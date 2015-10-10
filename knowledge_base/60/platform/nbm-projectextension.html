@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- -*- xhtml -*- -->
+    <title>NetBeans Project Type Extension Module Tutorial</title>
+    <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+    <meta name="AUDIENCE" content="NBUSER">
+    <meta name="TYPE" content="ARTICLE">
+    <meta name="EXPIRES" content="N">
+    <meta name="developer" content="gwielenga@netbeans.org">
+    <meta name="indexed" content="y">
+    <meta name="description"
+          content="A short guide to using the Nodes API.">
+    <!--      Copyright (c) 2005 Sun Microsystems, Inc. All rights reserved. -->
+    <!--     Use is subject to license terms.-->
+</head>
+<body>
+    <h1>NetBeans Project Type Extension Module Tutorial</h1>
+    
+    <p>This tutorial demonstrates how to extend an existing project type. New APIs in NetBeans IDE 6.0
+        enable you to add new nodes to an existing project type's logical view, additions to an
+        existing project type's lookup, and new panels to an existing project type's Project
+        Properties dialog box. To illustrate these extensions, we extend the web application
+        project type, by adding a new 'Important Files' node, exposing the content of the
+    project's 'nbproject' folder, as shown here:</p>
+    
+    <p><img border="1" src="../../../images/articles/platform/projectextensions/result.png" alt="New node">
+    
+    <p>Prior to NetBeans IDE 6.0, no APIs existed for extending existing project types.
+    Instead, you would need to create new ones from scratch. From 6.0 onwards, you are
+    recommended to extend existing project types rather than create new ones. This will
+    keep the number of project types to a minimum and avoid a large number of project
+    types with very small differences. 
+    
+     <h3>Contents</h3>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tbody><tr>
+         <td align="left" valign="top">
+<ul>
+        <li><a href="#installing">Installing the Software</a></li>
+        <li><a href="#creatingthemoduleproject">Creating the Module Project</a></li>
+        <li><a href="#settingdependencies">Setting Dependencies</a>
+        <li><a href="#registeringextensions">Registering the Extensions</a>
+        <li><a href="#extendingthelookup">Extending the Lookup</a>
+        <li><a href="#extendingthelogicalview">Extending the Logical View</a>
+        <li><a href="#building">Installing the Module</a>
+    </ul></td>
+         <td width="20"> </td>
+
+         <td align="right" valign="top"> 
+      <img src="../../../images/articles/platform/netbeans-stamp.gif" 
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0" height="45" width="206">
+   </td>
+       </tr>
+     </tbody></table>
+    
+    <p>For more information on working with NetBeans modules, see the <a href="http://platform.netbeans.org/index.html" target="_blank">
+        NetBeans Development Project home</a> on the NetBeans website. If you have questions, visit the 
+        <a href="http://wiki.netbeans.info/wiki/view/NetBeansDeveloperFAQ" target="_blank">NetBeans Developer FAQ</a> or use the feedback link
+    at the end of this page.</p>
+    
+    <br />
+    
+    <!-- ===================================================================================== -->
+    <h2 class="tutorial"><a name="installing"></a>Installing the Software</h2>
+    
+    
+    <p>Before you begin, you need to install the following software on your 
+    computer:</p>
+    <ul>
+        <li>NetBeans IDE 6.0 </li>
+        <li>Java Standard Development Kit (JDK&trade;) version 
+            5.0 
+        or later</li>
+    </ul>   
+    
+    <p>You will also make use of this icon, which you
+    can right-click here and download: <img src="../../../images/articles/platform/projectextensions/webPagesBadge.gif" />
+    
+    <br />
+    
+    <h2 class="tutorial"><a name="creatingthemoduleproject"></a>Creating the Module Project</h2>
+    
+        <p>We begin by working through the New Module Project
+            wizard. At the end of it, we will have a basic
+            source structure, with some default files, that
+            every NetBeans module requires.
+            
+            <ol>
+            <li>Choose File &gt; New Project (Ctrl-Shift-N). Under Categories, select NetBeans Plug-in Modules. Under projects, 
+        select Module Project.</p>
+        <p>Click Next.</li>
+        <li>In the Name and Location panel, type <tt>ImportantWebFiles</tt> in Project Name.
+            Change the
+            Project Location to any directory on your computer. Leave the Standalone Module radiobutton
+        and the Set as Main Project checkbox selected.</p>
+        
+        <p>Click Next.
+        
+        <li>In the Basic Module Configuration panel, replace <tt>yourorghere</tt> in Code Name Base with <tt>modules.netbeans</tt>,
+            so that the whole code name base is <tt>org.modules.netbeans.importantwebfiles</tt>. 
+            Add a space to the default Module Display Name, so that it is changed to <tt>Important Web Files</tt>.
+            Leave the location of the localizing bundle and XML layer, so that they will be stored in a
+        package with the name <tt>org/modules.netbeans/importantwebfiles</tt>. The panel should now look as follows:</p>
+        
+        
+    <p>Click Finish.</ol>
+    
+    <p> The IDE creates the <tt>Important Web Files</tt>
+        project. The project contains all of your sources and
+        project metadata, such as the project's Ant build script. The project
+        opens in the IDE. You can view its logical structure in the Projects window (Ctrl-1) and its
+    file structure in the Files window (Ctrl-2). 
+    
+    <p>For basic information on each of the files above, see the 
+    <a href="quickstart-nbm.html">Introduction to NetBeans Module Development</a>.
+    </ol><p>
+    <br />
+    
+    <!-- ===================================================================================== -->
+    <h2><a name="settingdependencies"></a>Setting Dependencies</h2>
+        <p>We will need to make use of several NetBeans APIs. In this
+        step, we select the modules that provide the NetBeans APIs
+        that we will need.
+            
+            <ol>
+            
+            <li>Right-click the project node and 
+        choose Properties.</p>
+        <p>The Project Properties dialog box opens.</li>
+        <li>In the Libraries panel, add dependencies on the
+        following modules:
+        
+        <ul>
+            <li>Datasystems API</li>
+            <li>File System API</li>
+            <li>Nodes API</li>
+            <li>Project API</li>
+            <li>Project UI API</li>
+            <li>Utilities API</li>
+            <li>Web APIs</li>
+        </ul>
+        
+        <p>The Libraries panel should now look as follows:</p>
+        
+        <p><img border="1" src="../../../images/articles/platform/projectextensions/add-deps.png" alt="Select Project panel.">
+        
+        <li>Click OK.
+            
+            </ol>
+            
+            <br />
+            
+            <!-- ===================================================================================== -->
+            <h2><a name="registeringextensions"></a>Registering the New Extensions</h2>
+            <p>Before we create the classes that implement
+            the APIs that we registered above, we will add
+            entries to the layer file.
+                
+                <ol>
+                
+                <li>Expand the Important Files node and
+                double-click the XML Layer node to open
+                the file in the editor.</p>
+        <li>Add the following entries to the layer file:</p>
+        
+        <pre class=examplecode>&lt;folder name="Projects"&gt;
+    
+    &lt;folder name="org-netbeans-modules-web-project"&gt;
+        
+        &lt;folder name="Lookup"&gt;
+            &lt;file name="org.netbeans.modules.importantwebfiles.LookupProviderImpl.instance"/&gt;
+        &lt;/folder&gt;
+        
+        &lt;folder name="Nodes"&gt;
+            &lt;file name="org.netbeans.modules.importantwebfiles.ImportantFilesNodeFactoryImpl.instance"&gt;
+                &lt;attr name="position" intvalue="1200"/&gt;
+            &lt;/file&gt;
+        &lt;/folder&gt;
+        
+    &lt;/folder&gt;
+    
+&lt;/folder&gt;</pre>  
+        
+        <li>In the Important Files node, expand the XML Layer node,
+        then expand the 'this layer in context' node. Scroll to the
+        Projects node and notice that the changes you made above
+        are highlighted, to visually distinguish your extensions 
+        from those that were there already:</p>
+        
+          <p><img border="1" src="../../../images/articles/platform/projectextensions/layer-visualized.png" alt="Select Project panel.">
+      
+          <p><b>Note:</b> The visual view above is very useful
+          in showing you the names of the project types, so
+          that you can correctly register extensions to them
+          in the layer file.
+          
+        </ol>
+    
+    <br />
+    
+     <!-- ===================================================================================== -->
+            <h2><a name="extendingthelookup"></a>Extending the Lookup</h2>
+            <p>We start by implementing the <tt>LookupProviderImpl</tt>
+            class, which we registered in the layer file in the
+            previous section.
+                
+                <ol>
+                <li>Create a Java class called <tt>LookupProviderImpl</tt>.
+                <li>Change the default code to the following:</p>
+        
+        <pre class=examplecode>public class LookupProviderImpl implements LookupProvider {
+
+    public Lookup createAdditionalLookup(Lookup lookup) {
+        
+        Project prj = lookup.lookup(Project.class);
+        
+        <b>//If there is a web module provider in the
+        //project's lookup, add a new lookup item to
+        //the lookup, which we will look for to determine
+        /whether a node should be created:</b>
+        WebModuleProvider wmp = lookup.lookup(WebModuleProvider.class);
+        if (wmp != null) {
+            return Lookups.fixed(new MyCoolLookupItem(prj));
+        }
+        
+        <b>//If there is no web module in the lookup,
+        //we do not add a new item to our lookup,
+        //so that later a node will not be created:</b>
+        return Lookups.fixed();
+        
+    }
+
+}</pre>  
+
+                <li>Create a new Java class called <tt>MyCoolLookupItem</tt>.
+
+                <li>Change the default code to the following:</p>
+        
+        <pre class=examplecode>public class MyCoolLookupItem {
+
+    public MyCoolLookupItem(Project prj) {
+    }
+
+}</pre>  
+        
+        </ol>
+    
+    <br />
+    
+    
+    
+     <!-- ===================================================================================== -->
+            <h2><a name="extendingthelogicalview"></a>Extending the Logical View</h2>
+            <p>We start by implementing the <tt>LookupProviderImpl</tt>
+            class, which we registered in the layer file in the
+            previous section.
+                
+                <ol>
+                <li>Create a Java class called <tt>ImportantFilesNodeFactoryImpl</tt>.
+                <li>Change the default code to the following:</p>
+        
+                <pre class=examplecode>public class ImportantFilesNodeFactoryImpl implements <a href="http://www.netbeans.org/download/dev/javadoc/org-netbeans-modules-projectuiapi/org/netbeans/spi/project/ui/support/NodeFactory.html" target="_blank">NodeFactory</a> {
+
+    Project proj;
+
+    public <a href="http://www.netbeans.org/download/dev/javadoc/org-netbeans-modules-projectuiapi/org/netbeans/spi/project/ui/support/NodeList.html" target="_blank">NodeList</a> createNodes(Project project) {
+      
+        this.proj = project;
+        
+        <b>//If there is no 'nbproject' folder,
+        //return an empty list of nodes:</b>
+        if (proj.getProjectDirectory().getFileObject("nbproject") == null) {
+            return NodeFactorySupport.fixedNodeList();
+        }
+        
+        <b>//If our item is in the project's lookup,
+        //return a new node in the node list:</b>
+        MyCoolLookupItem item = project.getLookup().lookup(MyCoolLookupItem.class);
+        if (item != null) {
+            try {
+                ImportantFilesNode nd = new ImportantFilesNode(proj);
+                return NodeFactorySupport.fixedNodeList(nd);
+            } catch (DataObjectNotFoundException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+        
+        <b>//If our item isn't in the lookup,
+        //then return an empty list of nodes:</b>
+        return NodeFactorySupport.fixedNodeList();
+        
+    }
+    
+}</pre>  
+
+                <li>Create a new Java class called <tt>ImportantFilesNode</tt>.
+
+                <li>Change the default code to the following:</p>
+        
+                <pre class=examplecode>public class ImportantFilesNode extends <a href="http://www.netbeans.org/download/dev/javadoc/org-openide-nodes/org/openide/nodes/FilterNode.html" target="_blank">FilterNode</a> {
+
+    private static Image smallImage = 
+          Utilities.loadImage("/org/netbeans/modules/importantwebfiles/webPagesBadge.gif"); // NOI18N
+
+    public ImportantFilesNode(Project proj) throws DataObjectNotFoundException {
+        super(DataObject.find(proj.getProjectDirectory().getFileObject("nbproject")).getNodeDelegate());
+    }
+
+    public String getDisplayName() {
+        return "Important Files";
+    }
+     
+    <b>//Next, we add icons, for the default state, which is
+    //closed, and the opened state; we will make them the same. 
+    //Icons in project logical views are
+    //based on combinations--you must combine the node's own icon
+    //with a distinguishing badge that is merged with it. Here we
+    //first obtain the icon from a data folder, then we add our
+    //badge to it by merging it via a NetBeans API utility method:</b>
+    
+    public Image getIcon(int type) {
+        DataFolder root = DataFolder.findFolder(Repository.getDefault().getDefaultFileSystem().getRoot());
+        Image original = root.getNodeDelegate().getIcon(type);
+        return Utilities.mergeImages(original, smallImage, 7, 7);
+    }
+
+    public Image getOpenedIcon(int type) {
+        DataFolder root = DataFolder.findFolder(Repository.getDefault().getDefaultFileSystem().getRoot());
+        Image original = root.getNodeDelegate().getIcon(type);
+        return Utilities.mergeImages(original, smallImage, 7, 7);
+    }
+    
+}</pre>  
+        
+        </ol>
+    
+    <br />
+    
+    
+        <!-- ======================================================================================= -->
+            
+        <h2><a name="building"></a>Installing the Module</h2>
+        <p>Finally, we install the module and make use of the result.</p>
+        <div class="indent">
+        
+        <ol>
+            <li>Check that the module looks as follows
+            in the Projects window:</p>
+            <p><img border="1" src="../../../images/articles/platform/projectextensions/result1.png" alt="finished project">
+                <li>Right-click the module project and install it.
+                <li>Create a new web application, or open an
+                existing one, and notice that it
+                has an Important Files node, containing the files
+            from the 'nbproject' folder:</p>
+            <p><img border="1" src="../../../images/articles/platform/projectextensions/result.png" alt="installed result">
+        </ol>
+    
+     </div>
+      
+    
+    
+    <br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+    <br style="clear:both;" />
+    <!-- ======================================================================================== -->
+    
+    <h2><a name="nextsteps"></a>Next Steps</h2>
+    
+    <p>For more information about creating and developing NetBeans modules, see the following resources: 
+    <ul>
+        <p><li><a href="http://platform.netbeans.org/tutorials" target="_blank">Other Related Tutorials</a></li>
+        <p><li><a href="http://www.netbeans.org/download/dev/javadoc/" target="_blank">NetBeans API Javadoc</a></li>
+    </ul>
+    
+    <hr>
+</body>
+</html>

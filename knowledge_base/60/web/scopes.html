@@ -1,0 +1,607 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html lang='en'>
+<head>
+<title>NetBeans IDE 6.0 - Tutorials - Understanding Scope and Managed Beans</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="Develop a web application using the NetBeans IDE's  Visual Web functionality 
+that demonstrates the request scope, session scope, and application scope of a web application.">
+<meta name="date" content="2007-02-11">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<body>
+<a name="top"></a>      
+
+<h1>Understanding Scope and Managed Beans</h1>
+<a name="skip2content"></a>
+<div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans  Tutorials Team</div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td class="smaller" valign="top"><em>December, 2007</em>&nbsp;[Revision number: 6.0]</td>
+    <td width="10">&nbsp;</td>
+    <td align="right" valign="bottom">&nbsp;</td>
+  </tr>
+</table>
+<table border="0" cellpadding="4" cellspacing="0" width="100%" >
+  <tr>
+    <td><p>In this tutorial, you use the NetBeans IDE with Visual Web JSF application development functionality to create an application that demonstrates how to use <i>application</i>, <i>session</i>, and <i>request</i> scopes to manage your application's objects. Scope is the availability (or context) of an object and its intended life span in a web application. </p>
+      <p> The web application that you create in this tutorial uses an object in application scope to tally votes, and uses an object in session scope to ensure that a user votes only once per session. The application uses a request scope object to display the time that the user submitted the vote. The time is stored in request scope, because the application does not need the value after the response is sent to the client browser. </p></td>
+  </tr>
+</table>
+<p align="center"><b>Expected duration: <i>45</i> minutes</b></p>
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top"><p><b>Contents</b></p>
+      <table border="0" cellpadding="0" cellspacing="0" class="vatop">
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#about">About Scopes</a></td>
+        </tr>
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#properties">Adding Properties to Managed Beans</a></td>
+        </tr>
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#start">Creating the Start Page</a></td>
+        </tr>
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#results">Creating the Results Page</a></td>
+        </tr>
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#navigation">Specifying Page Navigation</a></td>
+        </tr>
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#run">Running the Application</a></td>
+        </tr>
+        <tr>
+          <td class="hyphen">-&nbsp;</td>
+          <td><a href="scopes.html#more">Doing More</a></td>
+        </tr>
+      </table></td>
+    <td width="20">&nbsp;</td>
+    <td align="right" valign="top">      <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td>
+  </tr>
+</table>
+<span class="sp20">&nbsp;</span><br />
+<p><b>This tutorial works with the following technologies and resources</b></p>
+
+<table border="1" cellpadding="1">
+  <tbody>
+  <tr>
+    <td valign="top">JavaServer Faces Components/<br>
+      Java EE Platform</td>
+    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br>
+      <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 
+  </td></tr>
+  <tr>
+    <td valign="top">Travel Database</td>
+    <td colspan="4" valign="top"><img src="../../../images/articles/60/web/spacer.png" alt="not required" height="15" hspace="3" width="14">Not required</td>
+  </tr>
+  
+</tbody></table>
+<p>* In order to take advantage of NetBeans IDE 6.0's Java EE 5 capabilities, use an application server that is fully compliant with the Java EE 5 specification such as the Sun Java Application Server 9/GlassFish.</p>
+<p>This tutorial has been tailored for use with the GlassFish v2 Application Server. 
+If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. 
+For detailed information about the supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p>
+
+<h2><a name="about"></a>About Scopes</h2>
+<p>As long as a user stays on a page, the component values are remembered even when the page redisplays, such as when the user clicks a button that returns null. However, when the user leaves the page, the component values disappear. </p>
+<p> To make values available to other pages, or to make values available to the same page, should the user return to it, you need to store the values. When you create a project from the IDE, the IDE creates three <i>managed beans</i> for storing values: </p>
+<ul>
+  <li><code>RequestBean1</code></li>
+  <li><code>SessionBean1</code></li>
+  <li><code>ApplicationBean1</code></li>
+</ul>
+<p>The following figure shows the Navigator window with the default managed beans.</p>
+<table border="0" cellpadding="2" cellspacing="0" width="339">
+  <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/scopes/default-classes.png" width="329" height="231" border="0" alt="Figure 1: Default Classes and Scopes"> <b>Figure 1</b>: Default Managed Beans</td>
+  </tr>
+</table>
+<br>
+<p>A <b>managed bean</b> is a JavaBeans object that a JavaServer Faces web application instantiates and stores in either request scope, session scope, or application scope. The web application stores <code>RequestBean1</code> in request scope, <code>SessionBean1</code> in session scope, and <code>ApplicationBean1</code> in application scope. </p>
+<p> To add a property to one of these managed beans, you double-click the bean in the Navigator window and type the property declaration in the source code. Right-click anywhere in the Java editor and choose Refactor &gt; Encapsulate Fields. Then select the property from the list,  select which methods to add, and click Refactor. </p>
+<p> Before you create a bean property to store a value, you must determine the appropriate scope for the property's value. Because many users can access a web application at the same time, you need to use the smallest scope possible to make the best use of  server resources. The following figure illustrates the duration of each type of scope. </p>
+<ul>
+  <li>Application scope lasts until the server stops the application. Values that you store in an application bean are available to every session and every request that uses the same application map. </li>
+  <li>Session scope begins when a user first accesses a page in the web application and ends when the user's session times out due to inactivity, or when the web application invalidates the session, such as, for example, by calling <code>session.invalidate()</code>. </li>
+  <li>Request scope begins when the user submits the page and ends when the response is fully rendered, whatever page that is. </li>
+</ul>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="451">
+  <tr> 
+    <td align="center" ><img src="../../../images/articles/60/web/scopes/scopes.png" 
+width="441" height="512" border="0" 
+alt="Figure 2: Web Application Scopes" 
+title="Figure 2: Web Application Scopes" /> <b>Figure 2</b>: Web Application Scopes</td>
+  </tr>
+</table>
+<br>
+<!-- END FIGURE COMPONENT -->
+<p>For example, your web application has a drop-down list of measurement types (pixels, centimeters, and inches). You might want to store the list of choices in <code>ApplicationBean1</code> so  that all concurrent user sessions can share the list. On the other hand, you might store the user's login name in <code>SessionBean1</code>, so that the name is available for all the pages that the user accesses in that session. If you don't need the information beyond the lifetime of the current request, you can save space by putting the property in <code>RequestBean1</code>.</p>
+<p> <b>Warning:</b> You cannot use a request bean if you have included the <code>&lt;redirect&gt;</code> element inside the <code>&lt;navigation-case&gt;</code> element of a navigation rule. (You see these rules when you click the XML button in the Page Navigation editor.) When the page is submitted, the <code>&lt;redirect&gt;</code> element redirects the page and ends the request before a subsequent page can use any of the values stored in the Request Bean. </p>
+<p> When you create a page from the IDE, the Java source code for the page bean contains methods for accessing the <code>RequestBean1</code>, <code>SessionBean1</code>, and <code>ApplicationBean1</code> objects. To access properties of these managed beans, you use code similar to the statements in the following code snippet. </p>
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+  <tr class="bg-white">
+    <td><b>Code Sample 1: Accessing an Application Bean Property</b></td>
+  </tr>
+  <tr>
+    <td><pre>ApplicationBean1 appBean = getApplicationBean1();
+Option[] choices = appBean.BallotOptions();</pre></td>
+  </tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+<p>The web application instantiates a managed bean the first time within that bean's scope that a page accesses a property in the managed bean. For example, an instance of a <code>SessionBean1</code> object does not exist for the user's session until the user accesses a page that references a <code>SessionBean1</code> property. An instance of an <code>ApplicationBean1</code> object is created the first time a page from any session accesses the application bean, and it persists as long as the web application is running. </p>
+<p><b>Tip:</b> To add additional managed beans:
+<ol>
+  <li> In the Projects window, expand the Source Packages node, right-click the package node.</li>
+<li> Choose New &gt; Other, select JavaServer Faces category and  scope under File Types, and click Next.</li>
+<li><p>Type the File Name of the new managed mean and click Finish.</p>
+
+The new managed bean appears in the Projects window under the Source Packages node.</li> </ol>
+<h2><a name="properties"></a>Adding Properties to  Managed Beans</h2>
+<p>The pages in this web application require access to the following values, which you create in this section:</p>
+<ul>
+  <li><b><code>ballotOptions</code>.</b> An array property that contains the list of ballot choices. Because the list remains the same for all sessions, this property goes in application scope. </li>
+  <li><b><code>tally</code>.</b> A hash map property that  accumulates all the session votes. Because it must persist across sessions, it goes in application scope. </li>
+  <li><b><code>hasVoted</code>.</b> A boolean property that tracks whether the user has voted. Because the application needs to persist the value across several requests in a single session, the application stores the value in session scope. </li>
+  <li><b><code>timestamp</code>.</b> A <code>Date</code> property in which  the application records the time that the user submits a vote, for use by the next page. Because the application does not need the value after the next page is rendered, the application stores the value in request scope.</li>
+</ul>
+<div>Complete the following steps to add the properties to the managed beans. </div>
+<ol>
+  <li>From the main menu, choose File &gt; New Project.</li>
+  <li>In the New Project Wizard, select Web from the Categories list and Web Application from the Projects list, and click Next.</li>
+  <li>Name the project <code>Scopes</code> and click Next.</li>
+  <li>
+    <p>In the Frameworks panel, check Visual Web JavaServer Faces and click Finish. </p>
+	The Scopes project's Page1.jsp
+opens in the Visual Designer. </li>
+  <li>
+  <p>In the Navigator window, double-click <b>ApplicationBean1</b>.</p> 
+  This opens ApplicationBean1.java for editing. </li>
+  <li>Next you add the Application bean properties. Under the constructor <tt>public class ApplicationBean1 extends AbstractApplicationBean</tt>, add the following declarations:
+    <pre><span class="bold"><tt>private Option[] ballotOptions;
+private HashMap tally;</tt></span></pre>
+          
+
+  </li>
+  <li>
+    <p>Right-click in the Java editor and choose Fix Imports. Because there is more than one package that contains the Option class, the Fix Imports dialog appears. </p>
+    <ul>
+<li>For a Java EE 5
+  project, select <code>com.sun.webui.jsf.model.Option</code>.</li>
+<li>For a J2EE 1.4 project, select <code>com.sun.rave.web.ui.model.Option</code>.</li>
+</ul> </li>
+  <li>
+      Right-click in the Java editor and select Refactor &gt; Encapsulate Fields.
+</li>
+  <li><p>In the Encapsulate Fields dialog, check the boxes to create both getter and setter methods for both the <tt>ballotOptions</tt> and <tt>tally</tt> properties, as shown in the figure below. </p>
+  <table border="0" cellpadding="2" cellspacing="0" width="528">
+  <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/scopes/encapsulate-fields1.png" width="518" height="402" border="0" alt="Figure 1: Encapsulate Fields Dialog"> <b>Figure 1</b>: Encapsulate Fields Dialog</td>
+  </tr>
+</table> 
+  </li>
+  <li>
+    <p>Scroll to the <code>init</code> method and add the following code shown in bold to the bottom of the method. </p>
+   
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 2: Code to Add to the Application Bean's <code>init</code> Method</b></td>
+      </tr>
+      <tr>
+        <td><pre>        // TODO - add your own initialization code here
+        <b>// populate ballot items
+        ballotOptions = new Option[] {
+            new Option("java", "Java Programming Language"),
+            new Option("cpp", "C++"),
+            new Option("fortran", "Fortran")
+        };
+        
+        // initialize counters for ballot choices
+        tally = new HashMap();
+        for (int i=0; i < ballotOptions.length; i++) {
+            this.tally.put(ballotOptions[i].getValue(), "0");
+        }</b></pre></td>
+      </tr>
+    </table>
+  
+  </li>
+  <li>
+    <p>Add the following methods at the end of the file, just before the last end brace. </p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 3: Application Bean Vote Counting Methods</b></td>
+      </tr>
+      <tr>
+        <td><pre>    <b>/**
+     * Vote counter for property tally.
+     */
+    public void incrementTallyFor(String category) {
+        int count = getTallyFor(category);
+        count++;
+        this.tally.put(category, Integer.toString(count));
+    }
+        
+    /**
+     * Getter for value in property tally.
+     * @param category HashMap key
+     * @return Value to which the specified key is mapped
+     */
+    public int getTallyFor(String category) {
+        String stringCount = (String) this.tally.get(category);
+        if (stringCount == null) {
+            return 0;
+        } else {            
+            int count = Integer.valueOf(stringCount).intValue();
+            return count;
+        }
+    }</b>   
+</pre></td>
+      </tr>
+    </table>
+   
+  </li>
+  <li>Press Ctrl-S to save your changes, and press Ctrl-F4 to close the file. </li>
+  <li>
+    <p>In the Navigator window, double-click <b>SessionBean1</b>. This opens SessionBean1.java for editing.</p>
+<b>Note: </b>If the Navigator window is not open, click the Page1 tab in the editing area and click Design in the editing toolbar. The Navigator window appears when the IDE is in design mode.</li>
+  <li>Next you add the Session bean properties. Under the constructor <tt>public class SessionBean1 extends AbstractSessionBean</tt>, add the following declaration:
+    <pre><span class="bold"><tt>private boolean hasVoted;</tt></span></pre>
+  </li>
+  <li>
+      Right-click in the Java editor and select Refactor &gt; Encapsulate Fields.
+</li>
+  <li>In the Encapsulate Fields dialog, check the boxes to create both getter and setter methods for the <tt>hasVoted</tt> property and click Refactor.
+  </li>
+  <li>
+    <p>Scroll to the <code>init</code> method and add the following code shown in bold to the bottom of the method. </p>
+    
+    <!-- BEGIN CODE SAMPLE COMPONENT  -->
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 4: Code to Add to the Session Bean's <code>init</code> Method</b></td>
+      </tr>
+      <tr>
+        <td><pre>        // TODO - add your own initialization code here
+        <b>setHasVoted(false);</b></pre></td>
+      </tr>
+    </table>
+    <!-- END CODE SAMPLE COMPONENT  -->
+  </li>
+  <li>Press Ctrl-S to save your changes, and press Ctrl-F4 to close the file. </li>
+  <li>In the Navigator window, double-click RequestBean1. This opens RequestBean1.java for editing.</li>
+  <li>Add the Request bean properties. Under the constructor <tt>public class RequestBean1 extends AbstractRequestBean</tt>, add the following declaration:
+    <pre><span class="bold"><tt>private java.util.Date timestamp;</tt></span></pre>
+  </li>
+  <li>
+      Right-click in the Java editor and select Refactor &gt; Encapsulate Fields.
+</li>
+  <li>In the Encapsulate Fields dialog, check the boxes to create both getter and setter methods for the <tt>timestamp</tt> property and click Refactor.
+  </li>
+  
+  <li>
+    <p>Click on Page1 tab and then Design button for Page1. Check the Navigator window to ensure that the properties in the request bean, session bean, and application bean match the following figure. </p>
+    <!-- BEGIN FIGURE COMPONENT -->
+    <table border="0" cellpadding="2" cellspacing="0" width="339">
+      <tr>
+        <td align="center" ><img src="../../../images/articles/60/web/scopes/bean-properties.png" 
+width="329" height="231" border="0" 
+alt="Figure 4: Request, Session, and Application Bean Properties"
+title="Figure 4: Request, Session, and Application Bean Properties" /> <b>Figure 4</b>: Request, Session, and Application Bean Properties</td>
+      </tr>
+    </table>
+    <!-- END FIGURE COMPONENT -->
+  </li>
+</ol>
+
+<h2><a name="start"></a>Creating the Start Page</h2>
+<p>Follow the steps in this section to create the page shown running in a browser in the following figure. If the user clicks the Submit Vote button, the page submits the user's vote. Once the user has voted, the button is disabled to prevent the user from voting again in that session.</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="423">
+  <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/scopes/page1.png" 
+width="413" height="326" border="0" 
+alt="Figure 5: Page1"
+title="Figure 5: Page1" /> <b>Figure 5</b>: Page1</td>
+  </tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<ol>
+  <li>Click Page1 in the editing toolbar.</li>
+  <li> Drag a Label component from the Basic section of the Palette, drop it onto the top center of the page, and set the label's text to <code>Reader's Poll: What Is Your Favorite Programming Language?</code>.</li>
+  <li>Drop a Radio Button Group component beneath the Label component.</li>
+  <li>In the Properties window, set the component's <code>id</code> to <code>voteRBGroup</code>.</li>
+  <li>
+    <p>Right-click the Radio Button Group component and choose Bind to Data from the pop-up menu. </p>
+    A Bind to Data dialog box appears.</li>
+  <li>In the Bind to an Object tab of the dialog box, select ApplicationBean1 &gt; ballotOptions, and click OK.</li>
+  <li>Drop a Button under the Radio Button Group component, and set its text to <code>View Results</code>.<ul class="note">
+    <li><b>Important Note:</b> There is a known issue that affects the width of the JSF 1.2 Button component in IE7. The workaround is to place the Button component in a layout component (Grid Panel, Group Panel, or Layout Panel). Resizing the layout component automatically resizes the Button component.   </li>
+  </uL></li>
+  <li>In the Properties window, set the <code>id</code> to <code>viewButton</code>.</li>
+  <li>
+    <p>Click the ellipsis button <img src="../../../images/articles/60/web/ellipsis.png" alt="ellipsis button" width="14" height="16" align="absmiddle"> for the <code>action</code> property, select viewButton_action from the drop-down list, and click OK. </p>
+    The IDE adds the <code>viewButton_action</code> event handler, which returns null.</li>
+  <li>Drop a Button component to the right of the View Results button, and set its text to <code>Submit Vote</code>.</li>
+  <li>In the Properties window, set the <code>id</code> to <code>voteButton</code>.</li>
+  <li>
+  <p>Click the ellipsis button <img src="../../../images/articles/60/web/ellipsis.png" alt="ellipsis button" width="14" height="16" align="absmiddle"> for the  <code>disabled</code> property. </p>
+  This opens the property binding dialog box for  the property. </li>
+  <li>
+    <p>In the dialog box, select Use Binding, click Bind to an Object, and select SessionBean1 &gt; hasVoted, as shown in the following figure, and then click OK. </p>
+    <!-- BEGIN FIGURE COMPONENT -->
+    <table border="0" cellpadding="2" cellspacing="0" width="436">
+      <tr>
+        <td align="center" ><img src="../../../images/articles/60/web/scopes/disabled-binding.png" 
+width="426" height="481" border="0" 
+alt="Figure 6: Binding the disabled Property"
+title="Figure 6: Binding the disabled Property" /> <b>Figure 6</b>: Binding the <code>disabled</code> Property</td>
+      </tr>
+    </table>
+    <!-- END FIGURE COMPONENT -->
+  </li>
+  <li>
+    <p>Double-click the Submit Vote button. </p>
+    The IDE adds the <code>voteButton_action</code> action handler, opens the Java source for the page, and displays the method.</li>
+  <li>
+    <p>Replace the body of the method with the following code shown in <b>bold</b>. </p>
+   
+    
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 5: <code>voteButton_action</code> Method</b></td>
+      </tr>
+      <tr>
+        <td><pre>    public String voteButton_action() {        
+        
+        <span style="font-weight:bold">if (voteRBGroup.getSelected() == null) {
+            return null;
+        }
+        
+        // Tallies are kept across all user sessions
+        String votedFor = voteRBGroup.getSelected().toString();
+        getApplicationBean1().incrementTallyFor(votedFor);
+        
+        // User can only vote one time per session
+        getSessionBean1().setHasVoted(true);
+        
+        // Don't need the timestamp after the next request ends
+        Date now = new Date();
+        getRequestBean1().setTimestamp(now);</span>
+        
+        return null;
+    }</pre></td>
+      </tr>
+    </table>
+    <!-- END CODE SAMPLE COMPONENT  -->
+  </li>
+  <li>Right-click in the source and choose Fix Imports from the pop-up menu.</li>
+  <li>Select <code>java.util.Date</code> from the Date drop-down list, and click OK.</li>
+</ol>
+
+<h2><a name="results"></a>Creating the Results Page</h2>
+<p>Follow these steps to create the page that is shown running in a browser in the following figure. This page displays the current tally. The user can click the Refresh Results button to get the latest tally, which includes the votes that have been submitted by other users since the page was last displayed.</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="423">
+  <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/scopes/results.png" 
+width="413" height="326" border="0" 
+alt="Figure 7: Results"
+title="Figure 7: Results" /> <b>Figure 7</b>: Results</td>
+  </tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<ol>
+  <li>In the Projects window, right-click the Web Pages node under your Scopes project, choose New &gt; Visual Web JSF Page, name the page <code>Results</code>, and click Finish to create the page. </li>
+  <li>Drop a Label component on the top center of the Results page and set the text to <code>Results</code>.</li>
+  <li>Drop a Button component to the left of the Label component and set its text to <code>Home.</code></li>
+  <li>Set the Button component's <code>id</code> to <code>homeButton</code>.</li>
+  <li>Click the ellipsis button <img src="../../../images/articles/60/web/ellipsis.png" alt="ellipsis button" width="14" height="16" align="absmiddle"> for the <code>action</code> property, select homeButton_action from the Handler drop-down list, and click OK.</li>
+  <li>Drop a Button component to the right of the Label component and set its text to <code>Refresh Results.</code></li>
+  <li>Set the Button component's <code>id</code> to <code>refreshButton</code>.</li>
+  <li>Click the ellipsis button <img src="../../../images/articles/60/web/ellipsis.png" alt="ellipsis button" width="14" height="16" align="absmiddle"> for the <code>action</code> property, select refreshButton_action from the Handler drop-down list, and click OK.</li>
+  <li>Drag a Grid Panel component from the Layout section of the Palette and drop it under the Label Component.</li>
+  <li>In the Properties window, set the <code>cellspacing</code> property to <code>10</code> and the <code>columns</code> property to <code>1</code>.</li>
+  <li>
+    <p>Drag a Static Text component inside the Grid Layout component. When the outline of the Grid Layout component becomes a solid blue line, drop the Static Text component, as shown in the following figure. </p>
+    <!-- BEGIN FIGURE COMPONENT -->
+    <table border="0" cellpadding="2" cellspacing="0" width="151">
+      <tr>
+        <td align="center" ><img src="../../../images/articles/60/web/scopes/grid-panel.png" 
+width="141" height="188" border="0" 
+alt="Figure 8: Dropping a Component Into a Grid Panel Component"
+title="Figure 8: Dropping a Component Into a Grid Panel Component" /> <b>Figure 8</b>: Dropping a Component Into a Grid Panel Component</td>
+      </tr>
+    </table>
+    <!-- END FIGURE COMPONENT -->
+  </li>
+  <li>In the Properties window, set the <code>Static Text component's id</code> to <code>resultsST</code>. Leave its <code>text</code> property blank.</li>
+  <li>
+    <p>Clear the checkbox for the <code>escape</code> property. </p>
+    Later, you add code to put HTML in the component's <code>text</code> property. By setting the <code>escape</code> property to false, the HTML code will be passed to the browser unaltered. </li>
+  <li>Drag another Static Text component onto the Grid Panel component, and, when the outline of the Grid Layout component becomes a solid blue line, drop the Static Text component.</li>
+  <li>Set the Static Text component's <code>id</code> to <code>messageST</code>. Leave its <code>text</code> property blank.</li>
+  <li>Click Java in the editing toolbar to view the Java source for the page.</li>
+  <li>
+    <p>In the Navigator window, double-click the <code>prerender</code> method to open it in the Java editor, and then add the following code shown in bold. </p>
+   
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 6: <code>prerender</code> Method</b></td>
+      </tr>
+      <tr>
+        <td><pre>    public void prerender() {
+      <span style="font-weight:bold">// Display latest poll results
+      ApplicationBean1 appBean = getApplicationBean1();
+      Option[] choices = appBean.getBallotOptions();
+      String str = &quot;&lt;table border=\&quot;0\&quot; cellpadding=\&quot;5\&quot;&gt;&quot;;
+      for (int i = 0; i &lt; choices.length; i++) {
+        int count = 
+          appBean.getTallyFor(choices[i].getValue().toString());
+        str = str + &quot;&lt;tr&gt;&lt;td&gt;&quot; + 
+          choices[i].getLabel() +
+          &quot;&lt;/td&gt;&lt;td&gt;" + 
+          count + 
+          &quot;&lt;/td&gt;&lt;/tr&gt;&quot;;
+      }
+      str = str + &quot;&lt;/table&gt;&quot;;
+      resultsST.setText(str);
+      
+      RequestBean1 reqBean = getRequestBean1();
+      Date timestamp = (Date) reqBean.getTimestamp();
+      if (timestamp != null) {
+        messageST.setText(&quot;Your vote was recorded at &quot; +
+          (String)DateFormat.getTimeInstance(DateFormat.LONG).format(
+          timestamp));
+      }</span>
+    }</pre></td>
+      </tr>
+    </table>
+    <!-- END CODE SAMPLE COMPONENT  -->
+    <br>
+    This code creates an HTML table that contains the tally for each vote and puts the HTML table in the <code>text</code> property for the first Static Text component. If the user just voted, the second Static Text component displays the date and time the vote was registered. </li>
+  <li>Right-click in the source and choose Fix Imports from the pop-up menu. </li>
+  <li>From the Date drop-down list, select <code>java.util.Date</code>.</li>
+<li>
+  <p>Select from the  Option drop-down list according to the version of Java EE you are using for your project:</p>
+  <ul>
+    <li>For a Java EE 5 project, select <code>com.sun.webui.jsf.model.Option</code>.</li>
+    <li>For a J2EE 1.4 project, select <code>com.sun.rave.web.ui.model.Option</code>.</li>
+  </ul>
+  </li>
+</ol>
+
+<h2><a name="navigation"></a>Specifying Page Navigation</h2>
+<p>Follow these steps to specify the page navigation for the buttons, as shown in the following figure.</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="420">
+  <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/scopes/navigation.png" 
+width="410" height="337" border="0" 
+alt="Figure 9: Page Flow Editor"
+title="Figure 9: Page Flow Editor" /> <b>Figure 9 </b>: Page Flow Editor</td>
+  </tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<ol>
+  <li>In the editing area, click the Results tab and click Design to view the page in the Visual Designer.</li>
+  <li>
+    <p>Right-click on a blank spot in the page and choose Page Navigation from the pop-up menu.</p>
+	This displays the faces-config.xml in the Page Flow Editor  </li>
+  <li>Click the + sign in the Page1.jsp icon to enlarge the icon.</li>
+  <li>Click and drag from the viewButton to Results.jsp to create a connector between the button and the Results page.</li>
+  <li>Double-click the connector's label to change to edit mode, type <code>view</code> <code>results</code> and press Enter.</li>
+  <li>Click and drag from the  voteButton to Results.jsp.</li>
+  <li>Double-click the connector's label to change to edit mode, type <code>vote</code> and press Enter.</li>
+  <li>Click the + sign in the Results.jsp icon to enlarge the icon.</li>
+  <li>Click and drag from the  homeButton to Page1.jsp.</li>
+  <li>Double-click the connector's label to change to edit mode, type <code>home</code>, and press Enter.</li>
+</ol>
+
+<h2><a name="run"></a>Running the Application</h2>
+<div>To enable multiple sessions from the same browser, configure the application to end each session after one minute of inactivity. Then deploy and run the application.</div>
+<ol>
+  <li>
+    <p>In the Files window, expand Scopes &gt; web &gt;WEB-INF, as shown in the following figure.</p>
+    <!-- BEGIN FIGURE COMPONENT -->
+    <table border="0" cellpadding="2" cellspacing="0" width="268">
+      <tr>
+        <td align="center" ><img src="../../../images/articles/60/web/scopes/files-window.png" 
+width="258" height="335" border="0" 
+alt="Figure 10: Files Window"
+title="Figure 10: Files Window" /> <b>Figure 10</b>: Files Window</td>
+      </tr>
+    </table>
+    <!-- END FIGURE COMPONENT -->
+  </li>
+  <li>Double-click <tt>web.xml</tt> to open the file in the editor.</li>
+  <li>
+    <p>Type <code>1</code> in the Session Timeout text box, as shown in the following figure.</p>
+    <!-- BEGIN FIGURE COMPONENT -->
+    <table border="0" cellpadding="2" cellspacing="0" width="603">
+      <tr>
+        <td align="center" ><img src="../../../images/articles/60/web/scopes/xml-editor.png" 
+width="593" height="409" border="0" 
+alt="Figure 11: Setting Session Timeout in theweb.xml Visual Editor"
+title="Figure 11: Setting Session Timeout in theweb.xml Visual Editor" /> <b>Figure 11</b>: Setting Session Timeout in the <code>web.xml</code> Visual Editor</td>
+      </tr>
+    </table>
+    <!-- END FIGURE COMPONENT -->
+  </li>
+  <li>Save and close the file.</li>
+  <li>Click the Run Main Project button <img src="../../../images/articles/60/web/runprojectbtn.png" alt = "Run Project toolbar icon" align = "absmiddle" height = "19" width = "11"> in the main toolbar.</li>
+  <li>
+    <p>When the start page appears, select a radio button and click Submit Vote.</p>
+    The browser displays the results page. Note that the results page shows the time that you submitted your vote.</li>
+  <li>
+    <p>Click Home to return to the start page. </p>
+    The Submit Vote is disabled because you have voted.</li>
+  <li>
+    <p>Click View Results. </p>
+    Note that the results page no longer shows the time that you voted. This is because the previous request bean is out of scope and a new request bean has been instantiated.</li>
+  <li>Wait one minute for the session to time out. Then type the following URL into the browser's address text box, and press Enter to start a new session: <code>http://localhost:8080/Scopes</code>. You might need to change <code>8080</code> to a different port if you are not using the default server configuration.</li>
+  <li>Vote again and check the results. The results should include your first vote.</li>
+  <li>If you have a different browser application, start that browser, type <code>http://localhost:8080/Scopes</code> into the browser's address text box, and press Enter. Submit another vote.</li>
+  <li>
+    <p>In the first browser, click Refresh Results from the results page. </p>
+    The results should include the vote that you submitted from the second browser.</li>
+</ol>
+
+<h2><a name="more"></a>Doing More</h2>
+<p>Using what you have learned in this tutorial, build an application that prompts for a login name. Add a page that displays the number of unique users who have accessed the web application.</p>
+
+<h2><a name="summary"></a>Summary</h2>
+<p>You use the application bean, the session bean, and the request bean to store information for use by other pages.</p>
+<ul>
+  <li>Use the <b>application bean</b> for information that applies to all user sessions, such as a static option list for a Drop Down List component.</li>
+  <li>Use the <b>session bean</b> to store information for use by other pages throughout the user's session, such as the user's login name.</li>
+  <li><p>If you only need the information for use by the next page, use the <b>request bean</b>.</p>
+ <b>Note:</b> You cannot use the request bean if you have included the <code>&lt;redirect&gt;</code> element inside the <code>&lt;navigation-case&gt;</code> element of a navigation rule. 
+</li>
+<li>A request bean, session bean, or application bean is instantiated as soon as a page accesses one of its properties. The bean is destroyed when its scope ends. </li>
+<li>To add a property to the Session Bean, right-click the Session Bean node in the Outline window and choose Add &gt; Property. Use similar steps to add a property to the Request Bean or the Application Bean.
+</li>
+</ul>
+<!--
+<br>
+<p><b>See Also</b>:</p>
+<ul>
+<li><a href="data_sharing_twopages.html">Sharing Data Between Two Pages</a>
+</ul>
+-->
+<hr class="light"> 
+<br>
+<div class="date-stamp" align="right">This page was last modified:&nbsp; December, 2007</div>
+<!-- =================== -->
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+<!--stopindex-->
+<!-- END CENTRAL COLUMN COMPONENTS -->
+<table border="0" cellpadding="10" cellspacing="0" class="full-width">
+  <!-- BEGIN SPACER ROW -->
+  <tr>
+    <td><br>
+      <div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org"> Send Us Your Feedback</a></div>
+      <br style="clear:both;" />
+    </td>
+  </tr>
+  <!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+</body>
+</html>

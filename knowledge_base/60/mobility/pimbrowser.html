@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+<HTML>
+<HEAD>
+<TITLE>NetBeans 6.0 Visual Mobile Designer Custom Components: PIM Browser</TITLE>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="author" content="Karol Harelzak">
+</HEAD>
+<BODY>
+<H1>Visual Mobile Designer Custom Components: PIM Browser</H1>
+<P>Contributed by Karol Harezlak</P>
+<P>The Visual Mobile Designer (VMD) is a graphical interface within the NetBeans Mobility pack that enables you to design mobile applications using drag and drop components. The VMD allows you to define the application flow and design your GUI using the components supplied by the Mobility pack, or components you design yourself. The VMD contains many standard User Interface (UI) components that you can use to create applications such as Lists, Alerts, Forms and Images. It also includes custom components that simplify the creation of more complex features, such as Wait Screens, Splash Screens, Table Items and more. </P> 
+<p><img src="../../../images/articles/60/netbeans-stamp.gif" align="right"
+   alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+   IDE 6.0" border="0" height="45" width="206">
+The PIM Browser is a custom component that provides easy access to standard mobile devices functions
+like calendar, address book or task list. You can use the PIM Browser component to enable mobile Java applications to access locally stored personal information databases. This component
+utilizes The PIM (Personal Information Management) API which is a part of the <a href="http://jcp.org/en/jsr/detail?id=75" target="_blank">JSR-75 specification's</a>  PDA Optional Packages
+for the Java ME Platform. Because JSR-75 is not a part of the MIDP 2.0 specification, it is by definition a custom
+ component and can only be used with JSR-75 enabled devices.<p>
+<H2 CLASS="western">Application Overview</H2>
+<P>This example shows you how to use the PIM Browser component in a
+mobile application for JSR-75 capable devices. It  demonstrates the basic
+features of the the component such as browsing the content of a device's 
+contact database, Calendar or  To Do List. In addition to the PIM Browser, we also need to use three other
+components: Splash Screen, TextBox and Alert. 
+</P>
+<H3 CLASS="western">Software Requirements</H3>
+<P>Before you begin, you need to install the following software on
+your computer:</P>
+<UL>
+	<LI>NetBeans IDE 6.0 with Mobility  pack 
+  </LI>
+    <LI>Java Standard Development Kit (JDK) version 6.0 </LI>
+</UL>
+<P>
+</P>
+<P>If you are new to the NetBeans Mobility Pack, you should start
+with<A HREF="quickstart.html"> NetBeans
+6.0 Mobility CLDC/MIDP Quick Start Guide</A> before continuing.</P>
+<H2 CLASS="western">Installing and Running the Sample Application</H2>
+<P>Before we begin, you might want to see final result of the
+tutorial. 
+</P>
+<P>Take the following steps to install the PIMBrowserExample
+application:</P> 
+<OL>
+	<LI>Download <A HREF="../../../files/documents/4/1530/PIMBrowserExample.zip">pimbrowserexample.zip</A>
+	</LI>
+	<LI>Unzip the file. 
+	</LI>
+	<LI>In the IDE, choose File &gt; Open
+	Project and browse to the folder that contains the unzipped file. 
+	</LI>
+	<LI>Open the Project and Navigator
+  windows. It should look like the following:</LI>
+ <BR>
+	  
+	  <img src="../../../images/mobility/customcomponents/pim-navigator_project.png" width="272" height="397" border="0" alt="Navigator and Project window with PIM Browser example opened">
+  
+
+    </LI>
+	<LI>In the Projects window,
+	right-click the project node and choose Run Project (or press F6
+	key). As the application runs, an emulator window opens and displays
+	the application running in the default device emulator. 
+	</LI> 
+	<LI>In the Emulator window, click the button underneath
+	&quot;Launch.&quot;<BR>The emulator displays a Splash Screen
+   component then PIM Browser, as shown:
+  
+    <BR>
+	      
+      <img src="../../../images/mobility/customcomponents/pim-emulator.png" width="245" height="327" border="0" alt="WTK 2.5 emulator displaying the sampel PIM Browser application">
+  <LI>Contact's details <BR><BR>
+   
+   <img src="../../../images/mobility/customcomponents/pim-emulator2.png" width="249" height="330" border="0" alt="WTK 2.5 emulator displaying the sampel PIM Browser application">
+	
+  </LI>
+</OL>
+<UL>
+	<LI>Move the cursor up and down to
+	navigate through available positions. 
+	</LI>
+	<LI>Click the button underneath &quot;Back&quot; to come back to the contact's list. 
+	</LI>
+   <LI>Click the button underneath &quot;Exit&quot; to close the
+	application. 
+  </LI>
+</UL>
+<H2 CLASS="western">Creating an application with the PIM Browser Custom Component</H2>
+<P>Now that you have seen the PIM Browser component in action, let's
+go back to the beginning and create this application. To create the
+application, do the following: 
+</P>
+<OL>
+	<LI><A HREF="pimbrowser.html#create">Create the
+	PIMBrowserExample project</A> 
+	</LI>
+	<LI><A HREF="pimbrowser.html#add">Add packages and a
+	visual MIDlet to the PIMBrowserExample project</A> 
+	</LI>
+	<LI><A HREF="pimbrowser.html#addcomponent">Add
+	components to the PIMBrowserExample</A> 
+	</LI>
+	<LI><A HREF="pimbrowser.html#addcommands">Add
+	Commands to the PIM Browser Components</A> 
+	</LI>
+	<LI><A HREF="pimbrowser.html#connect">Connect the
+	Components to create an application flow</A> 
+	</LI>
+	<LI><A HREF="pimbrowser.html#storage">Adding contacts to the
+Wireless Toolkit Contact Database</A>
+	</LI>
+	<LI><A HREF="pimbrowser.html#run">Run the Project</A> 
+	</LI>
+</OL>
+<H3 CLASS="western"><A NAME="create"></A>Creating the
+PIMBrowserExample Project</H3>
+<OL>
+	<LI>Choose File &gt; New Project
+	(Ctrl-Shift-N). Under Categories, select Mobile. Under Projects,
+	select MIDP Application and click Next. 
+	</LI>
+	<LI>Enter <CODE>PIMBrowserExample</CODE>
+	in the Project Name field. Change the Project Location to a
+	directory on your system. From now on let's refer to this
+	directory as $PROJECTHOME. 
+	</LI>
+	<LI>Uncheck the Create Hello MIDlet
+	checkbox. Click Next. 
+	</LI>
+	<LI>Leave the Java ME Wireless Toolkit
+	as the selected Target Platform. Click Next. 
+	</LI>
+	<LI>Click Finish. <BR>The project folder contains all of your
+	sources and project metadata, such as the project Ant script. The
+	application itself is displayed in the Flow Design window of the
+	Visual Mobile Designer. 
+	</LI>
+</OL>
+<H3 CLASS="western"><A NAME="add"></A>Adding Packages and a Visual
+MIDlet to the PIMBrowserExample Project</H3>
+<OL>
+	<LI>Choose the <CODE>PIMBrowserExample</CODE>
+	project in the Project Window, then choose File &gt; New File
+	(Ctrl-N) . Under Categories, select Java Classes. Under File Types,
+	select Java Package. Click Next. 
+	</LI>
+	<LI>Enter <CODE>pimbrowserexample</CODE>
+	in the Package Name field. Click Finish. 
+	</LI>
+	<LI>Choose the <CODE>pimbrowserexample</CODE>
+	package in the Project window, then choose File &gt; New File
+	(Ctrl-N) . Under Categories, select MIDP. Under File Types, select
+	Visual MIDlet. Click Next. 
+	</LI>
+	<LI>Enter <CODE>PIMBrowserExample</CODE> into MIDlet Name and MIDP
+	Class Name fields. Click Finish. 
+	</LI>
+
+</OL>
+<H3><A NAME="addcomponent"></A>Adding Components to
+the PIMBrowserExample</H3>
+<OL>
+	<LI>Switch your Visual MIDlet to the Flow Designer window. 
+	Drag the following components from the
+	Component Palette and drop them in the Flow Designer: 
+	</LI>
+	<UL>
+		<LI>Splash Screen</li>
+		<LI>Alert</li>
+		<LI>IM Browser</li>
+	</UL>
+	<LI>Click on splashScreen and, in the Properties Window, change
+	value of property Text from &quot;null&quot; to the &quot;PIM
+	Browser Example&quot; 
+	<LI>Click on alert component and, in the Properties Window, change
+	value of property String to the &quot;Contact selected&quot;
+</OL>
+<H3><A NAME="addcommands"></A>Adding Commands to the
+PIMBrowserExample</H3>
+<OL> 
+	<LI>Open the Flow Designer Window.</li>
+	<LI>Choose Exit Command from the Commands section of the 
+	Component Palette. Drag and drop it into Flow Designer Window 
+	(pimBrowser component).</li>
+</OL>
+<H3><A NAME="connect"></A>Connecting Components</H3>
+<OL>
+	<LI>In the Flow design window, click on the Start Point on the
+	Mobile Device and drag it to the splashScreen component. In the same
+	manner, connect the components together as shown in the following
+	graphic.
+	<img src="../../../images/mobility/customcomponents/pim-flow.png" width="387" height="496" border="0" alt="Shows the Flow Designer with components conneted by command lines">
+  </LI>
+</OL>
+
+<H3><A NAME="storage"></A>Adding contacts to the
+Wireless Toolkit Contact Database</H3>
+<H3>&nbsp;</H3>
+<P> Copy the <A HREF="../../../files/documents/4/1613/SAMPLE.VCF"> sample contact
+	</A>to the WTK folder $WTKHOME/appdb/DefaultColorPhone/pim/contacts/Contacts/. This folder is empty on "default",
+	 so it's necessary to copy at least one file(contact) to test PIM Browser example.
+<p>
+More information about WTK Persistent Storage is available at Sun Java
+Wireless Toolkit for CLDC User's Guide (section: 4.3.2.1 Persistent
+Storage) <A HREF="http://java.sun.com/products/sjwtoolkit/wtk2.5.2/docs/UserGuide-html/emulator.html" target="_blank">Using
+the Emulator</A> 
+</p> 
+</P>
+<H3><A NAME="run"></A>Running the Project</H3>
+<OL>
+	<LI>Press &lt;F6&gt; to Run the main project or  select Run &gt; Run Main Project.</LI>
+</OL>
+<H2>To Learn More about the PIM Browser Component</H2>
+<P>The NetBeans IDE provides API Javadocs for the PIM Browser
+component, as well as other components you can use in the VMD. To
+read the Javadocs for the PIM Browser component do the following:
+</P>
+<OL>
+	<LI>Choose Help &gt; Javadoc References
+	&gt; org.netbeans.microediton.lcdui.pda The file is opened in a web browser. </LI>
+	<LI>Click<CODE> org.netbeans.microedition.lcdui.pda </CODE>to  see links for the component information. 
+	</LI>
+</OL>
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br>
+<br>
+<H2>Related Tutorials</H2>
+<UL>
+ <li><a href="smscomposer.html">Visual Mobile Designer Custom Components: SMS Composer</a></li>
+ <li><a href="filebrowser.html">Visual Mobile Designer Custom Components: File Browser</a></li>
+ <li><a href="loginscreen.html">Visual Mobile Designer Custom Components: Login Screen</a></li>
+</UL>
+</BODY>
+</HTML>

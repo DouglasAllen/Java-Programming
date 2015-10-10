@@ -1,0 +1,12 @@
+||:accessjavaobjectsfromscript.Main
+java.util.List
+java.util.ArrayList
+javax.script.ScriptEngineManager
+java.lang.System
+java.io.PrintStream
+java.util.Iterator
+javax.script.ScriptException
+java.lang.Object
+javax.script.ScriptEngine
+java.lang.String
+accessjavaobjectsfromscript.Main

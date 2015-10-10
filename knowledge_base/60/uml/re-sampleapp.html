@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>UML: Reverse Engineering a Java Application</title>
+<meta name="description" content="UML: Reverse Engineeringn a Java Application">
+<meta name="date" content="2007-05-01">
+<meta name="author" content="Cindy Castillo">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<script type="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=800,height=600,left=500,top=100,scrollbars=yes');
+return false;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+.style1 {color: #FF0000}
+-->
+</style>
+</head>
+<body>
+<a name="top"></a>
+<h1>UML: Reverse Engineering a  Java Application </h1>
+<div class="articledate" style="margin-left: 0px;">Last Updated: October 2007</div>
+<p>This tutorial applies to NetBeans&#8482; 6.0  release integrated development environment (the IDE).</p>
+<p>In this tutorial, you use the  sample Java and UML sample projects provided with the IDE to learn how to reverse engineer the source code of an existing Java application into a UML project. All the classes and other application elements are represented in the Projects window under the <tt>UML project</tt> node, while the original Java code remains in its original state under the Java project node. This document walks you through several basic tasks as indicated by the topic links listed under Contents.</p>
+
+<p><b>Note:</b> Wherever you see the <img src="../../../images/articles/uml_re/flash_demo_button_med.gif" alt="View Demo" border="0"> icon, you can click to view a detailed interactive demonstration of the steps described in the tutorial.</p>
+
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3 class="tutorial">Prerequisites</h3>
+<p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a></p>
+<!-- ======================================================================================== -->
+<h3 class="tutorial">System Requirements</h3>
+<p>This tutorial assumes that your system meets the requirements specified in the Systems Requirements section of the <a href="../../../community/releases/60/relnotes.html">NetBeans 6.0  Release Notes</a>.</p>
+<!-- ======================================================================================== -->
+<h3 class="tutorial">Software Needed for the Tutorial</h3>
+<p>Before you begin, download and install the following software:</p>
+<ul>
+  <li>NetBeans IDE 6.0<br>
+      <br>
+    Select the All Download option. <br>
+  </li>
+</ul>
+<!-- ======================================================================================== -->
+<h3 class="tutorial">Contents</h3>
+<ul>
+<li class="tut"><a href="re-sampleapp.html#JavaProject">Creating the Sample Java and UML   Projects</a></li>
+<li class="tut"><a href="re-sampleapp.html#proj_explore">Exploring the UML Project in the Projects Window</a></li>
+<li class="tut"><a href="re-sampleapp.html#UMLProject">Creating Another UML Project By Reverse Engineering </a></li>
+<li class="tut"><a href="re-sampleapp.html#classdiagram">Generating a Class Diagram</a></li>
+<li class="tut"><a href="re-sampleapp.html#diag_wdw">Exploring the Diagram Editor</a></li>
+<li class="tut"><a href="re-sampleapp.html#overvu_wdw">Using the Overview Window</a></li>
+<li class="tut"><a href="re-sampleapp.html#dependency">Generating a Dependency Diagram for a Class</a></li>
+<li class="tut"><a href="re-sampleapp.html#sequence">Generating a Sequence Diagram for an Operation</a></li>
+</ul>
+</div>
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="JavaProject"></a>Creating the Sample Java and UML Projects</h2>
+<p>In this section, you use the New Project wizard to create the  sample Java  project and <tt></tt> UML  project provided with  the IDE.</p>
+<ol>
+<li class="tut">From the main menu of the IDE, choose File &gt; New Project.<br>
+    The New Project wizard appears. </li>
+<li class="tut">In the Choose Project page, expand the <tt>Samples</tt> node in the Categories pane and select the <tt>UML</tt> node. <br>
+  The Projects pane is updated with the available UML sample project.
+</li>
+<li class="tut">In the Projects pane, select the UML Bank App Sample and click Next.</li>
+<li class="tut">In the Name and Location page, leave the default value  of <tt>UMLBankAppSample</tt> for the Java project 
+name.</li>
+<li class="tut">For the  Projects Location field, click Browse to navigate to the folder in which you want to save the files for the sample projects.<br>
+  Notice that when you change the value in the Projects Location field, the IDE automatically updates the 
+  values in the Java Project Folder and UML Project Folder fields.</li>
+<li class="tut"> Leave the default value of <tt>UMLBankAppSample-Model</tt> for the UML project name.</li>
+<li class="tut">Click Finish.<br>
+  The Opening Projects progress dialog box appears.<br>
+The <tt>UMLBankAppSample</tt> and <tt>UMLBankAppSample-Model</tt> projects appears in the Projects window.</li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-create-projects.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+
+<h2><a name="proj_explore"></a>Exploring the UML Project in the Projects Window</h2>
+<p>This section steps you through the different parts of the UMLBankAppSample application by exploring the different features of the Projects window that represent the elements of the application.</p>
+<ol>
+  <li class="tut">From the main menu, select <tt>Windows &gt; Properties</tt> to open the Properties window.</li>
+  <li class="tut">In the Projects window, expand the <tt>UMLBankAppSample-Model&gt; Model &gt; bankpack</tt> node.</li>
+  <li class="tut"> Expand the <tt>BankAccount</tt> node and its<tt> Attributes</tt> node.<br>
+    All attributes of the <tt>BankAccount</tt> class are contained in this folder. If there are less than three attributes, the attributes appear under the class node without an Attributes folder.</li>
+  <li class="tut">Select the <tt>Attribute</tt> node <img src="../../../images/articles/uml_re/attribute.gif" alt="image of Attributes node icon"> labeled <tt>private double balance</tt>.<br>
+    The Properties window shows the name of the attribute and its properties. </li>
+  <li class="tut">In the Projects window, under the node for the <tt>BankAccount</tt> class, expand the <tt>Operations</tt> node <img src="../../../images/articles/uml_re/operation.gif" alt="image of the Operations node icon is displayed."> . <br>
+    All the operations on the <tt>BankAccount</tt> class appear under this node.</li>
+  <li class="tut">Under the <tt>BankAccount</tt> class, expand the <tt>Relationships</tt> node <img src="../../../images/articles/uml_re/relationships.gif" alt="image of the Relationships node icon is displayed.">. <br>
+    Nodes for three types of relationships are displayed: Specializations, Aggregation, and Implementation. </li>
+  <li class="tut">Expand the <tt>Specializations</tt> node <img src="../../../images/articles/uml_re/GeneraLink.png" alt="image of the Generalization icon is displayed.">, then expand the three <tt>Generalization</tt> nodes.<br>
+    The Generalization links show the relationship between <tt>BankAccount </tt>class to other elements (the <tt>Checking</tt>, <tt>Platinum</tt>, and <tt>Saving </tt> classes). </li>
+  <li class="tut">(Optional) Before continuing to the next section, close the expanded nodes under the BankAccount class.</li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-explore-uml-proj.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+<p align="center"><a href="re-sampleapp.html#top">top</a><br>
+  <!-- ======================================================================================= -->
+</p>
+<h2><a name="UMLProject"></a>Creating Another UML Project by Reverse Engineering</h2>
+<p>In the first section of this tutorial, you loaded the <tt>UMLBankAppSample</tt> Java  project and the UML project, <tt>UMLBankAppSample-Model</tt>, that was generated using the Reverse Engineering feature. In this section, you  go through the steps to create another  UML project by reverse engineering the same <tt>UMLBankAppSample</tt> Java project that you used in the previous section.</p>
+<ol>
+<li class="tut">In the Projects window, right-click the <tt>UMLBankAppSample</tt> node and choose Reverse Engineer.<br>
+  The Reverse Engineer dialog appears. <br>
+  Notice that the Selected Nodes field contains the non-editable value of <tt>UMLBankAppSample</tt>. </li>
+<li class="tut">Leave the checkboxes in the Reverse Engineer column selected. </li>
+<li class="tut">Select the Create New UML Project button. </li>
+<li class="tut">In the Project Name field, type <tt>UMLBankAppSample-MyModel</tt>.</li>
+<li class="tut">For the Project Location field, leave the default value, which is the directory in which you saved the UML sample projects.<br>
+  If you want to use a different folder, click Browse to navigate to that <tt></tt> folder, and click Open.</li>
+<li class="tut">Click OK.<br>
+The Opening Projects progress dialog box appears.<br>
+The <tt>UMLBankAppSample-MyModel</tt> project appears in the Projects window.</li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-create-new-umlproj.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="classdiagram"></a>Generating a Class Diagram</h2>
+<p>In this section, you generate the class diagrams for the UMLBankAppSample application created in the previous section. </p>
+<ol>
+<li class="tut">In the Projects window, under the <tt>UMLBankAppSample-MyModel</tt> node, expand the <tt>Model &gt; bankpack</tt> node. </li>
+<li class="tut"><a name="selectstuff"></a>Select the <tt>bankpack</tt> folder and all the elements under the <tt>bankpack</tt> folder by holding down the Shift-key or Ctrl-key when making the selection. </li>
+<li class="tut">Right-click the selected elements and choose Create Diagram From Selected Elements.<br>
+The Create New Diagram wizard appears. </li>
+<li class="tut">In the Diagram Type list, select Class Diagram.</li>
+<li class="tut">Type <tt>BankClassDiagram</tt> in the Diagram Name field, leave <tt>UMLBankAppSample-MyModel</tt> in the Namespace field and click Finish.<br>
+The IDE does the following:<br>
+<ul>
+<li class="tut">Creates a <tt>BankClassDiagram</tt> node under the <tt>Model</tt> node</li>
+<li class="tut">Displays the new diagram in the Diagram editor </li>
+<li class="tut">Opens the Modeling Palette</li>
+</ul>
+<b>Note: </b>The new <tt>BankClassDiagram</tt> diagram consists of all the elements you selected in <a href="re-sampleapp.html#selectstuff">Step 2 </a>.</li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-gen-class-diag.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="diag_wdw"></a>Exploring the Diagram Editor</h2>
+<p>In this section, you use the buttons of the Diagram toolbar to view the application in various UML layouts in the Diagram editor.</p>
+<ol>
+<li class="tut">Double-click the <tt>BankClassDiagram</tt> tab at the top of the Diagram editor. <br>
+This action stretches the class Diagram editor to fill the entire IDE window space.<br><br>
+<b>Note: </b>This is a toggle: To reverse this action double-click the <tt>BankClassDiagram</tt> tab again. </li>
+<li class="tut">Stay in the expanded Diagram editor and click the Fit To Window button <img src="../../../images/articles/uml_re/FitToWindow.gif" alt="image of the FitToWindow icon is displayed."> on the Diagram toolbar to display the diagram completely in the expanded editor.<br><br>
+<b>Note: </b>Notice the zoom level percentage field in the Diagram toolbar. You can manipulate the size by typing different numbers in this field. </li>
+<li class="tut">Select the Symmetric Layout <img src="../../../images/articles/uml_re/SymmetricLayout.gif" alt="image of the Tree Style icon is displayed."> button on the Diagram toolbar and click Yes in the Layout warning dialog box. <br>
+The IDE arranges the BankClassDiagram diagram into a symmetric layout style. </li>
+<li class="tut"> Select the Hierarchical Layout <img src="../../../images/articles/uml_re/HierarchicalLayout.gif" alt="image of the Hierarchical Style tool icon is displayed."> button on the Diagram toolbar and click Yes in the Layout warning dialog box. <br>
+The IDE rearranges the BankClassDiagram diagram into a hierarchical layout style with all elements below the <tt>bankpack </tt>package.</li>
+<li class="tut">Select the Orthogonal Layout <img src="../../../images/articles/uml_re/OrthogonalLayout.gif" alt="image of the Orthogonal Style icon is displayed."> button on the Diagram toolbar and click Yes in the Layout warning dialog box. <br>
+The IDE rearranges the BankClassDiagram diagram into a rectangular layout style. </li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-explore-diageditor.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="overvu_wdw"></a>Using the Overview Window</h2>
+<p>Here, use the features of the Overview window to get a scalable view of the diagram in the Diagram editor. </p>
+<ol>
+<li class="tut">Double-click the <tt>BankClassDiagram</tt> tab at the top of the expanded Diagram editor. <br>
+The IDE returns to the multi-window view.</li>
+<li class="tut"> Click the Fit to Window button <img src="../../../images/articles/uml_re/FitToWindow.gif" alt="image of the FitToWindow icon is displayed."> on the Diagram toolbar and then select 75% from the zoom drop-down list . <br>
+Using the  zoom drop-down list, the diagram scales to the 75% sized version so that you can read the labels better.</li>
+<li class="tut">Click the Overview Window button <img src="../../../images/articles/uml_re/Overview.gif" alt="image of the Overview Window icon is displayed."> on the Diagram toolbar to open the Overview window.<br>
+  A small, scalable window displaying the entire diagram appears. A blue box in the window indicates what appears in the Diagram editor. <br>
+  <b>Note:</b>  You may need to enlarge the Overview window or select a higher scale in the zoom drop-down list to see the blue box.</li>
+<li class="tut">Drag the blue box over the BankAccount element.<br>
+This focuses the BankAccount element in the center of the Diagram editor.</li>
+<li class="tut">To zoom in on an element, click one of the handles at the corner of the blue box and decrease the size of the box. Adjust the location of the box to zoom in on a specific part of the diagram.</li>
+<li class="tut">To zoom out, click one of the handles of the blue box and increase the box's size.<br>
+Notice that the IDE zooms out on the diagram.</li>
+<li class="tut">Close the Overview window by clicking the X in the upper right corner or by clicking the Overview Window button a second time. </li>
+<li class="tut">Click the Fit to Window button <img src="../../../images/articles/uml_re/FitToWindow.gif" alt="image of the FitToWindow icon is displayed."> again on the Diagram toolbar</li>
+</ol>
+
+
+<p align="center"><a href="re-files/umlre-sample-use-overview-win.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="dependency"></a>Generating a Dependency Diagram for a Class</h2>
+<p>Now, generate a dependency diagram for one of the classes in the BankApp application.</p>
+<ol>
+<li class="tut">Double-click the <tt>BankClassDiagram</tt> tab to switch to the full view of the diagram.</li>
+<li class="tut">Right-click the <tt>BankAccount</tt> class in the Diagram editor and choose Generate Dependency Diagram.<br>
+The IDE creates a dependency diagram and opens a <tt>BankAccountDependencies</tt> tab in the Diagram editor to display the new diagram. Your focus is now in the Diagram editor tab showing the BankAccountDependencies diagram. The BankAccountDependencies diagram shows the following dependency links:<br>
+<ul>
+<li class="tut">Implementation relationship with the <tt>Account </tt>interface</li>
+<li class="tut">Navigable Aggregation link to the <tt>History </tt>class</li>
+</ul>
+<b>Note: </b>Using this option, you can create a diagram showing all the dependencies for any given object.</li>
+<li class="tut">Double-click the BankClassDiagram tab again to switch to the multi-window view of the IDE. </li>
+<li class="tut">In the Projects window, expand the BankAccount class node  under the UMLProject &gt; Model &gt; bankpack folder.<br>
+  You see that a <tt>BankAccountDependencies</tt> node <img src="../../../images/articles/uml_re/ClassDiagram.gif" alt="image of the BankAccountDependencies node icon is displayed."> has been added representing the Dependency diagram you just created.</li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-gen-depend-diag.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="sequence"></a>Generating a Sequence Diagram for an Operation</h2>
+<p>Now generate a sequence diagram for the application's <tt>withdraw</tt> operation. Examine how it is represented as a diagram and as elements in the UML Project in the Projects window</p>
+<ol>
+<li class="tut">Click the <tt>BankAccountDependencies</tt> tab in the Diagram editor. </li>
+<li class="tut">Select <tt>BankAccount</tt> element and adjust the zoom so that you can easily read the operation labels.</li>
+<li class="tut">In the Diagram editor, right-click the <tt>withdraw</tt> operation and choose Reverse Engineer  Operation. <br>
+The Create New Diagram dialog box  appears.</li>
+<li class="tut">In the Diagram Type list, select Sequence Diagram.</li>
+<li class="tut">In the Diagram Name field, type <tt>withdrawSD</tt>.</li>
+<li class="tut">Accept the default value in the Namespace field and click Finish. <br>
+A sequence diagram appears in the Diagram editor.</li>
+<li class="tut">Expand the Diagram editor and manipulate the zoom level so that you can easily examine the new sequence diagram. <br>
+The sequence diagram shows the control flow, the sequence of behavior, and the concurrent processes and activations. </li>
+<li class="tut">In the Projects windows, under the <tt>BankAccount</tt> class node, expand the <tt>Operations</tt> node, then expand the <tt>public void withdraw </tt> operation node. <br>
+You see the new <tt>withdraw</tt> sequence diagram node <img src="../../../images/articles/uml_re/Interaction.gif" alt="image of the sequence diagram node.">. </li>
+<li class="tut"> Expand the <tt>withdraw</tt> node to see the elements of the sequence diagram represented in the Projects window.</li>
+</ol>
+
+<p align="center"><a href="re-files/umlre-sample-gen-seq-diag.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_re/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+
+
+<p align="center"><a href="re-sampleapp.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2>Summary</h2>
+<p>In this tutorial, you learned how to reverse engineer a Java application by importing its data into a UML model. You learned how to perform the following tasks:</p>
+<ul>
+<li class="tut">Generate a class diagram from a sample Java application</li>
+<li class="tut">Explore the features of the Projects window for representing the elements of the application</li>
+<li class="tut">Use the buttons of the Diagram toolbar to view the application in various UML layouts</li>
+<li class="tut">Use the Overview Window as a viewing tool</li>
+<li class="tut">Generate a dependency diagram for one of the application's classes</li>
+<li class="tut">Generate a sequence diagram for an operation and examine how it was represented as a diagram and as elements in the UML Project in the Projects window </li>
+</ul>
+<!-- Feedback Link -->
+<br>
+
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+
+<!-- ======================================================================================== -->
+<p align="center"><a href="re-sampleapp.html#top">top</a></p> 
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+||:invokescriptfile.Main
+javax.script.ScriptEngineManager
+java.lang.Object
+java.io.FileInputStream
+java.io.File
+javax.script.ScriptEngine
+java.io.InputStreamReader
+java.lang.Exception
+invokescriptfile.Main

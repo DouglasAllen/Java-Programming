@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+2007-04-15 15:54:15.953 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.2.1.7 - (453926): instance c013800d-0111-f5f3-9e6b-000000184490
+on database directory C:\handson2\development\javase6adv\samples\derbysimple\derbyDB  
+
+Database Class Loader started - derby.database.classpath=''
+
+2007-04-15 15:54:18.437 GMT:
+Shutting down instance c013800d-0111-f5f3-9e6b-000000184490
+----------------------------------------------------------------

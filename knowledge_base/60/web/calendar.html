@@ -1,0 +1,559 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html>
+<head>
+<title>NetBeans IDE 6.0 - Tutorials - Using the Calendar Component</title>
+<script language="JavaScript"><!--
+function open_popup(page) {
+    window_handle = window.open(page,'popupWindowName',"status=1,scrollbars=1,width=775,height=450");
+    window_handle.focus();
+    return false;
+}
+//--></script><!-- BEGIN METADATA -->
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="description" content="This tutorial describes how to work with the Calendar component in NetBeans Visual Web Pack 5.5. This tutorial shows how to set the minimum and maximum calendar date and how to verify that the date that a user selects falls within this range.">
+<meta name="date" content="2007-01-10">
+<meta name="TYPE" content="TUTORIAL">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<body>
+<a name="top"></a>
+<!-- Sample Title for NetBeans 5.5:
+Delving Into Components
+-->
+
+<h1>Using the Calendar Component</h1>
+<!-- ============ -->
+<!-- MAIN CONTENT -->
+<!-- ============ -->
+<a name="skip2content"></a>
+<!--  BEGIN VCD4 BYLINE AND TOOLS  -->
+<!-- Update the date and version according to instructions for this release -->
+<div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team.</div>
+<table class="full-width" border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td class="smaller" valign="top"><em>December, 2007</em>&nbsp;[Revision number: V6.0]</td>
+    <td width="10">&nbsp;</td>
+    <td align="right" valign="bottom">&nbsp;</td>
+  </tr>
+</tbody></table>
+<h2 class="warningBox">  <!-- This table contains an overview or an intro to your-tutorial. -->
+</h2>
+<table class="full-width" border="0" cellpadding="4" cellspacing="0">
+  <tbody><tr>
+    <td><p>This tutorial describes how to work with the Calendar component in NetBeans IDE 6.0. 
+	This tutorial shows how to set the minimum and maximum calendar date and how to verify that a date that the user selects falls within this range.</p>
+</td>
+  </tr>
+</tbody></table>
+<!-- END VCD1 OVERVIEW COMPONENT  -->
+<!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  -->
+<table class="full-width" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+    <td align="left" valign="top"><p><b>Contents</b></p>
+     <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr valign="top">
+          <td class="hyphen" width="9">-&nbsp;</td>
+          <td><a href="calendar.html#02">Picking a Calendar Date</a></td>
+</tr>
+       <tr valign="top">
+          <td class="hyphen" width="9">-&nbsp;</td>
+          <td><a href="calendar.html#03">Setting the Minimum and Maximum Calendar Dates</a></td>
+</tr>
+       <tr valign="top">
+          <td class="hyphen" width="9">-&nbsp;</td>
+          <td><a href="calendar.html#04">Validating a Calendar Range </a></td>
+</tr>
+       <tr valign="top">
+          <td class="hyphen" width="9">-&nbsp;</td>
+          <td><a href="calendar.html#05">Changing the Calendar Style</a></td>
+</tr>
+       <tr valign="top">
+          <td class="hyphen" width="9">-&nbsp;</td>
+          <td><a href="calendar.html#06">Tips for Using the Calendar Component</a></td>
+</tr>
+       <tr valign="top">
+          <td class="hyphen" width="9">-&nbsp;</td>
+          <td><a href="calendar.html#07">Summary</a></td>
+</tr>
+      </tbody></table></td>
+    <td width="20">&nbsp;</td>
+    <td align="right" valign="top">      <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td>
+  </tr>
+</tbody></table>
+<!-- END VCD5 ANCHOR LINKS COMPONENT  -->
+<br>
+
+<!-- BEGIN EXAMPLES BOX -->
+<table border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+<td><p><b>Image file used in this tutorial</b></p></td>
+</tr>
+<tr valign="top">
+    <td>»&nbsp;<a href="../../../images/articles/60/web/calendar/table_title_solid.gif">table_title_solid.gif</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<!-- END CODE EXAMPLES BOX -->
+<!-- BEGIN RESOURCE MATRIX -->
+<!--
+This table, introduction, and final paragraph are used with VWP 5.5.
+Some form of this section might be used with future versions, 
+but that hasn't been decided.
+-->
+<p><b>This tutorial works with the following technologies and resources</b></p>
+
+<table border="1" cellpadding="1">
+  <tbody>
+  <tr>
+    <td valign="top">JavaServer Faces Components/<br>
+      Java EE Platform</td>
+    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br>
+      <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 
+  </td></tr>
+  <tr>
+    <td valign="top">Travel Database</td>
+    <td colspan="4" valign="top">
+<img src="../../../images/articles/60/web/spacer.png" alt="not required" height="15" hspace="3" width="14">Not required</td>
+  </tr>
+  <tr>  </tr>
+</tbody></table>
+<p>* To take advantage of NetBeans IDE 6.0's Java EE 5 capabilities, use an application server that is fully compliant with the Java EE 5 specification, such as the Sun Java System Application Server 9 (GlassFish Project).</p>
+<p>
+This tutorial has been tailored for use with the Sun Java Application Server PE 9.0 Update Release 1. If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. 
+For detailed information about the
+supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p>
+<!-- END RESOURCE MATRIX -->
+
+
+<h2><a name="02"></a>Picking a Calendar Date </h2>
+<div>This tutorial uses the Calendar component found in the Basic section of the Palette. You begin by adding the Calendar to your project. You then add code to validate that the date the user picks falls within a default minimum and maximum Calendar range. </div>
+<ol>
+<li>
+  <p>Create a new Visual Web JSF application project, name it <code>CalendarExample</code>, and enable the Visual Web JavaServer Faces framework.</p>
+<p>You design the page as shown in the following figure.</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="531">
+<tr>
+<td align="center"><img src="../../../images/articles/60/web/calendar/startdate.png" width="521" height="267" border="0" alt="Figure 1: Calendar Format Page Design" title="Figure 1: Calendar Format Page Design" /> 
+<b>Figure 1</b>: Calendar Format Page Design</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+<li>From the Basic section of the Palette, drag a Calendar component onto the page.</li>
+<li><p>In the Properties window, set the the following values:</p>
+    <table border="0" cellpadding="0" cellspacing="3">
+<tr align="left" valign="top">
+            <th> 
+              Property&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Value</th>
+      </tr>
+
+          <tr> 
+            <td>id</td>
+            <td><code>startCalendar</code></td>
+          </tr>
+		  <tr> 
+            <td>dateFormatPatternHelp</td>
+            <td><code>MM/dd/yyyy</code></td>
+          </tr>
+          <tr> 
+            <td>label</td>
+            <td><code>Start Date:</code></td>
+          </tr>
+          <tr> 
+            <td>required</td>
+            <td><img src="../../../images/articles/60/web/calendar/required.gif" alt="Checkmark icon" width="15" height="17"> 
+                for True</td>
+          </tr>
+    </table>  
+</li>
+<li>
+  <p>Place a Message component to the right of the Calendar component.  Press the Ctrl-Shift keys and drag a line from the Message Component to the 
+Calendar component.</p>
+This action enables the Message component to display error messages for the Calendar.</li>
+<li>Place a Static Text component below the Calendar component.  Set
+the <code>id</code> property to <code>validationMsgStaticText</code>.</li>
+<li>Place a Button component below the Static Text component, type <code>Validate,</code> and press Enter. In the Properties window, 
+set the <code>id</code> property to <code>validateButton</code>.</li>
+<li><p>Double-click the Validate button, and add the following code to the <code>validateButton</code> action method:</p>
+
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 1: Code to Validate Calendar Date </b></td>
+  </tr>
+  <tr>
+    <td><pre>public String validateButton_action() {
+        <b>validationMsgStaticText.setText(
+                (String)DateFormat.getDateInstance(
+                DateFormat.MEDIUM).format(startCalendar.getSelectedDate())
+                + " is a valid date.");</b>
+        return null;
+    }</pre></td>
+  </tr>
+</table>
+<br>
+
+This code gets the date that the user entered into the Calendar. If the date is between the minimum and maximum dates set for the Calendar, then the Static Text displays the date and indicates that it is valid. 
+</li>
+<li>Right-click, then choose Fix Imports from the pop-up menu to resolve the DateFormat not found error.</li>
+<li><p>Deploy and run the application, and then open the pop-up calendar. </p>
+The Calendar displays the current month and year. By default, the earliest valid date that you can select is 100 years before the current date, and the last valid date is 100 years after the current date. </li>
+<li><p>Choose a date from the pop-up calendar and then click the Validate button.</p>
+<p>If the date you selected falls within the default minimum and maxium dates, the Static Text displays a valid message, as shown in Figure 2. 
+If you choose a date outside this range, you see a validation error message.
+</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="416">
+<tr>
+<td align="center"><img src="../../../images/articles/60/web/calendar/valid-date.png" width="406" height="305" border="0" alt="Figure 2: Calendar Date Format" title="Figure 3: Valid Calendar Date" /> 
+<b>Figure 2</b>: Valid Calendar Date</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+</ol>
+
+ 
+<h2><a name="03"></a>Setting the Minimum and Maximum Calendar Dates</h2>
+<div>By default, the Calendar spans just over 200 years. In most cases, however, you want to define a span specific to your application. In this section, you limit the Calendar span to one year by setting the minimum property to today's date and the maximum property to one year from today.</div>
+
+<ol>
+<li><p>In the Java Editor, scroll to the <code>preprocess</code> method. Add the following code (shown in <b>bold</b>) to clear the existing message in the Static Text component. </p>
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 2: Clear Old Valid Date Message</b></td>
+</tr>
+<tr>
+<td><pre>public void preprocess() {
+        <b>// Clear out old valid date message before start
+        // new validations
+        validationMsgStaticText.setText("");</b>
+}</pre></td>
+</tr>
+</tbody>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+</li>
+<li>
+  <p>Find the <code>prerender</code> method.  Add the following code to pre-populate the Calendar text field with today's date.</p>
+    <!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 3: Set Default Start Date</b></td>
+</tr>
+<tr>
+<td><pre>public void prerender() {
+        <b>// Set default start date, if not
+        // already entered
+        java.util.Calendar date = GregorianCalendar.getInstance();
+        if (startCalendar.getSelectedDate() == null) {
+            startCalendar.setSelectedDate(date.getTime());
+        }</b>   
+}</pre></td>
+</tr>
+</tbody>
+</table>
+<br>
+The code displays an error because it cannot find the GregorianCalendar variable. You add an import statement for this class later in this section. </li>
+<li>
+  <p>Add the following two methods above the <code>validateButton</code> action method.</p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<a name="codesample4"></a>
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 4: Set Minimum and Maximum Calendar Dates </b></td>
+</tr>
+<tr>
+<td><pre><b>private Date minCalDate;
+
+     public Date getMinCalDate() {
+       java.util.Calendar date = java.util.Calendar.getInstance
+           (FacesContext.getCurrentInstance().getViewRoot().getLocale());
+       // Have to zero out the time because
+       // the date comparison is time sensitive
+       date.set(java.util.Calendar.HOUR_OF_DAY, 0);
+       date.set(java.util.Calendar.MINUTE, 0);
+       date.set(java.util.Calendar.SECOND, 0);
+       date.set(java.util.Calendar.MILLISECOND, 0);
+       return date.getTime();
+   } 
+    
+    private Date maxCalDate;
+    
+    public Date getMaxCalDate() {
+        java.util.Calendar date = GregorianCalendar.getInstance();
+        date.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        //here is where you adjust your time period
+        date.add(java.util.Calendar.YEAR, 1);
+		SimpleDateFormat formatter
+                = new SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm:ss a zzz");
+        error(formatter.format(date.getTime()));
+        maxCalDate = date.getTime();
+        return maxCalDate;
+    }</b></pre></td>
+</tr>
+</tbody>
+</table>
+<br>
+The <code>getMinCalDate</code> method sets the Calendar's minimum date to today. 
+In the <code>getMaxCalDate</code> method, the line <code>date.add(java.util.Calendar.YEAR, 1);</code> sets the maximum date to one year from today. For more examples on setting the minimum and maximum dates, including how to set the calendar to display past years, see the section of this tutorial titled <a href="calendar.html#06">Tips for Using the Calendar Component </a>. 
+<li>Right-click in the Java Editor and choose Fix Imports from the pop-up menu. Ensure that java.util.Date appears in the Date field and click OK.</li>
+<li>Return to the Visual Designer, right-click the Calendar component, and choose Property Bindings from the pop-up menu.</li>
+<li><p>In the Property Bindings dialog box, bind the Calendar's <code>minDate</code> property to Page 1's <code>minCalDate</code>, as shown in the following figure. Click Apply.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="494">
+<tr>
+<td align="center"><img src="../../../images/articles/60/web/calendar/binding.png" width="484" height="502" border="1" alt="Figure 3: Calendar Date Format" title="Figure 2: Binding for mindate property" /> 
+<b>Figure 3</b>: Binding for <code>mindate</code> Property</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+<li>Bind the Calendar's <code>maxDate</code> property to Page 1's <code>maxCalDate</code>, and click Apply. Click Close to close the dialog box. </li>
+<li>Run the application.  
+
+
+ The selected value renders today's date.
+
+Open the Calendar pop-up and note that today's date is highlighted. Also note that the Calendar now spans from January 
+of the current year through December of the following year.
+</li>
+<li><p>Choose any date in the Calendar and then click the Validate button.</p>
+If the date is within one year of today's date, the application displays a valid message. If you pick a date before or after this range, 
+the application displays an error message.</li>
+</ol>
+
+ 
+<h2><a name="04"></a>Validating a Calendar Range</h2>
+<div>Now suppose you are developing a travel program. You want users to select a starting date and ending date for a trip, and the trip must be at least one week long. In this section, you add an End Calendar to the application. You add code to validate that the date the user sets in the End Calendar is at least one week after the date set in the Start Calendar.</div>
+<ol>
+<li>
+  <p>Place a Calendar component on the page directly underneath the Start Calendar. Adjust the other components as necesary. Following is the page you design in this section.</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="530">
+<tr>
+<td align="center"><img src="../../../images/articles/60/web/calendar/endcalendar.png" width="520" height="286" border="0" alt="Figure 3: Page that includes an end calendar" title="Figure 4: Page that includes an end calendar" /> 
+<b>Figure 4</b>: Page That Includes an End Calendar</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT --></li>
+
+<li><p>In the Properties window for the new Calendar,
+    set the following values:</p>
+ <table border="0" cellpadding="0" cellspacing="3">
+<tr align="left" valign="top">
+            <th> 
+        Property&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        <th>
+        Value</th>
+      </tr>
+        <tr> 
+        <td>id</td>
+        <td><code>endCalendar</code></td>
+        </tr>
+		<tr> 
+            <td>dateFormatPatternHelp</td>
+            <td><code>MM/dd/yyyy</code></td>
+      </tr>
+        <tr> 
+        <td>label</td>
+        <td><code>End Date:</code></td>
+        </tr>
+        <tr> 
+        <td>required</td>
+        <td><img src="../../../images/articles/60/web/calendar/required.gif" alt="Checkmark icon " width="15" height="17"> 
+        for True</td>
+        </tr>
+    </table>
+  </li>
+<li>Place a Message component to the right of the Calendar component.  
+Press the Ctrl-Shift keys and drag a line from the Message Component to the 
+Calendar component.</li>
+<li>Right-click the End Calendar component and choose Property Bindings from the pop-up menu.</li>
+<li>Bind the End Calendar's <code>minDate</code>  property to the Page 1's <code>minCalDate</code>. Click Apply.</li>
+<li>Bind the End Calendar's <code>maxDate</code> property to Page1's <code>maxCalDate</code>. Click Apply, then close the Property bindings dialog box.</li>
+<li>In the Visual Designer, right-click the End Calendar component and choose
+Edit Event Handler &gt; validate.</li>
+<li><p>Add the following code to the <code>endCalendar_validate()</code> method. This code ensures that the end date is at least one week after the start date.</p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 5: Code to Validate Start Date</b></td>
+</tr>
+<tr>
+<td><pre>public void endCalendar_validate(FacesContext context, 
+           UIComponent component, Object value) {
+        <b>java.util.Calendar endDate = GregorianCalendar.getInstance();
+        endDate.setTime((Date)value);
+        java.util.Calendar startDate = GregorianCalendar.getInstance();
+        startDate.setTime(startCalendar.getSelectedDate());
+        if (startCalendar.getSelectedDate() != null) {
+            if (startDate.after(endDate)) {
+                throw new ValidatorException(new FacesMessage
+                        ("End date must be after start date."));
+            } else {
+                startDate.add(java.util.Calendar.DATE, 7);
+                if (startDate.after(endDate)) {
+                    throw new ValidatorException(new FacesMessage
+                         ("End date must be at least one week after the start date."));
+                }
+                
+            }
+        }</b>
+    }</pre></td>
+</tr>
+</tbody>
+</table>
+
+<!-- END CODE SAMPLE COMPONENT  -->
+<li>Right-click in the Java Editor and choose Fix Imports to fix the FacesMessage and ValidatorExeception errors. </li>
+<li>
+  <p>Modify the <code>validateButton</code> action method to include validation for the End Calendar date:</p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 6: Code to Validate End Date</b></td>
+</tr>
+<tr>
+<td><pre>public String validateButton_action() {
+            <b>SimpleDateFormat formatter
+                = new SimpleDateFormat("EEE, MMM d, yyyy");
+        validationMsgStaticText.setText(
+                formatter.format(startCalendar.getSelectedDate())
+                +
+                " - "
+                +
+                formatter.format(endCalendar.getSelectedDate())
+                + " is a valid date range.");</b> 
+        return null;
+    }</pre></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p>Run the application.  Choose a Start Date and End Date and then click the Validate button. </p> 
+<p>If the dates are between the minimum and maximum dates (today and one year from today), and if the end date is more than one week past the start date, the application displays a valid message as shown in Figure 2. Otherwise, the application displays an error message as shown in the figure below.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="478">
+<tr>
+<td align="center"><img src="../../../images/articles/60/web/calendar/calendar-range.png" width="468" height="333" border="0" alt="Figure 4: Validation Page Results" title="Figure 5: Calendar Range - Invalid Results" /> 
+<b>Figure 5</b>: Calendar Range - Invalid Results</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+</ol>
+
+ 
+<h2><a name="05"></a>Changing the Calendar Style</h2>
+<div>You can change the color and style of the Calendar component.  Here
+you change the appearance of the table title in the Calendar component.</div>
+<ol>
+<li>
+ Save the image <a href="../../../images/articles/60/web/calendar/table_title_solid.gif">table_title_solid.gif</a> to your 
+<em>projects_directory</em>\CalendarExample\web\resources directory.
+</li>
+<li>
+  <p>In the Projects window, double-click the CalendarExample &gt; Web Pages &gt; resources node &gt; stylesheet.css node. Add the code in either Code Sample 7 or 8, depending on which version of JavaServer Faces components you are using.</p>
+
+  <!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 7: Stylesheet Code for JavaServerFaces 1.1 Calendar </b></td>
+    </tr>
+    <tr>
+      <td>
+        <pre><b>.CalPopDiv .DatSelDiv{
+background-image:url(table_title_solid.gif);
+}
+
+.CalPopDiv .DatDayHdrTxt {
+color: red
+}</b>
+  </pre></td>
+    </tr>
+	</tbody>
+  </table>
+<br>
+<table class="examplecode" border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0">
+  <tbody><tr class="bg-white">
+    <td><b>Code Sample 8: Stylesheet Code for JavaServer Faces 1.2 Calendar </b></td>
+    </tr>
+    <tr>
+      <td>
+        <pre><b>.CalPopDiv_sun4 .DatSelDiv_sun4 {
+background-image:url(table_title_solid.gif);
+}
+
+.CalPopDiv_sun4 .DatDayHdrTxt_sun4 {
+color: red
+}
+</b>
+  </pre></td>
+    </tr></tbody>
+  </table>
+<br>
+<p>
+The first style class sets a new background image for the pop-up Calendar title.  The second style class sets the color of the day header text to red.</p>
+
+A complete list of CSS styles for the Calendar component is available in the NetBeans online help.  Choose Help > Help Contents from the main menu and search for the topic Calendar Component CSS Classes. </li>
+
+<li>
+  <p>Deploy and run the application, then open the pop-up Calendar. 
+</li>
+</ol>
+
+
+
+<h2><a name="06"></a>Tips for Using the Calendar Component </h2>
+<ul>
+<li><a href="calendar.html#codesample4">Code Sample 4</a> includes the following code in the <code>getMaxCalDate</code> method to set the maximum value to one year from the minimum value:
+  <pre>date.add(java.util.Calendar.YEAR, 1);</pre>
+To adjust the time period for a number of days, such as a week, use code similar to the following:
+<pre>date.add(java.util.Calendar.DATE, 7);</pre></li>
+<li><a href="calendar.html#codesample4">Code Sample 4</a> also includes code in the <code>getMinCalDate</code> method to set the minimum date to today. 
+To display past years in the calendar, use code similar to the following. 
+This code displays the past ten calendar years:
+  <pre>date.add(java.util.Calendar.YEAR, -10); 
+</pre></li>
+<li>To change the Calendar's date format, click the ellipsis <img src="../../../images/articles/60/web/ellipsis.png" align="absmiddle"> button in the <code>dateFormatPattern</code> property and select a predefined date format. 
+If the Property Editor does not include the format you want, you may create your own. The values you can enter are limited to some combination of yyyy for the year, MM for the month, and dd for the day. Typical separator characters are slash (/), period (.), and dash (-).
+</li>
+</ul>
+
+
+<h2><a name="07"></a>Summary</h2>
+<p> 
+In this tutorial, you added a Calendar component to a Visual Web JSF Page, and then set the minimum and maximum dates. You also add a Validator component, and added code to validate that the date the user sets in the End Calendar is at least one week after the date set in the Start Calendar. You also changed the style of the calendar. </p>
+<hr class="light">
+
+<div align="right">This page was last modified:&nbsp; December, 2007</div>
+<!-- =================== -->
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+<!--stopindex-->
+<!-- END CENTRAL COLUMN COMPONENTS -->
+<!-- BEGIN SPACER ROW -->
+<table border="0" cellpadding="0" cellspacing="0" class="full-width">
+  <tr>
+    <td><br>
+      <div class="feedback-box"> 
+<a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+      <br style="clear:both;" /></td>
+  </tr>
+</table>
+</body></html>

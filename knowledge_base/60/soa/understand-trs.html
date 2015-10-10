@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Understanding the Travel Reservation Service</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="keywords" content="NetBeans, IDE, Platform, BPEL, free, open source, developer" >
+<meta name="description" content="Understanding the Travel Reservation Service">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+</head>
+<body>
+<a name="top"></a>
+<h1>Understanding the Travel Reservation Service </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br> 
+December 2007<br>
+</p>
+</div>
+<p><img src="../../../images/articles/60/netbeans-stamp.gif" align="right"
+   alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206" align="right">The Travel Reservation Service is a sample business process provided with the NetBeans IDE 6.0 with SOA. The Travel Reservation Service acts as a logical aggregator of other services and is based on business logic typical of travel reservation systems as described below.</p>
+<ul>
+<li>The process assumes that a client initiates the process by sending a message that contains a partial travel itinerary document. </li>
+<li>The client's travel itinerary can have:
+<ul>
+<li>No pre-existing reservations, or </li>
+<li>A combination of pre-existing airline, vehicle and/or hotel reservations. </li>
+</ul>
+</li>
+<li>The Travel Reservation Service examines the incoming client itinerary and processes the itinerary to completion. </li>
+<li>If the client itinerary does not contain a pre-existing airline reservation, the Travel Reservation Service passes the itinerary on to its partner service, the Airline Reservation Service, to add the airline reservation. </li>
+<li>The Airline Reservation Service passes back the modified itinerary to the Travel Reservation Service. </li>
+<li>The Travel Reservation Service conducts similar logic for both vehicle and hotel reservations. In each case it will delegate the actual provisioning of the reservation to the Vehicle Reservation Service and the Hotel Reservation Service. </li>
+<li>Finally, the Travel Reservation Service passes the completed itinerary back to the original client, completing the process. </li>
+</ul>
+<p align="center"><b>Expected duration: <i>60</i> minutes</b></p>
+<!-- ======================================================================================== -->
+<h3>Contents</h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="understand-trs.html#tut_req" title="Tutorial Requirements">Tutorial Requirements</a></li>
+             <li><a href="understand-trs.html#configuringthetutorial">Configuring and Starting the GlassFish Application Server</a><a href="understand-trs.html#ConfiguringtheTutorialEnvironment"></a><a href="understand-trs.html#overview" title="Overview"></a></li>
+		<li><a href="understand-trs.html#newproject">Creating a New Project with the Travel Reservation Service Sample Project</a><a href="understand-trs.html#openingtheasynchronoussample"></a><a href="understand-trs.html#Openingthesampleproject"></a><a href="understand-trs.html#createSampleApp" title="Create the Sample Application Project"></a></li>
+		<li><a href="understand-trs.html#partnerservices">Opening and Deploying the Partner Web Services Project</a><a href="understand-trs.html#exploringthebpelandjbiproject"></a><a href="understand-trs.html#exploringbpelprj"></a><a href="understand-trs.html#openCASA" title="Open the CASA Editor and Build the Application"></a></li>
+		<li><a href="understand-trs.html#deploy">Deploying the Composite Application Project to the Application Server</a><a href="understand-trs.html#exploringtheasyncronoussampleclient"></a></li>
+		<li><a href="understand-trs.html#test">Performing a Test Run of the Travel Reservation Service Process</a><a href="understand-trs.html#deployingtheproject"></a><a href="understand-trs.html#addingif"></a></li>
+         <li><a href="understand-trs.html#debug">Debugging the Travel Reservation Service Process</a></li>
+           </ul>
+         </td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top">   </td>
+       </tr>
+</table>
+<p align="center"><a href="understand-trs.html#top">top</a>
+<h2><a name="tut_req"></a>Tutorial Requirements </h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+<h3>Prerequisites</h3>
+<p>This tutorial assumes that you have some basic knowledge of, or programming experience with, the Java language and platform and the NetBeans IDE.</p>
+<!-- ======================================================================================== -->
+<h3>System Requirements</h3>
+<p>This tutorial assumes that your system meets the requirements specified in the <i>System Requirements</i> topic of the <a href="../../../community/releases/60/relnotes.html" title="NetBeans IDE 6.0 Release Notes">NetBeans IDE 6.0 Release Notes</a>.</p> 
+<!-- ======================================================================================== -->
+<h3>Software Needed for the Tutorial</h3>
+<p>Before you begin, you need to install the following software on your computer: NetBeans IDE 6.0 with SOA and the GlassFish application server.</p> 
+
+<!-- ======================================================================================== -->
+<p align="center"><a href="understand-trs.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="configuringthetutorial" id="configuringthetutorial"></a>Configuring and Starting the GlassFish Application Server</h2>
+<p>When you install full NetBeans 6.0 download, it includes the GlassFish application server.  The NetBeans IDE will automatically start the application server when needed. </p>
+<p><strong>To start the GlassFish application server: </strong></p>
+  <ol>
+    <li>If the Services window is not visible, choose Window &gt; Services. </li>
+    <li>In the Services window, expand the Servers node. <br>
+      The Servers node should contain the GlassFish application server subnode. If the GlassFish application server node does not appear, go to <a href="understand-trs.html#configure-sjas">To configure the GlassFish Application Server</a>. </li>
+  </ol>
+  <blockquote>
+    <p align="center"><img src="../../../images/articles/ep-asynchsample/60/glassfish.png"></p>
+    <p>&nbsp;</p>
+</blockquote>
+  <ol>
+    <li value="3"> Right-click the GlassFish application server node and select Start. <br>
+       The Output window displays logging information about the application startup. If the Output window is not visible, choose Window &gt; Output &gt; Output. <br>
+      <br>
+      When the message <tt>Application server startup complete</tt> appears in the Output window, the application server is running.<br>      
+      <b>Note:</b> If a green arrow badge appears on the GlassFish application server node, the server is running. <br>
+    </li>
+  </ol>
+  <p><span class="bold"><b>Note</b></span><b>:</b> Deploying an application to the GlassFish application server will automatically start the server. Thus, you do not have to manually start the application server. </p>
+  <p><b>Note:</b> The following procedure shows how to configure the IDE to use an alternate version of the GlassFish V2 application server.</p>
+  <p><a name="configure-sjas"></a><span class="bold"><b>To configure the GlassFish V2 application server: </b></span></p>
+  <p>You might want to use a different version of the application server than the one provided with NetBeans 6.0. For example, you might want to download and install a more current version of the GlassFish V2 application server from the <a href="https://glassfish.dev.java.net/" target="_blank">GlassFish Community </a> site. </p>
+  <p> The following procedure shows how to configure the NetBeans 6.0 IDE to use an alternate version of the GlassFish V2 application server. It assumes that you have downloaded and installed the alternate version of the application server. </p>
+  <ol>
+
+      <li>In the Services window, right-click the Servers node and choose Add Server from the pop-up menu. <br>
+        The Add Server Instance dialog box opens. </li>
+      <li>In the Choose Server page, select GlassFish V2 from the  list. </li>
+      <li>Click Next. <br>
+          The Platform Folder Location page opens. </li>
+      <li>In the Platform Location field, use the Browse button to navigate to and select the installation location of the application server. <br>
+          <br>
+        If you installed the GlassFish application server in the default location,  use <a href="understand-trs.html#table-1">Table 1 </a> as a guide for locating the installation. Otherwise, navigate to the location where you installed the GlassFish V2 application server. <br>
+        <br>
+        <p><a name="table-1"></a><strong>Table 1: Default Application Server Installation Directory </strong></p>
+        <table>
+          <tbody>
+            <tr>
+              <td class="tblheader">Platform </td>
+              <td class="tblheader">Installing As... </td>
+              <td class="tblheader">SOA Installation </td>
+              <td class="tblheader">Tools Bundle Installation </td>
+            </tr>
+            <tr>
+              <td class="tbltd0">Solaris OS <br>
+                Linux </td>
+              <td class="tbltd0">root </td>
+              <td class="tbltd0"><tt>/opt/glassfish-v2</tt> </td>
+              <td class="tbltd0"><tt>/opt/SUNWappserver</tt> </td>
+            </tr>
+            <tr>
+              <td class="tbltd1">Solaris OS <br>
+                Linux </td>
+              <td class="tbltd1">user </td>
+              <td class="tbltd1"><tt>~/glassfish-v2</tt> </td>
+              <td class="tbltd1"><tt>~/SUNWappserver</tt> </td>
+            </tr>
+            <tr>
+                  
+              <td class="tbltd0">Mac OS X </td>
+              <td class="tbltd0">N/A </td>
+              <td class="tbltd0"><tt>/Applications/NetBeans/glassfish-v2b58g</tt></td>
+              <td class="tbltd0"><tt>/Applications/NetBeans/NetBeans 6.0</tt> </td>
+            </tr>
+            <tr>
+              <td class="tbltd1">Windows </td>
+              <td class="tbltd1">N/A </td>
+              <td class="tbltd1"><tt>C:\Program Files\glassfish-v2-b58g    </tt> </td>
+              <td class="tbltd1"><tt>C:\Sun\AppServer</tt> </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>Select the Register Local Default Domain radio button and click Next. </li>
+      <li>Enter the user name and password for the domain's administrator. <br>
+        If you accepted the default values during the installation, the user name is <tt>admin</tt> and the password is <tt>adminadmin</tt>. </li>
+      <li>Click Finish. </li>
+</ol>
+<p align="center"> <a href="understand-trs.html#top">top</a><br>
+  <!-- ======================================================================================== -->
+</p>
+<h2><a name="newproject"></a>Creating a New Project with the Travel Reservation Service Sample Project </h2>
+<ol>
+<li>From the IDE's main menu, choose File &gt; New Project. </li>
+<li>Under Categories select <tt>Samples &gt; SOA</tt>. </li>
+<li>Under Projects, select <tt>Travel Reservation Service</tt> and click Next.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/newproject.png" alt="New Project"> </p>
+</li>
+<li>Accept the default values or type a project name and location of your choice.<br>
+Note that in this document, the project name is <tt>TravelReservationService</tt>.</li>
+<li>Click Finish.<br>
+The Projects window now contains three project nodes: one for <tt>TravelReservationService</tt>, a BPEL module, one for <tt>TravelReservationServiceApplication</tt>, a Composite Application project, and one for <tt>ReservationPartnerServices</tt>, a bundled EJB project.
+<br>
+<br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/threeprjs.png" alt="Two Projects"> </p>
+</li>
+</ol>
+<!-- <p align="center"><a href="understand-trs/60/understand_trs-swf-opentrs.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'> <img src="../../../images/articles/ep-understand-trs/60/flash_demo_button_med.gif" alt="Demo" border="0">&nbsp;View Demo</a> </p> -->
+<p align="center"> <a href="understand-trs.html#top">top</a> </p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="partnerservices"></a>Deploying the Partner Web Services Project</h2>
+<p>The Travel Reservation Service communicates with its partner services via their public interfaces. These interfaces are defined in partner-specific WSDL files. </p>
+<p>The IDE includes a bundled EJB project called <tt>ReservationPartnerServices</tt>. The <tt>ReservationPartnerServices</tt> project contains a basic EJB and JMS based implementation of the three partner services. These partner services are Hotel Reservation Service, Vehicle Reservation Service and Airline Reservation Service. These partner web services must be deployed to the bundled GlassFish application server before you can test run the Travel Reservation Service process. </p>
+<p>This implementation is only meant to serve as a test harness for the Travel Reservation Service process. The implementation of the partner services should not be of any interest to the BPEL developer. They are merely prerequisites to the testability of the Travel Reservation Service. </p>
+<p><b>To deploy the <tt>ReservationPartnerServices</tt> project:</b></p>
+<ol>
+
+<li>In the Projects window, right-click the <tt>ReservationPartnerServices</tt> node and choose Undeply and Deploy. This deploys the <tt>ReservationPartnerServices</tt>. </li>
+<li>Verify that the <tt>ReservationPartnerServices</tt> application was successfully deployed by performing the following steps:<br><br>
+<ol type="a">
+<li>Switch to the Runtime window and expand the <tt>GlassFish V2</tt> node. </li>
+<li>Expand the <tt>Applications</tt> node and then expand the <tt>EJB Modules</tt> node.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/partnerdeployed.png" alt="Partner Services Deployed"> </p>
+</li>
+</ol>
+</li>
+</ol>
+<!-- <p align="center"><a href="understand-trs/60/understand_trs-swf-opendeploypartner.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'> <img src="../../../images/articles/ep-understand-trs/60/flash_demo_button_med.gif" alt="Demo" border="0">&nbsp;View Demo</a> </p> -->
+<p align="center"><a href="understand-trs.html#top">top</a> </p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="deploy"></a>Deploying the Composite Application Project to the Application Server </h2>
+<p>The <tt>TravelReservationServiceApplication</tt> project already contains a BPEL project as a JBI module (see the <tt>TravelReservationServiceApplication</tt> &gt; <tt>JBI Modules</tt> &gt; <tt>TravelReservationService.jar</tt> node). Deploy the <tt>TravelReservationServiceApplication</tt> Composite Application to make the service assembly available to the application server, thus allowing its service units to be run. </p>
+<ol>
+<li>In the Projects window, right-click the <tt>TravelReservationServiceApplication</tt> project's node, and choose Deploy  from the pop-up menu. </li>
+<li>In the Warning dialog box, make sure <tt>GlassFish V2</tt> is selected and click OK. <br>
+The deployment succeeded if you see the following message in the Output window:<br><br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/buildsuccess.png" alt="Build Successful"> </p>
+</li>
+</ol>
+<p align="center"> <a href="understand-trs.html#top">top</a> </p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="test"></a> Performing a Test Run of the Travel Reservation Service Process </h2>
+<p>The test-run feature enables business process developers to perform test runs of their processes. BPEL processes are deployed to the BPEL runtime, which manages the process lifecycle. A BPEL process starts with a receive or pick activity responsible for initiating the process. </p>
+<p>A BPEL process is also a web service. Like any web service, a BPEL process has a companion WSDL file that describes its public interface. This interface in turn describes the operations and messages that clients can target in order to create the process instance. Upon the receipt of a message targeted at one of these receive activities, the BPEL runtime will create a BPEL process instance and hand the message to the process instance for processing. </p>
+<p>For example, in the case of the <tt>TravelReservationService.wsdl</tt> there is an operation called <tt>buildItinerary</tt>. This is the operation that <tt>TravelReservationService</tt> clients will call in order to initiate a conversation with the <tt>TravelReservationService</tt>. </p>
+<pre class="examplecode">
+&lt;portType name=&quot;TravelReservationPortType&quot;&gt;
+	&lt;operation name=&quot;buildItinerary&quot;&gt;
+      		&lt;input message=&quot;tns:ItineraryIn&quot;/&gt;
+      		&lt;output message=&quot;tns:ItineraryOut&quot;/&gt;
+      		&lt;fault name=&quot;itineraryProblem&quot; message=&quot;tns:ItineraryFault&quot;/&gt;
+	&lt;/operation&gt;
+&lt;/portType&gt;</pre>
+<p>Thus, to test a BPEL process, you must send the BPEL runtime a message targeted at one of the process receive activities. </p>
+<p>This version of the BPEL Designer contains features to make this testing a point-and-click experience. Specifically, with the <tt>TravelReservationService</tt> sample project, you can send <tt>buildItinerary</tt> requests to the deployed <tt>TravelReservationService</tt>. </p>
+<p><b>To test run <tt>TravelReservationService</tt>:</b></p>
+<ol>
+<li>Expand the <tt>TravelReservationServiceApplication</tt> &gt; <tt>Test</tt> nodes.<br>
+There are 4 subnodes:<br><br>
+<ul>
+<li><tt>HasNoReservations</tt> - a test itinerary with no reservations </li>
+<li><tt>HasAirline</tt> - a test itinerary with a pre-existing airline reservation </li>
+<li><tt>HasVehicle</tt> - a test itinerary with pre-existing airline and vehicle reservations </li>
+<li><tt>HasHotel</tt> - a test itinerary with a pre-existing airline, vehicle and hotel reservations </li>
+</ul><br>
+These test nodes are actually XML files that contain SOAP message data. Each one represents a different case that can be used to test the <tt>TravelReservationService</tt> in order to exercise the process in slightly different ways.
+</li>
+<li>Right-click the <tt>HasNoReservations</tt> node and choose Run from the pop-up menu.<br>
+Once you select the Run action, the IDE sends the <tt>HasNoReservations</tt> SOAP message to the BPEL runtime. The IDE will indicate if the test is successful. </li>
+</ol>
+<p align="center"> <img alt="Test Passed" src="../../../images/articles/ep-understand-trs/60/testpassed.png"> </p>
+<!-- <p align="center"><a href="understand-trs/60/understand_trs-swf-test.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'> <img src="../../../images/articles/ep-understand-trs/60/flash_demo_button_med.gif" alt="Demo" border="0">&nbsp;View Demo</a> </p> -->
+<p><b>Notes:</b></p>
+<ul>
+<li>If you perform a Test Run on one of the Test Scenarios before having added the JBI module or deployed the project, the test run will fail.</li>
+<li>To resolve an issue with service endpoints when performing a test run, refer to the Ports section of the <a href="bpel-guide-troubleshoot.html">Developer Guide to the BPEL Designer: Troubleshooting</a> for instructions.</li>
+</ul>
+<p align="center"> <a href="understand-trs.html#top">top</a> </p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="debug"></a> Debugging the Travel Reservation Service Process </h2>
+<p>You can use the IDE to debug your sample BPEL application. <br>
+</p>
+<div class="indent">
+<h3>General Debugging Steps </h3>
+<ol>
+<li>In the Projects window, under the <tt>TravelReservationService</tt>  &gt; <tt>Process Files</tt> node, double-click the <tt>TravelReservationService.bpel</tt> file. </li>
+<li>In the Source Editor, set breakpoints in your source code by clicking the line number of the element you want to place a breakpoint for. We will use the <tt>HasNoReservations</tt> test, so we will place breakpoints on activities invoking all three partner services.<br><br>
+<ol type="a">
+<li>Place a breakpoint on the <tt>ReceiveItinerary</tt> receive activity at line 97. This is the activity that initiates the process. If line numbers are not visible, choose View &gt; Show Line Numbers from the main menu.<br>
+  <br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/setbp.png" alt="Set a Breakpoint in the BPEL Source"> </p>
+<p>You can also set breakpoints on the diagram. To do so, switch to the Design view, right-click the element and choose Toggle Breakpoint from the pop-up menu. </p>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/setbpdiag.png" alt="Set a Breakpoint on the Diagram"> </p>
+<p>A red box appears at the top of the element with a breakpoint. </p>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/brkpntdiag.png" alt="A Breakpoint on the Diagram"> </p>
+<p>The Toggle Breakpoint pop-up menu command is also available for the elements in the Navigator BPEL Logical View. If the Navigator window is not open, choose Window &gt; Navigating &gt; Navigator from the main menu. For the elements with breakpoints, the Navigator shows a small red box like the one in the following image (ReceiveItinerary): </p>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/brkpntnav.png" alt="A Breakpoint in the Navigator"> </p>
+</li>
+<li>Place breakpoints on the <tt>ReserveAirline</tt> (line 130), <tt>ReserveVehicle</tt> (line 183) and <tt>ReserveHotel</tt> (line 236) invoke activities. </li>
+</ol>
+<!-- <p align="center"> <a href="understand-trs/60/understand_trs-swf-addbrkpnt.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'> <img src="../../../images/articles/ep-understand-trs/60/flash_demo_button_med.gif" alt="Demo" border="0">&nbsp;View Demo</a> </p> -->
+</li>
+<li>Now add watches to your project:<br><br>
+<ol type="a">
+<li>If the Watches window is not visible, choose Window &gt; Debugging &gt; Watches from the main menu. </li>
+<li>In the Source view, go to line 127 and copy the XPath expression:
+  <pre class="examplecode">not($ItineraryIn.itinerary/ItineraryInfo/ReservationItems/Item/Air)</pre>
+Alternatively, select the <tt>HasAirline</tt> if element on the diagram and copy the XPath expression from the Condition row in the Properties window. If the Properties window is not visible, choose Window &gt; Properties from the main menu.<br>
+<br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/copyxpath.png" alt="Copy XPath Expression from the Properties Window"> </p>
+</li>
+<li>Right-click inside the Watches window and choose New Watch. </li>
+<li>In the New watch dialog box, paste the XPath expression into the Watch Expression field and click OK. </li>
+<li>Add two more watches for expressions at lines 180 and 233. Your Watches window should now have three items:<br>
+  <br>
+<p align="center"> <img src="../../../images/articles/ep-understand-trs/60/watches.png" alt="Watches window"> </p>
+</li>
+</ol>
+</li>
+<li>In the Projects window, right-click the <tt>TravelReservationServiceApplication</tt> node, and choose Debug Project (BPEL).</li>
+<li>Wait until the <tt>BUILD SUCCESSFUL</tt> message appears in the Output window.</li>
+<li>Switch to the BPEL Debugger Console window to ensure the <tt>Debug session started</tt> message appeared.</li>
+<li>Ensure you have the following windows open:<br><br>
+<ul>
+<li>BPEL Variables; choose Window &gt; Debugging &gt; BPEL &gt; BPEL Variables from the main menu if it is not open.</li>
+<li>BPEL Process Instances; choose Window &gt; Debugging &gt; BPEL &gt; BPEL Process Instances from the main menu if it is not open.</li>
+<li>BPEL Process Execution; choose Window &gt; Debugging &gt; BPEL &gt; BPEL Process Execution from the main menu if it is not open.</li>
+</ul></li>
+<li>In the Projects window, right-click <tt>HasNoReservations</tt> under the <tt>Test</tt> node under <tt>TraveReservationServiceApplication</tt> and choose Run to start the test. </li>
+<li>When the process reaches the first breakpoint, observe the following windows:<br><br>
+<ul>
+<li>BPEL Variables window. <br>
+It shows the structure of local variables and their values for the current process instance and the position where the current process instance became suspended.<br>
+Notice that you can access and modify the XML portion that pertains to a particular variable in the Value dialog box provided its value is XML. To display the dialog box, press the ellipsis (...) button at the end of the row in the BPEL Variables window.</li>
+<li>BPEL Process Instances window.<br>
+It lists all BPEL process instances running on the BPEL Service Engine within the current debugging session. <br>
+The numbered <tt>TravelReservationService</tt> instance should be in the <tt>Suspended</tt> state.</li>
+<li>BPEL Process Execution window.<br>
+It graphically represents the progress of executing the current BPEL process instance in the BPEL Debugger.<br>
+The <tt>ReceiveItinerary</tt> activity should be highlighted with green, which means it is being executed at the moment. <br>
+The rest of the activities are gray since they have not been executed yet.</li>
+<li>Watches window.<br>
+It should contain the <tt>&lt;Cannot evaluate the expression&gt;</tt> string in the Value column for all three expressions. This is because the process has stopped at the start of the very first receive activity and the <tt>ItineraryIn</tt> message has not arrived yet.</li>
+</ul>
+</li>
+<li>Click Continue on the Debugging toolbar (Ctrl-F5). The process stops at the second breakpoint. By this time the <tt>ItineraryIn</tt> message has arrived and the conditions in the watches have been evaluated. The value of all the three expressions should be set to <tt>true</tt>.<br><br>
+<b>Note:</b> Expressions return <tt>true</tt> if the message does not contain a corresponding reservation item. If you run the <tt>HasAirline</tt> test, the value of the <tt>not($ItineraryIn.itinerary/ItineraryInfo/ReservationItems/Item/Air)</tt> expression, which checks whether the incoming message does not contain the Airline reservation item, will be set to <tt>false</tt>.<br><br>
+</li>
+<li>Click Continue.<br>
+On the completion of the process the <tt>HasNoReservations</tt> test passes successfully.</li>
+<li>Select Run &gt; Finish Debugger Session from the main menu.</li>
+</ol>
+<!-- <p align="center"><a href="understand-trs/60/understand_trs-swf-debug.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'> <img src="../../../images/articles/ep-understand-trs/60/flash_demo_button_med.gif" alt="Demo" border="0">&nbsp;View Demo</a> </p> -->
+<h3>Debug Actions at a Breakpoint </h3>
+<p>Once a process instance is suspended you can perform any of the following conventional Debug toolbar actions (if the Debug toolbar is not visible, choose View &gt; Toolbars &gt; Debug): </p>
+<ul>
+<li><b>Finish Debugger Session (Shift-F5).</b> End the current debug session. </li>
+<li><b>Continue (Ctrl-F5).</b> Cause the current process instance to run until it encounters the next breakpoint or until the process instance completes. </li>
+<li><b>Step Into (F7).</b> Steps to the next BPEL activity. This step is only supported at the granularity of an activity in BPEL language terms. It does not step at a finer granularity. As you step, the current line indicator will advance and the BPEL Variables and Watches window contents can change accordingly. </li>
+<li><b>Run to Cursor (F4).</b> Allows for setting breakpoints dynamically, when the process is being executed, in the Navigator window and both the Source and Design views of the BPEL Designer. </li>
+</ul>
+</div>
+<!-- -------------------------------------------------------------------------->
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+<p align="center"><a href="understand-trs.html#top">top</a></p>
+</body>
+</html>

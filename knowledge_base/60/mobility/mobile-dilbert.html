@@ -1,0 +1,419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    
+    <title>Consuming Web Services in Mobile Applications</title>
+    <META NAME="description" CONTENT="Developing a Mobile Application that consumes a Web Service using the Mobility Pack">
+    <meta name="author" content="Michal Skvor"/>
+    <meta name="description" content="Developing a Mobile Application that consumes a Web Service using the Mobility Pack"/>
+     <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+</head>
+<body>
+
+<h1>Consuming Web Services in Mobile Applications</h1>
+<div class="articledate" style="margin-left: 0px;"> 
+</div>
+    <p>This tutorial describes how you can use NetBeans IDE to create a mobile client application 
+        that consumes a web service. You will create an application that fetches the daily Dilbert comic strip via
+        a live on-line web service, converts the graphics to a space-saving format, and displays 
+    the strip on a mobile device.</p>
+	 <p>In this tutorial, you first create a web service client in a mobile application
+        to connect to the on-line <a href="http://www.esynaps.com/WebServices/DailyDiblert.asmx" target="_blank">DailyDilbert service</a>. 
+        You are then shown how to use the Visual MIDlet Designer to graphically design the layout of
+        your application. Next, you add code that transforms the comic's graphic format from GIF 
+    to PNG, which is the format that mobile devices support. Finally, you use an 
+    emulator to see the daily strip in the IDE.</p>
+
+<div class="indent"> 
+ 
+ <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+	             <ul>
+    <li><a href="mobile-dilbert.html#webservice">Creating the Web Service Client</a></li>
+    <li><a href="mobile-dilbert.html#mobile">Creating the Mobile Client</a></li>
+         </ul>
+      </td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+
+  
+ <h3 class="tutorial">Software Needed for the Tutorial</h3>
+<p>Before you begin, you need to download or install the following software on your computer:</p>
+<ul>
+    <li>Java Standard Development Kit (JDK) version 5.0 or 6.0  
+    </li>
+    <li>Sun Java Wireless Toolkit (WTK) 2.5.2 for CLDC (<a href="http://java.sun.com/javase/downloads/index.jsp target="_blank">download</a>) 
+</li>
+    <li>The full distribution of NetBeans IDE 6.0  
+    </li>
+    <li>A Java EE 5 server, such as GlassFish or Tomcat, which can be installed together with the above item.
+    </li>
+</ul>
+ 
+</div>
+ 
+
+<h2>Creating the Web Service Client<a name="webservice"></a></h2>
+
+<p> First, we'll create a new Web Application project. The project will contain our web service client. 
+</p>
+<ol>
+    <li>Choose File &gt; New Project. From Categories, choose Web. From Projects, choose Web Application. Click Next. </li>
+    <li>Name the project <tt>DilbertWebApplication</tt> and choose Java EE 5, as shown below.</li>
+    <p><img src="../../../images/mobility/dilbert/dilbert-webapp1.png" border="1" alt="New Web Application wizard"> 
+    <li>Click Finish to let the IDE create the application.</li>
+</ol>
+<p>The application is created and looks as follows in the Projects window:
+<p><img src="../../../images/mobility/dilbert/dilbert-mob1.png" border="1" alt="Mobile application">
+      
+<h3>Using the Web Service Client Wizard</h3>
+<p>Now we'll add a web service client to consume the <a href="http://www.esynaps.com/WebServices/DailyDiblert.asmx" target="_blank">DailyDiblert service</a>. <p>
+<ol>
+    <li>Right-click the <tt>DilbertWebApplication</tt> project node and choose 
+        New &gt; Web Service Client. Alternatively, you can also select this wizard
+    from the New File wizard, as shown here:</li>
+    <p><img src="../../../images/mobility/dilbert/dilbert-webapp2.png" border="1" alt="New Web Application wizard">
+    <p>The Web Service Client wizard appears.
+    
+    <li>Select WSDL URL and enter the following URL:
+    <p><p><code>http://www.esynaps.com/WebServices/DailyDiblert.asmx?WSDL</code>
+    <li>Name the package <tt>dilbert</tt>. You should now see the following:</li>
+    <p><img src="../../../images/mobility/dilbert/dilbert-webapp3.png" border="1" alt="Web Service Client wizard">
+    
+    <li>Click Finish. </li>
+</ol>
+
+<p>The IDE downloads the WSDL file and creates the client-side artifacts, which you can see
+in the <tt>build</tt> folder, within the Files window. The Projects window displays the logical
+view as shown here:
+
+<p><img src="../../../images/mobility/dilbert/dilbert-webapp4.png" border="1" alt="Projects window">
+
+<h2>Creating the Mobile Client<a name="mobile"></a></h2>
+
+<p>In this section, we'll create a new Mobile Application project.
+    We then use the Mobile Client to Web Application wizard to connect the application 
+to the <a href="http://www.esynaps.com/WebServices/DailyDiblert.asmx" target="_blank">DailyDiblert service</a>. </p>
+<ol>
+    <li>Choose File &gt; New Project. From Categories, choose Mobility. From Projects, choose MIDP Application, as shown below:</li> 
+    
+    <p><img src="../../../images/mobility/dilbert/dilbert-mobapp1.png" border="1" alt="Mobile application">
+        
+  <p>Click Next.
+      
+  <li>If you have not registered a Java ME MIDP Platform Emulator, you now see this dialog:</li>
+        
+             <p><img src="../../../images/mobility/dilbert/dilbert-mob2.png" border="1" alt="Mobile application">
+      
+             <p><b>Note:</b> 
+             
+             <p>When you click Install SDK/Platform/Emulator, you see the following dialog, where
+              you should click Java ME MIDP Platform Emulator:
+             <p><img src="../../../images/mobility/dilbert/dilbert-mob3.png" border="1" alt="Mobile application">
+      <p>Complete the wizard to install the emulator.
+  <li>Enter <tt>DilbertViewer</tt> as the Project Name and uncheck the Create Hello MIDlet 
+        check box.</li>
+        <p><img src="../../../images/mobility/dilbert/dilbert-mobapp2.png" border="1" alt="Mobile application">
+        
+        
+        <li>Click Finish to create the MIDlet. </li>
+</ol>
+    
+    <p>The mobile application is created and looks as follows in the Projects window:
+<p><img src="../../../images/mobility/dilbert/dilbert-mob4.png" border="1" alt="Mobile application">
+        
+    
+<h3>Using the Mobile Client to Web Application Wizard</h3>
+    <p>The Mobile Client to Web Application wizard generates a servlet that connects 
+    to a web application that includes a web service client.</p>
+    
+            <ol>
+                <li>In the Projects window, right-click the <tt>DilbertViewer</tt> project node and choose New 
+                &gt; Mobile Client to Web Application, as shown below: </li>
+                    <p><img src="../../../images/mobility/dilbert/dilbert-mob5.png" border="1" alt="Mobile application">
+        <p>Click Next.
+              <li><tt>DibertWebApplication</tt> should be listed as the Web application. Change the 
+                    Servlet name to <tt>DilbertServlet</tt> and name the package <tt>dilbert</tt>. For Mobile Client 
+                    Uses, select Web Service Client in Web Application and select 
+                <code>DailyDiblert.asmx</code>, as shown here:</li>
+                
+                <p><img src="../../../images/mobility/dilbert/dilbert-mobapp3.png" border="1" alt="Mobile application">
+                
+                
+                <p>Click Next. <br>
+                <li>Select <tt>DailyDilbertImage</tt>, as shown below:</li>
+                
+                <p><img src="../../../images/mobility/dilbert/dilbert-mobapp4.png" border="1" alt="Mobile application">
+                <p>Click Next.
+                <li>Change the Client Name to <tt>DilbertViewer</tt>,
+                within a package named <tt>dilbert</tt>, as below:</li> 
+                
+                <p><img src="../../../images/mobility/dilbert/dilbert-mobapp5.png" border="1" alt="Mobile application">
+                
+                <li>Click Finish.</li>  </ol> 
+                <p>The new artifacts are created and the Projects window now displays the application's logical view, as below:</p>
+                <p><img src="../../../images/mobility/dilbert/dilbert-designer-1.png" border="1" alt="Mobile application">
+          
+            
+            <h3>Creating the Visual MIDlet</h3>
+            
+            <p>In this section, you will create a visual MIDlet and use the designer
+            to add components and connect them to each other.
+            <ol>
+            <li>Right-click the project node and choose New &gt; Visual MIDlet.  
+            
+            <li>Name the file <tt>DilbertVisualMIDlet</tt> and specify <tt>dilbert</tt>
+            as the package name, as shown below:</li>
+            
+            <p><img src="../../../images/mobility/dilbert/dilbert-designer-2.png" border="1" alt="Mobile application">
+            <p>Click Finish.
+            <p>A new visual MIDlet file is created and is opened in the Visual MIDlet Designer.
+            <li>Now use the Palette (Ctrl-Shift-8) to drag and drop an Alert component and a Wait Screen 
+            component onto the canvas, as follows:</li>
+            
+            <p><img src="../../../images/mobility/dilbert/dilbert-designer-3.png" border="1" alt="Mobile application">
+            
+            <p>You can put the components anywhere you like on the designer.
+            
+            </ol>
+       <p>In the next section, we will create a new component and add it to the palette. Then we will drag it
+        onto the designer. Next,  we will connect the components to each other to establish
+        the relationships between them.
+          
+<h3>Creating the Canvas Component</h3>
+        <p>In this section, we'll create a custom canvas component to display the graphic file. </p>
+                    <ol>
+                                   <li>Right-click on the <tt>DilbertViewer</tt> project node and choose New &gt; Other.
+                                   Under Categories, choose MIDP. Under File Types, choose MIDP Canvas, as shown here:</li>
+                                   <p><img src="../../../images/mobility/dilbert/dilbert-mob6.png" border="1" alt="Mobile application">
+     
+                        <p>Click 
+                        Next.
+                        
+                        <li>Enter <tt>DilbertCanvas</tt> for the MIDP Class Name and <tt>dilbert</tt> for the package 
+                        name. Click Finish. </li>
+                        <li>Open the newly created file in the IDE and insert code so it looks as follows:</li>
+                        <pre class="examplecode">package dilbert;
+
+import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
+
+public class DilbertCanvas extends Canvas {
+
+    private int coordX,  coordY;
+    private int imageWidth,  imageHeight;
+    private Image image;
+    private int screenWidth,  screenHeight;
+
+    /** Creates a new instance of DilbertCanvas */
+    public DilbertCanvas() {
+        screenHeight = getHeight();
+        screenWidth = getWidth();
+    }
+
+    public void setImage(Image image) {
+        this.imageWidth = image.getWidth();
+        this.imageHeight = image.getHeight();
+        this.image = image;
+    }
+
+    protected void paint(Graphics graphics) {
+        graphics.setColor(255, 255, 255);
+        graphics.fillRect(0, 0, getWidth(), getHeight());
+        graphics.drawImage(image, coordX, coordY, Graphics.LEFT | Graphics.TOP);
+    }
+
+    protected void keyPressed(int keyCode) {
+        int key = getGameAction(keyCode);
+        if (key == DOWN) {
+            if (coordY - screenHeight + imageHeight > 0) {
+                coordY -= 10;
+            }
+        } else if (key == UP) {
+            if (coordY < 0) {
+                coordY += 10;
+            }
+        } else if (key == RIGHT) {
+            if (coordX - screenWidth + imageWidth > 0) {
+                coordX -= 10;
+            }
+        } else if (key == LEFT) {
+            if (coordX < 0) {
+                coordX += 10;
+            }
+        }
+        repaint();
+    }
+ }</pre>
+                        <li>Right-click <tt>DilbertCanvas</tt> and choose Build Project. 
+                        You have now built and compiled the canvas component. 
+                        
+                    </ol>
+                    
+                    <p>In the next section, we add the component to the palette and then we drag it from there
+                    and drop it on the designer.
+                    
+     <h3>Adding the Canvas Component to the Palette</h3>                    
+                    
+                    <p>Next, you add the canvas component 
+                        to the palette and then you incorporate the canvas component 
+                    into the application.
+                    
+                    <ol>
+                        
+                    <li>Open the <tt>DilbertVisualMIDlet</tt> file in the editor and then
+                     open the Palette (Ctrl-Shift-8). Right-click in the Palette and
+                     choose Palette Manager. The Palette Manager appears, as shown below:</li>
+                    
+                    <p><img src="../../../images/mobility/dilbert/dilbert-designer-4.png" border="1" alt="Mobile application">
+                    
+                    <li>Click on Add to Palette. The Add to Palette wizard appears, as shown below,
+                 displaying the mobile application that contains the Java class that you want to
+             add to the palette:</li>
+                    
+                    <p><img src="../../../images/mobility/dilbert/dilbert-designer-5.png" border="1" alt="Mobile application">
+                    
+                    
+                    <p>Click Next.</p>
+                    <li>Select <code>dilbert.DilbertCanvas</code>.</li>
+                    <p><img src="../../../images/mobility/dilbert/dilbert-designer-6.png" border="1" alt="Mobile application">
+                    
+                    <p>Click Finish. 
+                    <li>Check that you see the addition of the canvas class, as shown below:</li> 
+                    
+                    
+                    <p><img src="../../../images/mobility/dilbert/dilbert-designer-7.png" border="1" alt="Mobile application">
+                    
+                </ol>
+                
+                <h3>Using the Canvas Component</h3>
+                <ol>
+                    <li>Open the visual MIDlet and the Palette (Ctrl-Shift-8). Drag the DilbertCanvas
+                    item from the Custom category in the Palette into the designer.</li>
+                    <p><img src="../../../images/mobility/dilbert/dilbert-designer-8.png" border="1" alt="Mobile application">
+                    
+                    <li>Right-click on the dropped canvas component and choose
+                    New/Add &gt; OK command, as shown below:</li>
+                    <p><img src="../../../images/mobility/dilbert/ok-command-1.png" border="1" alt="Mobile application">
+       
+       <p>In the Navigator (Ctrl-7), you should now see the following:
+                  <p><img src="../../../images/mobility/dilbert/ok-command-2.png" border="1" alt="Mobile application">
+       
+                    
+                  <li>Create a flow between the components by connecting them as follows:
+                
+                        <p><ul>
+                            <li>Connect from the Started point of the Mobile Device to the <tt>waitScreen</tt> component.
+                            <li>Connect from the Success command of the <tt>waitScreen</tt> component to the <tt>dilbertCanvas</tt> component.
+                            <li>Connect from the Failure command of the <tt>waitScreen</tt> component to the <tt>alert</tt> component.
+                            <li>Connect from the <tt>okCommand</tt> of the <tt>dilbertCanvas</tt> component to the Mobile Device.
+                        </ul>
+                  </li>
+                    
+                    <p>At this point, you should see the following:
+                    <p><img src="../../../images/mobility/dilbert/dilbert-design.png" border="1" alt="Mobile application">
+                    
+                    <li>Switch to the Source view and change the <code>getTask()</code> method as shown below in bold:</li>
+                    <pre class="examplecode">
+   <b>private byte[] dailyDilbertImage_returnValue;</b>     
+        
+   public SimpleCancellableTask getTask() {
+        if (task == null) {                                 
+            // write pre-init user code here
+            task = new SimpleCancellableTask();                                   
+            task.setExecutable(new org.netbeans.microedition.util.Executable() {
+                public void execute() throws Exception {                                 
+
+                    <b>if (dailyDilbertImage_returnValue == null) {
+                        DilbertViewer client = new DilbertViewer();
+                        dailyDilbertImage_returnValue = client.dailyDilbertImage();
+                        Image dilbertImage = Image.createImage(dailyDilbertImage_returnValue, 0, dailyDilbertImage_returnValue.length);
+                        getDilbertCanvas().setImage(dilbertImage);
+                    }</b>
+                }                                    
+            });                                  
+        // write post-init user code here
+        }                         
+        return task;
+   }
+                </pre>
+                </ol>
+                
+                
+                   <h3>Transforming the Image</h3>
+            
+            <p>Now we have a client application to receive the daily image. But the received 
+                image is in GIF format, which is much too large for mobile devices with limited 
+                memory. So we'll need to transform the image to the PNG format, which is smaller 
+                and more easily sized for the many different display sizes available to mobile 
+            devices. </p>
+            
+            <ol>
+            <li>Open the <code>DailyDilbert_Proxy</code> file, shown below:</li>
+            <p><img src="../../../images/mobility/dilbert/dilbert-design2.png" border="1" alt="Mobile application">
+            
+            <li>Change the <code>dailyDilbertImage()</code> method by adding the highlighted code below: <br>
+            <pre>public byte[] dailyDilbertImage() throws RemoteException, Exception {
+    <b>try {
+        ByteArrayInputStream in = new ByteArrayInputStream(getService().getDailyDilbertSoap().dailyDilbertImage());
+        BufferedImage image = ImageIO.read(in);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", out);
+        return out.toByteArray();
+    } catch (java.rmi.RemoteException ex) {
+        throw ex;
+    } catch (Exception ex) {
+        throw ex;
+    }</b>
+}</pre>
+           
+        </ol>
+                
+                   <h3>Deploying the Application</h3>
+                <p>First we deploy the web application. Then we run the mobile application.
+                <ol>
+    
+     <li>In the Projects window, right-click the DilbertWebApplication and choose 
+                Deploy Application. After a moment, the server starts up, if it is not
+                already running. Then the application deploys to the server. To see it
+                deployed, look in the Services window, as below:
+                </li>
+<p><img src="../../../images/mobility/dilbert/dilbert-design3.png" border="1" alt="Emulator, displaying Dilbert."> 
+    
+<li>Right-click the mobile project and choose Run.
+ The mobile application runs. A device emulator opens. In the device emulator screen, click the button under Launch. Then click 
+    the Select button. The application will go out to the internet and return the latest Dilbert 
+strip, as shown below: </li>
+
+<p><img src="../../../images/mobility/dilbert/end-result.png" border="1" alt="Emulator, displaying Dilbert."> 
+
+
+</ol>
+<h2>Summary</h2>
+<p>This tutorial showed how you can use the Mobile Client to Web Application to 
+quickly create a MIDlet that consumes a Web service. </p>
+It also demonstrated how you can create a custom component and add it to your 
+application using the Visual Mobile Designer.  <br>
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send 
+Us Your Feedback</a></div>
+<br style="clear:both;" />
+<br style="clear:both;" />
+<h2>Next Steps<a name="next"></a></h2>
+  <blockquote>
+<p>In addition to the IDE's built-in help documentation about Java ME CDC development, tutorials 
+and articles about the technologies supported by the Mobility pack can be found at the following location: </p> 
+  <ul>
+    <li><a href="../../trails/mobility.html">NetBeans Mobility Pack Learning Trail</a></li>
+  </ul>
+</blockquote>
+
+</body>
+</html>

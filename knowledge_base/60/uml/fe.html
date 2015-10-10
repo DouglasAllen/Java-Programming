@@ -1,0 +1,352 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>UML: Developing Applications </title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- Replace this CSS URL with the appropriate relative URL -->
+<meta name="description" content="">
+<meta name="author" content="your-name"> <!--Optional tag-->
+<meta name="keywords" content=""> 
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>UML: Developing Applications </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+  <p><em>Contributed by <a href="mailto:cynthia.castillo@sun.com">Cindy Castillo</a> and maintained by <a href="mailto:bob.may@sun.com"><i>Bob May </i></a><br>
+    November 2007</em> [Revision number: V1-4]<br>
+    This publication is applicable to NetBeans IDE 6.0 release<br>
+    
+</p>
+</div>
+<p>In this tutorial, you learn how to use the UML features of the IDE to create a simple UML class diagram. You then use the code generation and reverse engineering features to develop a simple banking application, which you can test by executing a test class. This banking application is greatly simplified; a real model for an application of this type would require more detail. The purpose of this tutorial is to introduce some of the IDE's UML features, not to teach you about UML concepts or the Java programming language.
+  <!-- START Link to Support and Docs paragraph ----------------------------------------------------------* -->
+  <!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+
+  <!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+  <!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+  <!-- Update the image reference below so it references the file in your images directory ---------------* -->
+</p>
+<div class="indent">
+   <!-- ======================================================================================== -->
+</div>
+ <p align="center"><b>Expected duration: <i>25</i> minutes</b></p>
+
+ <h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li class="tut"><a href="fe.html#JavaProject">Creating the Java Project for the Application</a></li>
+             <li class="tut"><a href="fe.html#UMLProject">Creating the UML Project and the Class Diagram</a></li>
+             <li class="tut"><a href="fe.html#classdiagram">Adding and Defining Class Elements</a></li>
+             <li class="tut"><a href="fe.html#add_cmpnts">Adding More Elements to Diagrams</a></li>
+             <li class="tut"><a href="fe.html#add_associations">Identifying Associations Between Elements</a></li>
+             <li class="tut"><a href="fe.html#codegen">Generating Java Source Code</a></li>
+             <li class="tut"><a href="fe.html#reveng">Continuing Development Using Reverse Engineering</a></li>
+             <li class="tut"><a href="fe.html#execute">Testing Your Work</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top">   <a href="../../index.html"> <img src="../../../images/articles/60/netbeans-stamp.gif" 
+	  alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206"></a>
+
+      </td>
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3 class="tutorial">Prerequisites</h3>
+<p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a>.</p>
+<!-- ======================================================================================== -->
+<h3 class="tutorial">System Requirements</h3>
+<p>This tutorial assumes that your system meets the requirements specified in the Systems Requirements section of the <a href="../../../community/releases/60/relnotes.html">NetBeans 6.0 Release Notes</a>.</p>
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+<p>Before you begin, download and install the following software:</p>
+<ul>
+	<li>NetBeans IDE 6.0 <br>
+		<br>
+	Select the All Download option.	</li>
+</ul>
+    <!--<h3>Contents</h3> -->
+
+    <!-- Consider including a table of contents into your tutorial -------------------------------* -->
+    <!-- Use the sample format shown below -------------------------------------------------------* -->
+    <!-- <ul>
+	<li><a href="#first_h2_head" title="First H2 Heading">First H2 Heading</a></li>
+	<li><a href="#second_h2_head" title="Second H2 Heading">Second H2 Heading</a></li>
+	<li><a href="#third_h2_head" title="Third H2 Heading">Third H2 Heading</a></li>
+	<li><a href="#summary" title="Summary">Summary</a></li>
+	<li><a href="#next_steps_h2_head" title="Next Steps">Next Steps</a></li>
+</ul>-->
+
+</div>
+
+<p align="center"><a href="fe.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="JavaProject"></a>Creating the Java Project for the Application</h2>
+
+<p>In this section , you create a new Java project for the Java application you are going to develop in this tutorial. </p>
+<ol>
+  <li class="tut">From the main menu, choose File &gt; New Project and then do the following in the New Project wizard:<br>
+      <ol type="a">
+        <li class="tut">Under Categories, select Java.</li>
+        <li class="tut">Under Projects, select Java Application</li>
+        <li class="tut">Click Next.</li>
+      </ol>
+  </li>
+  <li class="tut">In the Project Name field, type <tt>JavaPrj</tt>.</li>
+  <li class="tut">For the Project Location field, click Browse, navigate to any directory on your computer. Click Open and type <tt>MyPrj</tt>.</li>
+  <li class="tut">Clear the Set as Main Project and the Create Main Class checkboxes.</li>
+  <li class="tut">Click Finish.<br>
+    A progress dialog box appears.<br>
+    When the new <tt>JavaPrj</tt> project is created, it appears in the Projects window.</li>
+</ol>
+<p align="center"><a href="fe-files/umljavaprj.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+<p align="center"><a href="fe.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="UMLProject"></a>Creating the UML Project and the Class Diagram</h2>
+<p>In this section, you create the UML project (or UML project) and class diagram for the application. A UML project is the mechanism by which you store and manage a collection of files for a UML model. A UML model contains all of the model's diagrams, their associated elements, and metadata related to the UML model.</p>
+<ol>
+  <li class="tut">To create the UML project, choose File &gt; New Project and then do the following:<br>
+      <ol type="a">
+        <li class="tut">Under Categories, select UML.</li>
+        <li class="tut">Under Projects, select Java-Platform Model.</li>
+        <li class="tut">Click Next.</li>
+      </ol>
+      The New Java-Platform Model dialog box opens.</li>
+  <li class="tut">In the Project Name field, type <tt>UMLPrj</tt>.<br>
+    Notice that when you type the Project Name, the IDE automatically suggests this name for the name of the Project Folder.</li>
+  <li class="tut">Verify that the Project Location is <tt>MyPrj</tt>.</li>
+  <li class="tut">Click Finish.<br>
+    The IDE creates the UML project and the Create New Diagram dialog box appears.</li>
+  <li class="tut">In the Diagram Type list, select Class Diagram.</li>
+  <li class="tut">In the Diagram Name field, type <tt>BankClassDiagram</tt>.</li>
+  <li class="tut">Leave <tt>UMLPrj</tt> in the Namespace field and click Finish.<br>
+    The IDE does the following:<br>
+    <ul>
+      <li class="tut">Adds the <tt>UMLPrj</tt> project node in the Projects window.</li>
+      <li class="tut">Creates a <tt>BankClassDiagram</tt> node under the <tt>Model</tt> node</li>
+      <li class="tut">Displays the new diagram in the Diagram editor (the diagram is empty at this point)</li>
+      <li class="tut">Opens the Modeling Palette</li>
+    </ul>
+  </li>
+</ol>
+<p align="center"><a href="fe-files/umlprj.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+<p align="center"><a href="fe.html#top">top</a></p>
+<p align="center">
+  <!-- ===================================================================================== -->
+</p>
+<h2><a name="classdiagram"></a>Adding and Defining Class Elements</h2>
+<p>Now, add and define the class elements that will make up your Java application. You use the Class icon from the Modeling Palette to create the class elements.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Class icon <img src="../../../images/articles/uml_fe/Class.png" alt="image of Class icon is displayed."> and click in the Diagram editor.<br>
+    This action places a class element on the Diagram editor.</li>
+  <li class="tut">Deselect the Class icon by right-clicking anywhere in the Diagram editor.</li>
+  <li class="tut">Select the newly added class element, type <tt>BankAccount</tt> and press Enter.<br>
+    The IDE does the following: <br>
+    <ul>
+      <li class="tut">Labels the element <tt>BankAccount</tt></li>
+      <li class="tut">Creates a public operation, <tt>BankAccount()</tt></li>
+      <li class="tut">Displays the properties of the <tt>BankAccount</tt> class in the Properties window</li>
+    </ul>
+  </li>
+  <li class="tut">With the <tt>BankAccount</tt> class element selected in the Diagram editor, right-click the word <tt>Attributes</tt> and choose Insert Attribute from the pop-up menu.<br>
+    A one-line editor opens and displays the following information:<br>
+    <pre class="examplecode">visibility type <b>name</b>[ranges]=initialValue{name=value}</pre>
+  </li>
+  <li class="tut">Type <tt>balance</tt> and press Enter.<br>
+    A private attribute named <tt>balance</tt> of type <tt>int</tt> appears on the <tt>BankAccount</tt> class. The following operations are created on the class:<br>
+    <ul>
+      <li class="tut"><tt>public int getBalance()</tt></li>
+      <li class="tut"><tt>public void setBalance(int val)</tt></li>
+    </ul>
+  </li>
+  <li class="tut"><a name="add_op"></a>With the <tt>BankAccount</tt> class element still selected in the Diagram editor, right-click the word Operations and choose Insert Operation from the pop-up menu. <br>
+    A one-line editor opens and displays the following information:<br>
+    <pre class="examplecode">visibility returnType <b>name</b>(parameter) {properties...}</pre>
+  </li>
+  <li class="tut">Type <tt>withdraw</tt>, move your cursor (use the forward arrow on your keyboard) into the parentheses, type <tt>int amount</tt> and press Enter.<br>
+    The IDE adds the new operation in the class element as follows:
+      <pre class="examplecode">public void withdraw(int amount)</pre>
+  </li>
+</ol>
+<p align="center"><a href="fe-files/umladdclass.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a>
+<p align="center"><a href="fe.html#top">top</a><br>
+  <!-- ======================================================================================= -->
+</p>
+<h2><a name="add_cmpnts"></a>Adding More Elements to the Diagram</h2>
+<p>In this section, you use more UML icons from the Modeling Palette to add interfaces, packages, attributes, and operations to your application.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Package icon <img src="../../../images/articles/uml_fe/DTPackage.png" alt="image of Package icon">.<br>
+      <br>
+      <b>Note: </b>If necessary, scroll down to see the additional Modeling icons.</li>
+  <li class="tut">Click in the Diagram editor to add a package element to the class diagram.</li>
+  <li class="tut">Right-click anywhere in the Diagram editor to deselect the Package icon.<br>
+      <br>
+      <b>Note: </b>As you add modeling elements to the diagram, you can select them and drag them to new locations in the Diagram editor to improve the appearance of the diagram. Be careful when you right-click, as in some positions, this action opens a pop-up menu for the Diagram editor. If this happens, just click again in the white space of the Diagram editor.</li>
+  <li class="tut">With the package element selected, type <tt>bankpack</tt> and press Enter.</li>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Interface icon <img src="../../../images/articles/uml_fe/Interface.png" alt="image of Interface icon"> and click in the Diagram editor.</li>
+  <li class="tut">Right-click anywhere in the Diagram editor to deselect the Interface icon.</li>
+  <li class="tut">With the interface element selected, type <tt>Bank</tt> and press Enter.</li>
+  <li class="tut">Add a <tt>deposit</tt> operation to the <tt>Bank</tt> interface.<br>
+    You add operations to interfaces the same way you add them to classes (<a href="fe.html#add_op">Step 6 in the preceding section</a>). Define the operation as follows: <br>
+    <pre class="examplecode">public void deposit(int amount)</pre>
+  </li>
+  <li class="tut">From the Modeling Palette, select the Class icon <img src="../../../images/articles/uml_fe/Class.png" alt="image of Class icon"> and click in the Diagram editor two times.</li>
+  <li class="tut">Right-click anywhere in the Diagram editor to deselect the Class icon.<br>
+      <br>
+      <b>Note: </b>If you draw too many class elements, deselect the Class icon, then right-click the class element you want to delete and select Edit &gt; Delete.</li>
+  <li class="tut">Name the class elements <tt>Checking</tt> and <tt>AccountTest</tt> and resize the elements if necessary.</li>
+</ol>
+<p align="center"><a href="fe-files/umladdelement.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+<p align="center"><a href="fe.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="add_associations"></a>Identifying Associations Between Elements</h2>
+<p>In this section, you use the UML icons from the Modeling Palette to identify the association between class elements.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Implementation icon <img src="../../../images/articles/uml_fe/Implementation.png" alt="image of Implementation icon" width="16" height="16"> and click inside the <strong><tt>BankAccount</tt></strong> class element.</li>
+  <li class="tut">Click inside the <tt>Bank</tt> interface element and right-click anywhere in the Diagram editor to deselect the Implementation icon.<br>
+    An implementation link appears between the class and the interface element. An implementation link denotes a relationship between a class and an interface.</li>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Generalization icon <img src="../../../images/articles/uml_fe/GeneraLink.png" alt="image of Generalization icon">.</li>
+  <li class="tut">Click inside the <tt>Checking</tt> class element (the subclass), then click inside the BankAccount class element (the superclass).<br>
+  The Select Methods to Redefine dialog box appears.</li>
+  <li class="tut">Select the <tt>withdraw</tt> method and click OK.<br>
+    The IDE does the following: <br>
+    <ul>
+      <li class="tut">Closes the dialog box</li>
+      <li class="tut">Adds the <tt>withdraw</tt> method to the Checking class</li>
+      <li class="tut">Adds the Generalization link between the two related Class elements</li>
+    </ul>
+    A generalization link shows the relationship between a subclass and its superclass. Subclasses are refinements of the superclass, meaning they can inherit features (attributes and operations) from the superclass.</li>
+  <li class="tut">Right-click in any white space in the Diagram editor to deselect the Generalization icon.</li>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Nested Link icon <img src="../../../images/articles/uml_fe/NestedLink.png" alt="image of Nested Link icon"> and click inside the <tt>BankAccount</tt> element and then inside the <tt>bankpack</tt> package element.</li>
+  <li class="tut">Use the Nested Link icon as described in the prior step and connect the <tt>Checking</tt>, <tt>AccountTest</tt>, and <tt>Bank</tt> elements with the <tt>bankpack</tt> package.</li>
+  <li class="tut">Deselect the Nested Link icon. <br>
+    A nested link denotes how elements are organized into groups. In this case, you organized all the class elements into a group in the <tt>bankpack</tt> package.</li>
+  <li class="tut">Press Ctrl-S anywhere in the Diagram editor to save the changes made to the model. </li>
+</ol>
+
+
+<p align="center"><a href="fe-files/umlassociation.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+<p align="center"><a href="fe.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="codegen"></a>Generating Java Source Code</h2>
+<p>In this section, using the Generate Code feature of UML you generate the Java source code for the UML model that you created in the previous sections.</p>
+<ol>
+  <li class="tut">In the Projects window, right-click the <tt>UMLPrj</tt> node and choose Generate Code from the pop-up menu.<br>
+  The Generate Code dialog box appears. and specifies the Target Project.</li>
+  <li class="tut">Accept the default checkboxes in the Generate Code dialog box.</li>
+  <li class="tut">Click OK.<br>
+    The IDE generates the code and the output window displays the progress of the code generation process.</li>
+</ol>
+<p align="center"><a href="fe-files/umlgeneratecode.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+<p align="center"><a href="fe.html#top">top</a></p>
+
+<!-- ======================================================================================= -->
+<h2><a name="reveng"></a>Continuing Development Using Reverse Engineering</h2>
+<p>In this section, you continue with your application development by modifying the generated source code in the Source editor and using the Reverse Engineer feature to update your UML model of your application.</p>
+<ol>
+  <li class="tut">In the Projects window, expand the <tt>UMLPrj</tt> &gt; <tt>Model &gt; bankpack </tt> node.</li>
+  <li class="tut">Right-click the <tt>BankAccount</tt> node and choose Navigate To Source from the pop-up menu.</li>
+  <li class="tut">Add the following code to the <tt>deposit</tt> method in the Source Editor: <br>
+      <pre class="examplecode">setBalance(getBalance() + amount);</pre>
+  </li>
+  <li class="tut">Under the <tt>UMLPrj</tt> &gt; <tt>Model</tt> &gt; <tt>bankpack</tt> node in the Projects window, right-click the <tt>AccountTest</tt> node and choose Navigate To Source from the pop-up menu.</li>
+  <li class="tut">Type (or copy and paste) the following code in the Source Editor:<br>
+      <pre class="examplecode">
+public static void main(String[] args) {            
+Checking myChecking = new Checking();
+myChecking.deposit(100); 
+System.out.println(&quot;Checking Balance is: &quot; + 
+myChecking.getBalance() );
+}</pre>
+    This code creates a new <tt>Checking</tt> object and specifies a deposit of $100, then prints the results.<br>
+  </li>
+  <li class="tut">Right-click in the Source Editor and choose Format Code.</li>
+  <li class="tut">Press Ctrl-S anywhere in the Source Editor to save the changes made to the <tt>AccountTest.java</tt> source file.</li>
+  <li class="tut">Right-click in the Source Editor again and choose Reverse Engineer from the pop-up menu.<br>
+    The Reverse Engineer dialog box appears.</li>
+  <li class="tut">Select Use Existing UML Project in the Reverse Engineer dialog box and choose <tt>UMLPrj</tt> as the target project.</li>
+  <li class="tut">Click OK to invoke the reverse engineering process.</li>
+  <li class="tut">The 
+
+
+ popup Model Element Overwrite Authorization dialog appears, requesting that you  confirm your overwriting the AccountTest model element. Click Yes/ Yes to All.</li>
+  <li class="tut">Click the BankClassDiagram tab.<br>
+    Notice that the newly entered <tt>main</tt> method now appears in the <tt>AccountTest</tt> class element in the class diagram. <br>
+    By using the Reverse Engineer feature, the changes made to the Java source project can be reflected in the corresponding UML model project. </li>
+</ol>
+<p align="center"><a href="fe-files/umlreverseengin.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a></p>
+<p align="center"><a href="fe.html#top">top</a><br>
+  <!-- ======================================================================================= -->
+</p>
+<h2><a name="execute"></a>Testing Your Work</h2>
+<p>Now build and run your project.</p>
+<ol>
+  <li class="tut">In the Projects window, right-click the <tt>JavaPrj</tt> node and choose Build  from the pop-up menu.</li>
+  <li class="tut">In the Projects window, right-click the <tt>JavaPrj</tt> node and choose Run  from the pop-up menu.<br>
+  The Run Project dialog box appears.</li>
+  <li class="tut">In the Run Project dialog box, click OK to select the <code>bankpack.AccountTest</code> as the main class.<br>
+    The IDE executes the application and displays the following output in the Output window:
+      <pre class="examplecode">Checking Balance is: 100</pre>
+  </li>
+</ol>
+<p>You have now completed the application.</p>
+<p align="center"><a href="fe-files/umlrun.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=640,width=860,scrollbars=yes");demoWin.focus();return false'><img src="../../../images/articles/uml_fe/flash_demo_button_med.gif" border="0">&nbsp;View Demo</a>
+<p align="center"><a href="fe.html#top">top</a><!-- ======================================================================================= -->
+</p>
+<h2>Summary</h2>
+<p>In this tutorial, you designed a class diagram for a simple banking application. You learned how to perform the following tasks:</p>
+<ul>
+  <li class="tut">Create a UML project</li>
+  <li class="tut">Use the UML icons from the Modeling Palette to create classes, interfaces, packages, attributes, and operations</li>
+  <li class="tut">Link the classes together with UML associations</li>
+  <li class="tut">View the elements that you created in the Diagram editor in the UML project as represented in the Projects window</li>
+  <li class="tut">Generate the source code for the elements created in the Diagram editor in the UML project and view the generated source in the Source Editor.</li>
+  <li class="tut">Use the Code Generation and reverse engineering features to go back and forth between modeling and developing code in the Source Editor</li>
+  <li class="tut">Compile and execute classes from the Source Editor</li>
+</ul>
+<p align="center"><a href="fe.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="next_steps"></a>Next Steps</h2>
+<br>
+<ul>
+<li>
+  <p>To learn more about the UML feature, complete the Reverse Engineering tutorial. </p>
+</li>
+
+<li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p></li>
+</ul>
+
+<!-- ======================================================================================== -->
+<!-- Update your-tutorial-title below to reflect your tutorial title -----------------------------------* -->
+<br>
+    <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+    <br style="clear:both;">
+
+<p align="center"><a href="fe.html#top">top</a></p>
+<p><small>&gt;&gt; <a href="../../index.html">More NetBeans IDE UML Documentation</a></small></p>
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <script src="index_files/tigris.txt" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="index_files/netbeans.css">
+  <title>LAB-1513: Java SE 6 Scripting</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="SourceCastVersion" content="2.6.2.4.10">
+  <link rel="shortcut icon" href="http://www.netbeans.org/favicon.ico"
+ type="image/x-icon">
+  <meta name="keywords"
+ content="NetBeans, IDE, Platform, free, open source, developer">
+  <link rel="stylesheet" href="index_files/netbeans_002.css">
+  <meta name="author" content="Sang Shin">
+  <style type="text/css">
+#search {height:100%;}
+#topmodule {align:right;}
+  </style>
+  <script language="JavaScript" type="text/javascript">
+<!--
+function get_sc_login() {
+  var sclogin = "guest";
+  return (sclogin);
+}
+var username=get_sc_login();
+//-->
+  </script>
+  <meta content="LAB-1513: Java SE 6 Scripting" name="description">
+</head>
+<body onload="loginfocus()" class="composite"
+ style="background-image: url(index_files/beige.jpg);">
+<!-- begin TopTabs --><!-- end TopTabs --><!-- start NavCol --><!-- end NavCol --><!-- Servlet-Specific template --><!-- Show servlet name if it is a servlet -->
+<br>
+<br>
+<h1 style="text-align: center;">Java SE 6 Features <br>
+</h1>
+<div class="articledate" style="margin-left: 0px; text-align: center;"><a
+ href="http://www.javapassion.com/SangSchedule.html#Bio">Sang Shin</a>,
+<a href="mailto:sang.shin@sun.com">sang.shin@sun.com</a>, Sun
+Microsystems, <a href="http://www.javapassion.com">www.javapassion.com</a><a
+ href="mailto:sang.shin@sun.com"><i>
+</i></a></div>
+<div class="indent"><br>
+<div style="text-align: center;"><img alt=""
+ src="index_files/l2_shin_sang_portrait.gif"
+ style="width: 100px; height: 88px;"><br>
+</div>
+<br>
+This lab has a set of sample Java SE 6 applications you can play
+around.&nbsp; They are provided as "Ready-to-build-and run" NetBeans
+project.<br>
+<b><br>
+</b>
+<div style="text-align: center;"><b>Expected duration: 60 minutes
+(excluding homework)<br>
+<br>
+</b></div>
+<br>
+<br>
+<p></p>
+<br>
+<h3 class="tutorial">Software Needed</h3>
+<p>Before you begin, you need to install the following software on your
+computer.&nbsp; <br>
+</p>
+<ul>
+  <li>Java Standard Development Kit (JDK™) version 6.0 (<a
+ href="http://java.sun.com/j2se/1.5.0/download.jsp">download</a>)</li>
+  <ul>
+  </ul>
+  <li>NetBeans IDE 5.5 (<a
+ href="http://www.netbeans.info/downloads/index.php">download</a>) <br>
+  </li>
+  <ul>
+    <li>When you install NetBeans IDE, it will ask you which JDK
+you want to use.&nbsp; Select the JDK 5.0.</li>
+  </ul>
+  <li>1512_javase6scripting.zip (<a
+ href="http://www.javapassion.com/handsonlabs/1513_javase6scripting.zip">download</a>)</li>
+  <ul>
+    <li>The zip file contains this document and the lab contents<br>
+    </li>
+    <li>Download it and unzip in a directory of your choice</li>
+    <br>
+  </ul>
+</ul>
+<br>
+<h3 class="tutorial">OS platforms you can use<br>
+</h3>
+<ul>
+  <li>Windows</li>
+  <li>Solaris x86, Solaris Sparc</li>
+  <li>Linux</li>
+  <li>Mac OS X</li>
+</ul>
+<h3 class="tutorial"><a name="Change_Log"></a>Change Log<br>
+</h3>
+<ul>
+  <li>March 5th, 2007: Created<br>
+  </li>
+</ul>
+<br>
+<h3 class="tutorial"><a name="Tutorial_Exercises"></a>Lab Exercises</h3>
+<ul>
+  <li><a href="#Exercise_1">Exercise 1: Build and run
+"HelloWorld" sample
+application (20 minutes)</a><br>
+  </li>
+  <li><a href="#Exercise_2">Exercise 2: Build and run
+"DesktopAPIExample"
+sample
+application (20 minutes)</a></li>
+  <li><a href="#Exercise_3">Exercise 3: Build and run
+"SystemTrayExample" sample application (30 minutes)</a></li>
+  <li><a href="#Exercise_4">Exercise 4: Build and run "ModalityDemo2"
+sample application (30 minutes)</a></li>
+  <li><a href="#Exercise_5">Exercise 5: Build and run
+"TableSortFilterDemo"
+sample application (15
+minutes)</a><br>
+  </li>
+  <li><a href="#Homework">Homework
+Exercise (for people who
+are taking Sang Shin's "Java Programming online course")</a></li>
+</ul>
+</div>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="Exercise_1"></a>Exercise 1: Build and run
+"HelloWorld" sample application<br>
+</h2>
+<i></i>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build" sample application.&nbsp; <br>
+</p>
+<ul style="margin-left: 40px;">
+</ul>
+<div style="margin-left: 40px;">
+<ol>
+</ol>
+</div>
+<ol style="margin-left: 40px;">
+</ol>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(1.1)
+Open, build, and run "HelloWorld" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">HelloWorld</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <ul>
+    <li>Windows: If you unzipped the <span style="font-weight: bold;">1512_javase6scripting.zip</span>
+file under
+C:\
+directory, the directory to which you want
+to browse down should be <span style="font-weight: bold;">C:\javase6scripting\samples.</span></li>
+    <li>Solaris/Linux: If you unzipped the <span
+ style="font-weight: bold;">1512_javase6scripting.zip</span>
+file under $HOME
+directory, the directory to which you want
+to browse down should be <span style="font-weight: bold;">$HOME/javase6scripting/samples.</span><span
+ style="font-weight: bold;"></span></li>
+  </ul>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">HelloWorld</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">HelloWorld</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">HelloWorld </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;">HelloWorld</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"></p>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "HelloWorld" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="#Tutorial_Exercises">return to the top</a>
+<br>
+</p>
+<p style="margin-left: 40px;"><br>
+<br>
+</p>
+<!-- ===================================================================================== -->
+<br>
+<h2><a name="Exercise_2"></a>Exercise 2: Build and run
+"InvokeScriptFile" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build" Struts sample application. <br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(2.1)
+Open, build, and run "InvokeScriptFile" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">InvokeScriptFile</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">InvokeScriptFile</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">InvokeScriptFile</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">InvokeScriptFile </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click&nbsp;<span style="font-weight: bold;">InvokeScriptFile</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "InvokeScriptFile" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+</p>
+<p style="margin-left: 40px;"><br>
+</p>
+<h2><a name="Exercise_3"></a>Exercise 3: Build and run
+"CallMethodByInvocable" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(3.1)
+Open, build, and run "CallMethodByInvocable" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">CallMethodByInvocable</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">CallMethodByInvocable</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">CallMethodByInvocable</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">CallMethodByInvocable </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;">CallMethodByInvocable</span><span
+ style="font-weight: bold;"></span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "CallMethodByInocable" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+</p>
+<h2><a name="Exercise_4"></a>Exercise 4: Build and run
+"GetListOfScriptEngines" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(4.1)
+Open, build, and run "GetListOfScriptEngines" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">GetListOfScriptEngines</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">GetListOfScriptEngines</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">GetListOfScriptEngines</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">GetListOfScriptEngines </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;"></span><span
+ style="font-weight: bold;">GetListOfScriptEngines&nbsp;</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "GetListOfScriptEngines" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+</p>
+<p><br>
+</p>
+<h2><a name="Exercise_5"></a>Exercise 5: Build and run
+"SearchScriptEngineviaFactory" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(5.1)
+Open, build, and run "SearchScriptEngineviaFactory" sample JSP
+application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">SearchScriptEngineviaFactory</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">SearchScriptEngineviaFactory</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">SearchScriptEngineviaFactory</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">SearchScriptEngineviaFactory </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;">SearchScriptEngineviaFactory</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "SearchScriptEngineviaFactory" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+</p>
+<p><br>
+</p>
+<h2><a name="Exercise_6"></a>Exercise 6: Build and run
+"AccessJavaObjectsFromScript" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(5.1)
+Open, build, and run "AccessJavaObjectsFromScript" sample JSP
+application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">AccessJavaObjectsFromScript</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">AccessJavaObjectsFromScript</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">AccessJavaObjectsFromScript</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">AccessJavaObjectsFromScript </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click&nbsp;<span style="font-weight: bold;"></span><span
+ style="font-weight: bold;">AccessJavaObjectsFromScript </span>project
+and select <span style="font-weight: bold;">Run Project</span>. <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "AccessJavaObjectsFromScript" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+<br>
+</p>
+<h2><a name="Exercise_7"></a>Exercise 7: Build and run
+"ImportJavaPackage" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(5.1)
+Open, build, and run "ImportJavaPackage" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">ImportJavaPackage</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">ImportJavaPackage</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">ImportJavaPackage</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">ImportJavaPackage </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;">ImportJavaPackage</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "ImportJavaPackage" sample
+application.<br>
+</p>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+<h2><a name="Exercise_8"></a>Exercise 8: Build and run
+"ScriptPad" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(5.1)
+Open, build, and run "ScriptPad" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">ScriptPad</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">ScriptPad</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">ScriptPad</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">ScriptPad </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;">ScriptPad</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "ScriptPad" sample
+application.<br>
+</p>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<p></p>
+<h2><a name="Exercise_9"></a>Exercise 9: Build and run
+"Caculator" sample application<br>
+</h2>
+<p style="margin-left: 40px;">In this exercise, you are going to build
+and run "ready-to-build"&nbsp; sample application.&nbsp; You will then
+build the same application from scratch.<br>
+</p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial">(5.1)
+Open, build, and run "Calculator" sample JSP application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">Calculator</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/javase6scripting/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">Calculator</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">Calculator</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Build and run <span
+ style="font-weight: bold;">Calculator </span>project.&nbsp;
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right-click <span style="font-weight: bold;">Calculator</span>
+project and select <span style="font-weight: bold;">Run Project</span>.
+    <br>
+  </li>
+  <li>Browser gets displayed.&nbsp; <br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have built
+and run a ready-to-build-and-run "Calculator" sample
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+</p>
+<h2><a name="Homework_Exercise"></a><a name="Homework"></a>Homework
+Exercise (for people
+who
+are taking Sang Shin's "Java Programming online course") <br>
+</h2>
+<br>
+<div style="margin-left: 40px;"><span style="color: rgb(0, 0, 0);">&lt;to
+be provided&gt;</span></div>
+<div style="margin-left: 40px;"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;<a href="#Tutorial_Exercises">
+return to the top</a></div>
+<div class="indent"><br>
+<br>
+<br>
+</div>
+<br>
+<p> </p>
+<!-- ======================================================================================== -->
+</body>
+</html>

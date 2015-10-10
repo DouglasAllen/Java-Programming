@@ -1,0 +1,414 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>UML: Creating Activity Diagrams</title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- Replace this CSS URL with the appropriate relative URL -->
+<meta name="description" content="">
+<meta name="author" content="your-name"> <!--Optional tag-->
+<meta name="keywords" content=""> <!--Useful for including potential alternate search terms (shouldn't
+overlap with words that are prominently listed in the  tutorial) -->
+
+</head>
+<body>
+<a name="top"></a>
+
+<h1>UML: Creating Activity Diagrams</h1>
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:bob.may@sun.com"><i>Cindy Castillo, Bob May </i></a><br>
+November 2007</em> [Revision number: V1-4]<br>
+This publication is applicable to NetBeans IDE 6.0 release<br>
+<!-- This paragraph should contain an overview or an intro to your-tutorial ----------------------------* -->
+<!-- START Link to Support and Docs paragraph ----------------------------------------------------------* -->
+</p>
+</div>
+
+<p>In this tutorial, you learn how to use the UML features of the IDE to create a simple UML activity diagram. The steps in this tutorial show one representative way of creating an activity diagram and introduce you to some of the features offered by NetBeans UML. This tutorial does not teach you about UML concepts or the Java programming language.
+  <!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+  <!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+  <!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+  <!-- Update the image reference below so it references the file in your images directory ---------------* -->
+</p>
+<p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+<h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li class="tut"><a href="activity-diagram.html#intro">Activity Diagram - an Overview</a></li>
+             <li class="tut"><a href="activity-diagram.html#setup">Setting Up the Activity Diagram</a></li>
+             <li class="tut"><a href="activity-diagram.html#partitions">Placing Partitions</a></li>
+             <li class="tut"><a href="activity-diagram.html#states">Identifying Action States</a> </li>
+             <li class="tut"><a href="activity-diagram.html#edges">Placing Edges and Dependencies</a> </li>
+             <li class="tut"><a href="activity-diagram.html#group">Working with Group Kinds and Conditions</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top"> 
+
+      <a href="../../index.html"> <img src="../../../images/articles/60/netbeans-stamp.gif" 
+	  alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206"></a>
+
+   </td>
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+  <!--<p><b>Note:</b> Wherever you see the <img src="../../images/articles/uml_fe/flash_demo_button_med.gif" alt="Demo Icon" border="0"> icon, you can click to view a detailed interactive demonstration of the steps described in the tutorial.</p>
+-->
+</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+<p><span class="indent">This tutorial assumes that your system meets the requirements specified in the Systems Requirements section of the <a href="../../../community/releases/60/relnotes.html">NetBeans 6.0 Release Notes</a>.</span></p>
+<!-- ======================================================================================== -->
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<!-- tutorial. Examples: Java programming, XML, BPEL, and so on ----------------------------------------* -->
+<p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a>.</p>
+  <!-- ======================================================================================== -->
+  <!-- ======================================================================================== -->
+  <h3 class="tutorial">Software Needed for the Tutorial</h3>
+  <p>Before you begin, download and install the following software:</p>
+ 
+<ul>
+    <li>NetBeans 6.0 <br>
+	
+	<br>
+	Select the All Download option. </li>
+  </ul>
+    <!-- ======================================================================================== -->
+    <!--<h3>Contents</h3> -->
+    <!-- Consider including a table of contents into your tutorial -------------------------------* -->
+    <!-- Use the sample format shown below -------------------------------------------------------* -->
+    <!-- <ul>
+	<li><a href="#first_h2_head" title="First H2 Heading">First H2 Heading</a></li>
+	<li><a href="#second_h2_head" title="Second H2 Heading">Second H2 Heading</a></li>
+	<li><a href="#third_h2_head" title="Third H2 Heading">Third H2 Heading</a></li>
+	<li><a href="#summary" title="Summary">Summary</a></li>
+	<li><a href="#next_steps_h2_head" title="Next Steps">Next Steps</a></li>
+</ul>--></div>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<!-- ===================================================================================== -->
+<h2><a name="intro" id="intro"></a>Activity Diagram - an Overview </h2>
+<p>An Activity diagram is a visual representation of any system's activities and flows of data or decisions between activities. When you click the Diagram editor tab for an Activity diagram, the IDE displays a specific selection of icons in the IDE Modeling Palette. Activity diagrams provide a very broad view of a business process.</p>
+<p>The diagram may be used to:</p>
+<ul>
+  <li>Describe activities and flows of data or decisions between activities</li>
+  <li>Provide a broad view of business processes</li>
+  <li>Describe the activities that occur within a use case</li>
+  <li>Show many different activities using different discrete symbols</li>
+  <li>Show parallel threads</li>
+</ul>
+<p>The following shows the tasks involved in creating an Activity diagram. This table and the following procedures describe one way to create an Activity diagram. </p>
+<ol>
+  <li> <a href="activity-diagram.html#setup">Set Up the Activity Diagram</a>
+      <ul>
+        <li>Create a UML Project </li>
+        <li>Create a Package with Empty Scoped Activity Diagram</li>
+      </ul>
+  </li>
+  <li><a href="activity-diagram.html#partitions">Place Partitions</a>
+      <ul>
+        <li>Add Partitions</li>
+        <li>Add Subpartitions </li>
+      </ul>
+  </li>
+  <li><a href="activity-diagram.html#states">Identify Action States</a>
+      <ul>
+        <li>Add Elements
+            <ul>
+              <li>Add Activity Group</li>
+              <li>Add Invocation</li>
+              <li>Add Initial Node Element</li>
+              <li>Add Horizontal Fork Element</li>
+              <li>Add Activity Final Node and Decision Node</li>
+            </ul>
+        </li>
+      </ul>
+  </li>
+  <li> <a href="activity-diagram.html#edges">Place Edges and Dependencies</a>
+      <ul>
+        <li>Add Activity Edge</li>
+        <li>Add Dependencies</li>
+        <li>Label the Edges </li>
+      </ul>
+  </li>
+  <li> <a href="activity-diagram.html#group">Work with Group Kinds and Conditions</a>
+      <ul>
+        <li>Add Guard Conditions to Activity Edges </li>
+        <li>Select and Modify GroupKinds</li>
+      </ul>
+  </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="setup"></a>Setting Up the Activity Diagram</h2>
+<p>To create an Activity diagram, you must first create the UML project and a Java package to contain an empty scoped activity diagram. This section contains the following procedures:</p>
+<ul>
+  <li><a href="activity-diagram.html#createumlproject">Creating a UML Project</a></li>
+  <li><a href="activity-diagram.html#createpackagescopedactivity">Creating a Package With Scoped Activity Diagram</a> </li>
+</ul>
+<br>
+<h3><a name="createumlproject"></a>Creating a UML Project</h3>
+<ol>
+  <li>From the main menu, choose File &gt; New Project and then do the following:
+      <ol type="a">
+        <li>Under Categories, select UML.</li>
+        <li>Under Projects, select Platform-Independent Model.</li>
+        <li>Click Next.</li>
+      </ol>
+  </li>
+  <li>Type <code>ActivityDiagProj</code> for the project name and <code>ActivityDiagTut</code> for the location for your project.<br>
+    Notice that when you type the Project Name, the IDE automatically suggests this name for the name of the Project Folder.</li>
+  <li>Click Finish.<br>
+    The New Wizard opens and displays the Create New Diagram page.</li>
+  <li>For the purposes of this example, click Cancel.<br>
+    The IDE does the following:
+      <ul>
+        <li>Creates an empty Platform Independent modeling project</li>
+        <li>Displays the project icon in the Projects window</li>
+      </ul>
+  </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h3><a name="createpackagescopedactivity"></a>Creating a Package With Scoped Activity Diagram</h3>
+<ol>
+  <li>In the Projects window, right-click the <tt>Model</tt> node.</li>
+  <li>Choose Add &gt; Package from the pop-up menu.</li>
+  <li>In the Name field type <code>ActDiagPkg</code> as the name for your package. </li>
+  <li>Accept the default value in the Namespace field.</li>
+  <li>Select the Create Scoped Diagram checkbox.</li>
+  <li>In the Diagram Name field, type <code>actDiagram</code> as the name for your diagram.</li>
+  <li>From the Diagram Type list, select Activity Diagram and click Finish.<br>
+    The IDE does the following:
+      <ul>
+        <li>Creates a package node under the Model node with the package name that you entered </li>
+        <li>Creates a diagram node under the package node</li>
+        <li>Displays the new diagram in the Diagram editor (the diagram is empty at this point)</li>
+        <li>Opens the Modeling Palette displaying the icons that are used to build activity diagrams </li>
+      </ul>
+      <br>
+    The IDE should resemble the following figure:<br>
+    <br>
+    <img src="../../../images/articles/uml-activity-diagram/setup-act-diag.png" alt="Screen capture showing IDE after initial set up of the Activity Diagram" width="675" height="440" border="0"> </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="partitions"></a>Placing Partitions</h2>
+<p>The IDE lets you add partitions to your activity diagram. Partitions divide the nodes and edges to constrain and show a view of the contained nodes.</p>
+<ol>
+  <li>From the Data section of the Modeling Palette, select the Partition icon <img src="../../../images/articles/uml-activity-diagram/partitionicon.png" alt="Partition icon" width="16" height="16">.</li>
+  <li>Click in the Diagram editor to place a Partition element on the diagram.<br>
+    An unnamed Partition element is placed on the Diagram editor.</li>
+  <li>Deselect the Partition icon by right-clicking anywhere in the Diagram editor.</li>
+  <li>Elongate the rectangle in the left side of the Diagram editor.</li>
+  <li>With the Partition element selected, right-click and choose Partitions &gt; Add Partition Column to the Right from the pop-up menu. </li>
+  <li>Expand the right column of the partition.</li>
+  <li>Name the partition by double-clicking the word <tt>Unnamed</tt> in the top portion of the partition and typing <tt>Bank</tt>.</li>
+  <li>Press Enter. </li>
+  <li>Name the left column by double-clicking the word Unnamed in the left column and typing<tt> Bank Lobby</tt>. </li>
+  <li>Name the right column <tt>Teller</tt>.<br>
+    Your diagram should resemble the following figure.<br>
+    <br>
+    <img src="../../../images/articles/uml-activity-diagram/placing-partition.png" alt="Screen capture showing Activity diagram with labeled Partitions" width="800" height="600" border="0"></li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="states"></a>Identifying Action States</h2>
+<p>This section contains the following procedures:</p>
+<ul>
+  <li><a href="activity-diagram.html#addactivitygroup">Adding an Activity Group</a></li>
+  <li><a href="activity-diagram.html#addinvocation">Adding an Invocation</a></li>
+  <li><a href="activity-diagram.html#addinitialnode">Adding an Initial Node Element</a></li>
+  <li><a href="activity-diagram.html#addhorfork">Adding a Horizontal Fork Element</a></li>
+  <li><a href="activity-diagram.html#addactfinaldecision">Adding an Activity Final Node and a Decision Node</a></li>
+</ul>
+<h3><a name="addactivitygroup"></a>Adding an Activity Group</h3>
+<ol>
+  <li>From the Basic section of the Modeling Palette, select the Activity Group icon <img src="../../../images/articles/uml-activity-diagram/complex-activity-group.png" alt="Activity Group icon" width="16" height="16">. </li>
+  <li>Click inside the Bank Lobby subpartition in the Diagram editor to place the Activity Group element on the diagram inside the left subpartition.<br>
+    This nests the Activity Group inside the Bank Lobby subpartition.</li>
+  <li>Right-click to deselect the icon.</li>
+  <li>Double-click the word <tt>Unnamed</tt> on the new Activity Group, type <tt>Customer</tt> and press Enter. </li>
+  <li>Select the Activity Group that you just added. Move and enlarge it to almost fill this subpartition.</li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h3><a name="addinvocation"></a>Adding an Invocation</h3>
+<ol>
+  <li>From the Basic section of the Modeling Palette, select the Invocation icon <img src="../../../images/articles/uml-activity-diagram/invocation-node.png" alt="Invocation icon" width="16" height="16">. </li>
+  <li>Click inside the Customer Activity Group element in the Bank Lobby subpartition to place two invocation elements on the diagram, one directly below the other.</li>
+  <li>Deselect the icon.</li>
+  <li>Move and resize the invocation elements so that they fit completely inside the Customer Activity Group as shown in the following figure.<br>
+      <br>
+      <!-- img src="../../images/articles/uml-activity-diagram/Activity2.gif" alt="Screen capture showing Activity diagram with Partitions and Invocations" width="564" height="506" border="0"><br>
+-->
+      <img src="../../../images/articles/uml-activity-diagram/add-invocation1.png" alt="Screen capture showing Activity diagram with Partitions and Invocations" width="800" height="600" border="0"><br>
+      <br>
+  </li>
+  <li>Double-click the upper invocation node that you just added, type <tt>Approach Teller Counter</tt> and press Enter to label the element.</li>
+  <li>Select the lower invocation node and name it <tt>Enter Transaction</tt>.</li>
+  <li>Place six more invocation elements inside the Teller subpartition and name them as follows:
+      <ul>
+        <li><tt>Receive Transaction Request</tt></li>
+        <li><tt>Search Customer Info</tt></li>
+        <li><tt>Send to Customer Service</tt></li>
+        <li><tt>Process Transaction</tt></li>
+        <li><tt>Update Account Info</tt></li>
+        <li><tt>Notify Customer</tt></li>
+      </ul>
+      Your diagram should resemble the following figure.<br>
+      <br>
+      <img src="../../../images/articles/uml-activity-diagram/add-invocation2.png" alt="Screen capture showing Activity diagram with Labeled Invocations" width="800" height="600" border="0"></li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h3><a name="addinitialnode"></a>Adding an Initial Node Element</h3>
+<ol>
+  <li>From the Basic section of the Modeling Palette, select the Initial Node icon <img src="../../../images/articles/uml-activity-diagram/InitialNode.png" alt="Initial Node icon" width="16" height="16">.</li>
+  <li>Click in the Bank Lobby subpartition to the left of the Approach Teller Counter element.</li>
+  <li>Deselect the icon.</li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h3><a name="addhorfork"></a>Adding a Horizontal Fork Element</h3>
+<ol>
+  <li>From the Control section of the Modeling Palette, click the Horizontal Fork icon <img src="../../../images/articles/uml-activity-diagram/HorizontalForkNode.png" alt="Horizontal Fork icon" width="16" height="16">. </li>
+  <li>Place the bar representing the Horizontal Fork element above the Update Account Info and Notify Customer invocation elements </li>
+  <li>Deselect the icon.</li>
+  <li>Lengthen the bar to span the width of both invocations.</li>
+  <li>Place another Horizontal Fork element below the Update Account Info and Notify Customer invocation elements and lengthen the bar to span the width of both invocations. </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h3><a name="addactfinaldecision"></a>Adding an Activity Final Node and a Decision Node</h3>
+<ol>
+  <li>From the Basic section of the Modeling Palette, select the Activity Final Node icon <img src="../../../images/articles/uml-activity-diagram/ActivityFinalNode.png" alt="Activity Final Node icon" width="16" height="16">. </li>
+  <li>Place the Final Node below the lower Horizontal Fork element.</li>
+  <li>Deselect the Activity Final Node icon. </li>
+  <li>From the Control section of the Modeling Palette, select the Decision icon <img src="../../../images/articles/uml-activity-diagram/Decision.png" alt="Decision icon" width="16" height="16">.</li>
+  <li>Place the Decision element on the flow between Search Customer Info and Send To Customer Service elements.<br>
+    Your diagram should resemble the following figure.<br>
+    <br>
+    <img src="../../../images/articles/uml-activity-diagram/add-final-nodes.png" alt="Screen capture showing Activity diagram with control elements" width="800" height="600" border="0"> </li>
+  <li>Deselect the Decision icon. </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="edges"></a>Placing Edges and Dependencies</h2>
+<p>This section contains the following procedures:</p>
+<ul>
+  <li><a href="activity-diagram.html#addactivityedge">Adding an Activity Edge Element</a></li>
+  <li><a href="activity-diagram.html#addmoreactivityedges">Adding More Activity Edge Elements</a></li>
+</ul>
+<h3><a name="addactivityedge"></a>Adding an Activity Edge Element</h3>
+<ol>
+  <li>From the Basic section of the Modeling Palette, select the Activity Edge icon <img src="../../../images/articles/uml-activity-diagram/activity-edge.png" alt="Activity Edge icon" width="16" height="16">.<br>
+    You use the Activity Edge to connect the Initial Node element to the Invocation element. </li>
+  <li>Click once on the Initial Node element and click again on the invocation element that is labeled Approach Teller Counter.<br>
+    An Activity Edge link now connects the two elements. The labels for the Activity Edge links are hidden and need to be displayed.</li>
+  <li>Deselect the icon by right-clicking anywhere in the Diagram editor. </li>
+  <li>Select and right-click the Activity Edge element. </li>
+  <li>Choose Labels &gt; Show Name from the pop-up menu.<br>
+    The link is labeled with the highlighted text <tt>Unnamed</tt>.</li>
+  <li>To name the link, type <tt>Initiate Cash Withdrawal</tt> and press Enter. </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h3><a name="addmoreactivityedges"></a>Adding More Activity Edge Elements</h3>
+<ol>
+  <li>Select the Activity Edge icon from the Basic section of the Modeling Palette. </li>
+  <li>Draw the following links:
+      <ul>
+        <li>From Approach Teller Counter to Enter Transaction</li>
+        <li>From Enter Transaction to Receive Transaction Request</li>
+        <li>From Receive Transaction Request to Search Customer Info</li>
+        <li>From Search Customer Info to Decision node</li>
+        <li>From Decision node to Send To Customer Service</li>
+        <li>From Decision node to Process Transaction</li>
+        <li>From Process Transaction to Upper Horizontal Fork</li>
+        <li>From Upper Horizontal Fork to Update Account Info and Notify Customer</li>
+        <li>From Notify Customer to Lower Horizontal Fork</li>
+        <li>From Update Account Info to Lower Horizontal Fork</li>
+        <li>From Lower Horizontal Fork to Final State element </li>
+      </ul>
+  </li>
+  <li>Right-click to deselect the icon. <br>
+    Your diagram should now resemble the following figure:<br>
+    <br>
+    <img src="../../../images/articles/uml-activity-diagram/activity-edge.png" alt="Screen capture showing Activity diagram with Activity Edge elements" width="16" height="16" border="0"></li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="group"></a>Working with Group Kinds and Conditions</h2>
+<p>This section contains the following procedures:</p>
+<ul>
+  <li><a href="activity-diagram.html#addguardconditions">Adding Guard Conditions to Activity Edges</a></li>
+  <li><a href="activity-diagram.html#selectmodifygroupkind">Selecting and Modifying the GroupKind Property</a></li>
+</ul>
+<h5><a name="addguardconditions"></a>Adding Guard Conditions to Activity Edges</h5>
+The UML feature lets you add Guard Conditions to an Activity diagram in the Properties window or in the Diagram editor.
+<ol>
+  <li>In the Diagram editor, right-click the Activity Edge element between the Decision node and the Send to Customer Service element.</li>
+  <li>Choose Labels &lt; Show Guard Condition from the pop-up menu.</li>
+  <li>Inside the guard condition brackets, type <tt>No Customer Info</tt> and press Enter.</li>
+  <li>Repeat steps 2 and 3 for the Activity Edge between Decision node and Process Transaction. Type <tt>Customer Info</tt> for this guard condition.</li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<h5><a name="selectmodifygroupkind"></a>Selecting and Modifying the GroupKind Property</h5>
+<p>In the IDE, an Activity Group depicts a loop in the flow of an activity. For example, an Activity Group calls out an iteration that already exists in the flow. The IDE's UML feature offers three Group Kinds as follows: </p>
+<ul>
+  <li>Iteration</li>
+  <li>Structured</li>
+  <li>Interruptible </li>
+</ul>
+<ol>
+  <li>In the Diagram editor, select the Activity Group labeled Customer.</li>
+  <li>In the Properties window on the GroupKind property row, click the down arrow. </li>
+  <li>Select Structured from the drop-down list.<br>
+    The Customer Activity Group is relabeled on the diagram as a structured group. <br>
+    The finished Activity diagram should resemble the following figure: <br>
+    <br>
+    <br>
+    <img src="../../../images/articles/uml-activity-diagram/final-diag.png" alt="Screen capture showing the completed Activity diagram." width="800" height="600" border="0"> </li>
+</ol>
+<p align="center"><a href="activity-diagram.html#top">top</a><!-- ======================================================================================= -->
+</p>
+<h2>Summary</h2>
+<p>In this article, you created an activity diagram for a simple banking application. You learned how to create a representative Activity diagram using the features offered by NetBeans UML. </p>
+<p align="center"><a href="activity-diagram.html#top">top</a><br style="clear: both;">
+  <!-- ======================================================================================== -->
+</p>
+<h2><a name="next_steps"></a>Next Steps</h2>
+<ul><li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p></li>
+</ul>
+
+<p>
+  <!-- Update your-tutorial-title below to reflect your tutorial title -----------------------------------* -->
+  <br>
+</p>
+
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="activity-diagram.html#top">top</a></p>
+<p><small>&gt;&gt; <a href="../../index.html">More NetBeans IDE Documentation</a></small></p>
+
+</body>
+</html>

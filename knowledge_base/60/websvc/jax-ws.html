@@ -1,0 +1,492 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>Getting Started with JAX-WS Web Services</title>
+    <meta name="description"
+          content="This tutorial shows how to use NetBeans IDE 6.0 to developing a JAX-WS web service 
+          and consume it in a Java class in a Java SE application, or in 
+    a servlet or JSP page">
+    <link rel="stylesheet" href="../../../netbeans.css">
+</head>
+<body>
+<h1>Getting Started with JAX-WS Web Services</h1>
+
+
+<p><a href="http://www.jcp.org/en/jsr/detail?id=224" target="_blank">Java API for XML Web Services (JAX-WS) 2.0, JSR 224</a>, is an important part 
+    of the Java EE 5 platform. A follow-on release of Java API for 
+    XML-based RPC 1.1(JAX-RPC), JAX-WS simplifies the task of 
+    developing web services using Java technology. It addresses some
+    of the issues in JAX-RPC 1.1 by providing support for multiple
+    protocols such as SOAP 1.1, SOAP 1.2, XML, and by providing 
+    a facility for supporting additional protocols along with HTTP. 
+    JAX-WS uses JAXB 2.0 for data binding and supports 
+    customizations to control generated service endpoint interfaces. 
+    With its support for annotations, JAX-WS simplifies web service 
+development and reduces the size of runtime JAR files.</p>
+
+<p>This document takes you through the basics of using the IDE to develop a JAX-WS web service 
+    and to consume it in three different clients&#8212;either a Java class in a Java SE application, or
+    a servlet or JSP page
+    in a web application. The three clients that you create in this document are separate applications, all
+consuming the same web service. </p>
+
+
+<div class="indent"> 
+    
+    <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+<ul>
+        <li><a href="jax-ws.html#Exercise_1"> 
+        Creating a Web Service</a></li>
+        <li><a href="jax-ws.html#Exercise_2"> 
+        Designing the Web Service</a></li>
+        <li><a href="jax-ws.html#Exercise_2_1"> 
+        Deploying and Testing the Web Service</a></li>
+        <li> 
+                Consuming the Web Service in
+        <ul><li><a href="jax-ws.html#Exercise_3_1">a Java class in a Java SE Application</a></li>
+            <li><a href="jax-ws.html#Exercise_3_2">a servlet in a web application</a></li>
+            <li><a href="jax-ws.html#Exercise_3_3">a JSP page in a web application</a></li>
+        </ul>
+        
+    </ul>
+</td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+    
+    <h3 class="tutorial">Software Needed for the Tutorial</h3>
+    <p>Before you begin, you need to install the following software on your computer:</p>
+    <ul>
+        <li>NetBeans IDE 6.0 Web & Java EE.
+        <li>Java Standard Development Kit (JDK) version 5.0 or version 6.0.</li>
+        <li>Glassfish V2 or Tomcat Web Server, both of which you can select from the installer
+   that you use to install NetBeans IDE 6.0.                                                                                  </li>
+           </li>
+    </ul>
+
+</div>
+                                    <!-- ===================================================================================== -->
+                                    <h2><a name="Exercise_1"></a> 
+                                        <!--Exercise 1: -->
+                                    Creating a Web Service</h2>
+                                    <p>The goal of this exercise is to create a project appropriate to the deployment container that you decide to use. Once
+                                    you have a project, you will create a web service in it.</p>
+                                    <div class="indent"> 
+                                    <h3 class="tutorial">Choosing a Container</h3>
+                                    <p>You can either deploy your web service in a web container or in an EJB container. This depends on implementation choices.
+                                        For example, if you plan to deploy to the Tomcat Web Server, which only has a web container, you should choose to create a web application,
+                                    and not an EJB module.</p>
+                                    
+                                    <ol>
+                                        
+                                        <li> Choose File &gt; New Project (Ctrl-Shift-N). Select Web Application from 
+                                        the Web category or EJB Module from the Enterprise category. </li>
+                                        
+                                        <li>Name the project <tt>CalculatorWSApplication</tt>.
+                                        <li>Depending on the deployment server that you want to use, do the following: 
+                                        <ul><li>For GlassFish, set the Java EE Version to Java EE 5.
+                                        <li>For the Tomcat Web Server, unselect the Set Source Level to 1.4 checkbox.</ul>
+                                        
+                                        
+                                        
+                                        <li>Click Finish.</li>
+                                    </ol>
+                                    <h3 class="tutorial">Creating a Web Service from a Java Class</h3>
+                                    <ol>
+                                    
+                                    <li>Right-click the <tt>CalculatorWSApplication</tt> node and
+                                    choose New &gt; Web Service.</li>
+                                    
+                                    <li>Name the web service <tt>CalculatorWS</tt>, type <tt>org.me.calculator</tt> in
+                                    Package, 
+                                and click Finish. <p>The Projects window displays the structure of
+                                the new web service and the visual designer is shown in the editor area. For
+                                    example, for web
+                                applications you should now see the following:</p>
+                                <p><img border="1" src="../../../images/articles/jaxws/jaxws-60-designer.png" alt="Projects window displaying the web service"> 
+                                    
+                                    
+                                    </li>
+                                    
+                                    </ol>
+                                    </div>
+                                    
+                                    <!-- ===================================================================================== -->
+                                    <h2><a name="Exercise_2"></a> 
+                                        <!--Exercise 2: -->
+                                    Designing the Web Service</h2>
+                                    
+                                    <p>The goal of this exercise is to do something meaningful with the files and code
+                                        that the IDE has generated for you. You will add an operation that will add two numbers
+                                    received from a client.</p>
+                                    
+                                    <div class="indent"> 
+                                    
+                                    <h3 class="tutorial">Adding Business Logic to the Web Service</h3>
+                                    
+                                    
+                                    
+                                    <ol>
+                                    
+                                <li>Click Add Operation in the visual designer.
+                                <p>A dialog box appears, where you can define the new operation.
+                                    <li>In the upper part of the Add Operation dialog box, type <tt>add</tt> in Name and type <tt>int</tt> in
+                                    the Return Type drop-down list. In the lower part of the Add Operation dialog box, click Add and create a parameter of type <tt>int</tt> named <tt>i</tt>.
+                                Then click Add again and create a parameter of type <tt>int</tt> called <tt>j</tt>.</p>
+                            <p>You should now see the following:</p>
+                                <p><img border="1" src="../../../images/articles/jaxws/jaxws-60-add-operation.png" alt="Add Operation"> 
+                                    
+                                    
+                                <li>Click OK at the bottom of the Add Operation dialog box.</p>
+                                
+                                <p>The visual designer now displays the following:</p>
+                                
+                                <p><img border="1" src="../../../images/articles/jaxws/jaxws-60-result.png" alt="Result"> 
+                                    
+                                    <li>Click Source and notice that the source code that has been
+                                generated in the previous steps is as follows:</p>
+                           
+                                   <p><img border="1" src="../../../images/articles/jaxws/jaxws-60-source.png" alt="Result"> 
+                           
+                                  
+                            <li>In the editor, extend the skeleton <tt>add</tt> operation to the following (changes are in bold):
+                                
+                                <pre class="examplecode">    @WebMethod
+    public int add(@WebParam(name = "i") int i, @WebParam(name = "j") int j) {
+        <b>int k = i + j;</b>
+        return <b>k</b>;
+    }</pre></li>
+                        </ol>
+                
+                      <p>As you can see from the code above, the web service simply receives
+                      two numbers and then returns their sum. In the next section, we use the IDE
+                      to test our web service.
+                        
+                    </div>
+                    
+                    <!-- ======================================================================================== -->
+                    
+                    <h2 class="tutorial"><a name="Exercise_2_1"></a>Deploying and Testing the Web Service</h2>
+                    
+                    <p>When you deploy a web service to a web container, the IDE lets you test the
+                        web service to see if it functions as you expect. The Tester application, provided
+                        by the Sun Java System Application Server, is integrated into the IDE for this purpose. For the
+                        Tomcat Web Server, there is a similar tool. However, while the Sun Java System Application Server's
+                        Tester page lets you enter values and test them, the Tomcat Web Server does not. In the
+                        latter case, you can only see that the web service is deployed, you cannot test the values. No
+                    facility for testing whether an EJB module is deployed successfully is currently available.</p>
+                    
+                    <p><b>To test successful deployment to a web container:</b></p>
+                    
+                    <ol>
+                       <li>Expand the Web Services node,
+                       right-click the node that represents
+                    your web service, and choose Test Web Service. 
+                    <p>The IDE starts the 
+                        application server, builds the application, and opens the tester page
+                        in your browser, if you
+                        deployed a web application to the Sun Java System Application Server. 
+                        For the Tomcat Web Server
+                    and deployment of EJB modules, the situation is different:</p>
+                    
+                    <ul>
+                <li>If you deployed to the Sun Java System Application Server, type two numbers
+                    in the tester page, as shown below:
+                    <p><img border="1" src="../../../images/articles/javaee5/jax-ws-tester.png" alt="Web service tester page when service successfully deployed to Sun Java System Application Server"></p>
+                    <p>The sum of the two numbers is displayed:</p>
+                <p><img border="1" src="../../../images/articles/javaee5/jax-ws-tester2.png" alt="Web page showing result of web service test"></p></li> 
+          <li>If you deployed to the Tomcat Web Server, you
+                    will see the following instead, which indicates that you have successfully deployed your
+                web service:
+                <p><img border="1" src="../../../images/articles/javaee5/tomcat-successful-ws.png" alt="Web page displayed when web service was successfully deployed to Tomcat server"></p></li>      
+                    <li>Right-click the project node, choose Properties, and click Run. Depending on the deployment 
+                        server that you want to use, do the following: 
+                        <ul><li>For the Sun Java System Application Server, type <tt>/CalculatorWSService?Tester</tt> in the Relative URL field.</li>
+                            <li>For the Tomcat Web Server, type <tt>/CalculatorWS?Tester</tt> in the Relative URL field.</li>
+                        </ul>
+                        
+                        <p><b>Note:</b> Since the result of a deployed EJB module is not displayed in a browser, you cannot
+                    take the step above if you are working with an EJB module.</p></li>
+                 
+            
+            </ul>
+        </li>
+    </ol>
+    
+<!-- ======================================================================================== -->
+
+        
+        
+<h2 class="tutorial"><a name="Exercise_3"></a> Consuming the Web Service</h2>
+<p class="tutorial">Now that we have deployed our web service, 
+    we need to create a client to make use of the web service's <tt>add</tt> method. Here,
+    we create three clients&#8212; a Java class in a Java SE application,
+    a servlet, and a JSP page
+in a web application.</p>
+
+<p><b>Note:</b> A more
+advanced tutorial focusing on clients is
+<a href="client.html">Getting Started with JAX-WS Web Service Clients</a>.</p>
+
+<div class="indent"> 
+    <h3 class="tutorial"><a name="Exercise_3_1"></a>Client 1: Java Class in Java SE Application</h3>
+   
+    <p>In this section, we create a standard Java application. The wizard
+    that we use to create the application will also create a Java class.
+    We will then use the IDE's tools to consume the web service that we
+    created at the start of this tutorial.</p>
+    
+    <ol>
+        
+        <li>Choose File &gt; New Project (Ctrl-Shift-N). Select Java Application from 
+            the General category. Name the project <tt>CalculatorWS_Client_Application</tt>. Click Finish.</li>
+        
+        
+        <li>Right-click the <tt>CalculatorWS_Client_Application</tt> node and
+        choose New &gt; Web Service Client.</li>
+        
+        <li>In Project, click Browse. Browse to the web service that you want to consume.
+        When you have selected the web service, click OK.</li>
+        
+        <li>Type <tt>org.me.calculator.client</tt> in
+            Package, 
+            and click Finish. <p>The Projects window displays the new web service client, with a node
+            for the <tt>add</tt> method that you created:</p>
+            <p><img border="1" src="../../../images/articles/jaxws/jax-ws-project-view2.png" alt="New web service client in Java SE application displayed in the Projects window"/></p> 
+        </li>
+        <li>Double-click <tt>Main.java</tt> so that it opens in the
+            Source Editor. Delete the TODO comment and then drag
+            the <tt>add</tt> node above into the empty line.
+            You should now see the following:
+            
+            <pre class="examplecode">public static void main(String[] args) {
+
+    try { // Call Web Service Operation
+        org.me.calculator.client.CalculatorWSService service = new org.me.calculator.client.CalculatorWSService();
+        org.me.calculator.client.CalculatorWS port = service.getCalculatorWSPort();
+        // TODO initialize WS operation arguments here
+        int i = 0;
+        int j = 0;
+        // TODO process result here
+        int result = port.add(i, j);
+        System.out.println("Result = "+result);
+    } catch (Exception ex) {
+        // TODO handle custom exceptions here
+    }
+
+}</pre>
+            <p><b>Note:</b> Alternatively, instead of dragging
+            the <tt>add</tt> node, you can right-click in the editor
+        and then choose Web Service Client Resources &gt; Call Web Service Operation.</li>
+        <li>Initialize the two ints, using meaningful numbers, such as 3 and 4. Just change the 
+            values of the two ints above from 0 to some other number.</li>
+            <li>Right-click the project node and choose Run Project.
+                <p>The Output window should now show the sum:</p>
+                    
+                <pre class="examplecode">    compile:
+    run:
+    Result = 7
+    BUILD SUCCESSFUL (total time: 1 second)</pre></li>
+            
+            </ol>
+            
+            <h3><a name="Exercise_3_2"></a>Client 2: Servlet in Web Application</h3>
+           
+            
+            <p>In this section, we create a new web application, after which
+            we create a servlet. We then use the servlet to consume the
+            web service that we created at the start of this tutorial. 
+            
+            <ol>
+                
+                <li> Choose File &gt; New Project (Ctrl-Shift-N). Select Web Application from 
+                    the Web category. Name the project <tt>CalculatorWSServletClient</tt>. 
+                Click Finish.</li>
+                
+                <li>Right-click the <tt>CalculatorWSServletClient</tt> node and
+                choose New &gt; Web Service Client.
+    
+                <p>The New Web Service Client wizard appears.</p>
+    </li>
+        
+        <li>In Project, click Browse. Browse to the web service that you want to consume.
+        When you have selected the web service, click OK.
+        
+            <li>In Package, type <tt>org.me.calculator.client</tt>.</li>
+            
+            <p>You should now see the following:</p>
+            
+             <p><img border="1" src="../../../images/articles/jaxws/jax-ws-project-view4.png"  alt="New web service client in servlet displayed in the Projects window"> 
+            
+            <p>Click Finish.</p> 
+            
+            <p>The Web Service References node in the Projects window displays
+            the structure of your newly created client, including
+            the <tt>add</tt> operation that you created earlier
+            in this tutorial:</p>
+            <p><img border="1" src="../../../images/articles/jaxws/jax-ws-project-view3.png"  alt="New web service client in servlet displayed in the Projects window"> 
+        </li>
+        
+        <li>Right-click the <tt>CalculatorWSServletClient</tt> project node and choose New &gt; Servlet. Name
+        the servlet <tt>ClientServlet</tt> and place it in a package called <tt>org.me.calculator.client</tt>.
+        Click Finish. 
+        
+        <li>To make the servlet the entry point to your application,
+        right-click the project node, choose Properties, click Run, and
+        type <tt>/ClientServlet</tt> in Relative URL. Click OK.
+        
+        <li>In the Source Editor, remove the line that comments out the
+            body of the <tt>processRequest</tt> method. 
+            This is the line:
+            
+            <pre class="examplecode">    /* TODO output your page here</pre>
+            <p>Next, delete the line that ends the section of commented out code:
+            <pre class="examplecode">    */</pre>
+            <p>Add some empty lines after this line:
+            <pre class="examplecode">    out.println("&lt;h1&gt;Servlet ClientServlet at " + request.getContextPath () + "&lt;/h1&gt;");</pre>
+        
+            <p>Now, drag the node that represents
+        the <tt>add</tt> operation into the space that you created.
+            <p>The <tt>processRequest</tt> method now looks as 
+            follows (the added code is in bold below):</p>
+            
+            <pre class="examplecode">    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("&lt;html&gt;");
+        out.println("&lt;head&gt;");
+        out.println("&lt;title&gt;Servlet ClientServlet&lt;/title&gt;");
+        out.println("&lt;/head&gt;");
+        out.println("&lt;body&gt;");
+        out.println("&lt;h1&gt;Servlet ClientServlet at " + request.getContextPath () + "&lt;/h1&gt;");
+    
+        <b>try { // Call Web Service Operation
+            org.me.calculator.client.CalculatorWS port = service.getCalculatorWSPort();
+            // TODO initialize WS operation arguments here
+            int i = 0;
+            int j = 0;
+            // TODO process result here
+            int result = port.add(i, j);
+            out.println("Result = "+result);
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }</b>
+        
+        out.println("&lt;/body&gt;");
+        out.println("&lt;/html&gt;");
+        out.close();
+     }</pre>
+            
+            <p>Change the value for <tt>i</tt>
+                and <tt>j</tt> to more meaningful numbers,
+            such as 3 and 4. </p>
+            
+           
+        
+            <li>Right-click the project node and choose Run Project.</p> <p>The server starts, if
+            it wasn't running already; the application is built and deployed, and the browser
+        opens, displaying the calculation result, as shown below:</li>
+        
+        <p><img border="1" src="../../../images/articles/jaxws/jaxws-60-webclient.png"  alt="New web service client in servlet displayed in the Projects window"> 
+            
+            </ol>
+            
+            <h3><a name="Exercise_3_3"></a>Client 3: JSP Page in Web Application</h3>
+            <p>In this section, we create a new web application and
+            then consume our web service in the default JSP page
+            that the Web Application wizard creates.
+            
+            <ol>
+            
+            <li> Choose File &gt; New Project (Ctrl-Shift-N). Select Web Application from 
+                the Web category. Name the project <tt>CalculatorWSJSPClient</tt>. Click Finish.</li>
+            
+            
+            <li>Right-click the <tt>CalculatorWSJSPClient</tt> node and
+            choose New &gt; Web Service Client.</li>
+            
+            <li>In Project, click Browse. Browse to the web service that you want to consume.
+            When you have selected the web service, click OK.
+            
+        <li>In Package, type <tt>org.me.calculator.client</tt>.
+        
+               <p>You should now see the following:</p>
+                
+               <p><img border="1" src="../../../images/articles/jaxws/jax-ws-project-view6.png"  alt="New web service client in servlet displayed in the Projects window"></p>
+        
+        <p>Click Finish. </p>
+        <p>The Projects window displays the new web service client,
+    as shown below:</p>        
+        
+        <p><img border="1" src="../../../images/articles/jaxws/jax-ws-project-view5.png"  alt="New web service client in servlet displayed in the Projects window"></p></li> 
+        
+        <li>In the Web Service References node, expand
+        the node that represents the web service. The <tt>add</tt> operation, which you want to
+        invoke from the client, is now exposed.</li>
+        <li>Drag the <tt>add</tt> operation to the client's <tt>index.jsp</tt> page,
+        and drop it below the H1 tags. The code for invoking the service's operation
+        is now generated in the <tt>index.jsp</tt> page,
+    as you can see here:
+        
+<pre>&lt;%
+try {
+    org.me.calculator.client.CalculatorWSService service = 
+        new org.me.calculator.client.CalculatorWSService();
+    org.me.calculator.client.CalculatorWS port = 
+        service.getCalculatorWSPort();
+     // TODO initialize WS operation arguments here
+    int i = 0;
+    int j = 0;
+    // TODO process result here
+    int result = port.add(i, j);
+    out.println("Result = "+result);
+} catch (Exception ex) {
+    // TODO handle custom exceptions here
+}
+%&gt;</pre>    
+    
+        <p>Change the value for <tt>i</tt>
+            and <tt>j</tt> from 0 to more meaningful numbers,
+        such as 3 and 4.</p></li> 
+            
+            
+        <li>Right-click the project node and choose Run Project.
+        <p>The server starts, if
+            it wasn't running already; the application is built and deployed, and the browser
+        opens, displaying the calculation result:</p>
+        
+    <p><img border="1" src="../../../images/articles/javaee5/jax-ws-project-jsp-result.png" alt="JSP page showing result"></p></li> 
+        
+        
+        
+    </ol>
+</div>
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;" />
+<!-- ======================================================================================= -->
+<h2><a name="nextsteps"></a>Next Steps</h2>
+<p>For more information about using NetBeans IDE 6.0 to develop Java EE applications, see the following resources:
+</p>
+<ul>
+    <li><a href="client.html">Getting Started with JAX-WS Web Service Clients</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/jaxb.html" target="_blank">Getting Started with JAXB</a></li>
+    <li><a href="rest.html">Getting Started with RESTful Web Services</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/ejb.html" target="_blank">End-to-End Web Service Creation and Consumption</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/strikeiron.html" target="_blank">Consuming StrikeIron Web Services in Web Applications</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/google.html" target="_blank">Consuming Google Web Services in Web Applications</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/wsit.html" target="_blank">Advanced Web Service Interoperability</a></li>
+    <li><a href="../../trails/java-ee.html">Java EE Applications Learning Trail</a></li>
+
+</ul>
+<p>To send comments and suggestions, get support, and keep informed on the latest
+    developments on the NetBeans IDE Java EE development features, <a <a href="http://www.netbeans.org/community/lists/top.html" target="_blank">join
+the nbj2ee@netbeans.org mailing list</a>.</p>
+</body>

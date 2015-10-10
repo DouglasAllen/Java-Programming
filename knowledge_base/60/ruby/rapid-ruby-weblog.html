@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+    <head>
+        <title>Creating a Ruby Weblog in 10 Minutes - NetBeans IDE 6.0 Tutorial</title>
+        <meta name="DESCRIPTION" content="This tutorial describes how to use the NetBeans IDE 6.0 with Ruby support to create a blog in less than 10 minutes." >
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+	
+
+    </head>
+<body>
+<h1>Creating a Ruby Weblog in 10 Minutes</h1>
+<div class="articledate" style="margin-left: 0px; font-style: italic;">
+<p><em>Contributed by Brian Leonard, maintained by Gail Chappell<br>
+December 2007</em> [Revision number: V6.0-5]<br>
+</p>
+</div>
+<p>In this tutorial, you use the Ruby support in the NetBeans IDE to create and run a simple web application. The example shows how to create a Ruby web log. You follow the basic  workflow of creating the model, adding a controller,
+and creating a view.</p>
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><p><b>Contents</b></p>
+      <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="374"><a href="rapid-ruby-weblog.html#01">Tutorial Requirements</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="374"><a href="rapid-ruby-weblog.html#02">Creating the Sample Database</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#03">Creating the Ruby on Rails Project</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#04">Configuring the Database Environment </a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#05">Creating the Model</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#06">Migrating the Database</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#07">Creating a Controller </a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#07a">Running the Application</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#08">Doing More: Adding Another Field </a></td>
+        </tr>
+		        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="rapid-ruby-weblog.html#09">Doing More: Making the List Look More Like a Blog</a></td>
+        </tr>
+      </table>
+	  </td>
+      <td width="20"></td>
+      <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to NetBeans IDE 6.0" border="0"></td>
+
+    </tr>
+</table>
+<a name="01"></a>
+<h2>Tutorial Requirements</h2>
+ <p>This tutorial requires the following technologies and resources: </p>
+ <ul>
+    <li>A database server </li>
+    <li>NetBeans IDE 6.0 with Ruby support</li>
+</ul>
+<a name="02"></a>
+ <h2>Creating the Sample Database </h2>
+ <p><b>Note:</b> This tutorial uses the MySQL database server. See <a href="setting-up.html"
+>Installing and Configuring Ruby Support</a>
+for information about using a MySQL database server
+in a Ruby application. 
+
+
+ This document also contains tips on how to use the Java DB database server instead. </p>
+ <p>Before you create the Ruby on Rails project, create a rubyweblog_development database, as described below.</p>
+<ol>
+<li>Open a command window.</li>  
+<li>If it has not already been started, start the MySQL database server.</li>
+<li>Type the following command to create the development database
+and press Enter.
+<pre>mysqladmin -u root -p create rubyweblog_development</pre>
+<b>Note:</b> If the root user does not have a required password,
+omit the <b>-p</b> argument.
+</li>
+</ol>   
+
+<a name="03"></a>
+ <h2>Creating the Ruby on Rails Project </h2>
+ <div>You begin by creating a Ruby on Rails project.  By default, the application 
+ is created in a directory structure that conforms to the Ruby on Rails project conventions for applications.</div>
+ <ol>
+ 
+ <li>In the NetBeans IDE, choose File &gt; New Project. </li>
+  <li><p>Select Ruby in the Categories field and Ruby on Rails Application in the Projects field. Click Next. </p>
+ <strong>Note:</strong> The first time that you create a Ruby project in the IDE, 
+	the IDE checks if you have any other Ruby installations in addition to the bundled JRuby software. 
+	If you do, the IDE displays a dialog box asking you to select which software to use. 
+	Choose JRuby if you want to use the bundled JRuby interpreter, or choose your Ruby installation if you prefer to use 
+	it instead. For more information, see <a href="setting-up.html#native">Configuring the IDE to Use Your Own Ruby Installation</a> 
+	in the Installing and Configuring Ruby tutorial.
+</li>
+  <li>
+    Type <code>rubyweblog</code> in the Project Name field.
+Accept all the other default settings.   </li>
+	<li><p>Click Finish to create the new project.</p>
+	
+	<p>The IDE creates the project directory with the same name as your project.  You see the following:</p>
+	<ul>
+	<li>The basic categories of the application in the Projects window. Of particular interest are the Controllers, Models,  and Views nodes. In this tutorial,
+you follow the basic  workflow of  creating the model, adding a controller,
+and creating a view.</li>
+	<li>A list of files that are part of the application in the Output window. You can click a link in the Output window to open a file in the editing area.</li>
+	<li>The<code> database.yml</code> file in the editing area. </li>
+	</ul>
+	
+   </li>
+	
+
+</ol>
+ <a name="04"></a>
+<h2>Configuring the Database Environment</h2>
+<div>The next step is to edit the file database.yml, 
+
+
+ which is already configured to use the MySQL
+adapter and the development database. You do not need to do
+any configuration unless the root user requires a password.</div>
+<ol>
+  <li>In the editing area, edit the <code>database.yml</code> by providing the password in the development configuration.</li>
+  <li><p>Save and close the <code>database.yml</code> file.</p>
+  <b>Note:</b> If your operating system's host file does not
+           contain <tt>localhost</tt>, use  <tt>127.0.0.1</tt> instead. Note
+          also that with some systems, the database setting must be in lowercase letters.
+  </li>
+</ol> 
+<a name="05"></a>
+<h2>Creating the Model</h2>
+<p>Here you use the Rails Generator to create a model for the application. The rubyweblog application requires a Post model for storing instances of blog posts. </p>
+<ol>
+  <li>In the  Projects  window, right-click the Models node and choose Generate.</li>
+  <li>
+    <p>In the Rails Generator dialog box, type <code>Post</code> in the Arguments field and click OK.</p>
+   <p>The Rails Generator creates a model named Post. The Output window lists the files that are created as part of the model generation: </p>
+    <ul>
+ <li><b>app/models/post.rb.</b>  A file that holds the methods for the Post model.
+This file is also opened in the editing area. </li>
+ <li><b>test/unit/post_test.rb.</b> A unit test for checking the Post model.
+ </li>
+ <li><b>
+ test/fixtures/posts.yml.</b> A test fixture for populating the model.
+ </li>
+ <li>
+ <strong>db/migrate/migrate/001_create_posts.rb</strong>. A migration file for defining the initial structure of the database.
+ </li>
+</ul>
+</ol>
+  
+	<a name="06"></a>
+ <h2>Migrating the Database </h2>
+ <div>  The file that you work with next is the migration file, <code>001_create_posts.rb</code>. 
+ You add information to configure the database. </div>
+ <ol>
+  <li>
+    <p>In the Output window, click the link for the <code>001_create_posts.rb</code> file.</p>
+    <p>The file opens to show the <code>self.up</code> method, which creates a table called posts, and the
+    <code>self.down</code> method, which tears the posts table down.</p>
+  </li>
+  <li>
+    <p>Add the title column (shown in <b>bold</b>) to <code>create_table</code> in the <code>self.up</code> method as shown in the following code sample:</p>
+	 <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 1: Code for </b><strong><code>001_create_posts.rb</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+class <em>CreatePosts < ActiveRecord::Migration</em>
+  def self.up
+    create_table :posts do |t|
+      <strong>t.column "title", :string</strong>
+    end
+  end
+
+  def self.down
+    drop_table :posts
+  end
+end</pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+  </li>
+   <li>From the main menu, choose File > Save All.</li>
+
+  <li>
+    <p>In the Projects window, right-click the rubyweblog node and choose Migrate Database &gt; To Current Version.</p>
+    <p>This action updates the the database to include the posts table. The Output window indicates when the migration is complete. </p>
+</ol>
+<a name="07"></a>
+<h2>Creating a Controller </h2>
+<div>Now you use the Rails Generator to create a controller to interact with the Post model. In this tutorial, you add scaffolding code, which provides a simple CRUD interface for creating, reading, updating, and deleting entries in the blog. </div>
+
+<ol>
+  <li>
+    <p>In the Projects window, right-click the Controllers node and choose Generate.
+  </li>
+  <li><p>In the Rails Generator dialog box, type <code>Blog</code> in the Name field.  Leave the Views field blank. Click OK.</p>
+	This action creates the file <code>blog_controller.rb</code> and opens the file in the editing area<code>. </code>A blog_controller.rb node is added under the Controllers node in the Projects window.</li>
+    <li>
+    <p>Edit <code>blog_controller.rb</code> by adding the following scaffolding code, which provides a simple CRUD application around the Post model:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 2: Code for </b><strong><code>blog_controller.rb</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+class <em>BlogController</em> &lt; <em>ApplicationController</em>
+  <strong>scaffold :post</strong>
+end</pre>
+</td>
+      </tr>
+    </table> 
+  </li>
+    
+</ol>
+  <a name="07a"></a>
+<h2>Running the Application</h2>
+<div>Now test the application.</div>
+<ol>
+<li>
+    <p>Under the Configuration node, open <code>routes.rb</code>.  Find the line:</p>
+	<pre># map.connect '', :controller => "welcome"
+	</pre>
+</li>
+<li>Edit the line by removing the comment sign (#) and changing <code>welcome</code> to <code>blog</code>.</li>
+<li>
+    <p>Expand the Public node, right-click index.html and choose Delete.</p>
+    <p><code>index.html</code> displays a default Welcome page, which is not what you want. By deleting <code> index.html</code>, Rails looks in <code>routes.rb</code> to figure out what page to display, which you set to the blog in the previous step.
+</li>
+  <li>Choose File > Save All.</li>
+  <li>
+    <p>Click the Run Main Project button in the toolbar.</p>
+	<p>This action starts the WEBrick server, which is part of the Ruby on Rails framework, and launches the web browser. Following is the first page of the application.</p>
+	<div style="margin:10px auto;">
+<p><b>Figure 1: rubyweblog Home Page </b></p>
+    <img src="../../../images/articles/60/ruby/rapid-ruby-weblog/listing_posts.png" width="321" height="147" border="0" alt="Figure 1:  Ruby WebLog Home Page"><br>
+  </div>
+  </li>
+	<li>
+	  <p>Click the New post link to display the second page of the application, shown below. </p>
+		<div style="margin:10px auto;">
+<p><b>Figure 2: Page for Creating a New Post</b></p>
+		<img src="../../../images/articles/60/ruby/rapid-ruby-weblog/first_entry.png" width="321" height="190" border="0" alt="Figure 2: Page for Creating a New Post"><br>
+ </div>
+  </li>
+		<li>
+		  <p>Enter a title and click Create.</p>
+		  <p>Following is a sample blog post.</p>
+		  <div style="margin:10px auto;">
+<p><b>Figure 3: Successful Creation of Blog Post</b></p>	
+		<img src="../../../images/articles/60/ruby/rapid-ruby-weblog/listing_first_entry.png" width="321" height="190" border="1" alt="Figure 3: Successful Creation of Blog Post">
+		</div>
+		</li>
+
+  
+</ol>
+<a name="08"></a>
+
+<h2> Doing More: Adding Another Field </h2>
+<div>Here you add another field so that, in addition to the Title field, the posts table includes a Body column for providing the text of the blog. The steps for creating a field should be familiar by now. </div>
+  <ol>
+    <li>
+      <p>Right-click the Database Migrations node and choose Generate. In the Rails Generator dialog box, type <code>AddBody</code> in the Arguments field and click OK.</p>
+	  <p>The IDE creates the versioned migration script <code>002_add_body.rb</code> and opens the file in the editing area. </p>
+    </li>
+    <li>
+      <p>Modify <code>002_add_body.rb </code> as follows:</p>
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 3: Code for </b><strong><code>002_add_body.rb</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+class AddBody < ActiveRecord::Migration
+  def self.up
+    <strong>add_column 'posts', 'body', :text</strong>
+  end
+
+  def self.down
+    <strong>remove_column 'posts', :body</strong>
+  end
+end
+</pre>
+</td>
+      </tr>
+    </table>
+	<br>
+	This migration adds a body column to the posts table and removes it again, if you are backing out of the migration.    </li>
+	<li>Choose File > Save All.</li>
+    <li>
+      Right-click the rubyweblog node and choose Migrate Database &gt; To Current Version.
+    </li>
+<li>
+  <p>Return to the browser and click the New Post link to see how Ruby recognizes the new body field, shown in the following figure. </p>
+ 		<div style="margin:10px auto;">
+<p><b>Figure 4: New Post With Body Field </b></p>	
+   <img src="../../../images/articles/60/ruby/rapid-ruby-weblog/new_posts_body.png" border="1" width="384" height="529" alt="Figure 4:  New Post With Body Field"> 
+</div>
+</li>
+<li><p>Create a few more blog entries. For example: </p>
+ 		<div style="margin:10px auto;">
+<p><b>Figure 5: More Blog Posts</b></p>	
+    <img src="../../../images/articles/60/ruby/rapid-ruby-weblog/listing_posts_2.png" width="560" height="275" alt="Figure 5:  More Blog Posts"> 
+</div>
+</li>
+</ol>
+<a name="09"></a>
+
+<h2>Doing More: Making the List Look More Like a Blog</h2>
+<div>So far, the scaffold method used in the BlogController created a basic CRUD application that enabled you to easily 
+test the Post model. Now, you generate the same views used by the scaffold method so that you can customize the user interface.</div>
+<ol>
+  <li>In the Projects window, right-click the Views node and choose Generate.</li>
+  <li>In the Rails Generator dialog box, choose scaffold from the Generate drop-down list.</li> 
+  <li>
+    <p>Type <code>Post</code> in the Model Name field and <code>Blog</code> in the Controller Name field. 
+  Leave the Actions field blank. Select Overwrite to force the BlogController to be regenerated, and then click OK.</p>
+  The IDE creates a view for the Post model and lists the contents in the Output window. </li>
+  <li>
+    <p>Expand Views > blog and open <code>list.rhtml,</code> which is used to show the list of blog entries.  Delete the &lt;h1&gt; and &lt;table&gt; tags and replace them with the following code:</p>
+          <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 4: Code for <code>list.rhtml</code> </b></td>
+      </tr>
+      <tr>
+        <td><pre>
+&lt;h1&gt;The Ruby Blog&lt;/h1&gt;
+
+&lt;% @posts.each do |post| %&gt;
+  &lt;h2&gt;&lt;%= post.title %&gt;&lt;/h2&gt;
+  &lt;p&gt;&lt;%= post.body %&gt;&lt;/p&gt;
+  &lt;small&gt; &lt;%= link_to 'Permalink', :action =&gt; 'show', :id =&gt; post %&gt;&lt;/small&gt;
+  &lt;hr&gt;
+&lt;% end %&gt;</pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+	<p>For each instance of a <code>post</code> action, this code produces a 
+	title, body, and Permalink, as shown in Figure 6. </p>
+  </li>
+ 
+  <li>
+    <p>Choose File &gt; Save All and  then refresh your browser to see the new interface for the Post model. </p>
+  		<div style="margin:10px auto;">
+<p><b>Figure 6: New and Improved Model Interface</b></p>	
+      <img src="../../../images/articles/60/ruby/rapid-ruby-weblog/listing_posts_3.png" width="437" height="416" alt="Figure 6:  New and Improved Model Interface"> 
+  </div>
+  </li>
+  <li>
+    <p>To display the blog with the most recent entry first, reverse the sort order by adding .reverse to the end of @posts in <code>list.rhtml</code>:</p>
+      <pre>
+	  &lt;% @posts.reverse.each do |post| %&gt;
+	  </pre>
+	  <p>When you save the file and refresh your browser, the blog displays as shown in the following figure.</p>
+  		<div style="margin:10px auto;">
+<p><b>Figure 7: Blog Posts in Reverse Order</b></p>	
+      <img src="../../../images/articles/60/ruby/rapid-ruby-weblog/listing_posts_4.png" width="437" height="417" alt="Figure 7:  Blog Posts in Reverse Order">
+</div>
+</li>
+</ol>
+<!-- ======================================================================================== -->
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<br>
+<ul>
+<li>
+  <p>To continue with the Ruby web log tutorial and learn more about Ruby support in the NetBeans IDE, go to <a href="model.html">Building a Relationship Between Rails Models</a>.</p>
+</li>
+  <li><p>To obtain support and stay informed of the latest 
+  changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and  
+  <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a>
+  mailing lists.</p>
+  </li>
+  <li>
+  To submit your own NetBeans Ruby tutorial, visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+</ul>
+  
+
+<br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div> 
+<br style="clear: both;">
+
+</body>
+</html>

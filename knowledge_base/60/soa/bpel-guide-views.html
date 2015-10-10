@@ -1,0 +1,556 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+    <title>Developer Guide to the BPEL Designer - The BPEL Design and Source View</title>
+    <meta name="description" content="Developer Guide to the BPEL Designer">
+    <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+    <meta name="author" content="Dmitry Markovski"></head>
+  <body>
+    <a name="top"></a>
+    <h1>
+       Developer Guide to the BPEL Designer: The BPEL Design and Source View
+    </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007</p>
+</div>
+    <h2>
+       Contents
+    </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><ul>
+            <li><a href="bpel-guide-overview.html">Overview</a></li>
+          <li><a href="bpel-guide-project.html">The BPEL Module Project</a></li>
+          <li><b>The BPEL Design and Source View</b>
+            <ul>
+              <li><a href="bpel-guide-views.html#und_views">Understanding the  Design and Source View</a> </li>
+              <li> <a href="bpel-guide-views.html#navigator">The Navigator</a> </li>
+              <li> <a href="bpel-guide-views.html#designer">Working in the Design View</a> </li>
+            </ul>
+          </li>
+          <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+          <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> </li>
+          <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+          <li><a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+          <li> <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> </li>
+          <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+        </ul></td>
+        <td width="20"></td>
+        <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206" align="right"> </td>
+      </tr>
+    </table>
+    <br>
+    <h2>
+      <a name="und_views"></a>Understanding the  Design and Source View    </h2>
+    <p>      This section explores the capabilities of the BPEL Designer, which enables you to visually author a process diagram that will be automatically generated into BPEL source code compliant with the WS-BPEL 2.0 specification. To fully support round-trip engineering and synchronize the visual diagram and code, the BPEL Designer has Design and Source views. </p>
+    <div class="indent">
+      <h3 class="tutorial">
+         Design View      </h3>
+      <p>The Design view is a business processes designer where you can author a diagram of your business process. In the Design view, you add, edit, and delete diagram elements. The diagram constructed in the Design view is  automatically generated into BPEL source code compliant with the WS-BPEL 2.0 specification with the exceptions listed in the BPEL 2.0 Language Constructs section of the <a href="https://open-esb.dev.java.net/kb/preview3/ep-bpel-se.html" title="BPEL Service Engine User's Guide" target="_blank">BPEL Service Engine User's Guide</a>. </p>
+      <p>The Design view opens by default when you double-click a BPEL source file from a BPEL Module project in the Projects window. To switch to the corresponding place in the Source view, right-click an element in the Design view and select Go to Source (Alt-O). </p>
+      <h3 class="tutorial">
+         Source View      </h3>
+      <p>
+         The Source view shows the underlying code for a business process diagram.  The Source view is based on the  IDE's XML 
+  Source view and provides access to conveniences such as code folding, XML syntax highlighting, and code completion.</p>
+      <p>You can perform source level editing as well as visual designing. The BPEL Designer will perform round-trip two-way engineering to ensure that the Design view and Source view remain synchronized with each other. The IDE will automatically re-parse the BPEL source file and rebuild the diagram every time you perform manual edits of the source file. </p>
+      <p>To switch to the corresponding place in the Design view, place a cursor at the line in the Source view, right-click and choose Go to Design (Alt-I). </p>
+    </div>
+    <p align="center">
+      <a href="bpel-guide-views.html#top">top</a><br>
+      <!--====================================================================================================-->
+    </p>
+    <h2>
+         <a name="navigator"></a>The Navigator
+  </h2>
+      <p>
+         The Navigator window is a companion of the BPEL Designer. If the Navigator window is not visible, you can manually invoke it by selecting Window &gt; Navigating &gt; Navigator from the main menu or pressing the Ctrl-7 key combination.
+      </p>
+      <p>
+         The Navigator window provides two distinct views of the BPEL process: BPEL Logical View and XML View.      You can switch between the XML View and BPEL Logical View using the drop-down menu in the upper part of the Navigator window.      </p>
+      <div class="indent">
+        <h3 class="tutorial">
+          XML View        </h3>
+          <p>
+           The XML View is identical to the Navigator view that is available for all XML documents opened in the IDE. The XML View is a companion to the BPEL Source view. Double-click any Navigator node and the Source view adjusts the current line of code to show the selected element.        </p>
+          <h3 class="tutorial">
+          Logical View        </h3>
+          <p>           The Navigator also provides the BPEL Logical View of BPEL processes. When you select BPEL constructs in the Design view, the BPEL Logical View shows the same element selected. Alternatively, when you select a node in the BPEL Logical View's tree, the corresponding element is selected on the diagram. </p>
+          <p>
+          Right-clicking the nodes in the BPEL Logical View invokes pop-up menus with actions relevant to the particular node. For example, for the Assign element, the actions are Go to Source, Go to Design, Wrap With, Move Up and Move Down, Toggle Breakpoint, Delete, Show BPEL Mapper, and Properties. The Go to Source and Go to Design actions, available for most of the nodes, have associated keyboard shortcuts: Alt-O for Go to Source and Alt-D for Go to Design.          </p>
+          <p>
+           In general, the nodes in the Navigator window correspond to the elements on the diagram. In addition, there are nodes, such as <tt>Variables</tt> and <tt>Correlation Sets</tt>, that are related to functionality not directly accessible from the diagram.
+        To view the variables used in the business process, expand the <tt>Variables</tt> node in the BPEL Logical View of the Navigator window. For variables, the following commands are available in the pop-up menu:</p>
+          <ul>
+            <li><b>Go To Source</b>.  Opens the source of the BPEL file and places the cursor at the place where the variable is mentioned for the first time.</li>
+            <li><b>Go To Type Source</b>. Opens the source file that contains a definition of the variable type. This can be, for example, a WSDL file.</li>
+            <li><b>Find Usages</b>. Shows usages of variables in the BPEL file.  This command is also available from the pop-up menu for correlation sets and Partner Link elements. </li>
+        </ul>
+          <p>
+           Of particular relevance is the <tt>Imports</tt> node, which lists XSD and WSDL files referenced with the help of the Import element in your BPEL file. Using the pop-up menu for the Imports node, you can add reference to an XSD or WSDL file. Note that  only files located in the project folder may be referenced. </p>
+          <p><b><a name="addimport"></a>To add a resource file (<tt>.wsdl</tt> or <tt>.xsd</tt>) as an import:</b></p>
+          <ol>
+            <li>In the   BPEL Logical View of the Navigator window, right-click the Imports node and choose one of the following, depending on the format of the imported file: Add WSDL Import or Add Schema Import.            </li>
+            <li>In the Create New Import dialog box, select the file in your project structure to add it as import.<br>
+			<b>Note:</b> You first need to add the files stored in  your project directory to the project structure. Then you can add  them as imports. The files that are already referenced are displayed in the strikethrough style. </li>
+            <li>View the values in the read-only Namespace and Type fields and click OK.<br>
+              The resource file you have just added appears under the Imports node in the Navigator window.</li>
+        </ol>
+          <p>
+              You can add  properties and property aliases to the WSDL files referenced in the BPEL document.           </p>
+           <p>
+                <strong>To add a property to a WSDL file:</strong>           </p>
+           <ol>
+                <li>
+                    In the   BPEL Logical View of the Navigator window, right-click a WSDL file under the <tt>Imports</tt> node and choose Add Property from the pop-up menu.                </li>
+                <li>
+                    In the Create New Correlation Property dialog box, specify the property name.                </li>
+                <li>
+                    Select the property type and click OK.                </li>
+           </ol>
+           <p>
+                <strong>To add a property alias to a WSDL file:</strong>           </p>
+           <ol>
+                <li>In the   BPEL Logical View of the Navigator window, right-click a WSDL file under the <tt>Imports</tt> node and select Add Property Alias from the pop-up menu.                </li>
+                <li>
+                    In the Create New Property Alias dialog box, click Browse next to the Property field to specify the property.                </li>
+                <li>
+                    In the Property Chooser dialog box, select the property for which you are creating the alias and click OK. The Property Type field in the Create New Property Alias dialog box is populated with the type.                </li>
+                <li>
+                    In the Map Property To tree, expand the WSDL file node and select the message or message part.                </li>
+                <li>
+                    To add a query, enter the query string in the Query text field.                <br>
+                If the Synchronous with Tree checkbox is selected, the Query field is updated each time you change the selection in the Map Property To tree.</li>
+                <li>
+                    Click OK.                </li>
+           </ol>
+           <p>
+                For more information on defining properties and property aliases with the WSDL Editor, refer to the <a href="../websvc/wsdl-guide.html">Developer Guide to the WSDL Editor</a>.           </p>
+  </div>
+      <p align="center">
+      <a href="bpel-guide-views.html#top">top</a>
+    </p>
+    <br>
+    <!-- ======================================================================================== -->
+    <h2>
+      <a name="designer"></a>Working in the Design View    </h2>
+    <p>
+       When the Design view is active, the BPEL Designer Palette is shown. If the Palette is not readily visible, choose Window &gt; Palette from the main menu.    </p>
+    <p>
+       The Palette provides the set of visual elements you use to model business processes. The set of elements in the Palette corresponds to those BPEL elements which the business process author may wish to add to the diagram in a drag-and-drop fashion.
+    </p>
+    <p>
+       The Palette contains icons for most, but not all BPEL elements. The Palette does not contain icons for the BPEL elements that are only meaningful in the context of parent elements. The Design view supports the construction of these additional BPEL elements via different design idioms not based on the Palette drag-and-drop feature.    </p>
+  <div class="indent">
+    <h3>Navigation Features in the Design View</h3>
+    <p>When working with large-scale diagrams, you can use the navigation features provided in the  Design view. </p>
+    <ul>
+      <li><b>Using the Navigation mode to scroll through the diagram</b>. You can use the Navigation Mode to scroll through your diagram in any direction. This feature lets you navigate around large-size diagrams. Clicking the Navigation Mode icon <img src="../../../images/articles/ep-bpel-guide/60/hand_tool.png" alt="Navigation Mode icon"> on the Editor toolbar enables the Navigation Mode. To return to editing your diagram, click the Editing Mode icon&nbsp;<img src="../../../images/articles/ep-bpel-guide/60/select_tool.png" alt="Editing Mode icon">. <br>
+When you are in editing mode, you can press and hold the space bar on your keyboard to enable navigation mode. </li>
+      <li><strong>Zooming in and out of the diagram.</strong> The zoom feature allows you to reduce or enlarge the size of your diagram to get a closer view or to see more of the diagram at a reduced size. You can change the zoom value using the Zoom Value drop-down list on the Editor toolbar. To scale the  diagram to fit  the window, click Fit Diagram. To scale the diagram width to fit the window width, click the Fit Width button. <br>
+      Note that the minimum scale size is 33% and some large diagrams might not fit entirely the window.</li>
+      <li><b>Using the Thumbnail view</b>. The Thumbnail view helps you clickly navigate to another portion of your business diagram. This view provides a minuature representation of your entire diagram. To activate the Thumbnail view, click the Thumbnail view icon <img src="../../../images/articles/ep-bpel-guide/60/thumbnailview.png" alt="Thumbnail view icon"> in the right lower corner of the Design view. The current display area is shown with a shaded rectangle. Drag the shaded rectangle to the portion of the diagram that you need. </li>
+      <li><b>Scrolling through the diagram while editing</b>. You can scroll through the diagram or step through elements by using the following:
+        <ul>
+          <li>Turning the mouse wheel </li>
+          <li>Using the horizontal and vertical scroll bars</li>
+          <li>Pressing the Tab key or Shift-<i>arrow </i> to move through elements</li>
+        </ul>
+      </li>
+      <li><b>Using error stripes</b>. You can also click the error stripe near the right-hand scroll bar to quickly jump to the specific places on your diagram. These error stripes denote warnings, validation errors, breakpoints, validity status, and the current selection. </li>
+    </ul>
+      <h3 class="tutorial">
+      Operations with Elements in the Design View</h3>
+      <p>
+         In the Design view, you can perform the following operations on elements:      </p>
+      <ul>
+        <li>
+           <strong>Create elements by dragging elements from the Palette to the diagram.</strong> The Design view supports the notion of &quot;drop points&quot;, which means that you must align elements with these drop points when you drag them. Not all elements are created via drag-and-drop from the Palette. These other elements are created using pop-up menus which are invoked when you right-click an existing diagram element. </li>
+        <li>
+           <strong>Select elements on a diagram.</strong> A single click on an element selects it. Selection is a necessary step in performing several other operations, such as deleting, moving, or editing an element.        </li>
+        <li><strong>Invoke  pop-up menu actions for diagram elements.</strong> Each BPEL element has a pop-up menu. This pop-up menu can be invoked by right-clicking the element. The pop-up menu will offer a set of actions which are relevant to the selected element. </li>
+        <li><strong>Move diagram elements.</strong> You can move diagram elements by selecting the element and then dragging it to a new location.
+        If you move a container element, all its children move along with the container.</li>
+        <li><strong>Edit element names in the Design view directly.</strong> Double-click the element name on the diagram to edit it.        </li>
+        <li>
+           <strong>Invoke XML Validation.</strong> You can invoke XML validation by clicking the Validate XML button on the Design view editor toolbar. For more information, see the <a href="bpel-guide-validation.html#validation">Validating BPEL</a> section.        </li>
+        <li>
+           <strong>Apply filters to  diagram elements.</strong> The Editor toolbar contains the Show Partner Links and Show Sequences toggle buttons. Both Partner Link elements and Sequence elements are shown by default. Clicking the Show Partner Links button hides the Partner Link elements on the diagram. Clicking the Show Sequences button hides the Sequence containers on the diagram. Clicking either button a second time will again reveal the Partner Link elements, or the Sequence elements on the diagram, respectively.
+           <br>
+           <strong>Note:</strong> You cannot add new Partner Link or Sequence elements to the diagram if you chose not to show them.        </li>
+        <li><b>Finding elements on the diagram</b>. You can find BPEL elements in the Design view by their names or types. You can use either the Find bar (Edit &gt; Find or Ctrl-F) or the Advanced Search feature (Edit &gt; Advanced Search or Alt-Shift-F). In the Find bar, select the type of search you want to perform, type in the search query and click Find. In the Advanced Search dialog box, you can refine your search query and search BPEL elements by their name and/or type.</li>
+        <li><b>Collapsing or expanding elements on the diagram</b>. When a large diagram is open in the Design view, you can collapse or expand container elements, such as Sequence or Scope, using the quick action buttons that appear near the selected elements. By default, when you open a diagram in the Design view, you can see all container elements expanded. To expand all elements on the diagram, click the Expand All icon <img src="../../../images/articles/ep-bpel-guide/60/expand_all.png" alt="Expand All icon"> on the Editor toolbar. You can use the following combinations of keys: Enter to expand the selected element, Shift-Enter to collapse the selected element, and Alt-Enter to expand all elements on the diagram. </li>
+        <li><b>Wrapping activities with container elements</b>. You can wrap elements with container activities in a single click. The wrap feature is useful, for example when you want to quickly place an activity inside another activity. In the Design view, right-click the activity you want to wrap, point to the Wrap With option, and select the wrapper BPEL activity.</li>
+    </ul>
+      <h3 class="tutorial">
+         Configuring Element Properties in the Design View  </h3>
+      <p>
+      After you add BPEL activities to a diagram, you need to configure them. You can do this using either the Property Editor dialog boxes or the IDE's Properties window. Note that Property Editor dialog boxes are available only for some elements. </p>
+      <p>
+         To open the Property Editor for an element,
+      do one of the following: </p>
+      <ul>
+        <li>
+        Right-click the element and choose Edit.</li>
+        <li>
+           Double-click the element.
+        </li>
+      </ul>
+      <p>
+        To open the Properties window for an element, right-click the element and choose Properties.
+        The properties for this element are displayed in the standard IDE's Properties window. If the IDE's Properties window is not open, choose Window &gt; Properties from the main menu (Ctrl-Shift-7).      </p>
+      <h3 class="tutorial">Saving Your Changes
+      </h3>
+      <p>
+         The BPEL Designer synchronizes the Design and Source views as follows:
+      </p>
+        <ul>
+          <li>
+             Changes you make in a diagram are reflected immediately in the corresponding source code.          </li>
+          <li>
+             Changes you make in the source code are reflected on the diagram when you switch to the Design view.          </li>
+        </ul>
+        <p>To save changes in the Design or Source view, choose File &gt; Save or press Ctrl-S. </p>
+        <h3>Printing the Source or Diagrams</h3>
+        <p>You can print BPEL diagrams and source files and customize printing settings, including border, headers, footers, colors, line numbers, and zooming, to suit your preferences. </p>
+        <p><b>To preview and print a BPEL  diagram:</b></p>
+        <ol>
+          <li>Open a BPEL file in the Design view.</li>
+          <li>Choose File from the main menu and select one of the following commands:
+            <ul>
+                <li><b>Print</b>. Print out the BPEL diagram. </li>
+              <li><b>Print Preview</b>. Preview the print layout or customize print options.</li>
+            </ul>
+          </li>
+        </ol>
+        <p><b>To print a BPEL source file:</b></p>
+        <ol>
+          <li>Open a BPEL  file in the Source View.</li>
+          <li>Choose File from the main menu and select one of the following commands:
+            <ul>
+                <li><b>Print</b>. Print out the file. </li>
+              <li><b>Print Preview</b>. Preview the print layout or configure print settings.</li>
+              <li><b>Print to HTML</b>. Print the <tt>.bpel</tt> file as an HTML file. </li>
+            </ul>
+          </li>
+        </ol>
+        <p><b>To customize print options:</b></p>
+        <ol>
+          <li>In the IDE, select an object you want to print.</li>
+          <li>Choose File  &gt; Print Preview.</li>
+          <li>In the Print Preview window, click Options.<br>
+            The Print Options dialog box opens.</li>
+          <li>Change the print settings to suit your preferences: 
+          <ul>
+            <li><b>Print Border</b>. Adds a border to the printed page. Click the Color icon to change the border color.</li>
+            <li><b>Page Setup.</b> Specifies paper orientation, margin sizes, and the printer. You can also invoke the Page Setup dialog box by choosing File &gt; Page Setup.</li>
+            <li><b>Print Header</b> and <b>Print Footer</b>. Specifies the text, alignment, color, and font of the header and footer. To hide the header or  footer, clear the Print Header or Print Footer checkboxes, respectively. To specify the  header or footer pattern text, click in the field corresponding to the alignment (Left, Center, or Right) and select one of the buttons below.<br>
+              For example, to add a page number at the bottom left corner, select the Print Footer checkbox, click into the Left field, and click the &quot;Page number&quot; icon. Click the Choose Footer Color and Choose Footer Font icons to modify the color and the font for the page header and footer.</li>
+            <li><b>Line Numbers</b>. Specifies whether to print line numbers for source files.</li>
+            <li><b>Wrap Lines.</b> Wraps the lines to fit them on the page.</li>
+            <li><b>Text Color </b>and <b>Text Background</b>. Specifies the color and backround of the text when you are printing, for example, source files. </li>
+            <li><b>Zoom. </b>Specifies the scale for the printed text or diagram on the page. You can select to fit width or height or choose a specific zoom scale. </li>
+          </ul></li>
+          <li>Click OK. </li>
+    </ol>
+        <h3 class="tutorial">
+         Reverse Engineering
+      </h3>
+      <p>
+         You can use the BPEL Designer to edit the source file directly and to have those changes reflected in the Design view.      </p>
+      <p>
+         You might need to edit the source in the following cases:
+      </p>
+      <ol>
+        <li>
+           If you want to use a vendor-specific BPEL extension which is not part of the standard BPEL element set, you must use the Source view.        </li>
+        <li>
+           If you need to add a BPEL construct for which the Design view does not provide a code generation opportunity. There are a few edge case BPEL constructs, like assignment of static XML to a variable, which are not displayed in the current Property Editor dialog boxes.        </li>
+        <li>
+           If, while using the Source view, you modify and save BPEL source that is not well formed, then the Design view will not be able to render a diagram for this &quot;broken&quot; BPEL. The Design view will display a page that says &quot;Unable to show diagram&quot;. Return to the Source view to correct the error and, after correction, run the XML validator in the Source view to validate your changes. Once you have restored the BPEL source to a valid state, the Design view will once again be able to render the diagram.        </li>
+      </ol>
+      <h3 class="tutorial">
+         Configuring Message Flows
+      </h3>
+      <p>
+         Activities are diagram elements that represent BPEL activities involved in a message flow.
+      </p>
+      <p>
+         A message flow is the dashed line that connects a web service activity (Invoke, Receive, Reply) to its corresponding activity in a partner link. This relationship is called a message flow as it designates the flow of information to and from the process.
+      </p>
+      <p>
+         If you completely configure the Web Service activity by its Properties window, the IDE will render a message flow connector between an activity and a partner activity.
+      </p>
+      <p>
+         However, you can also directly draw a message flow. To do this:
+      </p>
+      <ol>
+        <li>
+           Select a web service activity. A small envelope appears on the left side of the activity icon.
+        </li>
+        <li>
+           Start dragging the envelope. The IDE displays a dashed line that links the source activity to the envelope you are dragging.
+        </li>
+        <li>
+           Move your mouse to the target activity. If the target activity is a match for the source, the mouse cursor indicates this, and you can release the mouse. The connection snaps into place between the activities.
+        </li>
+      </ol>
+      <p>
+         Note that you cannot directly delete a message flow. You can indirectly delete a message flow by unsetting some of the properties in the the web service activity. Usually, however, you will change a message flow to create a different relationship.
+      </p>
+      <p>
+      Note also that the drawing tool works only in one direction: from a web service activity within the BPEL process to its corresponding activity in a partner link.</p>
+      <h3 class="tutorial">
+         Changing Message Flow
+      </h3>
+      <p>
+         If you want to change an existing message flow connection and establish a new connection with a different target activity, proceed as if you are making the connection for the first time with the preferred pairing. Once you create the new pairing, the IDE automatically removes the old connection.
+      </p>
+      <h3 class="tutorial">
+         Palette Elements      </h3>
+      <p>
+         The following table lists the basic elements that appear on the Palette. Not all BPEL elements are on the Palette; some are created when you right-click the diagram and choose appropriate actions from the pop-up menus.      </p>
+      <p>You can use the Palette Manager to enable, disable, and rearrange the Palette elements. To open the Palette Manager, right-click inside the Palette and choose Palette Manager.</p>
+      <p>
+         Elements are of the following types:
+      </p>
+      <ul>
+        <li>
+           <b>Web Service</b>. Elements used for exchanging messages in a conversational manner with a partner web service.        </li>
+        <li>
+           <b>Basic Activities</b>. Activities that perform a certain task.        </li>
+        <li>
+           <b>Structured Activities</b>. Elements used to precisely order sets of activities. Structured Activities can contain other activities.        </li>
+      </ul>
+      <table width="100%" border="1" cellpadding="5">
+        <tbody>
+          <tr>
+            <th>
+              Icon
+            </th>
+            <th>
+              Element
+            </th>
+            <th>
+              Definition
+            </th>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <b>Web Service</b>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/invoke.png" alt="Invoke">
+            </td>
+            <td>
+               Invoke
+            </td>
+            <td>
+               Enables the business process to invoke a one-way or request-response operation on a <tt>portType</tt> offered by a partner; enables this process to send messages to partners. The operation is defined in the partner's WSDL.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/receive.png" alt="Receive">
+            </td>
+            <td>
+               Receive
+            </td>
+            <td>
+               Allows the business process to perform a blocking wait for a particular message to arrive.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/partnerlink.png" alt="Partner Link">
+            </td>
+            <td>
+               Partner Link
+            </td>
+            <td>
+               Identifies those web services that will exchange messages with our business process. Each partner link will contain child elements that correspond to the available web service activities supported by that partner link's interface.
+              <br>
+               Note: You do not directly add elements to a partner link container. The Design view will introspect the partner's WSDL and automatically populate the partner link container with the appropriate child elements. If you need to modify a partner link, edit the partner WSDL files which will allow the Design view to re-render the partner link and thereby reflect the modified interface.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/reply.png" alt="Reply">
+            </td>
+            <td>
+               Reply
+            </td>
+            <td>
+               Enables the business process to send a message in reply to a message that was received through a Receive.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <b>Basic Activities</b>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/empty.png" alt="Empty">
+            </td>
+            <td>
+               Empty
+            </td>
+            <td>
+               An activity that does nothing, useful when you need to catch and suppress a fault.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/wait.png" alt="Wait">
+            </td>
+            <td>
+               Wait
+            </td>
+            <td>
+               Waits until a given point in time or for a specified duration.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/throw.png" alt="Throw">
+            </td>
+            <td>
+               Throw
+            </td>
+            <td>
+               Generates a fault from inside the business process.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/assign.png" alt="Assign">
+            </td>
+            <td>
+               Assign
+            </td>
+            <td>
+               Updates the values of variables with new data.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/exit.png" alt="Exit">
+            </td>
+            <td>
+               Exit
+            </td>
+            <td>
+               Immediately terminates the execution of the business process instance.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <b>Structured Activities</b>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/flow.png" alt="Flow">
+            </td>
+            <td>
+               Flow
+            </td>
+            <td>
+               Specifies one or more activities to be performed concurrently.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/sequence.png" alt="Sequence">
+            </td>
+            <td>
+               Sequence
+            </td>
+            <td>
+               Defines a collection of activities to be performed sequentially, in lexical order.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/ifelement.png" alt="If">
+            </td>
+            <td>
+               If
+            </td>
+            <td>
+               Selects one branch of activity from a set of choices.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/pick.png" alt="Pick">
+            </td>
+            <td>
+               Pick
+            </td>
+            <td>
+               Blocks and waits for a suitable message to arrive, or for a time-out to expire. When an event specified in the body of the Pick occurs, the Pick completes. Only one of the activities in the body of the Pick actually occurs.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/scope.png" alt="Scope">
+            </td>
+            <td>
+               Scope
+            </td>
+            <td>
+               Defines a nested activity with its own associated local variables, event and fault handlers, and message exchange.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/while.png" alt="While">
+            </td>
+            <td>
+               While
+            </td>
+            <td>
+               Repeats an activity while a condition is true. The condition is checked before the execution of the activity.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/repeatuntil.png" alt="Repeat Until">
+            </td>
+            <td>
+               Repeat Until
+            </td>
+            <td>
+               Repeats an activity until a condition is true. It is different from While in that the condition is checked after the execution.
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/foreach.png" alt="For Each">
+            </td>
+            <td>
+               For Each
+            </td>
+            <td>
+               Repeats an activity exactly N+1 times, where N equals the Final Counter Value minus the Start Counter Value.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+            <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+    <p align="center">
+      <a href="bpel-guide-views.html#top">top</a>
+    </p>
+  </body>
+</html>

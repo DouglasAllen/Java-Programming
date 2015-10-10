@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang='en'>
+<head>
+<title>NetBeans 6.0 - Tutorials - Tips for Migrating NetBeans Visual Web Pack Applications to NetBeans </title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="This tutorial walks you through the process of importing a Sun Java Studio Creator 2.1 project in NetBeans 6.0 Milestone 9. You resolve data sources, enabling the IDE to access data sources created in Java Studio Creator 2.1.">
+<meta name="date" content="2006-11-21">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<!--stopindex-->
+<body>
+<a name="top"></a>
+<!-- END GENERIC MASTHEAD -->
+<!-- BEGIN VNV3 PAGETITLE, two-level variation -->
+
+<h1>Tips for Migrating NetBeans Visual Web Applications to NetBeans IDE 6.0</h1>
+
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+ <!--startindex-->
+      <!-- ============ -->
+      <!-- MAIN CONTENT -->
+      <!-- ============ -->
+      <a name="skip2content"></a>
+      <!--  BEGIN VCD4 BYLINE AND TOOLS  -->
+      <div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team</div>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td class="smaller" valign="top"><em>December 2007</em>&nbsp;[Revision number: V6.0]<br>
+This publication is applicable to NetBeans IDE 6.0 Web Support</td>
+          <td width="10">&nbsp;</td>
+          <td align="right" valign="bottom">&nbsp;</td>
+        </tr>
+      </table>
+
+      <!--  END VCD4 BYLINE AND TOOLS  -->
+      <!-- BEGIN VCD1 OVERVIEW COMPONENT  -->
+        <table border="0" cellpadding="4" cellspacing="0" width="100%" >
+          <tr>
+            <td><p>This tutorial walks you through the process of importing a NetBeans Visusl Web Pack 5.5 project into NetBeans IDE 6.0.</p>
+            </td>
+          </tr>
+        </table>
+
+      <!-- END VCD1 OVERVIEW COMPONENT  -->
+
+      <!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  -->
+      <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="left" valign="top"><p><b>Contents</b></p>
+            <table border="0" cellpadding="0" cellspacing="0" class="vatop">
+<tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#00">Migrating User Settings</a></td>
+              </tr>
+			  <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#01">Migrating Sources When Opening a Project </a></td>
+              </tr>
+			  <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#02">Using Page Navigation </a></td>
+              </tr>
+			  <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#03">Configuration Files</a></td>
+              </tr>
+			                 
+              <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#04">Resolving Library References</a></td>
+              </tr>
+			   			 
+			  <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#05">Working with Databases</a></td>
+              </tr>
+              <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#06">Deploying Migrated Applications</a></td>
+              </tr>
+			   <tr>
+                <td valign="top" class="hyphen">-&nbsp;</td>
+                <td valign="top"><a href="vwp-migration.html#07">Getting Assistance with Project Migration</a></td>
+              </tr>
+            </table></td>
+          <td width="20">&nbsp;</td>
+          <td align="right" valign="top">            <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td>
+        </tr>
+      </table>
+      <span class="sp20">&nbsp;</span><br>
+      <!-- END VCD5 ANCHOR LINKS COMPONENT  -->
+
+<p>This document assists  you with migrating your NetBeans Visual Web Pack applications to NetBeans IDE Web support. 
+<p>To use this tutorial, you need to install NetBeans IDE 6.0 and choose the Web &amp; Java EE or Full installation.
+</p>
+
+<p>The Visual Web JSF Backwards Compatibility Kit provides supplemental libraries that are required by the Visual Web designer to support projects that are based on J2SE 1.4 or J2EE 1.4. These include:</p>
+<ul>
+<li>JavaServer Faces 1.1 Reference Implementation (RI) 
+</li>
+<li>RowSet Reference Implementation (RI)</li>
+<li>JAX-RPC libraries from JWSDP 1.6</li></ul>
+
+These libraries are not open source and are therefore distributed as a separate NetBeans plugin. 
+    To install the plugin, do the following: </p>
+<ol><li>
+  In the main toolbar, click Tools &gt; Plugins. 
+  This opens thePlugins Manager.
+</li>
+  <li>In the available Plugins tab, select the checkbox next to the Visual Web JSF Backwards Compatibility Kit, and click Install.</li>
+</ol>
+
+
+<h2><a name="00"></a>Migrating User Settings 
+</h2>
+
+<p>Be sure to close all instances of the NetBeans and Java Studio Creator IDEs before starting NetBeans IDE 6.0. When you install NetBeans IDE 6.0 Preview Web support, the first time you run the IDE, 
+you are asked to migrate your settings, as shown in Figure 1. Click Yes in the Confirm Import Settings dialog to migrate the settings. </p>
+
+
+<table  border="0" cellpadding="2" cellspacing="0" width="635">
+<tr>
+<td align="center"><img src="../../../images/articles/60/web/web-creator-migration/import-vwp.png" alt="Figure 1: Confirm Import Settings Dialog" width="625" height="136"><br>
+    <b>Figure 1</b>: Confirm Import Settings Dialog</td>
+</tr>
+</table>
+<p>If you want to open a project that you developed in another version of the IDE, and you did not migrate the user settings for that version, then do this workaround:
+<ol><li>Close the NetBeans IDE 6.0</li>
+<li>Rename the user directory name of the IDE version that you do not want to migrate.</li>
+<li>Delete the NetBeans IDE 6.0 user directory. For the location of the user directory, choose Help > About as shown in Figure 2 below.</li>
+<li>Restart the NetBeans IDE 6.0.</li>
+<li>In the Confirm Import Settings Dialog, click Yes to migrate the settings for the version that was used to create the project.</li><br>
+Each time you run the IDE, the user directory is created. The file that you deleted in Step 3 is regenerated.</p>
+<p>To be prompted at your next launch of NetBeans IDE 6.0, rename the user directory. For the location of the user directory, choose Help > About as shown in the figure below.</p>
+<p><table border="0" cellpadding="2" cellspacing="0" width="569">
+          <tr>
+            <td align="center" ><img src="../../../images/articles/60/web/web-creator-migration/help-about-detail.png" width="559" height="563" border="0" alt="Figure 2: Installation Details">
+              <b>Figure 2</b>: Installation Details </td>
+          </tr>
+        </table></p>
+
+
+<h2><a name="01">Migrating Sources When Opening a Project </a>
+</h2>
+<p><b>Always copy project folders before opening projects in NetBeans IDE 6.0.</b> Once you open a project created in NetBeans Visual Web Pack, you will not be able to reopen that project in the earlier IDE. 
+Sharing projects betweeen NetBeans Visual Web Pack and NetBeans IDE 6.0 is not supported. <b>Note:</b> There is limited support for EJBs and web services at this time.</p> 
+<p>When you first open a Visual Web Pack application in NetBeans IDE 6.0 by clicking File &gt; Open Project, the following sources migrate:
+<ul>
+<li>Component libraries added to the IDE. 
+A dialog pops up when you open a project in NetBeans IDE and tells you that the complibs used in the project are being added to the Palette/Tools &gt; Component Library Manager. You might have to manually resolve a library reference. See <a href="vwp-migration.html#libref">Resolving Library References</a> for more details. </li>
+<li>JDBC Drivers and connections are not imported when the project is opened. This actually happens when the Project node in the Project Tab is expanded and a small progress bar starts &quot;Updating Legacy Project. Merely opening a project does not import the db settings. </li>
+</ul>
+</p>
+<ul class="note">
+<li><b>Note:</b> It is recommended that you delete the 'private' folder in the copy of the project that is going to be migrated. This folder is located at <em>myProject/nbproject/private.</em></li>
+
+
+<h2><a name="02"></a>Using Page Navigation</h2>
+<p>The Page Navigation Editor used in the Visual Web Pack is now the Page Flow Editor in NetBeans IDE 6.0. 
+<p><b>In VWP 5.5, 5.1 as well as Java Studio Creator, projects had three faces configuration files each for separate purposes:
+</b>
+<ul>
+  <li><b>managed-beans.xml.</b> For all managed beans entries (including session, request and application beans).</li>
+  <li><b>navigation.xml.</b>  Contained all the navigation rules.</li>
+  <li><b>faces-config.xml.</b>  This was usually empty unless any entries were made manually.</li>
+</ul>
+<p>In contrast for new projects in NetBeans 6.0, everything goes into one single faces-config.xml file by default but you have the capability to add new faces configuration files and add your own rules or entries in them.</p>
+<p> The new Page Flow editor can be used with any faces configuration file. </p>
+<p></p>
+<p><b>The new Page flow editor provides 3 different views in which you can view your navigation rules (you can switch views by using the drop down list  next to the XML button):</b></p>
+<ul>
+<li><b>Project.</b> This is the default view and shows all pages in the project (including JSF pages, html etc) along with all navigation rules of that particular faces config file.</li>
+<li><b>Faces Configuration Only.</b> Similarly in this view all rules in the current faces config file are shown but only relevant pages are displayed. </li>
+<li><b>All Faces Configuration.</b> In this view navigation rules and cases from all faces configuration files are merged together and shown along with all relevant pages.</li>
+</ul>
+<p>For more information about using page navigation, see the Visual Web Pack tutorial <a href="pagenav.html">Navigating Pages in a Web Application</a>. 
+
+
+ This tutorial covers the page navigation features of the NetBeans 6.0 integrated development environment. </p>
+ 
+<h2><a name="03"></a>Configuration Files</h2>
+<p>On importing a project users will see three config files:<ul>
+  <li><tt>faces-config.xml</tt></li>
+<li><tt>navigation.xml</tt></li>
+<li><tt>managed-beans.xml </tt></li>
+</ul>
+<p>It is important to note that all rules in these configuration files are merged when the project is run. You will be able to view the page flow editor for all three files, and add navigation rules to them, but this may result in conflicting rules in the different files. A conflicting navigation rule might arise if you have identical from-view-id and from-outcome elements but different to-view-id elements in different files. The two code blocks below illustrate an example of this scenario:
+<pre class="examplecode">&lt;navigation-rule&gt;
+  &lt;from-view-id&gt;*/Page1.jsp*&lt;/from-view-id&gt;
+    &lt;navigation-case&gt;
+	    &lt;from-outcome&gt;*case1*&lt;/from-outcome&gt;
+	    &lt;to-view-id&gt;*/Page2.jsp*&lt;/to-view-id&gt;
+    &lt;/navigation-case&gt;
+&lt;/navigation-rule&gt;</pre>
+<pre class="examplecode">&lt;navigation-rule&gt;
+  &lt;from-view-id&gt;*/Page1.jsp*&lt;/from-view-id&gt;
+  &lt;navigation-case&gt;
+    &lt;from-outcome&gt;*case1*&lt;/from-outcome&gt;
+    &lt;to-view-id&gt;*/Page3.jsp*&lt;/to-view-id&gt;
+    &lt;redirect/&gt;
+  &lt;/navigation-case&gt; 
+&lt;/navigation-rule&gt; </pre>
+If you only use navigation.xml for
+     navigation rules in imported projects, you should not have problems. The following rules should help you resolve such conflicts: 
+<ul>
+  <li> If the conflict is between <tt>faces-config.xml</tt> and some other 
+file, <tt>faces-config.xml</tt> always takes precedence. </li>
+	 <li> If the conflict is between two other config files, such as <tt>navigation.xml</tt> and <tt>managed-beans.xml</tt>, then 
+the file listed last in the <tt>web.xml</tt> context 
+parameter (<tt>javax.faces.CONFIG_FILES</tt>) takes precedence.</li>
+</ul>
+<p> To view the rules from all config files in one view so that you can remove any redundancy:
+<ol><li>Right-click in the Visual Designer and choose Page Navigation from the pop-up window.</li>
+<li>Choose Project from the configuration scope drop down list in the Page Flow Editor, as shown in the figure below. <br>
+  <br>
+<table border="0" cellpadding="2" cellspacing="0" width="377">
+          <tr>
+            <td align="center" >
+              <b>Figure 3:</b> Configuration Scope Menu</td>
+          </tr>
+</table>
+<img src="../../../images/articles/60/web/web-creator-migration/config-scope.png" width="367" height="108" border="1" alt="Figure 1: Configuration Scope Menu"></li>
+</ol> 
+<br>
+Note that once a 
+project has been migrated, the IDE registers the managed-bean entry of new pages to <tt>faces-config.xml</tt>, not to <tt>managed-beans.xml</tt> as was done in Sun Java Studio Creator and in NetBeans 5.5.
+</p>
+
+<h2><a name="04"></a>Resolving Library References</h2>
+
+<p>If you receive an error message stating that you have unresolved library references, you need to remove the references. Your project is not at risk when you remove the library references. </p>
+<ol>
+<li> Right-click the project node and choose Properties.</li>
+<li>Click the Libraries node and remove entries in the Compile window that have a yellow-badged icon next to the invalid library reference.</li> 
+<li>Expand the Build &gt; Packaging node and  remove any invalid library references.</li>
+</ol>
+
+
+</ul>
+
+
+<h2><a name="05"></a>Working With Databases</h2>
+<div>By following the steps below, it may be sufficient to migrate a project that was created on the same computer and by the same user using an earlier version of NetBeans or Sun Java Studio Creator.</div>
+<ul>
+  <li><p>To migrate settings, open the project then expand the main project node.</p>
+A progress bar will appear in the bottom right of the IDE. Once the progress bar has terminated, database drivers and connections
+and the project will be updated to be ready to use in NetBeans 6.0.</li></ul>
+If the project that was created on a different computer or by a different user using an earlier version of NetBeans or Sun Java Studio Creator then additional steps are required.
+<ol>
+  <li>Open a project that was created in the NetBeans Visual Web IDE. </li>
+<li>Right-click Project &gt; Data Source References and choose Resolve Data Sources. <ul class="note"><li><b>Note: </b>for projects created in Java Studio Creator, close then reopen the project. </li></ul> </li>
+<li>In the Add Database Connection dialog, add the JDBC driver if it hasn't already been registered or set the driver using the dropdown then click OK.</li>
+
+<li>Repeat step 3 if the project uses multiple database connections.</li>
+</ol>
+<p>Also, make sure the target application server has been registered in the Services tab.  By default, the Glassfish V2 application server is registered.</p>
+<h2><a name="06"></a>Deploying Migrated Applications</h2>
+<p>NetBeans IDE 6.0 Standard and Full installers include  the Sun Java System Application Server, which is a version of the Glassfish application server. If your migrated project was originally deployed on the Sun Java System Application Server, then you can deploy the project in NetBeans IDE 6.0.</p>
+<p>If you originally deployed your migrated application to a server other than Sun Java System Application Server, then you need to make modifications to deploy your application. </p>
+<p>To deploy your project to Tomcat, you must install Tomcat, which you can download from <a href="http://tomcat.apache.org/" target="_blank">tomcat.apache.org</a>. Tomcat versions 5 and 6 are tested with NetBeans IDE 6.0. For more information about deploying to Tomcat, see the FAQs <a href="http://wiki.netbeans.org/wiki/view/AddExternalTomcat" target="_blank">Add External Tomcat</a> and <a href="http://wiki.netbeans.org/wiki/view/DeploymentOnExternalTomcatforNB6" target="_blank">Deployment of External Tomcat on NB6</a>. </p>
+
+<h2><a name="07"></a>Getting Assistance With Project Migration</h2>
+<p>If you have more questions about migrating your projects from NetBeans Visual Web Pack to NetBeans IDE 6.0, use the feedback link at the end of this article. </p>
+
+<h3>See Also</h3>
+<ul>
+<li><a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">NetBeans Visual Web Pack FAQs</a></li>
+</ul>
+
+
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+</body>
+</html>

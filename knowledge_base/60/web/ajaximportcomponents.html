@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Installing the Visual Web Samples Plugin - NetBeans IDE Article</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="description" content="Download and install the Visual Web Samples plugin.">
+<meta name="date" content="2007-10-01">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Article">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<!--stopindex-->
+<body> 
+<a name="top"></a>   
+
+<!-- BEGIN VNV3 PAGETITLE, two-level variation --> 
+<h1>Installing the Visual Web Samples Plugin</h1>
+<!-- BEGIN WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT --> 
+
+<!-- BEGIN CENTRAL COLUMN COMPONENTS --> 
+        <!--startindex--> 
+        <!-- ============ --> 
+        <!-- MAIN CONTENT --> 
+        <!-- ============ --> 
+        <a name="skip2content"></a> 
+        <!--  BEGIN VCD4 BYLINE AND TOOLS  --> 
+		<div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team</div>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">      
+            <tr> 
+              <td class="smaller" valign="top"><em>December 2007</em>&nbsp;[Revision number: V6.0]</td> 
+              <td width="10">&nbsp;</td> 
+              <td align="right" valign="bottom">&nbsp; 
+              </td> 
+            </tr> 
+        </table> 
+
+        <!--  END VCD4 BYLINE AND TOOLS  --> 
+        <!-- BEGIN VCD1 OVERVIEW COMPONENT  --> 
+ 
+          <table border="0" cellpadding="4" cellspacing="0" width="100%"> 
+            <tbody> 
+              <tr> 
+                <td><p>This document shows how to download and install
+                the Visual Web JSF Post Release Samples plugin,
+                which includes the Dynamic Faces component library 0.2 and the
+                Currency Trader sample application.
+                  </p>
+<p>Note: The  
+    Dynamic Faces component library are only supported 
+    for use with the GlassFish Application Server V2.
+</p>
+                </td> 
+              </tr> 
+            </tbody> 
+          </table> 
+
+        <!-- END VCD1 OVERVIEW COMPONENT  --> 
+  
+        <!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  --> 
+        <table class="full-width" border="0" cellpadding="0" cellspacing="0"> 
+            <tr> 
+              <td align="left" valign="top"> <p><b>Contents</b></p> 
+             
+                <table class="vatop" border="0" cellpadding="0" cellspacing="0"> 
+                    <tr> 
+                      <td width="9" class="hyphen">-&nbsp;</td> 
+                      <td><a href="ajaximportcomponents.html#01">Installing the Plugin</a></td> 
+                    </tr> 
+
+                    <tr>
+                      <td width="9" class="hyphen">-&nbsp;</td>
+                      <td><a href="ajaximportcomponents.html#03">Adding a Component Library to a Project </a></td>
+                    </tr> 
+<tr> 
+                      <td width="9"  class="hyphen">-&nbsp;</td> 
+                      <td><a href="ajaximportcomponents.html#04">Updating, Reverting, or Removing a Component Library</a></td> 
+                  </tr> 
+                    <tr>
+                      <td width="9" class="hyphen">-&nbsp;</td>
+                      <td><a href="ajaximportcomponents.html#04">Accessing the Currency Trader Sample Application</a></td>
+                    </tr> 
+                </table></td> 
+              <td width="20">&nbsp;</td>
+<td align="right" valign="top">     <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0">
+</td>
+</tr>
+        </table> 
+        <!-- END VCD5 ANCHOR LINKS COMPONENT  -->
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Requirements</h2>
+<br>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+
+
+<p>Before you begin, you need to install the following software on your computer:</p>
+<ul>
+	<li>NetBeans IDE 6.0  with the Web and Java EE pack (included in the Web and Java EE download and the All download). 
+	</li>
+</ul>
+
+<!-- ======================================================================================== -->
+<a name="01"></a>
+<h2>Installing the Plugin</h2>
+
+
+<ol>
+<li>
+  <p> From the IDE's main menu, choose Tools &gt; Plugins. </p>
+  The Plugins wizard opens
+</li>
+<li>
+If you are working behind a firewall, you might need to configure the proxy server.  
+Click the Settings tab,
+click Proxy Settings, enter your proxy information, and click OK.
+</li>
+<li>Click the Available Plugins tab.</li>
+<li>
+If the catalog of available plugins is empty, click Reload Catalog.
+</li>
+<li><p>Scroll to and select the entry for the Visual Web JSF Post Release Samples,
+        as shown below.
+    </p>
+<p><b>Note:</b> If you plan to run the Currency Trader sample application, 
+    also select the entry for the Visual Web JSF Backwards Compatibility Kit.
+</p>
+        <table border="0" cellpadding="2" cellspacing="0" width="437">
+            <tr> 
+              <td align="center" class="grey3">                  <img src="../../../images/articles/60/web/ajaximportcomponents/pluginsMgr.png" 
+                  width="506" height="225" border="0" alt="Figure 1: Module Selection in Plugins Manager" /><br />
+              <b>Figure 1</b>: Module Selection in Plugins Manager</td>
+            </tr>
+        </table>    
+</li>
+<li>Click Install.
+</li>
+<li>Click Next.</li>
+<li><p>Read and accept the license agreement, then click Install.</p>
+The wizard downloads the plugin.</li>
+<li>Click Finish, and click Close. </li>
+</ol>
+<a name="02"></a> 
+
+<a name="03"></a>
+<h2>Adding a Component Library to a Project</h2>
+        <ol>
+          <li>Open the Visual Web JavaServer Faces project in which you want to use the component library's components.
+
+</li>
+        <li><p>In the Projects window, expand the project's node,
+            right-click the Component Libraries node, and choose Add Component Library.</p>
+            
+            <p>The Add Component Library dialog box displays the available component libraries,
+            as shown in the following figure:</p>
+            <!-- BEGIN FIGURE -->
+            <table border="0" cellpadding="2" cellspacing="0" width="484">
+            <tr> 
+              <td align="center" class="grey3"><img src="../../../images/articles/60/web/ajaximportcomponents/add-complib2proj.png" width="474" height="237" border="0" alt="Figure 2: Add Component Library dialog box" /><br /> 
+                <b>Figure 2</b>: Add Component Library Dialog Box</td>
+            </tr>
+            </table>
+            <!-- END FIGURE -->
+  
+        </li>
+        <li><p>Select the desired component library and click Add Component Library.</p>
+        <p>The IDE adds component library jar files
+        to the project's classpath. </p>
+
+<p>When you open a project web page in the Visual Designer, the Palette now shows
+the categories for the component library that you just added. Expand the categories to see the component nodes,
+as shown in the following figure. You can drag the new components and drop them on pages
+that you are editing in the Visual Designer, and you can work with these components just as
+you work with the components supplied with the Visual Web JavaServer Faces framework.</p>
+            <!-- BEGIN FIGURE -->
+            <table border="0" cellpadding="2" cellspacing="0" width="252">
+              <tr> 
+                <td align="center" class="grey3"><img src="../../../images/articles/60/web/ajaximportcomponents/ajax-components.png" width="242" height="324" border="0" alt="Figure 3: AJAX Components and Dynamic Faces Components in the Palette" /><br />
+                  <b>Figure 3</b>: BluePrints 
+                Ajax Components and Dynamic Faces Components in the Palette</td>
+              </tr>
+            </table>
+            <!-- END FIGURE -->
+          </li>
+        </ol>
+<a name="04"></a>
+<h2>Updating, Reverting, or Removing a Component Library
+</h2>
+<p>You can  update or revert the version of the library used by a project, and you can remove a component library. Open the project's Component Libraries node (as described in Step 2 above), right-click the component library's node, and choose Update, Replace, or Remove. For more information, open the help by choosing Help &gt; Help Contents, and then search for  
+&quot;Updating a Component Library&quot; or &quot;Removing a Component Library&quot;. </p>
+
+
+<a name="05"></a>
+<h2>Accessing the Currency Trader Sample Application
+</h2>
+<p>This plugin includes the Currency Trader sample application, which
+demonstrates how to use Dynamic Faces technology to employ Ajax techniques 
+with Ajax-unaware JavaServer Faces components. See 
+<a href="http://www.netbeans.org/kb/60/web/instcurrencytrader.html" target="_blank">Installing the Currency Trader Sample 
+Application</a> for
+information about creating and running the application.
+</p>
+         
+        <br>
+
+        <hr class="light"> 
+
+        <span class="sp10">&nbsp;</span><br> 	  		
+        <div class="date-stamp" align="right">This page was last modified:&nbsp; December 3, 2007</div> 
+        <!-- =================== --> 
+        <!-- =================== --> 
+        <!-- END OF MAIN CONTENT --> 
+        <!-- =================== --> 
+        <!--stopindex--> 
+        <!-- END CENTRAL COLUMN COMPONENTS --> 
+    <!-- BEGIN SPACER ROW --> 
+<table border="0" cellpadding="10" cellspacing="0" class="full-width"> 
+<tr>
+
+<td><br>
+<div class="feedback-box">
+<a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">
+Send Us Your Feedback</a></div>
+<br style="clear:both;" /> 
+</td>
+</tr>
+<!-- END SPACER ROW --> 
+
+</table> 
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT --> 
+
+
+</body>
+</html>

@@ -1,0 +1,892 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>C/C++ Support Quick Start Tutorial</TITLE>
+<meta name="DESCRIPTION" content="Short tutorial that demonstrates working with C/C++ source code in NetBeans IDE">
+<meta name="author" content="Ann Rice"><!--Optional tag-->
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+</head>
+<body>
+<a name="top"></a>
+
+	<h1>C/C++ Support Quick Start Tutorial</h1>
+	<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:ann.rice@sun.com"><i>Ann
+Rice</i></a><br>
+October 2007</em> [Revision number: V6.0-2]</div>
+
+	<p>The following short tutorial takes you through some of the basic
+	steps of developing a C or C++ application using NetBeans IDE 6.0 with
+	C/C++ support.  
+	</p>
+<!-- END INTRO -->
+
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="left" valign="top"><h3>Contents</h3>
+   <table border="0" cellpadding="0" cellspacing="0" class="vatop">
+   <tr>
+      <td class="hyphen">-&nbsp;</td>
+	<td><a href="quick-start.html#requirements" title="Requirements">Requirements</a></td>
+</tr>
+<tr>
+	<td class="hyphen">-&nbsp;</td>
+	<td><a href="quick-start.html#projects" title="Creating C and C++ Projects">Creating C 
+	and C++ Projects</a><td>
+</tr>
+<tr>
+	<td class="hyphen">-&nbsp;</td>
+	<td><a href="quick-start.html#running" title="Running a Project">Running a
+	Project</a></td>
+	</tr>
+<tr>
+	<td class="hyphen">-&nbsp;</td>
+	<td><a href="quick-start.html#makefileprojects" title="Creating a C/C++ Project From
+	Existing Code">Creating a C/C++ Project From Existing Code</a></td>
+	</tr>
+<tr>
+	<td class="hyphen">-&nbsp;</td>
+	<td><a href="quick-start.html#editing" title="Editing Source Files">Editing Source
+	Files</a></td>
+	</tr>
+<tr>
+	<td class="hyphen">-&nbsp;</td>
+	<td>
+	<a href="quick-start.html#breakpoints" title="Creating Breakpoints">Creating
+	Breakpoints</a></td>
+	</tr>
+<tr>
+	<td class="hyphen">-&nbsp;</td>
+	<td><a href="quick-start.html#debugging" title="Debugging a Project">Debugging a
+	Project</a></td>
+	</tr>
+</table>
+</td>
+<td width="20">&nbsp;</td>
+
+                <td align="right" valign="top">
+       <img src="../../../images/articles/60/netbeans-stamp.gif"
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans
+IDE 6.0" border="0">
+                </td>
+</tr>
+</table>
+	<h2><A NAME="requirements"></a>Requirements</h2>
+	<p>You must have the following software installed before you can
+	start C or C++ development: 
+	</p>
+	<ul>
+		<li>NetBeans IDE 6.0</li>
+		<li>NetBeans C/C++ pack</li>
+		<li>GNU C and C++ compilers, <tt>make</tt>, and <tt>gdb</tt> (Windows platform); GNU C and C++
+		compilers, or Sun C and
+		C++ compilers, <tt>make</tt>, and <tt>gdb</tt> (Solaris and Linux Platforms)
+		</li>
+	</ul>
+	<p>See the <a href="../../../community/releases/60/install.html">NetBeans IDE
+	6.0 Installation
+	Instructions</a> and the <a
+	HREF="../../../community/releases/60/cpp-setup-instructions.html">Installing
+	and Configuring C/C++ Support</a> for
+	information on downloading and installing the required software. 
+	</p>
+	<p><BbSample Projects</b> 
+	</p>
+	<p>Just want to play with some projects? In the IDE, choose
+	File&nbsp;&gt;&nbsp;New Project, then open the Samples category, the
+	C/C++  subcategory, and the C/C++ subcategory. The IDE
+	provides several sample C and C++ projects to help you familiarize
+	yourself with the IDE. 
+	</p>
+	<h2><a name="projects"></a>Creating C and C++ Projects</h2>
+<p>NetBeans C/C++ support lets you create C and C++ Application
+and Library projects with generated makefiles, as well as C and C++ projects 
+from existing code.
+</p>
+<p>
+With a C/C++ Application, Dynamic Library, or Static Library project, the 
+IDE controls all aspects 
+of how your application is built, run, and debugged. You specify project settings  
+when creating the project and in the Project Properties dialog box. The IDE 
+generates a makefile in which all of your settings are stored.
+</p>
+<div class="indent">
+<h3><a name="CreatingApp"></a>Creating a C/C++ Application Project</h3>
+<ol>
+    <li>Open the New Project wizard by choosing File &gt; New Project.</li><br>
+    <li>In the wizard, select the C/C++ category.</li><br>
+    <li>
+	The wizard gives you a choice of four types of new projects: 
+	C/C++ Project From Existing
+	Code, C/C++ Application,
+	C/C++ Dynamic Library, and C/C++ Static Library. 
+	Select C/C++ Application and click Next.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/CreatingApplication.png" alt="Screenshot of the New Project
+    Wizard">
+    <br><br>
+    <li>
+	Create a new C/C++ Application project from the wizard using the defaults. 
+	You can choose the name of the project and the location of the project.
+    </li><br>
+    <li>Click Finish to exit the wizard.</li>
+</ol>
+<p>
+A project is created with four logical folders. 
+A logical folder is not a directory. It is a way for you to organize your
+files and does not 
+reflect where the files are physically stored on disk. Files added to logical 
+folders are automatically part of the project and are compiled when you build 
+the project.
+</p>
+<p>
+Files added to the Important Files folder are not part of the project and are 
+not compiled when you build the project. These files are just for reference 
+and are convenient when you have a project with an existing makefile. 
+</p>
+<div class="indent">
+<h3><a name="SwitchingViews"></a>Switching Between the Logical View and the Physical View of the Project</h3>
+<p>A project has both a logical and a physical view.
+You can switch between the logical view and the physical view of your
+project.
+</p>
+<ol>
+    <li>
+	Select the Files tab. This window shows the physical view of your
+	project. It displays files and folders as they are stored on disk.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/FilesTab.png" alt="Screenshot of the Files tab"> 
+    <br><br>
+    <li>
+	Select the Projects tab. This window shows the logical view of 
+	your project. 
+    </li>
+    <br>
+	<img src="../../../images/articles/60/cnd/quickstart/ProjectsTab.png" alt="Screenshot of the Projects tab">
+    </ol>
+
+<h3><a name="AddingFilesandFolders"></a>Adding Files and Folders to Your Project</h3>
+<p>You can add logical folders to your project.
+</p>
+<ol>
+    <li>
+	Right-click the project node of your Application project 
+	and choose New Logical Folder. A new logical folder is added to the project.
+    </li><br>
+    <li>
+	Right-click the new logical folder and select Rename. Type the name
+	you would like to give the new folder.
+    </li>
+
+</ol>
+<p>You can add both
+files and folders to an existing folder. Logical folders can be nested.
+</p>
+<h3><a name="AddingNewFiles"></a>Adding New Files to Your Project</h3>
+<p>You can add new files to your project.
+</p>
+<ol>
+    <li>Right-click the Source Files folder and choose New.</li><br>
+    <li>
+	Choose Main C File from the submenu.
+    </li>
+    <li>On the Name and Location page of the New File dialog box, type <tt>main</tt> in the File Name field.
+        <img src="../../../images/articles/60/cnd/quickstart/AddingFiles.png" alt="Screenshot of the New File dialog
+        box"></li>
+<li>Click Finish.</li>
+</ol>
+<p>
+The <tt>main.c</tt> file is created on disk in the
+directory specified in the wizard and added to the Source Files folder. You
+can add any kind of file to this folder, not only source files. 
+</p>
+<h3"><a name="MoreNewFiles"></a>Adding More New Files to Your Project</h3>
+<ol>
+    <li>Right-click the Header Files folder and choose New.</li><br>
+    <li>
+	Choose C Header File from the submenu.
+    </li><br>
+    <li>On the Name and Location page of the New File dialog box, type <tt>file</tt> in the File Name field.</li><br>
+
+    <li>Click Finish.</li>
+</ol>
+<p>
+The file is created on disk in the directory specified in the wizard 
+and added to the Header Files folder.
+</p> 
+<h3><a name="AddingExistingFiles"></a>Adding Existing Files to Your Project</h3>
+<p>
+You can add existing files to your project in two ways:
+</p>
+<ul>
+    <li>
+	Right-click the Source Files folder and choose Add Existing Item. 
+	You can point to an existing file on disk using the Select Item
+	dialog box and add the file to the project.
+    </li>
+    <li>Right-click the Source Files folder and choose Add Existing Items from
+    Folders. Use the Add Files dialog box to add folders that contain existing
+    files.
+</ul>
+
+<p>
+Do not use New menu item to add existing items. The Name and Location panel
+will tell you the file already exists.
+</p>
+<h3><a name="ProjectProperties"></a>Setting Project Properties</h3>
+<p>
+<p>When the project is created, it has two configurations, Debug and Release. 
+A configuration is the project's way of storing the current settings.
+The Debug configuration builds a version of your application that includes
+debug information.
+The Release configuration builds an optimized version.
+</p>
+<p>The Project Properties dialog box contains build and configuration information
+for your project. To open the Project Properties dialog box:
+</p>
+<ul>
+    <li>
+	Right-click the project node of the 
+	<tt>Application_1</tt> project and choose Properties.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/ProjectProperties.png" alt="Screenshot of the Project
+    Properties dialog box">
+</ul>
+
+<p>
+You can modify the compiler settings and other configuration settings in the
+Project Properties dialog box by selecting a node in the left panel and modifying 
+the properties in the right panel. Select some of the nodes and property 
+values and notice the properties you can set. You are setting properties
+in the currently selected configuration.
+<h3><a name="Configurations"></a>Managing Configurations</h3>
+<p>Properties changed in the Project Properties window are stored in the
+makefile for the current configuration. You can edit the default configurations 
+or create new ones. To create a new configuration:
+</p>
+<ol>
+    <li>
+	Click the Manage Configurations button in the Project Properties
+	dialog box.
+    </li>
+    <br>
+    <li> 
+	In the Configurations dialog box, select the configuration which most
+	closely matches your desired configuration. In this case, select the
+	Release configuration and click the Copy button. Then click Rename.
+    </li>
+    <br>
+    <li>
+	In the Rename dialog box, rename the 
+	configuration to PerformanceRelease. Click OK. 
+    </li>
+    <br>
+    <li>Click OK in the Configurations dialog box.</li>
+    <br>
+    <li>
+	In the Project Properties dialog box, note that the PerformanceRelease
+	configuration is selected in the Configuration drop-down list.
+    </li>
+    <br>
+    <li>
+	In the left panel, expand the C/C++ node, 
+	and then the GNU C Compiler node, and select the General node. 
+    </li>
+    <br>
+    <li>
+	In the property sheet in the right panel, change the Development
+	Mode from Release to PerformanceRelease. Click OK.
+    </li>
+</ol>
+<p>
+You have created a new configuration that will compile the application with a 
+different set of options.
+</p>
+
+<h3><a name="FileProperties"></a>Setting Source File Properties</h4>
+<p>
+<p>When you set the project properties for your C or C++ project, the relevant 
+properties apply to all files in the project. You can set some 
+properties for a specific file.
+</p>
+<ol>
+    <li>
+	Right-click the <tt>main.c</tt> source file
+	and choose Properties. You can override the project compiler settings
+	and other properties on a per file basis. You can also exclude files
+	from a build in a specific configuration.
+    </li><br>
+
+    <li>Cancel the Project Properties dialog box.</li>
+</ol>
+
+<h3><a name="SettingMainProject"></a>Setting the Main Project</h3>
+<p>
+When you right-click a project node in the Projects window,
+you get a pop-up menu of actions you can perform on the selected project.
+If you have multiple projects open at the same time, the pop-up menu
+for a project node implies you are operating on that project.
+But what about project-related actions on the menubar and toolbar?
+</p>
+<p>
+Most of the project-related actions on the menubar and toolbar operate on the
+main project. The main project node is displayed in bold text in the
+Project window.
+<p>
+To change the main project in the IDE:
+<ul>
+    <li>
+	Right-click the desired project node and choose Set as Main Project.
+	This project is now the main project in the IDE 
+	and actions in the menubar and toolbar refer to this project.
+    </li>
+
+</ul>
+
+<h3><a name="BuildingProject"></a>Building Your Project</h3>
+<p>To build your project:
+<ol>
+    <li>
+	Choose Build &gt; Build Main Project and the project  
+	builds. The build output is shown in the Output window.
+    </li><br>
+    <li>
+	Switch the configuration from Debug to PerformanceRelease in the configuration 
+	drop-down list in the main toolbar. Now the project will be built using the
+	PerformanceRelease configuration.
+    </li><br>
+
+    <li>
+	Choose Build &gt; Build Main Project and the project 
+	builds. The build output is shown in the Output window.
+    </li>
+</ol>
+<p>
+You can build, clean, or both clean and build the project 
+by choosing actions from the Build menu. The project also keeps object
+files and executables from different configurations separate, so
+you do not have to worry about mixing files from multiple configurations.
+</p>
+<h3><a name="CompilingFile"></a>Compiling a Single File</h3>
+<p>
+To compile a single source file:
+</p>
+<ul>
+    <li>
+
+	Right-click on the <tt>main.c</tt> file and choose 
+	Compile File. Only this file is compiled.
+    </li>
+</ul>
+<p>
+Note: Single file compilation is not supported for the project type
+C/C++ Project From Existing Code.
+</p>
+</div>
+<h2><a name="running"></a>Running a Project</h2>
+<p>
+The <tt></tt> program prints command-line arguments. Before running the
+program, we will set some arguments in the current configuration. Then we will run
+the program.
+</p>
+<p>
+To create the <tt>Args</tt> project, set some arguments, and run the project:
+</p>
+<ol>
+<li>Choose File &gt; New Project.</li>
+<br>
+<li>In the project wizard, expand the Samples category and the C/C++ subcategory.</li>
+<br>
+<li>Select the C/C++ subcategory, then select the <tt>Args</tt> project. Click
+Next, then click Finish.
+</li>
+<br>
+<li>Right-click the <tt>Args_1</tt> project node and choose Build Project. The
+project builds.</li>
+<br>
+    <li>Right-click the <tt>Args_1</tt> project node and choose Properties.</li><br>
+    <li>In the Project Properties dialog box, select the Running node.</li>
+    <br>
+    <li>
+	In the Arguments text field, type 1111 2222 3333. Click OK.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/SettingArguments.png" alt="Screenshot of the Project Properties
+    dialog box">
+    <br><br>
+    <li>
+	Choose Run &gt; Run Main Project. The application runs.
+	Your arguments are displayed in the Output window.
+    </li>
+    </ol>
+</div>
+<h2><a name="makefileprojects"></a>Creating a C/C++ Project From Existing
+Code</h2>
+<p>With a C/C++ Project From Existing Code, the IDE relies on your 
+existing makefile for instructions on how to compile and run your application. 
+</p>
+<div class="indent">
+<h3><a name="CreateMakefileProject"></a>Creating a Project
+From Existing Code</h3>
+<ol>
+    <li>Download the <tt>loki-0.1.6</tt> library from
+    <a href="http://sourceforge.net/projects/loki-lib" target="_blank">
+    <tt>http://sourceforge.net/projects/loki-lib</tt></a>.
+    </li>
+    <br>
+    <li>Uncompress <tt>loki-0.1.6</tt> in a directory of your choice.
+    </li>
+    <br>
+  <li>Open the New Project wizard by choosing File &gt; New Project.
+    </li>
+    <br>
+    <li>Select the C/C++ category.</li>
+    <br>
+    <li>Select C/C++ Project From Existing Code and click Next.</li>
+    <br>
+    
+    <li>
+	<p>On the Build Tool page, click the Browse button for 
+	the Makefile field. </p>
+	<p>In the Select Makefile dialog box, navigate to the
+	directory where you saved 
+	<tt>loki-0.1.6</tt>. Select the Makefile. 
+	Click Select.
+	</p>
+	<p>Click Next.</p>
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/MakefileProject1.png" alt="Screen shot of Makefile and
+    Build Tool page of Project Wizard">
+    <br><br>
+    <li>On the Build Actions page, the Working Directory text field, the Build command text field, and 
+	the Clean command text field are filled in automatically. In the Build 
+	Result field, type the full path to where the makefile will put the
+	library, <tt>libloki.a</tt>, built from the <tt>loki-0.1.6</tt> source code.  
+	Click Next.
+    </li>
+    <br>
+        <img src="../../../images/articles/60/cnd/quickstart/MakefileProject2.png" alt="Screen shot of Makefile and
+    Build Actions page of Project Wizard">
+    <br><br>
+
+    <li>
+	On the Source File Folders page, the path to the source file folder for
+	the project is automatically listed. You could specify additional
+	folders by clicking Add and using the Source File Folders dialog box.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/MakefileProject3.png" alt="Screen shot of Source File
+    Folders page of Project Wizard">
+    <br><br>
+    <li>On the Code Assistance Configuration page, click Next.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/MakefileProject4.png" alt="Screen shot of
+    Code Assistance Configuration page of Project Wizard">
+    <br><br>
+    <li>
+	On the Project Name and Location page, type <tt>Loki</tt> in the Project Name 
+	field. Use the defaults for all of the other fields. Click Finish.
+    </li>
+    <br>
+    <img src="../../../images/articles/60/cnd/quickstart/MakefileProject5.png" alt="Screen shot of Project Name
+    and Location page of Project Wizard">
+    <br><br>
+
+</ol>
+<p>
+The project is created and opened in the Project window. You have created a
+project that is a thin wrapper around existing code.
+</p>
+<h3><a name="BuildingRebuilding"></a>Building and Rebuilding Your Project</h3>
+<p>To build the project:
+<ul>
+    <li>Right-click the project node of the project and choose Build Project.</li>
+</ul>
+<p>To rebuild the project:
+<ul>
+    <li>Right-click the project node of the project and choose Clean and Build 
+    Project.</li>
+</ul>
+<h2><a name="editing"></a>Editing Source Files</h2>
+<p>The C/C++ Development Pack provides advanced editing features to help you 
+in viewing and modifying your source code. To explore these features, we'll use 
+the <tt>Quote</tt> project:
+<ol>
+<li>Choose File &gt; New Project.</li>
+<br>
+<li>In the project wizard, expand the Samples category and the C/C++ subcategory.</li>
+<br>
+<li>Select the Applications subcategory, then select the <tt>Quote</tt> 
+project. Click Next, then click Finish.
+</li>
+</ol>
+</p>
+<div class="indent">
+<h3><a name="CodeFolding"</a>Folding Blocks of Code in C and C++ Files</h2>
+<p>
+For some types of files, you can use the code folding feature to collapse 
+blocks of code so that only the first line of the block appears in the Source 
+Editor.
+</p>
+<ol>
+<li>In the <tt>Quote_1</tt> application project, open the Source Files folder,
+then double-click the <tt>cpu.cc</tt> file to open it in the Source Editor.
+</li>
+<br>
+<li>Click the collapse icon (small box with minus sign) in the left margin to fold the code of one of the
+methods.</li>
+<br>
+<li>Mouse over the <tt>{...}</tt> symbol to the right of the folded block to
+display the code in the block.</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/CodeFolding.png" alt="Screenshot of folded code in the Source
+Editor">
+</ol>
+<h3><a name="ClassView"></a>Using the Classes Window</h3>
+<p>
+The Classes window lets you see all of the classes in your project, and the 
+members and fields for each class.</p>
+<ol>
+  <li>Choose Window &gt; Classes to open the Classes window, which displays 
+  the <tt>Quote_1</tt> project.</li>
+  <br>
+  <li>Expand the <tt>Quote_1</tt> node. All 
+  classes in the project are listed.
+  </li>
+  <br>
+  <li>Expand the <tt>Customer</tt> class.
+  </li>
+  <br>
+  <img src="../../../images/articles/60/cnd/quickstart/ClassView.png" alt="Screenshot of the Class View tab">
+  <br><br>
+  <li>Double-click on the
+  <tt>customerName</tt> variable to open the 
+<tt>customer.h</tt> header file.</li>
+</ol>
+<h3><a name="Navigator"></a>Using the Navigator Window</h3>
+<p>The Navigator window provides a compact view of the file that is currently 
+selected, and simplifies navigation between different 
+parts of the file.
+</p>
+<p><b>To display source file in the Navigator window:</b></p>
+<ul>
+<li>Select the file in the 
+Editor window, the Projects window, or the Files window.
+</li>
+</ul>
+<p><b>To navigate to an element of the file displayed in the Navigator window:
+</b></p>
+<ul>
+<li>
+Double-click the element in the Navigator window and the cursor in 
+the Editor window moves to that element.
+</li>
+</ul>
+<h3><a name="Hyperlinks"></a>Using Hyperlinks</h3>
+<p>Hyperlink navigation lets you jump from the invocation of a class, method, variable, 
+or constant to its declaration, and from its declaration to its definition.
+</p>
+<ol>
+<li>In the <tt>cpu.cc</tt> file of the <tt>Quote_1</tt> project, right-click in
+the left margin of the Source Editor and choose Show Line Numbers.
+</li>
+<br>
+<li>Mouse over line 26 while pressing Ctrl. The 
+<tt>ComputeSupportMetric</tt>function is highlighted.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/Hyperlink1.png" alt="Screenshot of the invocation of the function">
+<br><br>
+<li> 
+Click the hyperlink and the
+editor jumps to the definition of the function.</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/Hyperlink2.png" alt="Screenshot of the definition of the function">
+<br><br>
+<li>Mouse over the definition while pressing Ctrl, and click the hyperlink.
+The editor jumps to the declaration of the function in the <tt>cpu.h</tt>
+header file.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/Hyperlink3.png" alt="Screenshot of the declaration of the function">
+<br><br>
+<li>Click the left arrow in the editor toolbar and the editor jumps back to the definition.
+</li>
+</ol>
+<h3><a name="IncludeHierarchy"><a/>Using the Include Hierarchy</h3>
+<p>The Include Hierarchy window lets you inspect all header and source files 
+that are directly or indirectly included in a source file, or all source and 
+header files that directly or indirectly include a header file.
+</p>
+<ol>
+<li>In the <tt>Quote_1</tt> project, open the <tt>module.cc</tt> file in the
+Source Editor.</li>
+<br>
+<li>Right-click on the <tt>#include "module.h"</tt> line in the file and choose
+View Includes Hierarchy.
+</li>
+<br>
+<li>By default, the Hierarchy window displays a plain list of files that directly 
+include the header file. Click the right-most button at the bottom of the
+window to change the display to a tree view. Expand the nodes in the tree view 
+to see all of the source files that include the header file.
+</li>
+<!--commenting out since this image doesn't seem to be there<br>
+<img src="../../../images/articles/60/cnd/quickstart/IncludeView.png" 
+alt="Screenshot of the Include hierarchy">
+<br><br>-->
+</ol>
+<h3><a name="TypeHierarchy"></a>Using the Type Hierarchy</h3>
+<p>The Type Hierarchy window lets you inspect all subtypes or supertypes 
+of a class. 
+</p>
+<p>To open the Type Hierarchy window, right-click on the class declaration 
+or the class reference in a source or header file. To display the class hierarchy in a window in the IDE, choose
+View Type Hierarchy. To display the class hierarchy in a pop-up window, choose 
+Inspect Type Hierarchy. The default display is a tree view of all of the subtypes 
+of the class.
+<p>
+<!--PK note: commenting out this image for now since it's broken<br>
+<img src="../../../images/articles/60/cnd/quickstart/TypeView.png" 
+alt="Screenshot of the Include hierarchy">
+<br><br>-->
+<h3><a name="CodeCompletion"></a>Using Code Completion</h3>
+<p>
+The IDE has a dynamic C and C++ code completion feature 
+that enables you to type one or more characters and then see a 
+list of possible classes, methods, variables, and so on that can be used 
+to complete the expression.
+<ol>
+<li>Open the <tt>quote.cc</tt> file in the <tt>Quote_1</tt> project, and
+right-click in the left margin of the Source Editor and choose Show Line
+Numbers.
+</li>
+<br>
+<li>On line 19 of the <tt>quote.cc</tt>,
+type a capital C and press Ctrl-Space. The code completion box displays a list that includes the
+<tt>Customer</tt> class.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/CodeCompletion1.png" alt="Screenshot of code completion
+box">
+<br><br>
+<li>Select the <tt>Customer</tt> class and press Enter.
+</li>
+<br>
+<li>Complete the new instance of the <tt>Customer</tt> class by typing "
+<tt>andrew;</tt>". On the next line, type the letter <tt>a</tt> and press
+Ctrl-Space. The code completion box displays a list of choices starting with
+the letter <tt>a</tt>, such as method
+arguments, class fields, and global names, that are accessible from the
+current context.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/CodeCompletion2.png" alt="Screenshot of code completion box">
+<br><br>
+<li>Double-click the <tt>andrew</tt> option to accept it and type a period after it.
+You are automatically provided with a list of the public methods and fields
+of the <tt>Customer</tt> class.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/CodeCompletion3.png" alt="Screenshot of code completion
+box">
+<br><br>
+<li>Delete the code you have added.</li>
+</ol>
+<h3><a name="CodeTemplates"></a>Using Code Templates</h3>
+<p>The Source Editor has a set of customizable code templates for common snippets 
+of C and C++ code. You can generate the full code snippet by typing its 
+abbreviation and pressing the spacebar. For example, in the
+<tt>Singleton.cpp</tt> file of the <tt>Loki</tt> project:
+</p>
+<ol>
+  <li> Type <tt>uns</tt> followed by a
+space. <tt>uns</tt> expands to <tt>unsigned</tt>.</li>
+  <br>
+   <li>Type <tt>iff</tt> followed by a space.
+<tt>iff</tt> expands to <tt>if () {}</tt>.</li>
+   <br>
+   <li>Type <tt>ife,</tt> followed by a space.
+<tt>ife</tt> expands to <tt>if () {} else {}</tt>.
+  </li>
+  <br>
+  <li>Type <tt>fori</tt> followed by a
+space. <tt>fori</tt> expands to <tt>for (int i = 0; i &lt;
+; i++) {}</tt>.</li>
+</ol>
+<h3><a name="PairCompletion"></a>Using Pair Completion</h3>
+<p>When you edit your C and C++ source files, the Source Editor does "smart" 
+matching of pair characters such as brackets, parentheses, and quotation marks. When you type one of these characters, the Source Editor automatically inserts the closing character.
+</p>
+<ol>
+  <li>In the <tt>Quote_1</tt> project, place the cursor after the <tt>{</tt> 
+  on line 92 of the 
+  <tt>module.cc</tt> file and press
+  Return to go to a new line. 
+  </li>
+  <br>
+  <li>Type <tt>enum state {</tt> and press Return. The closing curly bracket and
+  semi-colon are added automatically and the cursor is placed on the line
+  between the brackets.
+  </li>
+  <br>
+  <li>Type <tt>invalid=0, success=1</tt> to 
+  complete the enumeration.
+  </li>
+  <br>
+  <li>On the line after the closing <tt>};</tt> of the enumeration, type <tt>if
+  (</tt>. The closing parenthesis is added automatically and the cursor is
+  placed between the parentheses.</li>
+  <br>
+  <li>Type <tt>v==null</tt>. Then type <tt> {</tt> and newline after the right
+  parenthesis. The closing bracket is added automatically.     
+
+</li>
+</ol>
+</div>
+<h2><a name="breakpoints">Creating Breakpoints</h2>
+<p>
+You can create and manipulate breakpoints in your code at any time.
+</p>
+<div class="indent">
+<h3<a name="LineBreakpoint"></a>Creating and Removing a Line Breakpoint</h3>
+<ol>
+<li>
+In the <tt>Quote_1</tt> project, open the <tt>quote.cc</tt> file.
+</li>
+<br>
+<li>Set a line breakpoint by clicking in the left margin of the Source Editor
+window next to line 151 (<tt>response = readChar("Enter disk module type: (S for single disks, R for RAID; Q - exit)",
+'S');</tt>). The line 
+is highlighted in red to indicate that
+the breakpoint is set.
+</li>
+<br>
+<li>You could remove the breakpoint by clicking on the icon in the left margin.
+</li>
+<br>
+<li>Choose Window &gt; Debugging &gt; Breakpoints to open the Breakpoints
+window. Your line breakpoints are listed in the window.
+</ol>
+<h3><a name="FunctionBreakpoint"></a>Creating a Function Breakpoint</h3>
+<ol>
+<li>Choose Run &gt; New Breakpoint (Ctrl+Shift+f8) to open the New Breakpoint
+dialog box.
+</li>
+<br>
+<li>In the dialog box, make sure the Debugger drop-down list is 
+set to C, C++ Fortran (gdb).
+</li>
+<br>
+<li>
+In the Breakpoint Type drop-down list, set the type to Function..
+</li>
+<br>
+<li>Type the function name <tt>Customer::GetDiscount</tt> in the Function
+Name text field. Click OK.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/FunctionBreakpoint1.png" alt="Screenshot of Add Breakpoint window">
+<br><br>
+<li>Your function breakpoint is set and is added to the list in the
+Breakpoints window.
+</li>
+</ol>
+</div>
+<h2><a name="debugging"></a>Debugging a Project</h2>
+When you start a debugging session, the IDE starts the <tt>gdb</tt>  
+debugger, then runs the application inside the debugger. The IDE automatically 
+opens the debugger 
+windows and prints debugger output to the Output window.</p>
+<div class="indent">
+<h3><a name="starting"></a>Starting a Debugging Session</h3>
+<ol>
+<li>Start a debugging session for the <tt>Quote_1</tt> project by
+right-clicking the project node and choosing Debug Project. The debugger
+starts and the application 
+runs, 
+and the Local Variables, Watches, and Call Stack windows open. 
+</li>
+<br>
+<li>Open the Sessions window by choosing Window &gt; Debugging &gt; Sessions.
+The debugging session is shown in this window.
+</li>
+</ol>
+<h3><a name="inspecting"></a>Inspecting the State of the Application</h3>
+<ol>
+<li>The <tt>Quote_1</tt> application prompts you for input in the External I/O
+window.</li>
+<br>
+<li>Enter a customer name after the "Enter customer name:" prompt.
+</li>
+<br>
+<li>The application stops at the function breakpoint you set earlier. 
+Open the Breakpoints window by choosing Window &gt; Debugging &gt;
+Breakpoints. The window lists the two breakpoints you set earlier.
+The function
+breakpoint is displayed in bold. 
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/FunctionBreakpoint2.png" 
+alt="Screenshot of Breakpoints tab">
+<br><br>
+<li>In the
+<tt>customer.cc</tt> file, the green program counter error appears on top of
+the breakpoint icon on the first line of the <tt>GetDiscount</tt>
+function.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/FunctionBreakpoint3.png" 
+alt="Screenshot of Source Editor">
+<br><br>
+<li>Click the Call Stack tab. The call stack shows three frames.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/CallStack.png" alt="Screenshot of Call Stack tab">
+<br><br>
+<li>Click the Local
+Variables tab and note that one variable is displayed. Click the expand icon
+(small box with plus sign) to
+expand the structure.
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/LocalVariables.png" alt="Screenshot of
+Local Variables tab">
+<br><br>
+<li>Click the Continue button. The <tt>GetDiscount</tt>
+function is executed, printing the customer discount to the External I/O
+window. Then you are prompted for input.
+</li>
+<br>
+<li>Enter the input in response to the prompts. The program stops at the next
+breakpoint, the line breakpoint you set earlier. Click the
+Local Variables tab and note the long list of local variables. 
+</li>
+<br>
+<img src="../../../images/articles/60/cnd/quickstart/LocalVariables2.png" alt="Screenshot of Local Variables tab">
+<br><br>
+<li>Click the Call
+Stack tab and note that there are only two frames in the stack.
+</li>
+<br>
+<li>
+Click the Continue button and continue entering input in response to the
+prompts in the External I/O window until the program is completed. When you
+enter <tt>Q</tt> to exit the program, the External I/O window closes and your
+debug session ends. To end the debug session before the
+execution of the program was complete, you could right-click the session in
+the Sessions tab, and choose Finish, or choose Run &gt; Finish Debugger Session.
+</li>
+</ol>
+<DIV CLASS="feedback-box">
+	<A
+	HREF="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a>
+	</DIV>
+</BODY>
+</HTML>

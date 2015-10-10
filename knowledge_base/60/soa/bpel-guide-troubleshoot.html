@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+   <head>
+      <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+      <title>Developer Guide to the BPEL Designer - Troubleshooting</title>
+      <meta name="description" content="Developer Guide to the BPEL Designer">
+      <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+      <meta name="author" content="Dmitry Markovski">
+</head>
+   <body>
+      <a name="top"></a>
+      <h1>
+          Developer Guide to the BPEL Designer: Troubleshooting
+      </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007<br>
+</p>
+</div>
+    <h2>
+       Contents
+    </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><ul>
+            <li><a href="bpel-guide-overview.html">Overview</a></li>
+          <li><a href="bpel-guide-project.html">The BPEL Module Project</a> </li>
+          <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a> </li>
+          <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+          <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> </li>
+          <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+          <li> <a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+          <li><a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a></li>
+          <li><b>Troubleshooting</b> </li>
+        </ul></td>
+        <td width="20"></td>
+        <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"> </td>
+      </tr>
+    </table>
+    <div class="indent">
+         <h2 class="tutorial">BPEL 2.0 Elements Not Present in This Release</h2>
+         <p>There are certain limitations to the elements supported in this release of the BPEL Designer. See the <a href="https://open-esb.dev.java.net/kb/preview3/ep-bpel-se.html" target="_blank">BPEL Service Engine User's Guide</a> for details about the supported BPEL 2.0 language constructs and related limitations. </p>
+   </div>
+         <div class="indent">
+		   <h2 class="tutorial">Using BPEL Schemas Different from the BPEL 2.0 Specification </h2>
+		   <p>This release of the BPEL Designer supports  the BPEL 2.0 final specification and does not support previous specifications. This means that when you open the BPEL files that comply with the previous versions of the specification, the BPEL Designer shows the Unable to Show the Diagram message.</p>
+         <p>If you see this message, do the following:</p>
+         <ul>
+           <li>Check the specification version that the BPEL file complies with. BPEL files that comply with the BPEL 2.0 specification have the following string: <br>
+               <tt>x</tt><tt>mlns=&quot;http://docs.oasis-open.org/wsbpel/2.0/process/executable&quot;</tt><br><br>
+               WSDL files that contain PartnerLinkType definitions should have the following string: <br>
+               <tt>xmlns:plnk=&quot;http://docs.oasis-open.org/wsbpel/2.0/plnktype&quot;</tt><br><br>
+              Replace the namespaces in your files with those above and try to open the BPEL file in the BPEL Designer. <br></li>
+           
+           <li>Make sure that the BPEL constructs used in your process are compatible with the BPEL 2.0 specification. </li>
+         </ul>
+        </div>
+		<div class="indent">
+		  <h2 class="tutorial"><a name="endpoint" id="endpoint"></a> Service Endpoint Conflict </h2>
+		  <p>
+            When deploying two or more Composite Application projects, a service endpoint conflict might occur and the deployment fails. In case of the service endpoint conflict, the following message is displayed:         </p>
+         <pre>Deploy service assembly failed. (partial success)
+MESSAGE: (SOAPBC_DEPLOY_2) Failed to deploy: java.lang.Exception:
+An activated endpoint already has the same SOAP Address location:
+http://localhost:18181/SynchronousSample
+C:\&lt;...&gt;\SynchronousSample1Application\nbproject\build-impl.xml:209:
+Service assembly deployment failed.
+BUILD FAILED (total time: 31 seconds)</pre>
+         <p>
+            This could typically arise from trying to deploy nearly identical processes that are packaged in different Composite Application projects. The workaround for this issue is to use different endpoints during the  deployment of different Composite Application projects. </p>
+         <p><b>Explanation:</b> Even though you are deploying distinct Composite Applications and distinct BPEL processes, by default they will have the same endpoint addresses defined in their <tt>SynchronousSample.wsdl</tt> files. They will both contain the following endpoint address: </p>
+         <pre class="examplecode">&lt;service name=&quot;service1&quot;&gt;
+   &lt;port name=&quot;port1&quot; binding=&quot;tns:binding1&quot;&gt;
+      &lt;documentation/&gt;
+      &lt;soap:address location=&quot;http://localhost:18181/SynchronousSample&quot;/&gt;
+   &lt;/port&gt;
+&lt;/service&gt;</pre>
+         <p> If you attempt to deploy two Composite Applications (for example, <tt>SynchronousSampleApplication</tt> and <tt>SynchronousSample1Application</tt>) with identical service endpoints, the deployment of the second one will fail due to the endpoint conflict. </p>
+         <p> You may wish to deploy more than one version of a Composite Application because you want to modify one or both of these processes and deploy both of them at the same time. Or you may want to compare their behavior. To do this you must first make their endpoint addresses distinct. This means editing the process WSDL file and adjusting the <tt>soap:address location</tt> attribute so that there is no conflict. You can adjust either the port number or the service name. For example, either of these would be sufficiently distinct from the original: </p>
+         <pre class="examplecode">&lt;soap:address location=&quot;http://localhost:18182/SynchronousSample&quot;/&gt;</pre>
+         <p> or </p>
+         <pre class="examplecode">&lt;soap:address location=&quot;http://localhost:18181/SynchronousSampleNew&quot;/&gt;</pre>
+         <h3><strong> Relationship of Service Endpoint to Test Cases </strong></h3>
+         <p> Each Test Case in the Composite Application project will attempt to send the input message to the target process when you invoke the Test action. In order to know where to send the message, each test case has a property called <tt>destination</tt>. You can modify this property in the Properties window. To invoke the Properties window, right-click the test case node and choose Properties from the pop-up window. </p>
+         <pre class="examplecode">destination=http://localhost:18181/SynchronousSample</pre>
+         <p> The value of the <tt>destination</tt> property is set at the time the test case is created. So if you subsequently change the service endpoint you will need to manually adjust the destination attribute for any previously generated test cases. Newly generated test cases, of course, will be OK. </p>
+		</div>
+	<div class="indent">
+         <h2 class="tutorial">Ports         </h2>
+         <h3>
+            <strong>GlassFish V2 Application Server HTTP Port</strong>         </h3>
+         <p>
+             By default, the  installer attempts to configure the Application Server's HTTP port to be 8080. Some of the sample processes assume the 8080 value. If for any reason, the Application Server's HTTP port is not 8080, you will have to make adjustments to the samples.         </p>
+         <p>
+            In particular, the Travel Reservation Service sample will require several adjustments.         </p>
+         <p>
+            Assume, for instance, that the Application Server is listening on HTTP port 8090 (not on the default 8080). In this case, you will have to do the following:         </p>
+         <p>
+            <strong>Adjust Reservation Partner Services WSDL files</strong>         </p>
+         <ol>
+            <li>
+                In the TravelReservationService BPEL Module project, change the soap address value in the
+               <br>
+               <tt>AirlineReservationService.wsdl</tt> from
+               <br>
+               <tt>&lt;soap:address<br> location=&quot;http://localhost:8080/webservice/AirlineReservationService&quot;/&gt;</tt>
+               <br>
+                to
+               <br>
+               <tt>&lt;soap:address<br> location=&quot;http://localhost:8090/webservice/AirlineReservationService&quot;/&gt;<br>
+               </tt>            </li>
+            <li>
+                Similarly, update the soap address values in <tt>VehicleReservationService.wsdl</tt> and
+               <br>
+                <tt>HotelReservationService.wsdl</tt>.</li>
+         </ol>
+         <p><a name="http"></a>
+            <strong>Note:</strong> To find out which HTTP port the Application Server is listening on, open the Services window, right-click the GlassFish V2 Application Server's  node and choose View Admin Console. This opens the GlassFish V2 Application Server Administration Console in your browser. Type username and password (default values are <tt>admin/adminadmin</tt>) and log in. Click Application Server in the left pane and choose the General tab in the right pane. The HTTP port value you need is the first in the <strong>HTTP Port(s):</strong> line.
+            <br>
+            Alternatively, find the following lines in the Application Server log:         </p>
+         <pre>WEB0712: Starting Sun-Java-System/Application-Server HTTP/1.1 on 8080
+WEB0712: Starting Sun-Java-System/Application-Server HTTP/1.1 on 8181
+WEB0712: Starting Sun-Java-System/Application-Server HTTP/1.1 on 4848</pre>
+         <p>
+            The value you need is in the first line.         </p>
+   </div>
+	     <div class="indent">
+		   <h2>
+		 Travel Reservation Service Endpoint Conflict       </h2>
+		   <p>
+            Refer to the <a href="bpel-guide-troubleshoot.html#endpoint">Service Endpoint Conflict</a> section above for a general description of the problem. In case of the Travel Reservation Service sample, however, you have to take these additional steps:         </p>
+         <p>
+             If port 18181 is not available, and if you want to run TRS on another port, such as port 19191, perform the following  steps:         </p>
+      
+	     <h3>
+            <b>Change URLs</b>         </h3>
+	     <p>
+             Open <tt>TravelReservationService.wsdl</tt>.         </p>
+         <p>
+             In the <tt>service</tt> tag change,
+            <br>
+            <tt>soap:address location=&quot;http://localhost:18181/TravelReservation/buildItinerary&quot;/</tt>
+            <br>
+             to
+            <br>
+            <tt>soap:address location=&quot;http://localhost:19191/TravelReservation/buildItinerary&quot;/</tt>         </p>
+         <p>
+             Similarly, update URL's for <tt>airlineReserved</tt>, <tt>hotelReserved</tt> and <tt>vehicleReserved</tt>.         </p>
+         <p>
+            <b>Adjust the Partner EJB project, ReservationPartnerServices</b>         </p>
+         <p>
+             Perform the following steps:         </p>
+         <ol>
+            <li>
+                In the IDE, open the ReservationPartnerServices project.
+               <br>
+                (The IDE created the ReservationPartnerServices project in the location where you created the TravelReservationService project.)            </li>
+            <li>
+                In the Projects window, expand the ReservationPartnerServices project node, expand the Configuration Files node, and then double-click the <tt>ejb-jar.xml</tt> node to open the file in the visual editor.</li>
+            <li>
+                In the Design view, under Enterprise Beans, click ReservationCallBackProviderMDB to expand the entry. Expand Bean Environment and then Environment Entries.            </li>
+            <li>
+                Under Environment Entries, select each entry and click Edit to change the 18181 port number in the Entry Value field.
+               <br>
+                For example, for <tt>AirlineCallbackURL</tt>, change<br>
+               <tt>http://localhost:18181/TravelReservation/airlineReserved</tt>
+               <br>
+                to
+               <br>
+               <tt>http://localhost:19191/TravelReservation/airlineReserved</tt>            </li>
+         </ol>
+         <p>
+            <b>Update the Destination Property</b>         </p>
+         <p>
+                In the <tt>TravelReservationServiceApplication</tt> Composite project expand the Test node. For each test case node under it:</p>
+         <ol>
+               <li>
+                   Right-click the test case node and choose Properties.               </li>
+               <li>
+                   In the Properties window, update the value of the <tt>Destination</tt> property.<br>
+                   Example:
+                  <br>
+                   Change <tt>http://localhost:18181/TravelReservation/buildItinerary</tt>
+                  <br>
+                   to
+                  <br>
+                  <tt>http://localhost:19191/TravelReservation/buildItinerary</tt>               </li>
+         </ol>
+      
+
+   </div>
+   <div class="indent">
+     <h2 class="tutorial">  Test Run         </h2>
+     <p>
+             When executing a test case:         </p>
+         <ul>
+         <li>
+            If the <tt>Output.xml</tt> file is empty (it is empty after a new test case is created), then you are asked whether the <tt>Output.xml</tt> should be populated with the response from the first test run. This first test run output will indicate that the test run failed.         </li>
+         <li>
+            If the <tt>Output.xml</tt> file is not empty, then the results obtained are compared with the content of the file; if they match, the test execution is marked as passed.         </li>
+         </ul>
+   </div>
+	<div class="indent">	
+		 <h2>
+             Test Run Failures         </h2>
+		 <p>
+             If you receive a failed test run, you can do one of the following:         </p>
+         <ul>
+            <li>
+                Check the response message after a failed test run. The response message is available under the test case node in the Projects window. The response message is time stamped.
+               <br>
+                You can verify that the response does not match the expected response (that is, <tt>Output.xml</tt>) and this might help you understand the problem.            </li>
+            <li>
+                Check the Server log file after a failed test run.
+               <br>
+                To do so, go to the IDE's Runtime tab. Select the <tt>View Server Log</tt> action on the GlassFish V2 Application Server node.
+               <br>
+                This shows the contents of the server log and might contain information about why a test run failed.            </li>
+         </ul>
+        <p><a name="sameid"></a>
+            One particular case of test run failures is related to tests that use content-based correlation embedded in <tt>Input.xml</tt> (for example, the <tt>Input.xml</tt> files in the Travel Reservation Service test cases have <tt>&lt;UniqueID&gt;...&lt;/UniqueID&gt;</tt> as the basis for correlation). In this situation, if you run the test case when there is already a running process instance initiated by the same test case, the second process instance will not be initiated and the test will fail. The following message will appear in the GlassFish V2 Application Server log:        </p>
+        <pre>
+Exception occurred while executing a business process instance.
+com.sun.jbi.engine.bpel.core.bpel.exception.CorrelationAlreadyExists: An instance is associated with the correlation
+&lt;...&gt;</pre>
+</div>
+<div class="indent">
+         <h2 class="tutorial">
+             Disabling Firewalls when Using Servers         </h2>
+         <p>
+            You might have to disable any firewall in order to successfully deploy run, debug, or test applications on the Application Server or business processes on the BPEL Server.         </p>
+   </div>
+		<div class="indent">
+		  <h2 class="tutorial">
+            <a name="correlation"></a>Required Correlation Set Usage is Not Detected by the Validation System         </h2>
+		  <p>
+            The BPEL service engine requires strict usage of correlation sets. Currently the validation system does not detect violations of the following requirements:         </p>
+         <ul>
+            <li>
+                <strong>On Message:</strong> The On Message element must have a valid <tt>&lt;correlations&gt;</tt> child if the On Message is used in a Pick activity that does not have the <tt>createInstance=&quot;yes&quot;</tt> attribute.            </li>
+            <li>
+                <strong>Receive:</strong> The Receive element must have a valid <tt>&lt;correlations&gt;</tt> child if it does not have the <tt>createInstance=&quot;yes&quot;</tt> attribute.            </li>
+            <li>
+                <strong>On Event:</strong> The On Event element must have a valid <tt>&lt;correlations&gt;</tt> child.            </li>
+         </ul>
+   </div>
+	<div class="indent">
+	  <p>See the <a href="../../..community/releases/60/relnotes.html">NetBeans IDE 6.0 Release Notes</a> for other known issues for the SOA pack. </p>
+   </div>
+              <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+      <p align="center">
+         <a href="bpel-guide-troubleshoot.html#top">top</a>
+      </p>
+   </body>
+</html>

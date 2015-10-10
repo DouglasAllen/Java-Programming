@@ -1,0 +1,1343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<script src="index_files/tigris.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="index_files/netbeans.css"><title>LAB-8110 NetBeans Enterprise Pack: Advanced UML Modeling</title>
+
+ 
+                                                 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="SourceCastVersion" content="2.6.2.4.10">
+<link rel="shortcut icon" href="http://www.netbeans.org/favicon.ico" type="image/x-icon">
+
+<meta name="keywords" content="NetBeans, IDE, Platform, free, open source, developer">
+
+<meta name="description" value="LAB-8110 NetBeans Enterprise Pack: Advanced UML Modeling">
+<link rel="stylesheet" href="index_files/netbeans_002.css">
+<meta name="author" content="">
+
+
+<style type="text/css">
+#search {height:100%;}
+#topmodule {align:right;}
+</style>
+<script language="JavaScript" type="text/javascript">
+
+</script></head>          
+ 
+ <body onload="loginfocus()" class="composite">
+
+<h1>LAB-8110 NetBeans Enterprise Pack: Advanced UML Modeling
+</h1>
+<div class="articledate" style="margin-left: 0px;">Contributed and maintained 
+  by <a href="mailto:Alexandr.Scherbatiy@sun.com"><i>Alexandr Scherbatiy</i></a>, 
+  <a href="mailto:andrew.korostelev@sun.com"><i>Andrew Korostelev</i></a>, 
+  <a href="mailto:anatoli.fomenko@sun.com"><i>Anatoli Fomenko</i></a><br>
+  <br>
+</div>
+
+<p>
+The NetBeans IDE, in addition to providing support for developing IDE plug-in modules and rich client applications based on the NetBeans platform, contains the NetBeans Enterprise Pack 5.5 Preview software which in turn provides UML modeling, Orchestration Designer, and XML tools to the NetBeans community.
+</p>
+<p>
+This Hands-on Lab takes you through the process of developing a Java application with the UML Modeling component of the NetBeans Enterprise Pack 5.5 Preview. During this lab you will learn how to design and develop a real life Java application, how to create a reverse engineered UML project from a Java library, how to analyze a project structure and find and correct mistakes using the UML graphical presentation.
+</p>
+
+
+<p align="center"><b>Expected duration: <i>90</i> minutes</b></p>
+<div class="indent"> 
+  <h3 class="tutorial">Prerequisites</h3>
+<p>
+This exercise assumes you have a basic familiarity with the Java programming language and UML modeling. If you are new to UML, a good
+resource for UML modeling techniques and theory is the official UML resource page at 
+<a href="http://www.uml.org" target="_blank" >http://www.uml.org/</a>.
+</p>
+
+  <h3 class="tutorial">System requirements</h3>
+  <p>This tutorial assumes your system meets the following requirements.</p>
+  <ul>
+    <li>Supported OS: Windows XP/2000, Solaris 8/9/10, Linux</li>
+    <li>Memory: 512M minimum, 1024M recommended</li>
+    <li>Disk space: 700M bytes<br>
+    </li>
+  </ul>
+  
+  <h3 class="tutorial">Software Needed for the Tutorial</h3>
+  <p>Before you begin, you need to install the following software on your computer.</p>
+  <ul>
+    <li>Java Standard Development Kit (JDK) version 5.0 (<a href="http://java.sun.com/j2se/1.5.0/download.jsp">download</a>)</li>
+    <li>NetBeans Enterprise Pack 5.5 (<a href="http://www.netbeans.info/downloads/download.php?type=5.5b">download</a>).</li>
+  </ul>
+  <h3 class="tutorial">Notations Used in the Tutorial</h3>
+  <ul>
+    <li>&lt;netbeans_install_directory&gt; - directory into which you install 
+      The NetBeans Enterprise Pack 5.5 </li>
+    <li>&lt;lab_root&gt; - directory into which lab zip file is unzipped. </li>
+    <ul>
+      <ul>
+        <li>This document uses &lt;lab_root&gt; to denote the directory under 
+          which you have unzipped the lab zip file of this hands on lab. The name 
+          of the lab zip file of this handson lab is <span style="font-weight: bold;">8110_nbeuml2.zip</span>.</li>
+        <li>Once you unzipped the lab zip file under &lt;lab_root&gt;, it will 
+          create a subdirectory called&nbsp;<span style="font-weight: bold;">nbeuml2</span><span
+ style="font-weight: bold;"></span>. For example, under Windows, if you have unzipped 
+          the lab zip file in the root of drive <span
+ style="font-weight: bold;">C:\</span>, it will create <span
+ style="font-weight: bold;">C:\</span><span style="font-weight: bold;">nbeuml2</span>.&nbsp; 
+          Under Linux/Solaris, if you have unzipped the lab zip file in the <span style="font-weight: bold;">$HOME</span> 
+          directory, it will create <span style="font-weight: bold;">$HOME/</span><span
+ style="font-weight: bold;">nbeuml2</span> directory</li>
+      </ul>
+    </ul>
+  </ul>
+    <h3 class="tutorial">Tutorial Exercises</h3>
+    <ul>
+      <li><a href="#Exercise_0">Exercise 0: Starting Netbeans 5.5 (5 minutes)</a></li>
+      <li><a href="#Exercise_1">Exercise 1: Developing Application using UML Modeling </a></li>
+      <li><a href="#Exercise_2">Exercise 2: Application Maintainance using UML Modeling </a></li>
+<!--      <li><a href="#Exercise_3">Exercise 3: Modeling a Web Service </a></li> -->
+    </ul>
+  <ul>
+    <ul>
+    </ul>
+  </ul>
+  <h3 class="tutorial"><span style="font-weight: bold;">Where to send questions 
+    or feedback's on this lab and public discussion forums</span></h3>
+  <ul>
+    <li>If you have any questions or feedback on this lab, please send them to 
+      the following email alias. Please be advised that this alias is set up for 
+      addressing issues/questions/feedbacks directly relevant to this lab not 
+      for answering general questions on NetBeans Enterprise Pack 5.5 Preview. 
+      </li>
+    <ul>
+      <ul>
+        <li><a href="mailto:handsonlab06-nbeuml2@yahoogroups.com">handsonlab06-nbeuml2@yahoogroups.com</a> (via email) </li>
+        <li><a href="http://groups.yahoo.com/group/handsonlab06-nbeuml2/">http://groups.yahoo.com/group/handsonlab06-nbeuml2/</a></li>
+      </ul>
+    </ul>
+  </ul>
+  <ul>
+    <li>If you have general questions on NetBeans Enterprise Pack, please post 
+      them to NetBeans Enterprise Pack forum.</li>
+    <ul>
+      <ul>
+        <li><a href="http://swforum.sun.com/jive/forum.jspa?forumID=174">Sun Software 
+          Forums - NetBeans Enterprise Pack</a></li>
+      </ul>
+    </ul>
+  </ul>
+  <h3 class="tutorial">
+    <!-- ===================================================================================== -->
+  </h3>
+</div>
+
+<h2><a name="Exercise_0"></a>Exercise 0: Starting Netbeans 5.5 (5 minutes)</h2>
+<p>In this exercise, you will learn how to start the Netbeans IDE.&nbsp;</p>
+<h3 class="tutorial"><span style="font-family: helvetica,arial,sans-serif;"><span
+ style="font-weight: bold;">Start NetBeans 5.5 Preview (if you have not done it 
+  so yet)</span></span><span
+ style="font-family: helvetica,arial,sans-serif;"></span></h3>
+<ol>
+  <p> </p>
+  <li>Under Windows, do one of the following:<br>
+    <br>
+    <ul>
+      <li><span style="font-family: helvetica,arial,sans-serif;">Double-click 
+        on the <span style="font-weight: bold;">NetBeans 5.5 Preview </span>icon 
+        from the desktop </span> 
+		<img src="index_files/a_01_NBicon.png" align="middle" border="0" alt="Figure-01 NetBeans 5.5 Preview icon">        
+      </li>
+      <br>
+      <li><span style="font-family: helvetica,arial,sans-serif;">Select <span
+ style="font-weight: bold;">Start -&gt; Programs -&gt; NetBeans 5.5 Preview -&gt; 
+        Netbeans IDE 5.5.</span></span></li>
+    </ul>
+    <br>
+  </li>
+  <li>Under Solaris/Linux, type the following commands in a terminal window:<br>
+    <br>
+    <ul>
+      <li> <b>cd &lt;netbeans_install_directory&gt;/bin</b></li>
+      <li><b>./netbeans</b><br>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+
+<br>
+
+
+<!-- ======================================================================================== -->
+<h2><a name="Exercise_1">Exercise 1: Developing Application using UML Modeling</h2>
+<!-- <h2><a name="Exercise_1">Exercise 1: Contact Library Application</h2>  -->
+<br>
+<div style="margin-left: 40px;">
+
+<p>
+In this exercise we will develop a small application that implements editing a simple contact list.
+</p>
+<p>
+The Contact information will be based on the Contact specifications described in RFC 2425 and RFC 2426. 
+These specifications describe the widely used vcard format used for interchanging contact information between computer based address
+books. For brevity we will work directly with a subset of those specifications.
+</p>
+<p>
+Firstly, to identify the primary elements and processes of the application, 
+we will develop a Use Case Model using the UML Use Case Modelling. 
+</p>
+<p>
+Then we will develop the information model using a UML Class Diagram. 
+UML code generation feature will allow us to generate the java source code for designed application.
+We will learn how model updates affect source and source updates affect model.
+At the end we will compile and run generated application.
+</p>
+
+<br>
+
+<!-- ***************************************************************** -->
+
+
+<h3 class="tutorial">Steps to follow:</h3>
+</div>
+
+
+<ol style="margin-left: 40px;"><li><a href="#Step_1:_Creating_a_UML_Java-Platform_model_project">Creating a UML Java-Platform Model Project</a></li>
+  <li><a href="#Step_2:_Developing_a_Use_Case_Model">Developing a Use Case Model</a></li>
+  <li><a href="#Step_3:_Developing_a_Class_Hierarchy">Developing a Class Hierarchy</a></li>
+  <li><a href="#Step_4:_Defining_Application_Classes">Defining Application Classes</a></li>
+  <li><a href="#Step_5:_Generating_Java_Source_Code">Generating Java Source Code</a></li>
+  <li><a href="#Step_6:_Filling_up_Bodies_of_Generated_Operations">Filling up Bodies of Generated Operations</a></li>
+  <li><a href="#Step_7:_Run_Developed_Application">Run The Developed Application</a></li>
+
+
+</ol>
+
+
+
+<br>
+<div style="margin-left: 40px;">
+<h3 class="tutorial"><a name="Step_1:_Creating_a_UML_Java-Platform_model_project"></a>Creating a UML Java-Platform Model Project</h3>
+<br>
+
+
+<ol>
+  <p> </p>
+  <li>Choose File from the menu bar and then select New Project.&nbsp;The New Project dialog box appears.</li>
+  <p> </p>
+  <li>Under Choose Project pane, select UML under Categories and select Java-Platform Model under Projects. <br>  </li>
+    <p align="center"><img alt="Select UML Java-Platform Model project" src="index_files/a_new_java_platform_model.png"><br>
+    <p> </p>
+  <li>Click Next. </li>  <p/>
+
+
+  <p></p>
+  <li>Under Name and Location pane,<br>
+    <ul>
+      <li>For the Project Name field, enter <tt> ContactLibrary_UML</tt>.</li> 
+      <li>For the Project Location field, click Browse to navigate, select the &lt;lab_root&gt;\nbeuml2 directory and click Open. <br></li><p> </p>
+    </ul>
+    <p align="center"><img alt="Select Name And Location for UML Java-Platform Model project" src="index_files/a_new_java_platform_model_name_and_location.png"><br>
+    <p> </p>
+  </li>
+
+  <p></p>
+  <li>Click Finish.<br> <p/> The New Wizard dialog box appears.<br> </li> <p> </p>
+
+  <li>For the Diagram Type field, select Use Case Diagram.</li><p> </p>
+  <li>For the Diagram Name field, enter ContactUseCaseDiagram.</li><p> </p>
+    <p align="center"><img alt="Select And Name the Use Case Diagram" src="index_files/a_new_java_platform_model_new_wizard.png"><br>
+  <li>Click OK. <br> <p/> The ContactLibrary_UML project appears in the Projects window. </li> <br>
+    <p align="center"><a target="_blank" href="index_files/a_new_java_platform_model_ide_large.png"><img alt="Click to Enlarge." src="index_files/a_new_java_platform_model_ide.png"></a><br>
+    <a href="index_files/a_new_java_platform_model_ide_large.png">Click to Enlarge</a>
+
+
+
+  <p> </p>
+</ol>
+
+
+<h3 class="tutorial"><a name="Step_2:_Developing_a_Use_Case_Model"></a>Developing a Use Case Model</h3>
+<br>
+
+<ol>
+  <p></p>
+  <li>Activate ContactUseCaseDiagram diagram by click on diagram's tab or by double click in project tree.</li>
+  <p></p>
+  <li>Open UML Palette (if closed) with main menu Window > Palette. </li>
+  <p></p>
+  <li>  Add Actor to the diagram.
+    <ul>
+      <li>Select Actor in palette. </li>
+
+      <li>Click left mouse button in free space of diagram area. <br> 
+       You'll get new Actor element in your model.
+      </li>
+    </ul>
+  </li>
+
+  <p></p>
+  <li>  Name it ContactManager.
+    <ul>
+      <li>Select the element on the diagram (if not selected). </li>
+      <li> Type name of element and press Enter. </li>
+    </ul>
+
+    <p align="center"><a target="_blank" href="index_files/a_use_case_actor_large.png"><img alt="Click to Enlarge - Actor." src="index_files/a_use_case_actor.png"></a><br>
+    <a href="index_files/a_use_case_actor_large.png">Click to Enlarge</a>
+
+  </li>
+
+  <p></p>
+  <li>  Add Package to the diagram. </li>
+  <p></p>
+  <li>  Name it contactAssistant.
+  <p></p>
+  <li>  Enlarge the Package to a hold a couple of Use Cases. </li>
+
+    <p align="center"><img alt="Use Case Diagram - Package " src="index_files/a_use_case_package.png"><br>
+
+  <p></p>
+  <li>  Add UseCase to the Package. </li>
+  <p></p>
+  <li>  Name it Manage Contacts.
+
+  <p></p>
+  <li>  Draw Association link from ContactManager actor to Manage Contacts use case.
+    <ul>
+      <li> Select Association link in palette. </li>
+      <li> Click on Actor element. </li>
+      <li> Click on Use Case element. </li>
+    </ul>
+
+    <p align="center"><a target="_blank" href="index_files/a_use_case_association_link_large.png"><img alt="Click to Enlarge - Association Link." src="index_files/a_use_case_association_link.png"></a><br>
+    <a href="index_files/a_use_case_association_link_large.png">Click to Enlarge</a>
+  </li>
+
+  <p></p>
+  <li>  Add UseCase to the Package. </li>
+  <p></p>
+  <li>  Name it Add Contact.
+
+  <p></p>
+  <li>  Draw Include link from Manage Contacts use case to Add Contact use case.
+    <p align="center"><a target="_blank" href="index_files/a_use_case_include_link_large.png"><img alt="Click to Enlarge - Include Link." src="index_files/a_use_case_include_link.png"></a><br>
+    <a href="index_files/a_use_case_include_link_large.png">Click to Enlarge</a>
+
+  <p></p>
+  <li>  Add UseCase to the Package. </li>
+  <p></p>
+  <li>  Name it Add Personal Information.
+  <p></p>
+  <li>  Draw Include link from Add Contact use case to Personal Information use case.
+
+  <p></p>
+  <li>  Add UseCase to the Package. </li>
+  <p></p>
+  <li>  Name it Add First Name.
+
+  <p></p>
+  <li>  Add UseCase to the Package. </li>
+  <p></p>
+  <li>  Name it Add Last Name.
+
+  <p></p>
+  <li>  Draw Include link from Add Personal Information use case to Add First Name use case.
+  <p></p>
+  <li>  Draw Include link from Add Personal Information use case to Add Last  Name use case.
+
+    <p align="center"><a target="_blank" href="index_files/a_use_case_personal_information_large.png"><img alt="Click to Enlarge - Personal Information Use Case." src="index_files/a_use_case_personal_information.png"></a><br>
+    <a href="index_files/a_use_case_personal_information_large.png">Click to Enlarge</a>
+
+
+  <p></p>
+  <li>Insert Add Birth Date Extension Point to Add Personal Information use case.
+    <ul>
+       <li>Invoke Context menu on the use case. </li>
+       <p align="center"><img alt="Use Case Diagram - Extension Point Context menu" src="index_files/a_use_case_extension_point.png"><br>
+       <li>Click on Insert Extension Point menu item. <br>  Text field was added to use case.</li>
+       <li>Type Extension Point name. </li> 
+       <li>Press Enter.</li>
+       <p align="center"><img alt="Use Case Diagram - Extension Point" src="index_files/a_use_case_extension_point_name.png"><br>
+    </ul>
+  </li>
+
+
+  <p></p>
+  <li>  Add UseCase to the Package. </li>
+  <p></p>
+  <li>  Name it Add EMail Address.
+  <p></p>
+  <li>  Draw Include link from Add Contact use case to Add EMail Addres use case.
+
+  <p></p>
+  <li>Insert Add Address Extension Point to Add Contact use case. </li>
+  <p></p>
+  <li>Insert Add Organization Extension Point to Add Contact use case. </li>
+
+  <p></p>
+  <li>Insert Update Contact Extension Point to Manage Contacts use case. </li>
+  <p></p>
+  <li>Insert Remove Contact Extension Point to Manage Contacts use case. </li>
+
+
+    <p align="center"><a target="_blank" href="index_files/a_use_case_whole_diagram_large.png"><img alt="Click to Enlarge - Use Case Diagram." src="index_files/a_use_case_whole_diagram.png"></a><br>
+    <a href="index_files/a_use_case_whole_diagram_large.png">Click to Enlarge</a>
+
+</ol>
+
+<h3 class="tutorial"><a name="Step_3:_Developing_a_Class_Hierarchy"></a>Developing a Class Hierarchy</h3>
+<br>
+
+<ol>
+  <p> </p>
+
+
+  <p></p>
+  <li> Create ContactClassDiagram under UML Project Model tree.
+    <ul>
+      <li> In the Projects window, expand the ContactLibrary_UML node. </li>
+      <li> Invoke Context menu on the Model node. </li>
+      <li> Click on Add Diagram menu item. <br>  The New Wizard dialog box appears. </li>
+      <li> For the Diagram Type field, select Class Diagram.</li>
+      <li> For the Diagram Name field, enter ContactClassDiagram.</li>
+      <p align="center"><img alt="Class Hierarchy- New Wizard" src="index_files/a_class_hierarchy_new_wizard.png"><br>
+      <li>Click OK. <br> </li> 
+    </ul>
+  </li>
+
+  <p></p>
+  <li>Activate ContactClassDiagram diagram by click on diagram's tab or by double click in project tree.</li>
+
+  <p></p>
+  <li>Open UML Palette (if closed) with main menu Window > Palette. </li>
+
+    <p align="center"><a target="_blank" href="index_files/a_class_hierarchy_class_diagram_large.png"><img alt="Click to Enlarge - Class Hierarchy." src="index_files/a_class_hierarchy_class_diagram.png"></a><br>
+    <a href="index_files/a_class_hierarchy_class_diagram_large.png">Click to Enlarge</a>
+   
+  <p></p>
+  <li>  Add Package to the diagram.
+    <ul>
+      <li>Select Package in palette. </li>
+
+      <li>Click left mouse button in free space of diagram area. <br> 
+       You'll get new package element in your model.
+      </li>
+
+    </ul>
+  </li>
+
+  <p></p>
+  <li>  Name it contact.
+    <ul>
+      <li>Select the element on the diagram (if not selected). </li>
+      <li> Type name of element and press Enter. </li>
+
+    <p align="center"><a target="_blank" href="index_files/a_class_hierarchy_package_large.png"><img alt="Click to Enlarge - Class Hierarchy." src="index_files/a_class_hierarchy_package.png"></a><br>
+    <a href="index_files/a_class_hierarchy_package_large.png">Click to Enlarge</a>
+
+    </ul>
+  </li>
+
+ 
+  <p></p>
+  <li>  Add Class to the diagram. </li>
+  <p></p>
+  <li>  Name it Contact.
+
+    <p align="center"><a target="_blank" href="index_files/a_class_hierarchy_class_large.png"><img alt="Click to Enlarge - Class Hierarchy." src="index_files/a_class_hierarchy_class.png"></a><br>
+    <a href="index_files/a_class_hierarchy_class_large.png">Click to Enlarge</a>
+
+  <p></p>
+  <li>  Add Class to the diagram. </li>
+  <p></p>
+  <li>  Name it ContactList.
+
+  <p></p>
+  <li>  Add Class to the diagram. </li>
+  <p></p>
+  <li>  Name it PersonalIdentity.
+
+  <p></p>
+  <li>  Add Class to the diagram. </li>
+  <p></p>
+  <li>  Name it EMailAddress.
+
+  <p align="center"><img alt="Class Hierarchy - Contact, ContactList, PersonalIdentity, EMailAddress classes" src="index_files/a_class_hierarchy_classes.png"><br>
+
+  <p></p>
+  <li>  Draw Nested link from Contact class to contact package.
+    <ul>
+      <li> Select Nested link in palette. </li>
+      <li> Click on Class element. </li>
+      <li> Click on Package element. <br>   Now class is located in package. </li>
+
+      <p align="center"><a target="_blank" href="index_files/a_class_hierarchy_nested_link_large.png"><img alt="Click to Enlarge - Nested Link." src="index_files/a_class_hierarchy_nested_link.png"></a><br>
+      <a href="index_files/a_class_hierarchy_nested_link_large.png">Click to Enlarge</a>
+
+    </ul>
+  </li>
+
+  <p></p>
+  <li>  Draw Nested link from ContactList class to contact package.       </li>
+  <p></p>
+  <li>  Draw Nested link from PersonalIdentity class to contact package.  </li>
+  <p></p>
+  <li>  Draw Nested link from EMailAddress class to contact package.  </li>
+  <p> </p>
+  <p align="center"><img alt="Class Hierarchy - Whole Class Diagram" src="index_files/a_class_hierarchy_nested_classes.png"><br>
+</ol>
+
+
+<h3 class="tutorial"><a name="Step_4:_Defining_Application_Classes">Defining Application Classes</a></h3>
+<br>
+
+<ol>
+  <p> </p>
+  <li>Insert String firstName attribute to PersonalIdentity class.
+    <ul>
+       <li>Invoke Context menu on Attributes title within the class. </li>
+       <p align="center"><img alt="Insert Attribute Menu" src="index_files/a_defining_application_insert_attribute_menu.png"><br>
+       <li>Click on Insert Attribute menu item. <br>  Attribute with default name was added to class.</li>
+       <li>Delete default name (with backspace) and delete default attribute type (int) </li>
+       <li>Type attribute type.</li>
+       <li>Type attribute name. </li> 
+       <p align="center"><img alt="Insert Attribute Type and Name" src="index_files/a_defining_application_insert_attribute_name.png"><br>
+       <li>Press Enter.</li>
+       <p align="center"><img alt="Insert Attribute" src="index_files/a_defining_application_insert_attribute.png"><br>
+    </ul>
+  </li>
+	
+  <p></p>
+  <li>Insert String lastName attribute to PersonalIdentity class. </li>
+    <!--   CTRL + DOWN  to Select Type of Attribute -->
+  
+  <p align="center"><img alt="PersonalIdentity Class Attributes" src="index_files/a_defining_application_attribute_personal_identity.png"><br>
+
+  <p></p>
+  <li>Insert String address attribute to EMailAddress class. </li>  
+
+  <p align="center"><img alt="PersonalIdentity Class Attributes" src="index_files/a_defining_application_attribute_email_address.png"><br>
+
+
+  <p></p>
+  <li>Insert boolean hasPersonalIdentity attribute to Contact class. </li>  
+  <p></p>
+  <li>Set default value of hasPersonalIdentity attribute to false in Contact class.
+    <ul>
+      <li>Double-click the attribute. </li>
+      <li>Go to the end of text field. </li>
+      <li>Press = and type default value. </li>
+      <li>Press Enter.</li>
+    </ul>
+  </li>  
+
+  <p align="center"><img alt="Contact Class Boolean Attribute" src="index_files/a_defining_application_attribute_contact_boolean_value.png"><br>
+
+  <p></p>
+  <li>Insert PersonalIdentity personalIdentity attribute to Contact class. </li>  
+
+  <p></p>
+  <li>Insert ArrayList&lt;EMailAddress&gt; eMailAddressList attribute to Contact class. </li>  
+  <p></p>
+  <li>Set default value of eMailAddressList attribute to new ArrayList&lt;EMailAddress&gt;() in Contact class. </li>
+
+  <p align="center"><img alt="Contact Class Attributes" src="index_files/a_defining_application_attribute_contact.png"><br>
+
+
+  <p></p>
+  <li>Insert boolean addEMailAddress(EMailAddress eMailAddress) operation to Contact class. 
+    <ul>
+       <li>Invoke Context menu on Operation title within the class. </li>
+       <p align="center"><img alt="Insert Operation Menu" src="index_files/a_defining_application_insert_operation_menu.png"><br>
+       <li>Click on Insert Operation menu item. <br>  Operation with default name was added to class.</li>
+       <li>Delete default name (with backspace) and delete default attribute type (int) </li>
+       <li>Type operation type.</li>
+       <li>Type operation name. </li> 
+       <li>Type operation arguments. </li> 
+       <p align="center"><img alt="Insert Operation" src="index_files/a_defining_application_insert_operation_name.png"><br>
+       <li>Press Enter.</li>
+       <p align="center"><img alt="Insert Operation" src="index_files/a_defining_application_insert_operation.png"><br>
+    </ul>
+  </li>  
+
+  <p></p>
+  <li>Insert boolean removeEMailAddress(EMailAddress eMailAddress) operation to Contact class. </li>
+
+  <p></p>
+  <li>Insert EMailAddress removeEMailAddress(int index) operation to Contact class. </li>
+  <p></p>
+  <li>Insert EMailAddress setEMailAddress(int index, EMailAddress eMailAddress) operation to Contact class. </li> 
+  <p align="center"><img alt="Contact Class Operations" src="index_files/a_defining_application_operation_Contact.png"><br>
+
+  <p></p>
+  <li>Insert ArrayList&lt;Contact&gt; contactList  attribute to ContactList class. </li>  
+  <p></p>
+  <li>Set default value of ArrayList&lt;Contact&gt; contactList attribute to new ArrayList&lt;Contact&gt;() in ContactList class. </li>
+
+
+  <p></p>
+  <li>Insert boolean addContact(Contact contact) operation to ContactList class. </li> 
+  <p></p>
+  <li>Insert boolean removeContact(Contact contact) operation to ContactList class. </li> 
+  <p></p>
+  <li>Insert Contact removeContact(int index) operation to ContactList class. </li> 
+  <p></p>
+  <li>Insert Contact setContact(int index, Contact contact) operation to ContactList class. </li> 
+
+  <p align="center"><img alt="ContactList Class Operations" src="index_files/a_defining_application_operation_ContactList.png"><br>
+
+  <br>  The Class diagram should be like this:
+    <p align="center"><a target="_blank" href="index_files/a_defining_application_whole_diagram_large.png"><img alt="Click to Enlarge - Defining Application Classes." src="index_files/a_defining_application_whole_diagram.png"></a><br>
+    <a href="index_files/a_defining_application_whole_diagram_large.png">Click to Enlarge</a>
+
+  <p> </p>
+</ol>
+
+
+<h3 class="tutorial"><a name="Step_5:_Generating_Java_Source_Code">Generating Java Source Code</a></h3>
+<br>
+
+
+<ol>
+  <p></p>
+  <li>Create empty ContactLibrary_JAVA Java Application.
+    <ul>
+      <p></p>
+      <li>Choose File from the menu bar and then select New Project. <br> The New Project dialog box appears. </li>
+      <p></p>
+      <li>Under Choose Project pane, select General under Categories and select Java Application under Projects. Click Next. </li>
+      <p align="center"><img alt="Source Code: New Project" src="index_files/a_source_code_new_project_type.png"><br>
+      <p></p>
+      <li>For the Project Name field, enter ContactLibrary_JAVA.</li>
+      <p></p>
+      <li>For the Project Location field, click Browse to navigate, select the &lt;lab_root&gt;\nbeuml2 directory and click Open.</li>
+      <p></p>
+      <li>Uncheck Create Main Class checkbox</li>
+      <p align="center"><img alt="Source Code: New Project" src="index_files/a_source_code_new_project_name.png"><br>
+      <p></p>
+      <li>Click Finish.  <br> </li>
+      <p align="center"><img alt="Source Code: New Java Project" src="index_files/a_source_code_java_project.png"><br>
+    </ul>
+  </li>
+
+  <p></p>
+  <li> Associate ContactLibrary_UML project with ContactLibrary_JAVA project.
+    <ul>
+      <p></p>
+      <li>In the Projects window, select the ContactLibrary_UML node and invoke Context menu.</li>
+      <p></p>
+      <li>Click on Properties menu item. <br>  The Project Properties -  ContactLibrary_UML dialog box appears. </li>
+
+      <p></p>
+      <li>Select Modeling under Categories </li>
+      <p></p>
+      <li>Check Generate Code checkbox </li>
+      <p></p>
+      <li>For the Java Project list, select ContactLibrary_JAVA. </li>
+      <p align="center"><img alt="Source Code: New Java Project" src="index_files/a_source_code_project_properties.png"><br>
+
+      <p></p>
+      <li>Click OK. </li>
+    </ul>
+  </li>
+  <p></p>
+  <li> Generate Java Source Code 
+    <ul>
+      <p></p>
+      <li> In the Projects window, select the ContactLibrary_UML node and invoke Context menu. </li>
+      <p align="center"><img alt="Source Code: Generate Code" src="index_files/a_source_code_generate_code.png"><br>
+      <p></p>
+      <li> Click on Generate Code menu item. <br>  The Code Generation dialog box appears. </li>
+      <p align="center"><img alt="Source Code: Generate Code" src="index_files/a_source_code_generation_code.png"><br>
+      <p></p>
+      <li> Click Done. 
+        <br> contact package appears in ContactLibrary_JAVA Java Application
+        <br> Contact, ContactList, PersonalIdentity, EMailAddress classes appear under contact package in ContactLibrary_JAVA Java Application
+      </li>
+      <p align="center"><img alt="Source Code: Generate Code" src="index_files/a_source_code_java.png"><br>
+    </ul>
+  </li>
+
+  <p> </p>
+</ol>
+
+
+
+<h3 class="tutorial"><a name="Step_6:_Filling_up_Bodies_of_Generated_Operations">Filling up Bodies of Generated Operations</a></h3>
+<br>
+
+
+<ol>
+
+  <p></p>
+  <li> Activate ContactClassDiagram diagram by click on diagram's tab or by double click in project tree. </li> 
+
+
+  <p></p>
+  <li> Go to source of the EMailAddress class element.
+    <ul>
+      <p></p>
+      <li>Invoke Context menu within the class element. </li>
+      <p align="center"><img alt="Filling up Methods: Navigate To Source menu" src="index_files/a_filling_body_navigate_to_source_menu.png"><br>
+      <p></p>
+      <li>Click on Navigate To Source menu item. <br> You'll see the source code for class element. </li>
+      <p align="center"><img alt="Filling up Methods: Navigate To Source Java File" src="index_files/a_filling_body_navigate_to_source_code.png"><br>
+
+    </ul>
+    <br>  The following methods were generated for the EMailAddress class
+    <ul>
+      <p></p>
+      <li> Constructor. </li>
+      <p></p>
+      <li> get/set methods for address attribute. </li>
+      <p align="center"><img alt="Filling up Methods: Navigate To Source Methods" src="index_files/a_filling_body_navigate_to_source_operations.png"><br>
+    </ul>
+  </li>
+
+  <p></p>
+  <li> Go to source of the PersonalIdentity class element. 
+    <br>  The following methods were generated for the PersonalIdentity class
+    <ul>
+      <p></p>
+      <li> Constructor. </li>
+      <p></p>
+      <li> get/set methods for firstName attribute. </li>
+      <p></p>
+      <li> get/set methods for lastName attribute. </li>
+    </ul>
+
+ </li>
+
+  <p></p>
+  <li> Go to source of the Contact class element. 
+    <br> The following methods were generated with default bodies 
+
+    <ul>
+      <p></p>
+      <li>  boolean addEMailAddress(EMailAddress eMailAddress). </li>
+      <p></p>
+      <li>  boolean removeEMailAddress(EMailAddress eMailAddress).  </li>
+      <p></p>
+      <li>  EMailAddress removeEMailAddress(int index).  </li>
+      <p></p>
+      <li>  EMailAddress setEMailAddress(int index, EMailAddress eMailAddress).  </li>
+    </ul>
+  </li>
+ 
+
+
+  <p></p>
+  <li> Change body of boolean addEMailAddress(EMailAddress eMailAddress) operation for Contact class to   
+       <pre class="examplecode">
+        return this.eMailAddressList.add(eMailAddress);
+       </pre>
+       <p align="center"><img alt="Filling up Methods: Change body for Contact Class" src="index_files/a_filling_body_contact_add_email_address.png"><br>
+  </li>
+
+  <p></p>
+  <li> Change body of boolean removeEMailAddress(EMailAddress eMailAddress) operation for Contact class to   
+       <pre class="examplecode">
+        return this.eMailAddressList.remove(eMailAddress);
+       </pre>
+  </li>
+
+  <p></p>
+  <li> Change body of EMailAddress removeEMailAddress(int index) operation for Contact class to   
+       <pre class="examplecode">
+        return this.eMailAddressList.remove(index);
+       </pre>
+  </li>
+
+
+  <p></p>
+  <li> Change body of EMailAddress setEMailAddress(int index, EMailAddress eMailAddress) operation for Contact class to   
+       <pre class="examplecode">
+        return this.eMailAddressList.set(index, eMailAddress);
+       </pre>
+       <p align="center"><img alt="Filling up Methods: Change body for Contact Class" src="index_files/a_filling_body_contact_methods.png"><br>
+  </li>
+
+  <p></p>
+  <li> Press &lt;Alt+Shift+F&gt; to fix all class's imports </li> 
+       <p align="center"><img alt="Filling up Methods: Fix Imports" src="index_files/a_filling_body_contact_fix_imports.png"><br>
+
+  <p></p>
+  <li> Go to source of the ContactList class element. </li> 
+  
+  <p></p>
+  <li> Change body of boolean addContact(Contact contact)  operation for ContactList class to   
+       <pre class="examplecode">
+        return this.contactList.add(contact);
+       </pre>
+  </li>
+
+
+  <p></p>
+  <li> Change body of boolean removeContact(Contact contact) operation for ContactList class to   
+       <pre class="examplecode">
+        return this.contactList.remove(contact);
+       </pre>
+  </li>
+
+  <p></p>
+  <li> Change body of Contact removeContact(int index) operation for ContactList class to   
+       <pre class="examplecode">
+        return this.contactList.remove(index);
+       </pre>
+  </li>
+
+  
+  <p></p>
+  <li> Change body of Contact setContact(int index, Contact contact)  operation for ContactList class to   
+       <pre class="examplecode">
+        return this.contactList.set(index, contact);
+       </pre>
+       <p align="center"><img alt="Filling up Methods: Change body for ContactList Class" src="index_files/a_filling_body_contact_list_methods.png"><br>
+  </li>
+
+  <p></p>
+  <li> Press &lt;Alt+Shift+F&gt; to fix all class's imports. </li> 
+  <p align="center"><img alt="Filling up Methods: Change body for ContactList Class" src="index_files/a_filling_body_contact_list_fix_imports.png"><br>
+
+  <p></p>
+  <li>  Build ContactLibrary_JAVA application
+    <ul>
+      <p></p>
+      <li>  In the Projects window, select the ContactLibrary_JAVA node and invoke Context menu. </li>
+      <p></p>
+      <li>  Click on Build Project menu item.  </li>
+      <p align="center"><img alt="Filling up Methods: Change body for ContactList Class" src="index_files/a_filling_body_build_app.png"><br>
+      <p></p>
+      <li>  Correct errors if build was failed</li>
+      <p align="center"><img alt="Filling up Methods: Change body for ContactList Class" src="index_files/a_filling_body_build_app_output.png"><br>
+    </ul>
+  </li>
+
+</ol>
+
+
+
+<h3 class="tutorial"><a name="Step_7:_Run_Developed_Application">Run The Developed Application</a></h3>
+<br>
+
+
+
+<ol>
+
+  <p></p>
+  <li> Add contactView package into ContactLibrary_JAVA application. </li> 
+
+  <p></p>
+  <li> Get ContactEditor JFrame (java and form files) from &lt;lab_root&gt;\nbeuml2\AppCreate\ContactLibrary\src\contactView directory and
+       copy them to contactView package of ContactLibrary_JAVA application (&lt;lab_root&gt;\nbeuml2\ContactLibrary_JAVA\src\contactView).
+    <ul>
+      <p></p>
+      <li>  <a href="AppCreate/ContactLibrary/src/contactView/ContactEditor.java"> ContactEditor.java </a> </li> 
+      <p></p>
+      <li> <a href="AppCreate/ContactLibrary/src/contactView/ContactEditor.form"> ContactEditor.form  </a> </li>
+      <p align="center"><img alt="Run Application: Add ContactEditor class" src="index_files/a_run_app_add_contact_editor.png"><br>
+    </ul>
+  </li>
+
+  <p></p>
+  <li>  Run ContactLibrary_JAVA application
+    <ul>
+      <p></p>
+      <li>  In the Projects window, select the ContactLibrary_JAVA node and invoke Context menu. </li>
+      <p align="center"><img alt="Run Application: Run Project menu " src="index_files/a_run_app_run_project.png"><br>
+      <p></p>
+      <li>  Click on Run Project menu item. <br>  The Run Project dialog box appears. </li>
+      <p></p>
+      <li>  Select contactView.ContactEditor under Select the main class. </li>
+      <p align="center"><img alt="Run Application: Run Project menu " src="index_files/a_run_app_run_project_dialog.png"><br>
+      <p></p>
+      <li> Click OK. <br> The Contact Editor window appears. </li>
+      <p align="center"><img alt="Run Application: Contact Editor Window" src="index_files/a_run_app_window.png"><br>
+    </ul>
+  </li>
+
+  <p></p>
+  <li> There are two contacts in the Contact List on the Contact Editor window
+    <ul>
+      <p></p>
+      <li> Gail Gardner, Gail.Gardner@sun.com.</li>
+      <p></p>
+      <li> Tom Davis, Tom.Davis@sun.com.</li>
+    </ul>
+  </li>
+
+
+  <p></p>
+  <li>  Add Mike Wazowski, Mike.Wazowski@monster.com contact to Contact list
+    <ul>
+       <p></p>
+       <li> For the First Name field, enter Mike. </li> 
+       <p></p>
+       <li> For the Last Name field, enter Wazowski. </li> 
+       <p></p>
+       <li> For the EMail Address field, enter Mike.Wazowski@monster.com . </li> 
+       <p align="center"><img alt="Run Application: Add Contact " src="index_files/a_run_app_window_add_contact.png"><br>
+       <p></p>
+       <li> Click Add. <br> Mike Wazowski, Mike.Wazowski@monster.com contact is added to Contact list.</li> 
+       <p align="center"><img alt="Run Application: Add Contact " src="index_files/a_run_app_window_add_contact_button.png"><br>
+    </ul>
+  </li>
+
+
+  <p></p>
+  <li> Close Contact Editor window. </li> 
+  <p></p>
+</ol>
+
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial">Summary</h3>
+
+  <p>In this exercise, you learned how to create new Java application using UML Modeling. <br>
+  You learned how to perform the following tasks:</p>
+
+  <li>Desing and analyze application using Use Case Diagram</li>
+  <li>Develop Class hierarchy of Java application on Class Diagram</li>
+  <li>Filling Java classes with attributes and operations on UML diagram</li>
+  <li>Generating Java source code for Application developed on diagram</li>
+
+</div>
+<br>
+
+
+<!-- ======================================================================================== -->
+<h2><a name="Exercise_2">Exercise 2: Application Maintainance using UML Modeling</h2>
+
+
+<br>
+<div style="margin-left: 40px;">
+<p>In this chapter we will present a process for Maintaining a Java Contact Editor application using UML
+modeling techniques. </p>
+
+<p>We will use java application created by another developer in Exercise 1.<br>
+To understand project structure we will begin with generating a UML diagram from an existing Java sources. </p>
+
+<p>The Next we will generate a UML Sequence diagram illustrating the interaction that takes place between the
+contact list view and the contact class library model. <br>
+We will use the Sequence diagram to find a bug in the update process. <br>
+We will then proceed with fixing localized bug.
+And at the end we will compile and run the editor to check the fix.</p>
+<br>
+<h3 class="tutorial">Steps to follow:</h3>
+</div>
+<ol style="margin-left: 40px;">
+<li><a href="#Step_21:_Open_existing_Java_Project">Step 1: Open Existing Java project with existing sources</a></li>
+<li><a href="#Step_22:_Run_project_find_mistake">Step 2: Run project to find a mistake</a></li>
+<li><a href="#Step_23:_Create_project_by_re">Step 3: Create a UML project by reverse engineering</a></li>
+<li><a href="#Step_24:_Generate_class_diagram">Step 4: Generate Class Diagram for Project</a></li>
+<li><a href="#Step_25:_change_diagram_view">Step 5: Change diagram view</a></li>
+<li><a href="#Step_26:_Review_project_structure_cld">Step 6: Review project structure on Class Diagram</a></li>
+<li><a href="#Step_27:_Generate_sqd_for_operation">Step 7: Generate a Sequence Diagram for an Operation</a></li>
+<li><a href="#Step_28:_review_update_operation_on_sqd">Step 8: Review update operation on Sequence diagram</a></li>
+<li><a href="#Step_29:_fix_problem">Step 9: Fix problem</a></li>
+<li><a href="#Step_210:_Run_project_to_check">Step 10: Run project to check</a></li>
+
+</ol>
+<br>
+<div style="margin-left: 40px;">
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_21:_Open_existing_Java_Project"></a>Step 1: Open Existing Java project with existing sources</h3>
+
+<br>
+Note: Close all projects from from previous exercises.
+<ol>
+
+  <p> </p>
+  <li>Choose File from the menu bar and then select Open Project.</li>
+  <p> </p>
+  <li>Browse to the &lt;lab_root&gt;/nbeuml2/AppMaintain directory and select ContactLibrary2 project. Click Open Project Folder. <br>
+    <p align="center"><a target="_blank" href="index_files/c_openproject.png"><img alt="Click to Enlarge. Opening Java project" src="index_files/c_openproject_thumb.png"></a><br>
+    <a href="index_files/c_openproject.png">Click to Enlarge</a>
+    </p>
+  </li>                                          
+  <p> </p>
+  <li>New ContactLibrary2 project node will appear in Projects tab.</li>
+  <p> </p>
+</ol>
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_22:_Run_project_find_mistake"></a>Step 2: Run project to find a mistake</h3>
+<br>
+<ol>
+  <p> </p>
+  <li>Right-click on the java Project node and select 'Run Project' from Context menu.</li>
+  <p> </p>
+  <li>In opened 'Run Project' dialog window select 'contactView.ContactEditor' main class<br>
+    <p align="center"><img alt="Select main class to run project." src="index_files/c_selectclasstorun.png">
+    </p>
+    Press OK.
+  </li>                                          
+  <p> </p>
+  <li>Output window shows compilation and running status.<br>
+    <p align="center"><img alt="Output window." src="index_files/c_outputwindow.png">
+    </p>
+  </li>                                          
+  <p> </p>
+  <li>Contact Editor form is started.</li>
+  <p> </p>
+  <li>Double-Click on 'First Name' of existing 'Tom Davis' contact item to edit it.<br>
+  	Table cell becomes editable.<br>
+  	Type new Name 'Bob'.<br>
+  	Change Email to 'Bob.Davis@sun.com'.<br>
+    <p align="center"><img alt="New First Name and Email. Update button" src="index_files/c_updatenameemeil.png">
+    </p>
+  	Click 'Update' button.<br>
+  </li>                                          
+  <p> </p>
+  <li>Close Contact Editor window.<br>
+	  Look at output window.<br>
+	  Editor application will print out updated Contact information.<br>
+	  Actually you can see that 'Tom Davis' record wasn't updated.<br>
+    <p align="center"><img alt="Application output." src="index_files/c_appoutput.png">
+    </p>
+  </li>                                          
+	<p></p>
+  <li>This means there is an error in updating mechanism.<br>
+	We should review application, find a mistale and fix it.<br>  
+  </li>
+  <li>Now you can close 'Output - ContactLibrary2 (run)' window. 
+  </li>
+</ol>
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_23:_Create_project_by_re"></a>Step 3: Create a UML project by reverse engineering</h3>
+<br>
+
+<ol>
+  <p> </p>
+  <li>Invoke 'File | New Project' command from the menu bar. The New Project dialog box appears.</li>
+  <p> </p>
+  <li>Under Choose Project pane, select UML under Categories and select Java-Platform Model by Reverse-Engineering a Java Project under Projects. Click Next.<br>
+    <br><br>
+    <p align="center"><a target="_blank" href="index_files/c_selectreverse.png"><img alt="Click to Enlarge. Select Java-Platform Model by Reverse-Engineering a Java Project" src="index_files/c_selectreverse_thumb.png"></a><br>
+    <a href="index_files/c_selectreverse.png">Click to Enlarge</a>
+    </p>
+    Note: You can create uml project from your sources another way by selecting Java-Platform Model project with turning on Generate Source on next wizard step </li>
+  <p> </p>
+  <li>Under Name and Location pane,<br>
+    <ul>
+      <p></p>
+      <li>For the Project Name field, enter ContactLibrary2UML .</li><p> </p>
+      <p></p>
+      <li>For the Project Location field, click Browse to navigate to and select the AppMaintain folder and click Open.<br></li><p> </p>
+      <p> </p>
+      <li>Choose ContactLibrary2 project in Java Project combobox.<br>
+      </li><p> </p>
+    <p align="center"><a target="_blank" href="index_files/c_choosejavaproj.png"><img alt="Click to Enlarge. Choose Java Project" src="index_files/c_choosejavaproj_thumb.png" ></a><br>
+    <a href="index_files/c_finishproject.png">Click to Enlarge</a>
+    </ul>
+    </p>
+    Note: You have to select java project to proceed with Java-Platform Model by Reverse-Engineering a Java Project project creation. You can choose only from already opened java projects.<br><br>
+<!--
+    <ul>
+    <li>
+        We have no test packages in our java project and you may deselect test packages from Reverse Engineering process on your wish.
+   </li>
+Note: You can't unselect both src and test packages, see next note also. <br>
+Note: Reverse Engineering process is closely correlated with model from source updates and source from model updates, see cases:<br>
+<u>Case 1 (you have selected only src packages):</u> model will be created only from packages and classes, interfaces located in src packages.
+Only elements located in src packages will be updated with you work in uml project. Changes from src packages will be propagated to uml project. Changes in test packages will affect nothing in uml project. <br>
+<u>Case 2 (you have selected only test packages):</u> reversed to 1st case. <br>
+<u>Case 3 (both set of packages was selected and both set exists in java project):</u> all source changes from test and src packages will go to uml project, all change in model within test packages will go to test packages in source and all changes in model within src packages will go to src packages in source. <br>
+      <li>Click Finish. Reverse engineering starts and progress bar shows the progress.<br>
+      </li>
+      <p> </p>
+    </ul>
+    -->
+  </li>
+  <p> </p>
+  <li>When the reverse engineering is done, click Done. The ContactLibrary2UML project appears in the Projects window.<br>
+    <br>
+    <p align="center"><img alt="Reverse Engineering performed by Netbeans Enterpise Pack" src="index_files/c_reversedone.png" >
+    </p>
+    <br>
+  </li>
+</ol>
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_24:_Generate_class_diagram"></a>Step 4: Generate Class Diagram for Project</h3>
+<br>
+
+<ol>
+  <p> </p>
+  <li>In the Projects tab window, under the ContactLibrary2UML node, expand the Model node.<br>
+  	Expand the contact and contactView package nodes.
+  </li>
+  <p> </p>
+  <li>Select the contact and contactView packages and all class nodes under them.<br>
+  You may click on contact folder and then, holding Shift key, click on ContactEditor to select all element between them.
+  </li>
+  <p> </p>
+  <li>Right-click the selected elements and choose Create Diagram From Selected Elements from the contextual menu.
+  </li>
+  <p> </p>
+  <li>In the Diagram Type list, select Class Diagram.<br>
+  Type ContactClassDiagram in the Diagram Name field, <br>
+  leave ContactLibrary2UML in the Namespace field<br>
+  and click OK.<br>
+    <p align="center"><img alt="Choose Class Diagram" src="index_files/c_chooseclassdiagram.png" >
+    </p>
+  </li>
+  <p> </p>
+  <li>This action does the following:<br>
+    <ul><p> </p>
+      <li>Creates a ContactClassDiagram node under the Model node</li><p> </p>
+      <li>Displays the new diagram in the Diagram editor </li><p> </p>
+      <li>Opens the Modeling Palette</li>
+    </ul>
+    <p align="center"><a target="_blank" href="index_files/c_cdfsclassdiagram.png"><img alt="Click to Enlarge. Class Diagram created From Selected Elements" src="index_files/c_cdfsclassdiagram_thumb.png"></a><br>
+    <a href="index_files/c_cdfsclassdiagram.png">Click to Enlarge</a>
+    </p>
+  </li>
+</ol>
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_25:_change_diagram_view"></a>Step 5: Change diagram view</h3>
+<br>
+
+<ol>
+  <p> </p>
+  <li>Double-click the BankClassDiagram tab at the top of the Diagram editor.<br>
+    Note: To reverse this action double-click the BankClassDiagram tab again.
+  </li>
+  <p> </p>
+  <li>Select 'Zoom with marquee' <img src="index_files/uml_re/zoom_with_marquee.png" alt="The Zoom with marquee diagram toolbar button." height="21" width="22"> button on diagram toolbar. 
+  </li>
+  <li>Click on empty diagram area near the top left corner of ContactEditor symbol on diagram and do not release the mouse button.<br>
+  Holding mouse button move pointer to select the whole ContactEditor symbol. Release button.
+    <br>
+    <p align="center"><img button on alt="Select area to enlarge." src="index_files/c_enlarge_area.png"><br>
+    </p>
+  </li>
+  <li>You will see selected area enlarged to the whole visible diagram area.<br>
+    <br>
+    <p align="center"><a target="_blank" href="index_files/c_enlarged_element.png"><img alt="Click to enlarge. Enlarged Element" src="index_files/c_enlarged_element_thumb.png"></a><br>
+    <a href="index_files/c_enlarged_element.png">Click to Enlarge</a>
+    </p>
+
+  </li>
+  <p> </p>
+</ol>
+
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_26:_Review_project_structure_cld"></a>Step 6: Review project structure on Class Diagram</h3>
+<br>
+<ol>
+  <p> </p>
+  <li>Look at ContactEditor class symbol on diagram.
+  </li>
+  <p> </p>
+  <li>There is 'updateButtonActionPerformed(ActionEvent)' operation which name <br>
+  (according to widespread naming approach) shows that it is invoked from 'update' button event listener.
+  </li>
+  <p> </p>
+  <li>And method 'setContact(int, Vector)' which performs actual data updating
+    <p align="center"><img alt="Operation Review" src="index_files/c_operationsreview.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>setContact() is probably invoked from updateButtonActionPerformed().
+  </li>
+  <p> </p>
+</ol>
+
+  	
+
+  <!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_27:_Generate_sqd_for_operation"></a>Step 7: Generate a Sequence Diagram for an Operation</h3>
+<br>
+<ol>
+  <li> Let's analyze updateButtonActionPerformed() method.<br>
+  Right-click on 'private void updateButtonActionPerformed(ActionEvent)' operation area<br>
+  and invoke 'Reverse Engineer Operation' command.
+    <br>
+    <p align="center"><img alt="Reverse Engineer operation" src="index_files/c_reoperation.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>The New Wizard dialog for creating a new diagram appears. <br>
+    <p align="center"><img alt="Reverse engineer operation dialog" src="index_files/c_reoperationdialog.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>In the Diagram Type list, select Sequence Diagram.<br>
+  </li>
+  <p> </p>
+  <li>In the Diagram Name field, type ContactEditorSD. <br>
+  </li>
+  <p> </p>
+  <li>Accept the default value in the Namespace field and click OK. A sequence diagram appears in the Diagram Editor.
+  </li>
+  <p> </p>
+  <li>Expand the Diagram editor and manipulate the zoom level so that you can easily examine the new sequence diagram.<br>
+    <p align="center"><a target="_blank" href="index_files/c_sequencediagram2.png"><img alt="Click to Enlarge. Sequence Diagram of operation" src="index_files/c_sequencediagram2_thumb.png"></a><br>
+    <a href="index_files/c_sequencediagram2.png">Click to Enlarge</a>
+    </p>
+  </li>
+  <p> </p>
+
+</ol>
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_28:_review_update_operation_on_sqd"></a>Step 8: Review update operation on Sequence diagram</h3>
+<br>
+<ol>
+  <p> </p>
+  <li>We can see Objects created and used in updateButtonActionPerformed method.<br>
+    <p align="center"><a target="_blank" href="index_files/c_sequencediagram3.png"><img alt="Click to Enlarge. Created and used objects." src="index_files/c_sequencediagram3_thumb.png"></a><br>
+    <a href="index_files/c_sequencediagram3.png">Click to Enlarge</a>
+    </p>
+  </li>
+  <p> </p>
+  <li>We can see combined fragments like 'if', loops etc.<br>
+    <p align="center"><img alt="Sequence Diagram. if clause." src="index_files/c_sqdif.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>And We can analyze messages invocation sequence.<br>
+  </li>
+  <p> </p>
+  <li>For updateButtonActionPerformed we see method getSelectedRow() that selects updated row .<br>
+    <p align="center"><img alt="Sequence Diagram. Row selection method." src="index_files/c_sqdgetselectedrow.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>Then requests new values using getValueAt(int, Integer) method.<br>
+    <p align="center"><img alt="Sequence Diagram. Geting new values methods." src="index_files/c_sqdgetvalues.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>Adds them into Vector.<br>
+    <p align="center"><img alt="Sequence Diagram. Putting values to vector." src="index_files/c_sqdadd.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>And then should invoke setContact(int, Vector) method to perform update.<br>
+  	But it doesn't!
+  </li>
+  <p> </p>
+  <li>We have localized a mistake. 
+  </li>
+  <p> </p>
+</ol>
+
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_29:_fix_problem"></a>Step 9: Fix problem</h3>
+<br>
+<ol>
+  <p> </p>
+  <li>Switch to class diagram
+  </li>
+  <p> </p>
+  <li>Open context menu for updateButtonActionPerformed method of ContactEditor class element<br>
+  and invoke 'Navigate to source' command.
+    <p align="center"><img alt="Navigate to source." src="index_files/c_navigatetosource.png">
+    </p>
+  </li>                                                                                       
+  <p> </p>
+  <li>Add 'this.setContact(rowIndex, rowData);' invocation as the last line of 'if' clause.
+    <p align="center"><a target="_blank" href="index_files/c_correctedsrc.png"><img alt="Click to Enlarge. Correct mistake in Source Code." src="index_files/c_correctedsrc_thumb.png"></a><br>
+    <a href="index_files/c_correctedsrc.png">Click to Enlarge</a>
+    </p>
+  </li>
+  <p> </p>
+</ol>
+
+<!-- === step ================================================ -->
+<h3 class="tutorial"><a name="Step_210:_Run_project_to_check"></a>Step 10: Run project to check</h3>
+<br>
+<ol>
+  <p> </p>
+  <li>Run ContactLibrary2 project again to check if updating works now.<br>
+  </li>
+  <p> </p>
+  <li>Change First Name and Email Address to 'Bob' and 'Bob.Davis@sun.com' again.<br>
+  Press Update button.
+    <p align="center"><img alt="New First Name and Email. Update button" src="index_files/c_updatenameemeil.png">
+    </p>
+  </li>
+  <p> </p>
+  <li>Close application window and check in output that contact data was updated.<br>
+    <p align="center"><img alt="Updated contact data" src="index_files/c_updatedcontact.png">
+    </p>
+  </li>
+</ol>
+
+<!-- === step ================================================ -->
+<h3 class="tutorial">Summary</h3>
+
+  <p>In this exercise, you learned how to reverse engineer and analyze a Java application. <br>
+  You learned how to perform the following tasks:</p>
+
+  <li>Create Reverse-Engineered UML Project</li>
+  <li>Generate a class diagram from the imported application</li>
+  <li>Generate a sequence diagram for an operation</li>
+  <li>Analyze generated sequence diagram</li>
+
+<br>
+</div>
+
+<!-- ======================================================================================== -->
+<!--
+<h2><a name="Exercise_3">Exercise 3: Modeling a Web Service</h2>
+
+<br>
+<div style="margin-left: 40px;">
+
+<p>
+not ready at this momemt
+</p>
+
+</div>
+-->
+<!-- ======================================================================================== -->
+<br>
+<p>For more information on NetBeans Enterprise Pack UML Modeling, consult the online help from the IDE and visit the NetBeans Enterprise Pack Developers Resource portal for tutorials, videos, and other resources
+on UML modeling.</p>
+
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="nextsteps"></a>Next Steps</h2>
+<p>To send comments and suggestions, get support, and keep informed on the latest 
+  developments on the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a> 
+  mailing list. 
+<!-- /Servlet-Specific template -->
+
+<!-- servlets and anything not on www or testwww ps -->
+
+
+
+
+
+
+
+ 
+ 
+ <!-- testing -->
+
+
+ 
+ 
+
+<script src="index_files/urchin" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct = "UA-198771-2";
+urchinTracker();
+</script>
+
+</p></body></html>

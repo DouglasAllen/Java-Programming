@@ -1,0 +1,665 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+    <head>
+        <title>Source Editing in NetBeans IDE 6.0</title>
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+        <meta content="?and? 0.5.5" name="GENERATOR">
+        <style type="text/css">
+            .floatright {
+                float: right;
+                margin: 0 0 10px 10px;
+                border: 1px solid #666;
+                padding: 2px;
+            }
+            .repo {
+                padding-top: .7em;
+                line-height: 1.2em;
+            }
+        </style>
+    </head>
+
+    <body>      
+   
+        <!-- Begin Content Area -->
+        <a name="top"></a>
+        <h1>Source Editing in NetBeans IDE 6.0</h1>
+
+        
+<p>This guide demonstrates the process of 
+creating and editing Java sources using the new and improved NetBeans IDE 6.0 Editor. </p>
+        
+ <div class="indent"> 
+ 
+ <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+	  <ul>
+                  <li><a href="editor-tips.html#Using-Code-Completion-and-Code-Generation">Using Code Completion and Code Generation</a></li>
+                    <ul>
+                        <li><a href="editor-tips.html#Generating-Code-Using-Code-Completion">Generating Code Using Code Completion</a></li>
+                        <li><a href="editor-tips.html#Generating-=Code-Using-the-Code-Generation-Dialogs">Generating Code Using the Code Generation Dialogs</a></li>
+                        <li><a href="editor-tips.html#Managing-the-Import-Section">Managing the Import Section</a></li>
+                        <li><a href="editor-tips.html#Using-Editor-Line-Tools">Using Editor Line Tools</a></li>
+                    </ul>
+                  <li><a href="editor-tips.html#Smart-Code-Completion-and-Live-Templates">Smart Code Completion and Live Templates</a></li>
+                    <ul>
+                        <li><a href="editor-tips.html#Smart-Code-Completion">Smart Code Completion</a></li>
+                        <li><a href="editor-tips.html#Live-Templates">Live Templates</a></li>
+                        <li><a href="editor-tips.html#Code-Highlighting">Code Highlighting</a></li>
+                        <li><a href="editor-tips.html#Instant-Rename">Instant Rename</a></li>
+                    </ul>      
+                        
+         </ul>
+      </td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+
+  
+                <p><b>Note:</b> Click the Arrow button in the center of each video to start playback. Each video contains on-screen text identifying important 
+        procedures and concepts which automatically pause playback. To resume playback of the videos, simply click the displayed on-screen text or use 
+        the controller below the video.</p>
+  
+ <h3 class="tutorial">Software Needed for the Tutorial</h3>
+<p>Before you begin, you need to download or install the following software on your computer:</p>
+<ul>
+    <li>NetBeans IDE 6.0 </li>
+    <li>Java Standard Development Kit (JDK) version 5.0 or version 6.0.</li>
+</ul>
+ 
+</div>
+       
+        
+        <a name="Using-Code-Completion-and-Code-Generation"></a>
+        <h2>Using Code Completion and Code Generation</h2>
+            <p>In this section, we'll take a look at the new Java editor features that 
+            enable you to be more productive when writing code. These features 
+            include code generation using Code Completion and the Code Generation 
+            dialog, maintaining import statements, as well as using advanced tools 
+            for manipulating lines and selected code blocks. </p>
+
+    <div class="indent">
+        <a name="Generating-Code-Using-Code-Completion"></a>
+        <h3>Generating Code Using Code Completion</h3>             
+        <p>Generally speaking, Code Completion is useful for filling in missing 
+        code, such as symbols and keywords, automatically. As of NetBeans IDE 6.0 
+        you can now also use Code Completion to generate whole methods. This is 
+        useful if you want, for example, to generate a constructor, override 
+        methods, or implement methods. Later in the tutorial, we'll also take a 
+        look at some other interesting new features of NetBeans 6.0's 
+        Code Completion, such as generating arbitrary constructors using the 
+        Code Generation dialog.</p>
+            
+	    <p>The first thing we will look at is the writing of a JavaBean representing an 
+            email message. The bean skeleton containing the private fields needed 
+            for storing the data has already been prepared for us so we now need 
+            to create a reasonable constructor for it, as shown in the following 
+            procedure and demo.</p>
+            
+            <p><b>To generate a constructor using code completion:</b></p>
+            <ol>
+                <li>Place the cursor at the location in the file where you want 
+                to generate the constructor and press Ctrl+Space. </li>
+                <li>In the Code Completion window that appears, select the 
+                constuctor which will initialize its fields 
+                (<code>Mail(String subject, String body) - generate</code>, 
+                in this case). Notice that the IDE gives you the option of 
+                generating either the default constructor or a constructor 
+                which will initialize all uninitialized fields.</li> 
+            <li>Press Enter.
+                <br>
+                <p class="repo">The IDE implements the selected constructor in 
+                the specified location.
+                        Note that the IDE also offers the possibility of 
+                        overriding or implementing methods from superclasses and 
+                        superinterfaces.
+                </p></li>
+            </ol>
+
+            <!--
+               <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <center>
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo01a-CodeCompletion" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1469/EditorDemo01a-CodeCompletion.swf">                    
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=true>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo01a-CodeCompletion" width="800" height="600" src="../../../files/documents/4/1469/EditorDemo01a-CodeCompletion.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                        <noembed>
+                      </noembed>
+                    </embed>
+                  </object>
+                </center>
+                <p><br><b>Generating a Constructor with Code Completion</b></p>
+                 <script type="text/javascript">
+                     // <![CDATA[          
+                     var fo = new SWFObject( "EditorDemo01a-CodeCompletion_controller.swf", "EditorDemo01a-CodeCompletion_controller.swf", "800", "655", "7", "#FFFFFF", false, "best" );
+                     fo.addVariable( "csConfigFile", "EditorDemo01a-CodeCompletion_config.xml"  ); 
+                     fo.addVariable( "csColor"     , "FFFFFF"           );
+                     fo.addVariable( "csPreloader" , "EditorDemo01a-CodeCompletion_preload.swf" );
+                     if( args.movie )
+                     {
+                        fo.addVariable( "csFilesetBookmark", args.movie );
+                     }
+                     fo.write("flashcontent"); 		  	  
+                     // ]]>
+                   </script> 
+                </div>
+                -->
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo01a-CodeCompletion/EditorDemo01a-CodeCompletion.html"
+                width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>
+                <p><br><b>Generating a Constructor with Code Completion</b></p>
+            </div>
+            <br>
+            
+             <a name="Generating-Code-Using-the-Code-Generation-Dialogs"></a>
+            <h3>Generating Code Using the Code Generation Dialogs</h3>
+			<p>The IDE's Java editor is capable of generating the 
+                        constructs you commonly use automatically. In this section, 
+                        we'll take a look at the procedure.</p>
+                    
+            <p>The next thing we want do is to generate the Getter and Setter 
+            for the fields and make sure that we can use the class in collections, 
+            which requires having <code>equals()</code> and <code>hashCode()</code> 
+            methods. The IDE's Java editor is capable of generating the constructs 
+            you commonly use automatically.  Notice as we go through the example 
+            procedure that the IDE's Code Generation dialog also enables you to 
+            do much more, including creating delegating methods, generating 
+            constructors for intializing arbitrary set of fields, etcetera.</p>
+            
+            <p><b>To generate getters and setters:</b></p>
+            <ol>
+                <li>Press Alt+Insert to invoke the code generation menu. </li>
+                <li>Select the element that you want to generate from the list 
+                of displayed items (<code>Getter and Setter...</code>, in this case).</li>
+                <li>In the dialog that appears, select the field for which you 
+                want to generate getters and setters and click OK.
+                    <br>
+                <p class="repo">The IDE generates the getters and setters code 
+                automatically.</p></li>
+        </ol>
+						
+<!--            <h3>Generating Equals and Hashcode </h3>-->
+            <p>The next thing we need to do is to generate an Equals and Hashcode 
+            using Alt-Insert.</p>
+            
+            <p><b>To generate equals and hashcode:</b></p>
+            <ol>
+                <li>Press Alt+Insert to invoke the code generation menu. </li>
+                <li>Select the element that you want to generate from the list 
+                of displayed items (<code>equals() and hashCode()...</code> 
+                in this case).</li>
+            <li>In the dialog that appears, select the fields you want to base 
+            your equals and hashCode methods on and click OK.
+                    <br>
+                <p class="repo">The IDE generates the required equals and hashcode.</p></li>
+            </ol>
+            <!--
+            <br>
+               <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <center>
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo01b-CodeGeneration" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1470/EditorDemo01b-CodeGeneration.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=true>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo01b-CodeGeneration" width="800" height="600" src="../../../files/documents/4/1470/EditorDemo01b-CodeGeneration.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                  </object>
+                </center>
+                <p><br><b>Generating Getters, Setters, Equals, and Hashcode</b></p>
+                </div>-->
+                
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo01b-CodeGeneration/EditorDemo01b-CodeGeneration.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>Generating Getters, Setters, Equals, and Hashcode</b></p>
+            </div>
+            <br>
+
+
+            <a name="Managing-the-Import-Section"></a>
+            <h3>Managing the Import Section</h3>
+            <p>The IDE's Java editor provides several ways to add import statements 
+            for one or more classes, each offering you a list of possible classes 
+            to import when you click on the light bulb error mark or press the 
+            appropriate key combinations. In addition, the Editor also displays 
+            error hints that assist you with removing imports that aren't needed 
+            in your source.</p>
+            
+            <p>After making the necessary changes to our file in the previous 
+            section, you may have noticed that the IDE's Error Stripe displayed 
+            a warning in the Editor's righthand margin indicating that there is 
+            an unused import in our file. In order to fix this, we'll use the 
+            IDE's helpful new Remove Unused Imports command so we can see how it works.</p>
+            
+            <p><b>To remove unused imports:</b></p>
+            <ol>
+                <li>Place the cursor on the line of the class that wasn't 
+                imported and press Alt+Enter. Alternately, you can click the 
+                warning mark in the Annotation Stripe (along Editor's left edge).</li>
+            <li>Choose Remove unused import from the pop-up menu. Notice that you 
+            can either remove one or all unused imports from the import section. 
+                    <br>
+                <p class="repo">The IDE removes the unused import statements 
+                from the file.</p></li>
+            </ol>	
+            
+            <p>The IDE's Java editor also provides several other methods for managing 
+            imports, such as pressing Ctrl-Shift-I to import multiple types at 
+            once and pressing Alt-Shift-I while the cursor is positioned in a type 
+            identifier, which enables you to import that specific type.</p>
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo01c-ErrorStripe" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1471/EditorDemo01c-ErrorStripe.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo01c-ErrorStripe" width="800" height="600" src="../../../files/documents/4/1471/EditorDemo01c-ErrorStripe.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>The ErrorStripe and Removing Unused Imports </b>
+            </div>
+            -->
+
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo01c-ErrorStripe/EditorDemo01c-ErrorStripe.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>The ErrorStripe and Removing Unused Imports</b></p>
+            </div>
+            <br>
+            
+            
+             <a name="Using-Editor-Line-Tools"></a>
+            <h3>Using Editor Line Tools</h3>
+            <p>Here we want to create two private static fields of the string 
+            type for our username and password. Using the Editor's Line Tools 
+            feature, we can rapidly duplicate the line where the cursor is 
+            positioned and copy/paste or move it to a new line immediately below 
+            the first. This feature is particularly useful when repeatedly duplicating or moving lines for which most of the code is the same and only isolated portions need to be adjusted, such as in the case when initializing an array, for example. After doing so, you can then edit the field values as necessary.</p>
+            
+            <p><b>To duplicate the current line or multiple selected lines:</b></p>
+            <ol>
+                <li>Position the cursor on the line or selection you want to duplicate.</li>
+                <li>Press and hold Ctrl-Shift, then press either the Up or Down 
+                cursor key to copy and paste the code above or below the original line. 
+                    <br>
+                <p class="repo">The IDE duplicates the designated line or 
+                selection in the desired location.</p></li>
+            </ol>
+                
+            <p><b>To move current line or multiple selected lines:</b></p>
+            <ol>
+                <li>Position the cursor on the line or selection you want to move.</li>
+                <li>Press and hold Alt-Shift, then press either the Up or Down 
+                cursor keys to move the current line or selection above or below 
+                the original line.
+                    <br>
+                <p class="repo">The IDE moves the designated line or selection 
+                in the desired location.</p></li>
+            </ol>
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo02-create_private_static_fields.swf" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1472/EditorDemo02-create_private_static_fields.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo02-create_private_static_fields.swf" width="800" height="600" src="../../../files/documents/4/1472/EditorDemo02-create_private_static_fields.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>Duplicating and Moving Single or Multiple Selected Lines </b>
+            </div>
+            -->
+            
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo02-create_private_static_fields/EditorDemo02-create_private_static_fields.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>Duplicating and Moving Single or Multiple Selected Lines</b></p>
+            </div>
+            <br>            
+            
+    </div><!-- END INDENTATION -->
+<br>
+
+
+
+
+    <a name="Smart-Code-Completion-and-Live-Templates"></a>
+        <h2>Smart Code Completion and Live Templates</h2>
+        
+        <p>In this section we'll move to 
+        our project's Main.java file so we can write the code that will, as
+        an example, check 
+        for new emails on the server while taking a second look a few of the 
+        commonly used features that we covered in the first part of the tutorial.</p>
+        
+        <p>To further illustrate the simple process of using the new Editor's Code Completion, we first need to initialize our UI. Using Code Completion we can quickly accomplish this. We also need to place the value from the preferences into a string. </p>
+
+        <div class="indent">
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo03-useCodeCompletion02.swf" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1473/EditorDemo03-useCodeCompletion02.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo03-useCodeCompletion02.swf" width="800" height="600" src="../../../files/documents/4/1473/EditorDemo03-useCodeCompletion02.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>The NetBeans IDE 6.0 Editor in Action</b>
+            </div>
+            -->
+            
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo03-useCodeCompletion02/EditorDemo03-useCodeCompletion02.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>The NetBeans IDE 6.0 Editor in Action</b></p>
+            </div>
+            <br>             
+        </div><!-- END INDENTATION -->
+
+        
+        <p>In the next steps, we will add a class that will enable us to 
+        access the database to the Main.java file. While accomplishing this 
+        we'll take a look at a few more of the IDE Editor's helpful features. </p>
+
+            <a name="Smart-Code-Completion"></a>
+            <h3>Smart Code Completion</h3>
+            <p>In this section, we'll use Smart Code Completion to quickly add a 
+            method body to our file.  </p>        
+            <p>You may have noticed that the standard completion listbox is 
+            divided into two parts separated by a black line. The first section 
+            includes the smart completion items. To determine list of these 
+            items the code completion uses the current context 
+            (i.e. the position of caret) when completion is invoked. 
+            See other bullet points below starting with smart for more 
+            information and examples of the smart completion feature.</p>
+            
+            <p><b>To add a method using Smart Code Completion:</b></p>
+            <ol>
+                <li>Place the cursor in the location in the file where you want 
+                to generate the constructor and press Ctrl+Space.</li>
+                <li>If you don't find the appropriate symbol, press Ctrl+Space a 
+                second time to display all symbols from the project class path, 
+                regardless whether imported or not.</li>
+            <li>In the Code Completion window that appears, select the 
+            appropriate item (<code>Mail(String subject, String body) - generate</code>, 
+            in this case) and press Enter.
+                    <br>
+                <p class="repo">The IDE implements the selected constructor in 
+                the specified location.</p></li>
+            </ol>
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo04b-smart_code_completion.swf" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1475/EditorDemo04b-smart_code_completion.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo04b-smart_code_completion.swf" width="800" height="600" src="../../../files/documents/4/1475/EditorDemo04b-smart_code_completion.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>Smart Code Completion in Action</b>
+                -->
+                
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo04b-smart_code_completion/EditorDemo04b-smart_code_completion.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>Smart Code Completion</b></p>
+            <br>                   
+            </div>
+
+            <a name="Live-Templates"></a>
+            <h3>Live Templates</h3>
+            <p>The IDE's Live Templates feature enables you to enter entire 
+            snippets of code by simply typing the first few letter of the 
+            template's identifier. In this section, we'll use Live Templates to 
+            add a For Loop that iterates through the list of mail stored on 
+            the server. </p>
+            <p><b>To add an iterator using a Live Template:</b></p>
+            <ol>
+                <li>Type the first few letters of the template name and invoke 
+                the code completion by pressing Ctrl+Space.</li>
+                <li>Choose the appropriate template. If there is a suitable 
+                collection it will be filled in for you with the editable parts 
+                of the template rendered in blue.</li>
+                <li>Press Tab to cycle between the blue editable fields and 
+                update the template code as necessary.
+                <li>Press Enter or Esc to finish editing the template.
+                <br>
+                <p class="repo">The IDE adds the template code to the file at 
+                the cursor position. 
+                    <br>
+                <br>
+                <b>Note:</b> Edit Template mode is maintained until you make an 
+                edit outside of the blue boxes (even if you move the cursor out 
+                of the blue editable boxes). If this occurs, use the Tab key to 
+                return to the template.</p></li>
+            </ol>
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo04c-live_templates.swf" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1476/EditorDemo04c-live_templates.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo04c-live_templates.swf" width="800" height="600" src="../../../files/documents/4/1476/EditorDemo04c-live_templates.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>Live Templates in Action</b>
+                -->
+                
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo04c-live_templates/EditorDemo04c-live_templates.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>Live Templates</b></p>
+            </div>
+            <br>                 
+    
+            <a name="Code-Highlighting"></a>
+            <h3>Code Highlighting</h3>
+            <p>The Java editor's Highlights is an easy-to-use feature which you 
+            can think of as an enhanced alternate to editor Search. Based on the 
+            current cursor position, Code Highlighting renders all similar 
+            elements in the file with a background color so that you can see 
+            at-a-glance where they are located. In addition, the highlights are 
+            also shown in the error stripe, presenting a convenient overview of 
+            the whole file. </p>
+            
+            <p>Notice that the IDE displays an error in the Annotation Stripe, 
+            telling us that the connect method throws an IOException which is not 
+            yet caught and we need to either catch it or add it into the throws 
+            clause of the enclosing method which can be done using a hint which 
+            after pressing Alt-Enter. Whenever you place the cursor in an 
+            exception, the Editor highlights all statements that throw the 
+            exception. If you place the cursor in a return type of a method, 
+            all exit points of the method will be highlighted. If you place the 
+            cursor in an element such as a field, for example, all usages of the 
+            field in the file are highlighted for easy identification and 
+            efficient navigation. Note also that the Editor places a marker in 
+            the Error Stripe indicating the location of the usage in the source.</p>
+            
+            <p><b>To highlight all statements that throw an exception:</b></p>
+            <ol>
+                <li>Place the cursor on an exception in a method declaration 
+                throws clause.
+                    <p class="repo">The IDE highlights all the places where that 
+                exception can be thrown. </li>
+            </ol>
+
+            <p>If you place the cursor in the return type of the method definition, 
+            the Editor will highlight all exit points from the method (all 
+            expressions that throw the exception in each place they are returned).</p>
+            <p><b>To highlight method exit points:</b></p>
+            <ol>
+                <li>Place the cursor in the return type of the method definition.
+                <p class="repo">The Editor highlights all expressions that throw 
+                the exception in each place they are returned. Notice that in 
+                this case, the closing bracket is highlighted because the 
+                execution can go through the end of the method.</li>
+            </ol>
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo05-codeHighlighting.swf" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1477/EditorDemo05-codeHighlighting.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo05-codeHighlighting.swf" width="800" height="600" src="../../../files/documents/4/1477/EditorDemo05-codeHighlighting.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>Code Highlighting Variations</b>
+                -->
+                
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo05-codeHighlighting/EditorDemo05-codeHighlighting.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>Code Highlighting Variations</b></p>
+            </div>
+            <br>                  
+
+            <a name="Instant-Rename"></a>
+            <h3>Instant Rename</h3>
+            <p>If you want to rename a private member (field, method, variable, 
+            etc.), you generally have several options. First, you could use 
+            Search and Replace, but you may end up replacing something you 
+            didn't want to replace if you're not careful. Second, you could 
+            use the Rename refactoring, however that would be a bit heavyweight 
+            for most scenarios. The third option, and the one we'll take a look 
+            at in this section, would be to use the Editor's new Instant Rename 
+            feature which you can use by simply placing the cursor on the 
+            identifier and pressing Ctrl+R.</p>
+            
+            <p><b>To instantly rename:</b></p>
+            <ol>
+                <li>Place the cursor on the identifier and press Ctrl+R. The 
+                IDE highlights all occurrences of the identifier in blue to 
+                indicate that Instant Rename mode is active. </li>
+                <li>Edit the identifier as necessary to change all occurrences 
+                of the member. </li>
+                <li>Press Enter or Esc to finish editing the identifier and exit 
+                Instant Rename mode.
+                    <br>
+                <p class="repo">The IDE updates all occurrences of the member 
+                in the file. 
+                </li>
+            </ol>
+            <!--
+            <br>
+               <div style="background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,22,0" id="EditorDemo06-javadocs.swf" width="800" height="600">
+                    <param name="movie" value="../../../files/documents/4/1478/EditorDemo06-javadocs.swf">
+                    <param name="bgcolor" value="#000000">
+                    <param name="quality" value="high">
+                    <param name="allowscriptaccess" value="samedomain">
+                    <PARAM NAME=play VALUE=false>
+                    <PARAM NAME=loop VALUE=false>
+                    <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" name="EditorDemo06-javadocs.swf" width="800" height="600" src="../../../files/documents/4/1478/EditorDemo06-javadocs.swf" bgcolor="#000000" quality="high" swliveconnect="true" allowscriptaccess="samedomain">
+                      <noembed>
+                      </noembed>
+                    </embed>
+                </object>
+                <p><br><b>Instantly Renaming a Member</b>
+            </div>
+            -->
+            
+            <br>
+            <div style="width:800px; background-color:#FFFFFF; text-align:center; font-size:10px; margin:0px auto;">
+                <iframe 
+                src ="http://www.netbeans.org/download/flash/netbeans_60/adoption-tips/EditorDemo06-javadocs/EditorDemo06-javadocs.html"
+                align="center" width="800" height="655" marginHeight="0" marginWidth="0" frameborder="0" scrolling="no">
+                </iframe>                
+                <p><br><b>Instantly Renaming a Member</b></p>
+            </div>
+
+
+
+
+
+<br>
+<p align="center"><a href="editor-tips.html#top">top</a></p>
+
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a><br style="clear:both;" />         
+        
+    <a name="next_steps"></a></div>
+    <h1>Next Steps</h1>
+        <ul>
+            <li><b><a href="http://wiki.netbeans.org/wiki/view/Java_EditorUsersGuide" target="_blank">Java Editor User's Guide</a>.</b> 
+            <li><b>Screencast: <a href="http://www.netbeans.org/download/flash/netbeans_60/editor2/editor2.html" target="_blank">New Features in Java Editor</a>
+            <li><b>Screencast: <a href="http://www.netbeans.org/download/flash/netbeans_60/296-2/296-2.html" target="_blank">New Features in NetBeans IDE 6.0</a>
+            <li><a href="../../../files/documents/40/1689/shortcuts60.pdf">Keyboard Shortcuts Card</a></li>
+        </ul>
+
+        <p align="center"><a href="editor-tips.html#top">top</a></p>
+    </body>
+</html>

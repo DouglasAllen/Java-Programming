@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>Test-Driven Rails Development - NetBeans IDE 6.0 Tutorial</title>
+<meta name="description" content="Test-Driven Rails Development with NetBeans IDE 6.0">
+<meta name="author" content="Brian Leonard, Beth Stearns"> <!--Optional tag-->
+<meta name="keywords" content=""> 
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+</head>
+<body>
+
+<h1>Test-Driven Rails Development</h1>
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed by Brian Leonard and maintained by <a href="mailto:beth.stearns@sun.com"><i>Beth Stearns  </i></a><br>
+September 2007</em> [Revision number: V6.0-1]<br>
+</div>
+
+<p>This article describes the NetBeans IDE features that can help you test your  Ruby and Rails code. There are several testing options available to you that make it easy to unit test your application.
+</p>
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><p><b>Contents</b></p>
+
+      <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="374"><a href="unittest.html#tut_req">Tutorial Requirements</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="374"><a href="unittest.html#TestingSupport">NetBeans IDE Ruby Testing Support</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="unittest.html#unit">Test::Unit Tests</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="unittest.html#auto">Auto Test</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="unittest.html#rspec">Rspec Tests</a></td>
+        </tr>
+      </table>
+</td>
+      <td width="20"></td>
+      <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to NetBeans IDE 6.0" border="0"></td>
+
+    </tr>
+</table>
+
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<br>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<p>Those of you developing Ruby and Ruby on Rails applications can call on a number of testing features to help test and debug your projects. This article covers the features that are currently available. </p>
+<p>This tutorial  requires the following:</p>
+<ul>
+  <li>A basic knowledge of programming with the <a href="http://www.ruby-lang.org" target="_blank">Ruby</a> technologies</li>
+<li>NetBeans IDE 6.0 with Ruby support </a></li>    <!-- ======================================================================================== -->
+
+</ul>
+<h2><a name="TestingSupport" id="TestingSupport"></a>NetBeans IDE Ruby Testing Support</h2>
+<p>The NetBeans IDE supports some of the Ruby testing frameworks and   features. We'll show you what is supported and give you an idea how to   use these testing features. We'll also demonstrate some neat NetBeans   features that help you track down errors and move between source code   and test cases.</p>
+<p>Before we cover the Ruby-related testing features, let's take a brief look at unit testing and its basic concepts. When we talk about unit testing, we mean testing that developers do to validate that individual units of an application's source code work properly. A unit is defined as the smallest part of an application that can be tested. Thus, for object-oriented programming, a unit is a class, and may be a base class, super class, abstract class, or derived (or child) class. In procedural programming, on the other hand, a unit is typically an individual program, function, or procedure. Be careful not to confuse units with modules, since modules are larger pieces of an application and are usually made up of units. </p>
+<p>Unit testing usually entails a set of test cases independent from each other. A test case may use mock objects to assist the testing, particularly if using a real object is difficult, time-consuming, or hard to generate. A mock object is used to test the behavior of another object since it mimics the behavior of the real object in a controlled manner. A good example of a mock object is a dummy used instead of a real person in car crash testing. </p>
+<p>Test harnesses, or automatic test frameworks, are also important in unit testing. A test harness is a collection of software code and test data that runs the program unit under varying conditions, all the while monitoring the unit's behavior and outputs. Because it  can be used repeatedly, a test harness automates the unit testing. </p>
+<h2 id="section-RubyTesting-TestUnit"> <a name="unit"></a>Test::Unit Tests </h2>
+<p>Ruby has a built-in testing framework, designated as <tt>Test::Unit</tt>. Since the NetBeans IDE directly supports <tt>Test::Unit</tt>, you can create new unit tests right from a project's New menu. In the Projects window, right click the Ruby project and select New-&gt;Ruby Unit Test.</p>
+<div style="margin:10px auto;">
+  <p><b>Figure 1: Create a Ruby Test::Unit </b></p>
+  <img src="../../../images/articles/60/ruby/unittest/testunit1.png" alt="Create new Ruby unit test" style="margin:5px auto;" height="321" width="452"> </div>
+<p>The New Ruby Unit Test dialog prompts you for  information on the unit test file, including the class to run the test against, the test file name, its module, along with its target directory location within the project. When you click Finish, the IDE  creates the skeleton unit test file to which you  add your specific testing code. It places this file in the specified folder location within the project. </p>
+<div style="margin:10px auto;">
+  <p><b>Figure 2: Create the Unit Test File </b></p>
+  <p><a href="../../../images/articles/60/ruby/unittest/testunit2.png" title="Click to Enlarge" target="_blank"> <img src="../../../images/articles/60/ruby/unittest/testunit2-small.png" alt="caption text - Click to Enlarge" width="478" height="214" border="0" style="margin:5px auto;"><br>
+    Click to enlarge</a><br>
+    <br>
+  </p>
+</div>
+<p>There are several ways to test or run a unit test. Most likely you'll use the Run File or Test File options from the Editor window context menu (you can also invoke the Run-&gt;Run File  option on the file  in the Project window).</p>
+<h3><a name="testvsrun"></a>Using Test File Versus Run File Options</h3>
+<p> The Test File (Ctrl+F6) option, available from the Editor context menu and the Run menu, is the better way to run a test file. You can run Test File from within the test file itself or from the class you want to test. The Run File option, also available from both the Editor context menu and the Run menu, requires that you be in the test file for the class you are testing. The advantage of the Test File option is that, while you <em>can</em> be in the file you want to test, you are not required to be in the test file for the class. </p>
+<p>To illustrate the advantage of using the Test File option, suppose you are working on a unit test for a Rails controller. When you are in the controller test file, you run the Test File option and it runs this same test file as a test. However, you could just as easily be editing the controller class itself. If you are in the midst of editing the controller class and want to test it, you merely  execute Test File, by pressing Ctrl+F6, and it runs the test file <em>corresponding</em> to the class you are currently in. If instead you use the Run File option on the controller class, the IDE  opens the controller's URL  in the browser. Thus, think of the Run File option as running a portion of the application in the browser whereas the Test File option runs the corresponding tests for that portion of the application. <br>
+  <br>
+  There is another important difference between the Test File and Run File options. The Test File option, when applied to a test file, runs the file <em>as a test</em>. 
+Running a file as a test signals the IDE to treat the executing code as a test and it looks at the output for failures. Currently, if it sees any failures, the IDE creates a red warning in the Editor window footer, similar to the red message in Auto Test.  </p>
+<p>The same differences apply to the Run Project and Test Project options.   The Test Project option, which appears as Test in the project's context menu, runs all the tests in the project. (Currently, running all test for a project works just for Rails projects.) The Run option for a project actually runs the project in a browser. <br>
+</p>
+<div style="margin:10px auto;">
+  <p><b>Figure 3: Test the Unit Test File</b></p>
+  <p> <img src="../../../images/articles/60/ruby/unittest/testunit3.png" alt="caption text - Click to Enlarge" width="490" height="479" border="0" style="margin:5px auto;"><br>
+  <br>
+  </p>
+</div>
+<p>The Output window at the bottom displays the output produced by executing the unit tests. Since the test output is hyperlinked, you can navigate through it using the Navigate-&gt;Next Error menu option. </p>
+<div style="margin:10px auto;">
+  <p><b>Figure 4: Example of Test::Unit Output </b></p>
+  <img src="../../../images/articles/60/ruby/unittest/ruby-unittests.png" alt="Create new Ruby unit test" style="margin:5px auto;" height="231" width="387"> </div>
+<p>The Goto Test action  option, available from the  Editor window's context menu,  lets you jump quickly between a class and its corresponding test cases. Right click anywhere in the source file in the Editor window and select Navigate-&gt;Go to Test option (Control+Shift+T in Windows and Command+Shift+T on  the MacIntosh).  The Go to Test action  is aware of <tt>Test::Unit</tt> conventions. It is also aware of Rails conventions, RSpec conventions, and ZenTest conventions. </p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 5: Go to Test Action</b></p>
+  <p><span style="margin:10px auto;"><a href="../../../images/articles/60/ruby/unittest/goto-test1.png" target="_blank"><img src="../../../images/articles/60/ruby/unittest/goto-test1-small.png" alt="Create new Ruby unit test" width="468" height="279" border="0" style="margin:5px auto;"></a></span></p>
+  <p><a href="../../../images/articles/60/ruby/unittest/goto-test1.png" title="Click to Enlarge" target="_blank">Click to enlarge</a></p>
+</div>
+<p>&nbsp;</p>
+<h2><a name="auto"></a>Auto Test </h2>
+<p>Your Ruby project can also include an Auto Test option. Auto Test runs unit tests automatically whenever you modify a file. For Rails projects, and in many other cases, Auto Test can determine the unit tests that need to be run.  If it cannot make this determination, Auto Test defaults to running all unit tests.</p>
+<p>The Auto Test option is available when you install the ZenTest Ruby Gem. Use the Tools menu Ruby Gems option to install ZenTest or any other Ruby Gem. When this option is selected, the IDE  loads the installed Ruby Gems and displays all  available and new Gems. Click the Installed tab to see the Ruby Gems already installed. </p>
+<div style="margin:10px auto;">
+  <p><b>Figure 6: Check Installed Ruby Gems </b></p>
+  <p><a href="../../../images/articles/60/ruby/unittest/zentest2.png" title="Click to Enlarge" target="_blank"> <img src="../../../images/articles/60/ruby/unittest/zentest2-small.png" alt="caption text - Click to Enlarge" width="525" height="339" border="0" style="margin:5px auto;"><br>
+    Click to enlarge</a><br>
+  </p>
+</div>
+<p>If ZenTest is not installed, click the New Gems tab, locate  <tt>zentest</tt> in the list,  select it and click Install.</p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 7: Install ZenTest Ruby Gem </b></p>
+  <p><a href="../../../images/articles/60/ruby/unittest/zentest.png" title="Click to Enlarge" target="_blank"> <img src="../../../images/articles/60/ruby/unittest/zentest-small.png" alt="caption text - Click to Enlarge" width="540" height="411" border="0" style="margin:5px auto;"><br>
+    Click to enlarge</a><br>
+  </p>
+</div>
+<p>You should see a message indicating that ZenTest and its associated libraries and tools are installed.</p>
+<div style="margin:10px auto;">
+  <p><b>Figure 8: ZenTest Installation Message </b></p>
+  <img src="../../../images/articles/60/ruby/unittest/zentest1.png" alt="Create new Ruby unit test" style="margin:5px auto;" height="294" width="446"> </div>
+<p>Once ZenTest is installed, you should see an Auto Test option in the context menu for the project. In the Projects window, right click the Ruby project node and select Auto Test to launch Auto Test on your project. As noted, Auto Test runs either the appropriate unit tests  or all unit tests when  files are modified.  </p>
+<div style="margin:10px auto;">
+  <p><b>Figure 9: Invoke Auto Test </b></p>
+  <img src="../../../images/articles/60/ruby/unittest/zentest3.png" alt="Create new Ruby unit test" class="thumbimage" style="margin:5px auto;" height="254" width="304"> </div>
+<p>The output for Auto Test appears in the Output window. If failures occur,  Auto Test posts a summary message  in the Editor window footer. Although the Auto Test pane in the Output window may be hidden, you can click the Auto Test tab  and examine the output detail to determine the cause of the failure. You can also click  the hyperlinks in the Auto Test output to go directly to the  test cases that failed.</p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 10: Auto Test Summary Message and Output Window </b></p>
+  <p><a href="../../../images/articles/60/ruby/unittest/autotest-footer.png" title="Click to Enlarge" target="_blank"> <img src="../../../images/articles/60/ruby/unittest/autotest-footer-small.png" alt="caption text - Click to Enlarge" width="572" height="232" border="0" style="margin:5px auto;"><br>
+    Click to enlarge</a><br>
+  </p>
+</div>
+<p>The short cut Goto Test action (Ctrl+Shift+T) also works in the Auto Test context; it takes you directly to the matching test file. </p>
+<p>Note: Auto Test support  will be enhanced in the near future. Enhancements may include displaying test failures in a task list. JRuby support for Auto Test will also be improved. If you encounter problems running Auto Test correctly on JRuby, switch to native Ruby for the moment. </p>
+
+<h2><a name="rspec"></a>RSpec  Tests</h2>
+<p>The <tt>rspec</tt> Ruby Gem is another tool for unit tests. It is bundled with the NetBeans IDE as part of the JRuby distribution, so if you use the bundled Ruby interpreter <tt>rspec</tt> is already installed. When <tt>rspec</tt> is installed, your  projects include a <tt>spec</tt> directory that contains specification files.</p>
+<p>However, should you decide  to use native Ruby, which you can do by   switching interpreters in the Options dialog, then you need to  check if <tt>rspec</tt> is installed (see Figure 6). If not, click Tools-&gt;Ruby Gems, then the New Gems tab (see Figure 7) to install it. If you want to use rspec with Rails,  you may need to install another Ruby Gem and you should check these <a href="http://rspec.rubyforge.org/documentation/rails/install.html" target="_blank">instructions</a>. </p>
+<p>You can use the Goto Test action to open any of these specification files. Use Test File or Run File from the Editor context menu to run the specification file under <tt>rspec</tt> control, which means that the test follows the specification file options found in the <tt>spec.opts</tt> file in the <tt>spec</tt> directory. Note that the same considerations discussed earlier apply for using <a href="unittest.html#testvsrun">Test File versus Run File</a> in this context. You can also run the test from within the IDE and have it  use a different set of options, such as turning off the red and green colored flags. Create a file called <tt>spec.opts.netbeans</tt> with the different options  and place the file in the same <tt>spec</tt> directory. </p>
+<p>Although not yet available, <tt>spec</tt> file templates are coming. </p>
+<!-- ======================================================================================== -->
+<h2><a name="summary"></a>Summary</h2>
+<p>This article covered the NetBeans IDE features for testing Ruby applications. It covered the basic unit test feature, Auto Test, and rspec. It also explained how to install Ruby Gems into the IDE and use the IDE's testing short cut features. </p>
+<br>
+<!-- ======================================================================================== -->
+<!-- ======================================================================================== -->
+<h2><a name="see_also"></a>Next Steps </h2>
+<br>
+<ul>
+<li>Check out the <a href="../../trails/ruby.html">Ruby and Rails Learning Trail</a> to learn  more about NetBeans IDE support for Ruby. </li>
+<li>To obtain support and stay informed of the latest 
+  changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList target="_blank">users@ruby.netbeans.org</a> and <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a> mailing lists. </li>
+  <li>
+  To submit your own NetBeans Ruby tutorial, please visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+</ul>
+<br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear: both;">
+</body>
+</html>
+

@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+    <head>
+        <title>Using Ajax With Ruby on Rails - NetBeans 6.0 Tutorial</title>
+        <meta name="DESCRIPTION" content="This tutorial describes
+how to add Ajax support to a NetBeans Ruby on Rails application." >
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+	
+
+    </head>
+<body>
+<h1>Using Ajax With Ruby on Rails</h1>
+<div class="articledate" style="margin-left: 0px; font-style: italic;">
+<p><em>Contributed by Brian Leonard, maintained by Gail Chappell<br>
+December 2007</em> [Revision number: V6.0-4]<br>
+</p>
+</div>
+<p>In this tutorial, you add Ajax support to a NetBeans Ruby on Rails project.  The example shows how to
+dynamically append comments to a web log.</p>
+
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><p><b>Contents</b></p>      <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="414"><a href="ajax.html#01">Tutorial Requirements</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="414"><a href="ajax.html#02">Creating the Sample Database</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="ajax.html#03">Creating a Partial Template</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="ajax.html#04">Adding Ajax Support</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="ajax.html#05">Adding RJS For Dynamic Updates</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="ajax.html#06">Doing More: Applying Visual Effects</a></td>
+        </tr>
+	
+      </table>
+	  </td>
+      <td width="20"></td>
+      <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to NetBeans IDE 6.0" border="0"></td>
+
+    </tr>
+</table>
+
+
+ <a name="01"></a>
+  <h2>Tutorial Requirements</h2>
+ <p>This tutorial requires the following technologies and resources: </p>
+ <ul>
+    <li>A database server </li>
+    <li>NetBeans IDE 6.0 with Ruby support </li>
+</ul>
+<a name="02"></a>
+ 
+
+<a name="02"></a>
+ <h2>Creating the Sample Database </h2>
+ <div>This tutorial builds on the tutorial <a href="model.html">Building Relationships Between Rails Models</a>.
+ If you completed that tutorial, you can start with the project that you built by completing the tutorial and proceed to the <a href="ajax.html#03">next section</a>. Otherwise, download the <a href="../../../files/documents/40/1553/RubyWebLogModel.zip">RubyWebLogModel.zip</a> file
+ and follow these steps to create the sample database.</div>
+ <br>
+  <div><b>Note:</b> This tutorial uses the MySQL database server. See <a href="setting-up.html">Installing and Configuring Ruby Support</a>
+for information about using a MySQL database server
+in a Ruby application. 
+
+
+ This document also describes how to use the Java DB database server instead. </div>
+  <ol>
+<li>Open a command window.</li>  
+<li>If it has not already been started, start the MySQL database server.</li>
+<li>Type the following command to create the development database
+and press Enter.
+<pre>mysqladmin -u root -p create rubyweblog_development</pre>
+<b>Note:</b> If the root user does not have a required password,
+omit the <b>-p</b> argument.
+<br>
+</li>
+<li><p>Open the rubyweblog project in the IDE.</p>
+  <strong>Note:</strong> The first time that you open or create a Ruby project in the IDE, the IDE checks if you have any other Ruby installations in addition to the bundled JRuby software. If you do, the IDE displays a dialog box asking you to select which software to use. Choose JRuby if you want to use the bundled JRuby interpreter, or choose your Ruby installation if you prefer to use it instead. For more information, see <a href="setting-up.html#native">Configuring the IDE to Use Your Own Ruby Installation</a> in the Installing and Configuring Ruby tutorial. </li>
+<li><p>If your database requires a password, edit the <code>database.yml</code> file and provide the <em>password</em> under
+the development configuration. Save the file.</p>
+To quickly access the <code>database.yml</code> file, press Alt+Shift+O (Ctrl+Shift+O on the Mac), type <code>database.yml</code> in the File Name text box, and press Enter.</li>
+<li>
+<p>Right-click the rubyweblog node and choose Migrate Database &gt; To Current Version.</p>
+This action updates the database to include the posts table and comments table.
+  The Output window indicates when the migration is complete.
+</li>
+<li>
+  Run the application. If there are no new posts, create a new post.</li>
+  <li><p>Click Permalink and add a comment to the post. </p>
+Note that the entire page reloads when you add the comment. </li>
+</ol> 
+
+
+
+<a name="03"></a>
+ <h2>Creating a Partial Template</h2>
+ <p>
+ Currently in the rubyweblog project, whenever a reader adds a comment to the page, both the blog entry and comments are reloaded on the page. A better solution is to load the comments dynamically by using the Ajax support that is part of the Ruby on Rails framework.
+ To prepare for using Ajax, you create a partial template in which to store the code for displaying the comments.
+ The benefit of using a partial is that you can call the partial multiple times (once for each comment in the blog) without rendering the blog entry itself. </p>
+ <ol>
+ <li>
+   <p>Right-click the rubyweblog node and choose New &gt; RHTML file. Name the file <code>_comments</code> and place it in the <code>app\views\blog</code> folder.
+ </p>
+   <p>The IDE creates the <code>_comments</code> file and opens it in the editing area. Note that  the partial template begins with an underscore (_) to distinguish it from a 
+ full template.</p>
+ Currently, the code for displaying the comments is in the file <code>show.rhtml</code>. In the next step, you remove this code from <code>show.rhtml</code> and paste it into the <code>_comments.rhtml</code> partial template. </li>
+     
+        
+    <li>
+      <p>Go to  the rubyweblog &gt; Views &gt; blog folder and open <code>show.rhtml</code>. Cut the code for displaying the comments (shown in Code Sample 1). Paste  the code into <code>_comments.rhtml</code>, 
+	  replacing all existing content in the file. </p>
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 1: Code to cut from </b><strong><code>show.rhtml</code> and paste into<code> _comments.rhtml</code></strong>  </td>
+      </tr>
+      <tr>
+        <td><pre>
+&lt;ul&gt;
+<strong>&lt;% for comment in @post_comments %&gt;
+&lt;li&gt;&lt;%= comment.comment %&gt;&lt;br&gt;
+  &lt;div style=&quot;color: #999; font-size: 8pt"&gt;
+      Posted on &lt;%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %&gt;
+  &lt;/div&gt;
+&lt;/li&gt;
+&lt;% end %&gt;
+&lt;/ul&gt;
+</strong>
+</pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+    </li>
+<li>
+  <p>Return to the <code>show.rhtml</code> file and insert the following HTML &lt;div&gt; tag. Add the code under <code>&lt;h4&gt;Comments&lt;/h4&gt;</code>, at the point where you previously removed the code.</p>
+  <a name="div"></a>
+  <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 2: &lt;div&gt; tag for </b><strong><code>show.rhtml</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+<strong>&lt;div id="comments"&gt;
+    &lt;%= render(:partial => "comments", :object => @post_comments) %&gt;
+&lt;/div&gt;
+</strong>
+</pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+
+This code creates a &lt;div&gt;  element named comments.  
+The <code>@post_comments</code> variable contains the comments that the <code>_comments</code> partial displays.</li>
+  <li>
+   <p>
+  Choose File &gt; Save All, then run the application.</li>
+  <li>
+    <p>Click Permalink and add a comment to a post.</p>
+	At this point, the application behaves exactly as it did before. However, now your application is designed so that you can start using Ajax support.
+  </li>
+</ol>
+<a name="04"></a>
+<h2>Adding Ajax Support
+</h2>
+<p>The first step in adding Ajax support to your project is to include the JavaScript libraries,
+<a href="http://www.prototypejs.org/" target="_blank">Prototype</a> and <a href="http://script.aculo.us/" target="_blank">script.aculo.us</a>.
+These libraries are bundled with Ruby on Rails. The Prototype library provides the foundation for the Ajax implementation in Ruby on Rails, while the script.aculo.us library provides visual effects that you can add to your application. </p>
+
+<ol>
+  <li>
+  Expand Views &gt; layouts and open the <code>blog.rhtml</code> file.</li>
+  <li>
+    <p> Add the following 
+  line of code, below the line containing <code>stylesheet_link_tag</code>:</p>
+    <pre>
+  &lt;%= javascript_include_tag :defaults %&gt;
+  </pre>
+<p>This code includes the  JavaScript libraries, Prototype and script.aculo.us, which are bundled with Ruby on Rails.
+ The next step is to create a <code>form_remote_tag</code> to trigger the Ajax action.</li>
+<li>
+  Open the <code>show.rhtml</code> file. Remove the existing <code>form_tag</code>, which performs a HTTP POST, and replace it with the following <code>form_remote_tag</code>, 
+    which performs an XMLHTTPRequest.
+    <pre>
+  &lt;% form_remote_tag :url => {:action => "post_comment"} do %&gt;
+    </pre>
+
+ This code triggers the Ajax action for the <a href="model.html#post_comment"><code>post_comment</code></a> action in the <code>blog.controller.rb</code> file. At this point, the entire page still reloads when a reader submits a comment. The <code>post_comment</code> action forces the reload by calling the <code>show</code> action. The final step is to edit the <code>blog_controller.rb</code> file to remove the call.  </li>
+  <li>
+   Expand the Controllers node and open the <code>blog_controller.rb</code> file.</li>
+  <li>Scroll to the <code>post_comment</code> action and comment out the <code>redirect_to</code> call.
+    <pre># redirect_to :action => 'show', :id => flash[:post_id]
+ </pre>
+ If you now run the application and add a comment, the comment is not displayed. You must next insert a Ruby JavaScript (RJS) template to handle the XMLHTTPRequest.
+ </li>
+</ol>
+<a name="05"></a>
+<h2>Adding RJS For Dynamic Updates</h2>
+<p>The final step is to use the built-in RJS support to dynamically update comments on the blog. </p>
+<ol>
+  <li>
+    <p>Under the Views node, right-click the blog node and choose New -> Empty RJS Template.</li>
+  <li>
+    Set the File Name to <code>post_comment</code> and place it in the <code>app\views\blog</code> folder.
+     </li>
+  <li>
+    <p>Remove the existing page object and insert the following page object in its place.</p>
+    <pre>
+  page.replace_html "comments", :partial =&gt; "comments", :object =&gt; @post_comments
+  page[:comment_comment].clear
+  </pre>
+  <p>Recall that the  <code>show.rhtml</code> file includes an HTML <code>div</code> tag 
+  named <code>comments</code> (see <a href="ajax.html#div">Code Sample 2</a>). In the first line of code, <code>replace_html</code> uses DHTML to dynamically replace the portion of the 
+  HTML code that falls between the <code>div</code> tags in <code>show.rhtml</code> with the HTML code  in the partial <code>_comments.rhtml.</code>  The <code>@post_comments</code> variable contains the comments that the <code>_comments</code> partial 
+  displays. The second line of code clears the text box after the user submits a comment.
+</p>
+  If you run the application at this point, the comments still are not displayed because <code>@post_comments</code> is nil. If you look again at the <code>blog_controller.rb</code> file, <code>@post_comments</code> is set in the <code>show</code> action, which you no longer call. So now you must edit the <code>blog_controller.rb</code> file.</li>
+  <li>
+    <p>Open the <code>blog_controller.rb</code> file and add the following three lines after the redirect you commented out earlier in the post_comment action:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 3: Update for the </b><strong><code>blog_controller.rb</code></strong> <strong>File</strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+  #redirect_to :action => 'show', :id => flash[:post_id]
+  <strong>@post = Post.find(flash[:post_id])
+  @post_comments = @post.comments.collect    
+  flash[:post_id] = @post.id  #Store the post.id back in the flash 
+  </strong>
+</pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+  <p>The first line of code calls flash,
+  which is similar to an HTTP session, but across a single request. 
+  When you put an item in the flash, that item is available for the next request, 
+  but then is gone (hence the term &quot;flash&quot;). 
+  This code gets the <code>post_id</code> from the flash (which is 1, 2, or so on) and uses
+  it to find the blog post associated with that id. 
+  </p>
+  <p>
+  The second line of code pulls the entire collection of comments for that post into the 
+  @post_comments variable, which is then passed to the <code>_comments</code> partial. 
+  </p>
+ 
+  The final line of code sets the <code>post_id</code> back into the flash so it is ready for the next comment a reader submits. 
+  <p></p>
+  </li>
+  <li>
+    <p>Run the project  and verify that the comments are dynamically updated.</p>
+  </li>
+</ol>
+   <a name="06"></a>
+<h2>Doing More: Applying Visual Effects</h2>
+<p>The script.aculo.us library, which you included earlier in your project, provides visual effects that you can use to enhance the look and feel of your application. Here you apply an effect to <a href="http://wiki.script.aculo.us/scriptaculous/show/Effect.Highlight" target="_blank">highlight</a>
+the most-recent comment in the blog.   After you apply this effect, you can easily swap in and try out other effects in the script.aculo.us library.</p>
+<ol>
+  <li>
+    <p>Open the <code>_comments.rhtml</code> file and replace the line <code>&lt;li&gt; &lt;%= comment.comment %&gt;&lt;br&gt;</code> with the following block of code: </p>
+		  <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 4:</b> <strong>Code to Determine Most Recent comment</strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+<b>&lt;% if @post_comments.index(comment) == @post_comments.length-1 %&gt;        
+        &lt;li id="new_comment"&gt;&lt;%=h comment.comment %&gt;&lt;br&gt;
+    &lt;% else%&gt;
+        &lt;li&gt;&lt;%=h comment.comment %>&lt;br&gt;
+    &lt;% end %&gt;
+</b></pre>
+</td>
+      </tr>
+    </table>
+  <br>
+  The first line of code determines if a comment is the most recent comment. If it is, the second line assigns the comment the id <code>new_comment</code> because it is the one to which you want to apply the visual effect.
+  <li>
+    <p>Switch to the <code>post_comment.rjs</code> file and add the following line, which highlights the new comment: </p>
+    <pre>
+  page[:new_comment].visual_effect :highlight
+  </pre>
+ </li>
+  <li>
+    <p>Choose File &gt; Save All, then refresh the browser. Add a comment and note how the new comment is briefly highlighted. </p>
+    <div style="margin:10px auto;">
+<p><b>Figure 1: View of Comment Model, With Highlighting </b></p>
+<img src="../../../images/articles/60/ruby/ajax/highlight.png" alt="View Of Comment Model, With Highlighting" style="margin:5px auto;" height="751" width="481">
+</div>
+  </li>
+</ol>
+<!-- ======================================================================================== -->
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul>
+<!--
+<li>
+  <p>To continue with the Ruby WebLog tutorial and learn more about NetBeans Ruby on Rails, go to <a href="ruby-dropdown.html">Using Drop-down Lists With NetBeans Ruby</a>.</p>
+</li>
+-->
+
+  <li><p>To obtain support and stay informed of the latest 
+  changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and  
+  <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a>
+  mailing lists.</p>
+  </li>
+  <li>
+    To submit your own NetBeans Ruby tutorial, go to the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+</ul>
+
+<br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div> 
+<br style="clear: both;">
+
+</body>
+</html>

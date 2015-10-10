@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html>
+
+<head>
+	<title>Quick Start Guide to the CASA Editor</title>
+	<meta name="description" content="Application Server, Tutorial, NetBeans SOA Pack, SOA, NetBeans IDE 6.0, IDE">
+	<meta name="author" content="MJ Early"> <!--Optional tag-->
+	<meta name="keywords" content="java IDE, java editor, java Platform, free, open source, java development, j2ee support, development enviroment, web development, NetBeans, IDE, java"> 
+	<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+</head>
+
+<body>
+<a name="top"></a>
+<h1>Quick Start Guide to the CASA Editor</h1>
+
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p> Contributed by Vince Genovese, maintained by <a href="mailto:Irina.Filippova@sun.com">Irina Filippova</a><br>
+  December 2007<br>
+</p>
+</div>
+<br>
+<p>This tutorial is an introduction to the Composite Application Service Assembly (CASA) Editor  provided with NetBeans 6.0.</p>
+
+
+<p align="center"><b>Expected duration: 30 minutes</b></p>
+
+<div class="indent">
+<h3>Contents</h3>
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+       <tr>
+         <td width="392" align="left" valign="top">
+           <ul>
+			<li><a href="casa-quickstart.html#tut_req" title="Tutorial Requirements">Tutorial Requirements</a></li>
+			<li><a href="casa-quickstart.html#overview" title="Overview">Overview</a></li>
+			<li><a href="casa-quickstart.html#createSampleApp" title="Create the Sample Application Project">Create the Sample Application Project</a></li>
+			<li><a href="casa-quickstart.html#openCASA" title="Open the CASA Editor and Build the Application">Open the CASA Editor and Build the Application</a></li>
+			<li><a href="casa-quickstart.html#editConfig" title="Modify the WSDL Bindngs of the Composite Application">Modify the WSDL Bindings of the Composite Application</a></li>
+			<li><a href="casa-quickstart.html#testCase" title="Create a Test Case for the Composite Application">Run a Test Case for the Composite Application</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td width="296" align="right" valign="top"> 
+	  <img src="../../../images/articles/60/netbeans-stamp.gif"
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right">   </td>
+       </tr>
+</table>
+</div> <!-- indent -->
+     
+     <!-- ======================================================================================== -->
+
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<br>
+<p>Before you proceed, review the requirements in this section.</p>
+
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+<p>This tutorial assumes that you have basic knowledge of the following technologies:</p>
+  <ul>
+    <li>Composite Applications and Service-oriented Architecture (SOA)</li>
+    <li>Web Services</li>
+  </ul>
+
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+<p>Before you begin, download and install the following software:</p>
+
+<p>Before you begin, you need to install the following software on your computer: NetBeans IDE 6.0 with SOA and the GlassFish application server.</p> 
+
+<!--<h3>GlassFish Application Server</h3>
+<p>
+After installing NetBeans 6.0, configure and start the GlassFish Application Server, as described in the  mini-tutorial,  <a href="http://blogs.sun.com/vinceg/resource/AppServerTutorial/soa-start-appserver-tutorial.html">Configuring and Starting the GlassFish Application Server</a>.</p>-->
+
+<h3>Window Layout of the NetBeans IDE</h3>
+<p>
+This tutorial assumes you have a standard window layout of the NetBeans IDE which includes the following visible windows:</p>
+<ul>
+	<li>Projects</li>
+	<li>Files</li>
+	<li>Services</li>
+	<li>Properties</li>
+	<li>Palette (for editors using the Palette window)</li>
+	<li>Output</li>
+</ul>
+<p>
+Use the Window menu of the NetBeans IDE to change the layout if necessary. 
+</p>
+
+</div> <!-- indent -->
+
+<p align="center"><a href="casa-quickstart.html#top">top</a></p>
+<!--  ===================================================================  -->
+<h2><a name="overview"></a>Overview</h2>
+
+<br>
+<p>
+This tutorial shows how to use the CASA Editor to edit the configuration of a composite application.</p>
+<p>
+The composite application you configure and build is the Synchronous Sample composite application provided with the NetBeans IDE 6.0 distribution. The tutorial illustrates the following:</p>
+<ul>
+	<li>Building a composite application from within the CASA Editor</li>
+	<li>Deleting a connection to an existing WSDL endpoint in the existing composite application</li>
+	<li>Adding a connection to a new WSDL endpoint to the composite application</li>
+	<li>Modifying the properties of the new WSDL endpoint</li>
+	<li>Deploying the composite application</li>
+	<li>Running a test case for the composite application</li>
+</ul>
+
+
+<p align="center"><a href="casa-quickstart.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="createSampleApp"></a>Create the Sample Application Project</h2>
+<p>In this section you create a project for the sample Synchronous Composite Application, which is provided with NetBeans 6.0.</p>
+<p><b>To create the Synchronous Sample Application project:</b></p>
+<ol>
+	<li>In the NetBeans IDE, select the Projects tab to display the Projects window.</li>
+	<li>From the File menu, select New Project.</li>
+	<li>In the Categories list of the New Project window, select &nbsp;<tt>Samples&nbsp;&gt;&nbsp;SOA&nbsp;&gt;&nbsp;Synchronous&nbsp;BPEL&nbsp;Process</tt> and click Next.
+	<br><br>
+	<!-- <a href="choose-project.png" title="New XML schema document open in XML Schema editor"> -->
+	
+	<img src="../../../images/articles/soa/casa-quickstart/choose-project-small.png"  title="New Project" alt="New Project">
+    </li>
+	<li>Accept the default project name and location (or specify an alternate location using the Browse button).</li>
+	<li>Click Finish to create the project.<br><br>
+	The following projects appear in the Projects window:<br><br>
+	
+	SynchronousSample, the BPEL project<br>
+	SynchronousSampleApplication, the composite application project<br><br>
+
+	<img src="../../../images/articles/soa/casa-quickstart/project-list.png"  title="Synchronous Sample Projects" alt="Synchronous Sample Projects">	</li>
+</ol>
+<p align="center"><a href="casa-quickstart.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+
+<h2><a name="openCASA"></a>Open the CASA Editor and Build the Application</h2>
+<p>This section shows how you can use the CASA Editor to build a composite application.</p>
+<p><b>To open the CASA Editor and build the composite application:</b></p>
+<ol>
+	<li>
+	In the NetBeans IDE, right-click the SynchronousSampleApplication in the Projects window and select &nbsp;<tt>Edit Application Configuration</tt>.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/edit-app-config.png"  title="Invoke CASA Editor" alt="Invoke CASA Editor">
+	<br><br>
+	The CASA Editor opens in the NetBeans IDE, as shown in the next step, displaying the Design View of the Synchronous Sample application.
+	<br>
+	<br>
+	The CASA Editor creates and modifies a <tt>.casa</tt> file, which contains the configuration information for the composite application. For this sample, the CASA Editor created the <tt>SynchronousSampleApplication.casa</tt> file.
+	</li>
+	<li>
+	In the CASA Editor, select the Build Project icon to build the composite application.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/casa-editor-build.png"  title="CASA Editor, Building an Application" alt="CASA Editor, Building an Application">
+	<br><br>
+	The Output window displays messages about the build.
+	<br><br>When the build successfully completes, the Design View displays a WSDL port endpoint, a JBI module, and the connection between the endpoint and the JBI module.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/casa-editor-configured.png"  title="CASA Editor, Showing Application Configuration" alt="CASA Editor, Showing Application Configuration">
+	</li>
+</ol>
+<p align="center"><a href="casa-quickstart.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+
+<h2><a name="editConfig"></a>Modify the WSDL Bindings of the Composite Application</h2>
+<p>This section shows how to modify connections between a WSDL port and a JBI module, and also how to add and configure new WSDL ports.</p>
+<p><b>To modify the endpoints of the composite application:</b></p>
+<ol>
+	<li>
+	In the Design View of the CASA Editor, select the connection between the WSDL port and the JBI module.
+	</li>
+	<li>
+	Delete the selected connection using the Delete key from your keyboard.
+	<br><br>
+	You can also right-click the connection and select &nbsp;<tt>Delete</tt> to delete the connection.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/delete-connection.png"  title="CASA Editor, Deleting a Connection" alt="CASA Editor, Deleting a Connection">
+	</li>
+	<li>
+	In the Palette Window of the NetBeans IDE, select the Soap WSDL Binding and drag it to the WSDL Ports area of the CASA Editor.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/drag-wsdl-binding.png"  title="CASA Editor, Adding a New WSDL Binding" alt="CASA Editor, Adding a New WSDL Binding">
+	</li>
+	<li>
+	Select the Consume endpoint of the newly added SOAP Binding and drag it to the Provide endpoint of the JBI module.
+	<br><br>This creates a connection between the SOAP Binding and BPEL JBI module.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/add-connection.png"  title="CASA Editor, Adding a Connection" alt="CASA Editor, Adding a Connection">	
+	</li>
+	<li>
+	Click the Edit icon for the newly added SOAP Binding to view it's properties.
+	<br><br>
+	This feature allows you to view details of the underlying WSDL without having to navigate through the WSDL file using the WSDL Editor interface.
+	<br>
+	<br>
+	<img src="../../../images/articles/soa/casa-quickstart/edit-binding-properties.png"  title="CASA Editor, Editing the Properties of a Binding" alt="CASA Editor, Editing the Properties of a Binding">	
+	</li>
+	<li>
+	In the Properties window, click the Edit button for the Location property.
+	<br><br>
+	Note that the auto-generated location property is: <tt>http://localhost:18181/service</tt>
+	<br><br>
+	In the following procedure, you will specify this location in a test case for the composite application.
+	</li>
+	<li>
+	Select Cancel in the Location property window and Close in the Properties Window, and save your work.
+	</li>
+</ol>
+<p align="center"><a href="casa-quickstart.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+
+<h2><a name="testCase"></a>Run a Test Case for the Composite Application</h2>
+<p>This section shows how to test the newly configured composite application. <!--In this section, the GlassFish Application Server must be configured and started, as explained previously in the <a href="#tut_req">Tutorial Requirements</a> section.--></p>
+<p><b>To run a test case for the composite application:</b></p>
+<ol>
+	<li>
+	In the Projects Window of the NetBeans IDE, expand the &nbsp;<tt>SynchronousSampleApplication&nbsp;&gt;&nbsp;Test</tt> node, right-click the default test case, TestCase0, and select Properties.
+	<br>
+	<br>
+	<img src="../../../images/articles/soa/casa-quickstart/select-test-case.png"  title="Selecting the Default Test Case" alt="Selecting the Default Test Case">	
+	</li>
+	<li>
+	In the Properties window for TestCase0, select the Edit button for the Destination property.
+	</li>
+	<li>
+	Replace the default Destination property with the auto-generated destination from the previous procedure, and click OK, and then close the Properties window:
+	<br><br>
+	<tt>http://localhost:18181/service</tt>
+	</li>
+	<li>
+	Right-click the SynchronousSampleApplication node, and select Deploy.
+	<br><br>
+	In the Select Server window, specify the GlassFish Application Server.
+	<br><br>
+	The Output window informs you when the composite application has been successfully deployed.
+	</li>
+	<li>
+	In the Services window of the NetBeans IDE, expand the <tt>servers&nbsp;&gt;&nbsp;GlassFish&nbsp;V2&nbsp;&gt;&nbsp;JBI&nbsp;&gt;&nbsp;Service&nbsp;Assemblies</tt> node.
+	<br><br>
+	Notice that the SynchronousSampleApplication Service Assembly has been deployed. You can also view the properties of the Service Units within the Service Assembly to see details of the composite application.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/deployed-application.png"  title="Deployed Service Assembly for Sample Application" alt="Deployed Service Assembly for Sample Application">	
+	</li>
+	<li>
+	In the Projects window, right-click the TestCase0 and select Run.
+	<br><br>
+	The Output window indicates that the test case was successful.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/test-passed.png"  title="Test Case Passed" alt="Test Case Passed">	
+	</li>
+</ol>
+<p align="center"><a href="casa-quickstart.html#top">top</a></p>
+<h2>See Also</h2>
+<ul>
+  <li><a href="casa-bc-bc.html">Connecting Binding Components With the CASA Editor</a></li>
+</ul>
+<br>   
+
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+</body>
+</html>

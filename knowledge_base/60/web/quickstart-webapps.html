@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html>
+<head>
+<title>NetBeans IDE 6.0 - Tutorials - Introduction to Developing Web Applications</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <meta name="DESCRIPTION" content="A short guide to creating and using web applications in NetBeans IDE 6.0.">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<meta name="keywords" content="web applications, quickstart, java IDE, web development, java">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+
+
+    
+   
+  
+</head>
+<body>
+<h1>Introduction to Developing Web Applications</h1>
+
+<p>This document takes you through the basics of using NetBeans IDE 6.0 to develop
+    web applications. This document is designed to get you going as quickly as possible.
+    For more information on working with NetBeans IDE, see the <a href="http://www.netbeans.org/kb/index.html" target="_blank">Support
+and Docs page</a> on the NetBeans website.
+You create,
+    deploy, and execute a simple web application. The application uses a
+    JavaServer Pages&trade; page to ask you to input your name. It then uses a
+    JavaBeans&trade; component to persist the name during the HTTP session and
+repeats the name on another JavaServer Pages page.</p>
+
+
+<div class="indent"> 
+    
+    <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="left" valign="top"><h3>Contents</h3>
+                <ul>
+                <li><a href="quickstart-webapps.html#01">Setting Up a Web Application Project </a></li>
+                <li><a href="quickstart-webapps.html#02">Creating and Editing Web Application Source Files</a></li>
+                <li><a href="quickstart-webapps.html#03">Building and Running a Web Application Project</a></li>
+                <li><a href="quickstart-webapps.html#04">Next Steps</a></li>
+                <ul>
+            </td>
+            <td width="20">&nbsp;</td>
+            <td align="right" valign="top"> 
+                <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+                 to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+        </tr>
+    </table>
+    
+    <h3 class="tutorial">
+    Installing the Software</h3>
+    
+    
+    <p>Before you begin, you need to install the following software on your
+    computer:</p>
+    <ul>
+        <li>NetBeans IDE 6.0.
+        <li>Java Standard Development Kit (JDK&trade;) version
+        5.0 or version 6.0 </li>
+    </ul>
+    
+</div>
+
+<br>
+
+<!-- ===================================================================================== -->
+<h2><a name="01"></a>Setting Up a Web Application Project</h2>
+    
+    <ol>
+        <li>Choose File &gt; New Project. Under Categories, select Web.
+        Under Projects, select Web Application and click Next.</li>
+        <li> Under Project Name, enter <tt>HelloWeb</tt>. Notice
+        that the Context Path is <tt>/HelloWeb</tt>.</li>
+        <li>Change the
+            Project Location to any directory on your computer. From now
+        on, this directory is referred to as <tt><i>$</i><i>PROJECTHOME</i></tt>. </li>
+        <li>Select the server to which you want to deploy your application. Only servers that are registered with the IDE are listed. Click Next. </li>
+      <li><p>Leave the Set as Main Project checkbox selected. Click Finish.</p>
+        
+         The IDE creates the <tt><i>$PROJECTHOME</i>/HelloWeb</tt>
+            project folder. The project folder contains all of your sources and
+            project metadata, such as the project's Ant build script. 
+          The HelloWeb project
+            opens in the IDE. You can view its logical structure in the Projects window and its
+        file structure in the Files window.
+      </li>
+  </ol>
+
+<!-- ===================================================================================== -->
+
+<h2><a name="02"></a>Creating and Editing Web Application Source Files</h2>
+<p>Creating and editing source files is the most important function that the
+    IDE serves. After all, that's probably what you spend most of your day doing.
+    The IDE provides a wide range of tools that can compliment any developer's
+    personal style, whether you prefer to code everything by hand or want the
+IDE to generate large chunks of code for you.</p>
+<div class="indent">
+    <h3 class="tutorial">Creating a Java Package and a Java Source File</h3>
+    
+    <ol>
+        <li>Expand the Source Packages
+            node. Note the Source Packages node only contains an empty default
+        package node. </li>
+        <li>Right-click the Source Packages node and choose New &gt;
+            Java Class.
+            Enter <tt>NameHandler</tt> in the Class Name text box and type
+        <tt>org.me.hello</tt> in the Package drop-down. Click Finish. </li>
+        <li>In the Source Editor, declare a field by typing the following line directly
+            below the class declaration:
+            <pre class="examplecode">    String name;</pre>
+        </li>
+        <li>Add the following constructor to the Java class:  
+        <pre class="examplecode">    public NameHandler()</pre></li>
+        <li>Add the following line in the <tt>NameHandler()</tt> constructor:
+            <pre class="examplecode">    name = null;</pre>
+        </li>
+    </ol>
+    
+    
+    <h3 class="tutorial">Generating Getter and Setter Methods</h3>
+    
+    <ol>
+        <li>Right-click the word <tt>name</tt> in the field
+            declaration at the start of the class and choose Refactor &gt; Encapsulate Fields.        </li>
+        <li>Click Refactor. Getter and setter methods are
+            generated for the <tt>name</tt> field and its access level
+            is changed to private. The Java class should now look similar to this:
+            <pre class="examplecode">    package org.me.hello;
+
+    /**
+     *
+     * @author Administrator
+     */
+
+    public class NameHandler {
+
+	private String name;
+
+        /** Creates a new instance of NameHandler */
+        public NameHandler() {
+           name = null;
+        }
+
+        public String getName() {
+           return name;
+        }
+
+        public void setName(String name) {
+           this.name = name;
+        }
+
+    }</pre>
+      </li>
+    </ol>
+    
+    
+    <h3 class="tutorial">Editing the Default JavaServer Pages File</h3>
+    
+    <ol>
+        <li>Expand the HelloWeb project node and the Web Pages node.
+            Note that the IDE has created a default JavaServer Pages file, <tt>index.jsp</tt>,
+        for you. When you create the project, the IDE opened the <tt>index.jsp</tt> file in the Source Editor. </li>
+        <li>Select the <tt>index.jsp</tt> Source Editor tab. The <tt>index.jsp</tt> file
+            now has focus in the Source
+        Editor. </li>
+        <li><p>In the Palette on the right side of the Source Editor, expand HTML Forms and
+        drag a Form item below the <tt>&lt;h2&gt;</tt> tags in the Source Editor.  </p>       
+        The Insert Form
+          dialog box appears:
+          <p><img src="../../../images/articles/60/web/quickstart-web/palette_small.png" align="middle" alt="Palette" vspace="5" hspace="5"></p>
+          <p>Set the following values:</p>
+          <ul>
+              <li><b>Action:</b> response.jsp
+              <li><b>Method:</b> GET
+              <li><b>Name:</b> Name Input Form
+          </ul>
+          <p>Click OK. The Form is added to the <tt>index.jsp</tt> file.</p>
+        <li>Drag a Text Input item to just before the <tt>&lt;/form&gt;</tt> tag.
+        <p>Set the following values:</p>
+        <ul>
+            <li><b>Name:</b> name
+            <li><b>Type:</b> text
+        </ul>
+        <p>Click OK. The Text Input is added between the <tt>&lt;form&gt;</tt> tags.
+        <li>Drag a Button item to just before the <tt>&lt;/form&gt;</tt> tag.</p>
+        <p>Set the following values:</p>
+        <ul>
+            <li><b>Label:</b> OK
+            <li><b>Type:</b> submit
+        </ul>
+        <p>Click OK. The Button is added between the <tt>&lt;form&gt;</tt> tags.</p>
+        <li>Change the text between the <code>h2</code> tags to <code>Entry Form</code>. </li>
+        
+        <li>Type <tt>Enter your name: </tt> in front of the <tt>&lt;input&gt;</tt> tag and change the text between the
+            <tt>&lt;h2&gt;</tt> tags to <tt>Entry Form</tt>.
+            <p>The tags between the <tt>&lt;body&gt;</tt> tags now look as follows:</p>
+        </li>
+        <pre class="examplecode">&lt;h2&gt;Entry Form&lt;/h2&gt;&lt;form name="Name Input Form" action="response.jsp" method="GET"&gt;
+Enter your name: &lt;input type="text" name="name" value="" /&gt;
+&lt;input type="submit" value="OK" /&gt;&lt;/form&gt;</pre>
+    
+	
+	
+	</ol>
+    
+    <h3 class="tutorial">Creating a JavaServer Pages File</h3>
+    
+    <ol>
+        <li>Expand the HelloWeb project node and the Web Pages node. </li>
+        <li>Right-click the Web Pages node and choose New &gt; JSP,
+            name the JavaServer Pages file <tt>response</tt>, and click Finish. 
+            <p>The new <tt>response.jsp</tt>
+        opens in the Source Editor.</p> </li>
+        <li>In the Palette on the right side of the Source Editor, expand JSP and
+        drag a Use Bean item right below the <tt>&lt;body&gt;</tt> tag in the Source Editor.
+        <p>Set the following values:</p>
+        <ul>
+            <li><b>ID:</b> mybean
+            <li><b>Class:</b> org.me.hello.NameHandler
+            <li><b>Scope:</b> session
+        </ul>
+        <p>Click OK. The Use Bean is added below the <tt>&lt;body&gt;</tt> tag.</p>
+        
+        <li>Change the text between the &lt;h2&gt; tags look like this: 
+          <pre>&lt;h2&gt;Hello, !&lt;/h2&gt;</pre> 
+        </li>
+        
+        <li>Drag a Get Bean Property item fromt he Palette and drop it after the comma between the <code>&lt;h2&gt;</code> tags. </li>
+        <li>Drag a Set Bean Property item from the Palette. Then
+        change the code so that the tags between the <tt>&lt;body&gt;</tt> tags look as follows: </li>
+        <pre class="examplecode">&lt;jsp:useBean id="mybean" scope="session" class="org.me.hello.NameHandler" /&gt;
+&lt;jsp:setProperty name="mybean" property="*" /&gt;
+&lt;h2&gt;Hello, &lt;jsp:getProperty name="mybean" property="name" /&gt;!&lt;/h2&gt;</pre>
+    </ol>
+</div>
+
+
+<!-- ======================================================================================= -->
+
+<h2><a name="03"></a>Building and Running a Web Application Project</h2>
+<p>The IDE uses an Ant build script to build and run your web applications.
+    The IDE generates the build script based on the options
+you enter in the New Project wizard and the project's Project Properties dialog box.</p>
+
+<ol>
+<li>Choose Run&nbsp;&gt; Run&nbsp;Main&nbsp;Project (F6) from
+    the Run menu.
+<p>The IDE builds the web application and deploys it, using the server you specified when creating the project. </li>
+<li>Enter your name in the text box on your deployed <tt>index.jsp</tt> page:
+    
+    <p><img src="../../../images/articles/60/web/quickstart-web/result1.png" align="middle" alt="Palette" vspace="5" hspace="5"></p>
+    <p>Click OK. The <tt>response.jsp</tt> page should open and greet you:</p>
+<p><img src="../../../images/articles/60/web/quickstart-web/result2.png" align="middle" alt="Palette" vspace="5" hspace="5"></p></li>
+
+</ol>
+
+
+
+
+
+
+<!-- ======================================================================================== -->
+
+<h2><a name="04"></a>Next Steps</h2>
+
+<p>For more information about developing web applications in NetBeans IDE 6.0, see the following resources:
+</p>
+<ul>
+    
+    <li><a href="tutorial-webapps.html" target="_blank">NetBeans 
+    IDE Web Application Tutorial</a></li>
+    <li><a href="../websvc/jax-ws.html">Getting Started with JAX-WS Web Services</a></li>
+    
+    
+</ul>
+<p>To send comments and suggestions, get support, and keep informed on the latest
+    developments on the NetBeans IDE Java EE development features, join the nbj2ee@netbeans.org
+    mailing list. </div>
+
+<hr class="light">
+
+<div align="right">This page was last modified:&nbsp;November, 2007</div>
+ 
+<!-- =================== -->
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+<!--stopindex-->
+<!-- END CENTRAL COLUMN COMPONENTS -->
+
+<!-- BEGIN SPACER ROW -->
+<table border="0" cellpadding="10" cellspacing="0" class="full-width"> 
+<tr>
+<td><br>
+<div class="feedback-box">
+<a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">
+Send Us Your Feedback</a></div>
+<br style="clear:both;" /> </td>
+</tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+
+</body>
+</html>

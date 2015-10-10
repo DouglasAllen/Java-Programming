@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html>
+
+<head>
+	<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+	<title>Using Cross Project References</title>
+	<meta name="description" content="Application Server, Tutorial, NetBeans SOA Pack, SOA, NetBeans IDE 6.0, IDE">
+	<meta name="author" content="MJ Early"> <!--Optional tag-->
+	<meta name="keywords" content="java IDE, java editor, java Platform, free, open source, java development, j2ee support, development enviroment, web development, NetBeans, IDE, java, cross project, XML references">
+	<style>
+	.comment {color:blue; font-weight:bold}
+	.change-bar {border-left: thin; border-left-style: solid; border-color:black; padding-left: 6px}
+	.deleted {text-decoration: line-through}
+	</style>
+</head>
+
+<body>
+
+<!-- =================================================================================================== -->
+
+<h1>Using Cross Project References</h1>
+
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>
+Contributed by <a href="mailto:Michael.Nazarov@sun.com">Michael Nazarov</a>, maintained by <a href="mailto:Irina.Filippova@sun.com">Irina Filippova</a><br> 
+December 2007
+<br>
+<br>
+</p>
+</div>
+<p>This tutorial describes how to create a project reference to an XML file in another project.</p>
+
+
+<p align="center"><b>Expected duration: 30 minutes</b></p>
+<div class="indent">
+<h3>Contents</h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td align="left" valign="top">
+	<ul>
+		<li><a href="cross-project-refs.html#tut_req">Tutorial Requirements</a></li>
+		<li><a href="cross-project-refs.html#overview" title="Overview">Overview</a></li>
+		<li><a href="cross-project-refs.html#CreateProjects" title="Create The Projects">Create The Projects</a></li>
+		<li><a href="cross-project-refs.html#CreateRef" title="Establish a Reference Between the Projects">Establish a Reference Between the Projects</a></li>
+		<li><a href="cross-project-refs.html#importFile" title="Import an XML Schema File Using a Project Reference">Import an XML Schema File Using a Project Reference</a></li>
+		<li><a href="cross-project-refs.html#useImportedFile" title="Use the Imported Schema File">Use the Imported Schema File</a></li>
+		<li><a href="cross-project-refs.html#checkUsage" title="Check the Usage of the Imported Schema File">Check the Usage of the Imported Schema File</a></li>
+		<li><a href="cross-project-refs.html#deployApp" title="Deploy the Blue Print Sample Composite Application">Deploy the Blue Print Sample Composite Application</a></li>
+	</ul>
+	</td>
+
+	<td width="20">&nbsp;</td>
+
+	<td align="right" valign="top"> 
+		<img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"></td>
+</tr>
+</table>
+</div> <!-- indent -->
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>   
+<!-- ======================================================================================= -->
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<br>
+<p>Before you proceed, review the requirements in this section.</p>
+
+<!-- ======================================================================================== -->
+<div class="indent">
+<h3>Prerequisites</h3>
+<p>This tutorial assumes that you have basic knowledge of the following technologies:</p>
+<ul>
+	<li>Composite Applications and Service-oriented Architecture (SOA)</li>
+    <li>Web Services</li>
+</ul>
+
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+<p>Before you begin, you need to install the following software on your computer: NetBeans IDE 6.0 with SOA and the GlassFish application server.</p> 
+
+</div> <!-- "indent" -->
+
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="overview"></a>Overview</h2>
+<p>
+This tutorial illustrates the basic steps to create a project that references an XML file that belongs to another project. Use the principals in this tutorial to streamline the reuse of XML files within a set of project.
+</p>
+
+<p>
+In the tutorial you create two projects. The first project is one of the SOA Blue Print Sample projects provided with NetBeans 6.0. The second is a BPEL Module project. From the BPEL Module project, you reference an XML schema file from the Blue Print Sample project.
+</p>
+
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ========================================================================================== -->
+<h2><a name="CreateProjects"></a>Create The Projects</h2>
+
+<p><b>To create the Blue Print Sample project:</b></p>
+<ol>
+	<li>In the NetBeans IDE, select the Projects tab to display the Projects window.</li>
+	<li>From the File menu, select New Project.</li>
+	<li>
+	In the Categories list of the New Project window, select <tt>Samples&nbsp;&gt;&nbsp;SOA&nbsp;&gt;&nbsp;BPEL BluePrints&nbsp;&gt;&nbsp;BluePrint1</tt> and click Next.<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/choose-project-bp.png"  title="SOA BluePrint Sample Projects" alt="SOA BluePrint Sample Projects">
+	</li>
+	<li>Accept the default name and location (or specify an alternate location using the Browse button).</li>
+    <li>Click Finish to create the project.<br>
+	The following projects appear in the Projects window:<br><br>
+	
+	BluePrint1, the BPEL project<br>
+	BluePrint1Application, the composite application project<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/blueprint1-project.png"  title="BluePrint Sample Project" alt="BluePrint Sample Project">
+	</li>
+</ol>
+
+ <br>   
+<p><b>To create the BPEL module project:</b></p>
+<ol>
+    <li>From the File menu, select New Project.</li>
+	<li>In the Categories list of the New Project window, select <tt>&gt;&nbsp;SOA&nbsp;&gt;&nbsp;BPEL&nbsp;Module</tt> and click Next.
+<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/choose-project-bpel.png"  title="Select BPEL Module Project" alt="Select BPEL Module Project">
+	</li>
+    <li>Accept the default project name and location (or specify an alternate location using the Browse button).</li>
+	<li>
+	Click Finish to create the project.<br><br>
+	The following project appears in the Projects window:<br><br>
+	
+	BpelModule1<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/bpel-project.png"  title="BPEL Module Project" alt="BPEL Module Project">
+	</li>
+</ol>
+
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ========================================================================================== -->
+<h2><a name="CreateRef"></a>Establish a Reference Between the Projects</h2>
+<p>
+This sections shows how to create a reference to the BpelModule1 project from the BluePrint1 project. Once the reference is created, resources in the Blue Print project can be accessed by the BPEL Module project.
+</p>
+<p><b>To establish a reference between the projects:</b></p>
+ <ol>
+ 	<li>In the Projects window, right-click the BluePrint1 project and select Properties.</li>
+    <li>In the Project Properties dialog, under Categories, select Project References.</li>
+	<li>Select Add Project.</li>
+	<li>
+	In the Add Project dialog, select the BpelModule1 project and click Add Project.<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/add-project-ref.png"  title="Add Project Reference" alt="Add Project Reference">
+
+	</li>
+    <li>Click OK.</li>
+</ol>
+	
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ========================================================================================== -->
+<h2><a name="importFile"></a>Import an XML Schema File Using a Project Reference</h2>
+<p>
+In this section you add an XML schema file to the BPEL Module project. You then modify the XML schema file using the XML schema structures referenced from a file in the Blue Print Sample project.</p>
+<p><b>To add an XML schema file to the BPEL Module project:</b></p>
+<ol>
+  <li>
+	In the Project Window, right click BpelModule1 node and select <tt>New&nbsp;&gt;&nbsp;Other</tt> to open the New File wizard.
+	<br>
+  </li>
+    <li>
+	With BpelModule1 as the selected project, make the following selections and then click Next:<br><br>
+	Categories: <tt>XML</tt>
+	<br>File Types: <tt>Loan Application Sample Schema</tt>
+	<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/import-schema-file.png" title="Import Schema File" alt="Import Schema File" border="0">
+	</li>
+    <li>
+	Accept the default Name and Location, and click Finish.
+	<br><br>
+	The NetBeans IDE adds the new file to the BpelModule1 project and opens the file in the Schema View of the XML Editor.<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/schema-file-added.png" title="Import Schema File" alt="Import Schema File" border="0">
+	</li>
+</ol>
+<br><br>
+<p><b>To import the Loan Application Schema File into the Blue Print Sample project:</b></p>
+<ol>
+    <li>
+	In the Project Window, expand the <tt>BluePrint1&nbsp;&gt;&nbsp;Process Files</tt> node and select <tt>purchaseOrder.xsd</tt>.
+	</li>
+    <li>
+	Double-click <tt>purchaseOrder.xsd</tt> to open this file for editing.
+	<br><br>If the Schema View is not selected in the editor, select Schema.
+	</li>
+    <li>In the leftmost column of the editor, right-click Referenced Schemas and choose <tt>Add&nbsp;&gt;&nbsp;Import</tt>.</li>
+    <li>
+	In the Add Import Dialog expand the following node:<br><br>
+	<tt>By File&nbsp;&gt;&nbsp;BpelModule&nbsp;&gt;&nbsp;Process&nbsp;Files</tt>
+	</li>
+    <li>
+	Select <tt>newLoanApplication.xsd</tt> for importing and click OK.<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/add-import.png" title="Import Schema File" alt="Import Schema File" border="0">
+	</li>
+</ol>
+
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ========================================================================================== -->
+<h2><a name="useImportedFile"></a>Use the Imported Schema File</h2>
+<p>In this section you choose the CarType element in the imported file.</p>
+
+<p><b>To select an element from an imported file:</b></p>
+<ol>
+    <li>In the Schema View of the editor for <tt>purchaseOrder.xsd</tt>, right-click the Elements in the leftmost column and select Add Element.</li>
+    <li>In the Add Element window, accept the default name for the element and select Use Exiting Type.</li>
+    <li>
+	Expand the following node:<br><br>
+	<tt>Referenced Schemas&nbsp;&gt;&nbsp;import {http://xml.netbeans.org/examples/LoanApplication}&nbsp;&gt;&nbsp;Complex&nbsp;Types</tt>
+	</li>
+    <li>
+	Select the CarType type and click OK.<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/car-type-selected.png" title="Selecting Referenced XML Schema Type" alt="Selecting Referenced XML Schema Type" border="0">
+	</li>
+    <li>Click OK.</li>
+	<li>From the File menu, select <tt>Save&nbsp;All</tt> to save your work.</li>
+</ol>	
+	
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ========================================================================================== -->
+<h2><a name="checkUsage"></a>Check the Usage of the Imported Schema File</h2>
+<p>In this section you check that the <tt>newLoanApplication.xsd</tt> file is imported into the BluePrint1 project.</p>
+ 
+<p><b>To find the usage of an imported XML schema file:</b></p>
+<ol>
+    <li>
+	In the Project window, expand the following node:<br><br>
+	<tt>BpelModule1&nbsp;&gt;&nbsp;Process&nbsp;Files</tt>
+	</li>
+    <li>
+	Right click <tt>newLoanApplication.xsd</tt> and select Find Usages.<br><br>
+	The Usages window for the XML schema file opens in Logical View.<br><br>
+	<img src="../../../images/articles/soa/cross-project-refs/find-usages.png" title="Find Usages of an XML Schema" alt="Find Usages of an XML Schema" border="0">
+	</li>
+    <li>
+	In the Usages window, note that the XML schema is used by the BluePrint1 project.
+	</li>
+</ol>
+
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ========================================================================================== -->
+<h2><a name="deployApp"></a>Deploy the Blue Print Sample Composite Application</h2>
+<p>In this section you deploy the Blue Print Sample composite application, which contains the cross project reference.</p>
+ 
+<p><b>To deploy the Blue Print Sample composite application:</b></p>
+<ul>
+  <li>
+    In the Projects window, right-click BluePrint1Application and select Deploy.
+      <br>
+    This to verify that the application builds and deploys with the referenced XML schema file.  </li>
+</ul>
+<p align="center"><a href="cross-project-refs.html#top">top</a></p>
+<!-- ============================================================================================ -->
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html lang='en'>
+    <head>
+        <script language="JavaScript" type="text/javascript"></script>
+        <title>NetBeans IDE 6.0 - Tutorials - Converting and Validating Data</title>
+        <!-- BEGIN METADATA -->
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="description" content="In this tutorial, you validate input against specified criteria
+        and convert data between two formats using Visual Web Pack coverters and validators.">
+        <meta name="date" content="2007-03-05">
+        <meta name="collection" content="learning">
+        <meta name="content_type" content="Tutorial">
+        <meta name="archive" content="false">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+        <!-- END METADATA -->
+   
+    </head>
+    <body> 
+        
+         
+        <h1><a name="top"></a>Converting and Validating Data in Visual Web JSF Applications</h1> 
+        <a name="skip2content"></a> 
+        <!--  BEGIN VCD4 BYLINE AND TOOLS  --> 
+        <div class="articledate" style="margin-left: 0px;"><em>Contributed by the NetBeans Tutorials Team</em></div> 
+        <!-- Update the date and version according to instructions for this release --> 
+       
+       <br>
+        <table border="0" cellpadding="0" cellspacing="0" class="full-width"> 
+            <tr> 
+                <td class="smaller" valign="top"><em>December, 2007</em>&nbsp;[Revision number: V6.0]</td> 
+                <td width="10">&nbsp;</td> 
+                <td align="right" valign="bottom">&nbsp;</td> 
+            </tr> 
+        </table> 
+        <!--  END VCD4 BYLINE AND TOOLS  --> 
+        <!-- BEGIN VCD1 OVERVIEW COMPONENT  --> 
+        <!-- This table contains an overview or an intro to your-tutorial. --> 
+        <table border="0" cellpadding="4" cellspacing="0" class="full-width"> 
+            <tr> 
+                <td><p>In this tutorial you learn about JSF Converters and Validators. Converters are used to convert string input into data Java data types for various purposes such as calculation. Validators are used to verify that user input falls within specified ranges. You use the Visual Web JSF framework to create an application that converts temperatures from Celsius to Fahrenheit. The application uses a converter to convert user input from a string value to a numerical Java data type on which the application can perform calculations. The application uses a validator to check that the data falls within a specified range and reports validation errors via a message component. 
+
+
+ You then build a web applicatation that calculates currency values and displays a formatted date value.</p>
+                  <p>You also learn how to add your own validation handler to an application and how to override the built-in error messages provided by the IDE for when a standard validation fails.</p></td> 
+            </tr> 
+        </table> 
+        <!-- END VCD1 OVERVIEW COMPONENT  --> 
+        <!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  --> 
+        <!-- 
+This table holds the TOC and the right-aligned product logo graphic. 
+It uses the class full-width to ensure a width of 100%.
+        --> 
+        <table class="full-width" border="0" cellpadding="0" cellspacing="0"> 
+            <tr> 
+                <td align="left" valign="top"><p><b>Contents</b></p> 
+                    <table class="vatop" border="0" cellpadding="0" cellspacing="0"> 
+                         
+                        <tr valign="top"> 
+                            <td width="9" class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#02">Designing the Application</a></td> 
+                        </tr> 
+                        <tr valign="top"> 
+                            <td width="9" class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#03">Using Validators</a></td> 
+                        </tr> 
+                        <tr valign="top"> 
+                            <td width="9"  class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#04">Using Converters</a></td> 
+                        </tr> 
+                        <tr valign="top"> 
+                            <td width="9"  class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#05">Testing the Application</a></td> 
+                        </tr> 
+                        <tr valign="top"> 
+                            <td width="9"  class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#06">Doing More: Using Number and Date Time Converters</a></td> 
+                        </tr> 
+                        <tr valign="top"> 
+                            <td width="9"  class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#07">Doing More: Adding Your Own Validation Handler</a></td> 
+                        </tr> 
+                        <tr valign="top"> 
+                            <td width="9"  class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#08">Doing More: Customizing a Standard Validator Message</a></td> 
+                        </tr> 
+						<tr valign="top"> 
+                            <td width="9"  class="hyphen">-&nbsp;</td> 
+                            <td><a href="convert-validate.html#09">Summary</a></td> 
+                        </tr> 
+                </table></td> 
+                <td width="20">&nbsp;</td> 
+              <td align="right" valign="top">                  <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td> 
+            </tr> 
+        </table> 
+        <!-- END VCD5 ANCHOR LINKS COMPONENT  --> 
+        <!-- BEGIN RESOURCE MATRIX --> 
+        <br> 
+        <p><b>This tutorial works with the following technologies and resources</b></p> 
+        <table border="1" cellpadding="1"> 
+            <tbody> 
+                <tr> 
+                    <td valign="top">JavaServer Faces Components/<br> 
+                    Java EE Platform</td> 
+                    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br> 
+                    <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 </td> 
+                </tr> 
+                <tr> 
+                    <td valign="top">Travel Database</td> 
+                    <td colspan="4" valign="top">
+<img src="../../../images/articles/60/web/spacer.png" alt="not required" height="15" hspace="3" width="14">Not required</td> 
+                </tr> 
+                
+            </tbody> 
+        </table> 
+        <p>* In order to take advantage of NetBeans IDE 6.0's Java EE 5 capabilities, use an application server that is fully compliant with the Java EE 5 specification such as the Sun Java Application Server 9/GlassFish.</p> 
+        <p>This tutorial has been tailored for use with the GlassFish v2 Application Server. 
+If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. 
+For detailed information about the supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p> 
+        <!-- END RESOURCE MATRIX --> 
+        <!-- Start content of tutorial --> 
+        
+        <a name="02"></a> 
+        <h2>Designing the Application </h2> 
+		<p>In this section, you create the application and add the necessary components to it.</p>
+        <ol> 
+            <li> 
+                <p>Create a new web application project  and name it ValidatorConverter. Enable the Visual Web JavaServer Faces framework. <!-- If you are using NetBeans 6.0, specify the Visual Web JavaServer Faces framework when creating the project.  --></p> 
+            Figure 1 shows the page you will create in the following steps. </li> 
+            <li> 
+                <p>From the Basic section of the Components Palette, drag a Text Field component and drop it on the page. Set the <code>label</code> property to <code>Celsius and set </code> the <code>text</code> property to <code>0.0</code>.</p> 
+            The <code>label</code> and <code>text</code> properties are under the Appearance section of the Properties window. The text value is the default value displayed at runtime.</li> 
+            <li> 
+                <p>Set the Text Field component's <code>required</code> property to True by selecting the checkbox in the Properties window.</p> 
+            The <code>required</code> property is under the Data section of the Properties window. A value of True requires that the user enter a value for the input field. If the user does not enter a value and tries to submit the page, a standard validation error message is returned. A red asterisk appears next to the Celsius label to indicate that the required property is set.</li> 
+            <li>Place a Label component on the page. Set the text of the label to <code>Fahrenheit.</code></li> 
+            <li>Place a Static Text component to the right of the Fahrenheit label. Set the text property to <code>32.0</code> to represent the freezing point of water in the Fahrenheit scale. </li> 
+            <li>From the Basic section of the Palette, drag a Message component and drop it below the Fahrenheit label.</li> 
+            <li> 
+                <p>Hold down the Ctrl+Shift keys and drag a line from the Message component to the Text Field component.</p> 
+                <p>The text of the Message component changes to Message summary for textField1, as shown in the following figure:</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="478"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/message-celsius.png" width="468" height="326" border="0" alt="Figure 1: Message Summary"><br> 
+                      <b>Figure 1 </b>: Message Summary </td> 
+                    </tr> 
+                </table> 
+            </li> 
+        </ol> <p>In the next section you add a validator to ensure that the user's entry falls within a specified range.</p>
+         
+        <h2><a name="03"></a>Using Validators </h2> 
+    <p>If your application collects information from users, for example a login and a password, then it is important that you verify the user data. The IDE provides a set of components for validating user input; you access them from the Validators section of the Components Palette. The simplest validation ensures that an input field has some sort of value.
+    <p>The Double Range validator tests whether the value of a numerical input is within a specified range. The data type must be floating point or convertible to floating point. Other validators include the Length Validator and the Long Range Validator. 
+    <ul>
+      <li>Use the Length Validator to validate that the length of text entered for a component is no shorter or longer than the values you specify for the validator's <tt>minimum</tt> and <tt>maximum</tt> properties. 
+   The value must be a <tt>java.lang.String</tt>.</li>
+   <li>Use the Long Range Validator to validate that a user-entered value falls within a range of minimum and maximum values. 
+   The value must be any string value that can be converted to a Java <tt>long</tt> data type.</li>
+    </ul>
+   
+    <table border="0" cellpadding="2" cellspacing="0" width="367"> 
+            <tr> 
+              <td align="center"><img src="../../../images/articles/60/web/convert-validate/convert-validate-palette.png" width="357" height="439" border="1" alt="Figure 2: Validators and Converters in the Palette"><br> 
+                <b>Figure 2 </b>: Validators and Converters in the Palette</td> 
+            </tr> 
+    </table>
+    <br>
+    <p><!-- You can use more than one validator on an input component to validate for different criteria.  -->
+    When you use a validator (or a converter, described below in <a href="convert-validate.html#04">Using Converters</a>), you may also want to use a message component to indicate when validation fails. The web application performs all the validations before it calls any value change or action listeners, such as the button action methods. If one or more validation errors occur, the value change listeners and action listeners are not called, and the web application rerenders the page so that the user can correct the problems.</p>
+    For this application, you want to check that the Text Field component contains at least one character before the page is submitted. You also need a message component to indicate when the validation fails.</p>
+<p> The Message component you added in the previous section will indicate to the user if the validation fails.</p> 
+        <ol> 
+            <li> 
+                <p>Expand the Validators section of the Palette. Drag the Double Range Validator from the Palette and drop it on the Text Field component.</p> 
+                <p>The double range validator is a non-visual component. The default value <code>doubleRangeValidator1</code> appears in the Navigator window and in the <code>validator</code> property in the Properties window, as shown in the figure below.</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="570"> 
+                    <tr><td align="center"> <img src="../../../images/articles/60/web/convert-validate/application-outline.png" width="292" height="328" border="0" alt="Figure 4: Application Outline">
+                         <img src="../../../images/articles/60/web/convert-validate/properties.png" width="273" height="306" alt="Figure 3: Properties Window"> <br> 
+                        <b>Figure 3 </b>: Outline Window and Properties Window</td> 
+                    </tr> 
+                </table> 
+            </li> 
+            <li>In the Navigator window, select doubleRangeValidator1. </li> 
+            <li> 
+                <p>Set the range for the validator in the Properties window: </p> 
+                <ul> 
+                    <li>Set the <code>maximum</code> property to <code>1000.0</code> (a very hot temperature).</li> 
+                    <li>Set the <code>minimum</code> property to <code>-273.15</code> (i.e. Absolute Zero on the Celsius scale).
+					</li> 
+                </ul> 
+            </li> 
+        </ol> 
+		<p>In this section you enabled the application to validate a user-entered value using a Double Range Validator. In the next section you use a converter 
+		to enable the application to calculate the Fahrenheit value of a numerical string input of a Celsius temperature. </p>
+         
+        <h2><a name="04"></a>Using Converters </h2> 
+	<p>The IDE also provides a set of converters that you can use to convert component data. A converter converts data types between <tt>java.lang.String</tt> values in your component properties and a Java data type. 
+  <!-- Converters are also good for formatting dates, times, and currency values.  -->
+  The standard converters can be accessed from the Converters section of the Components Palette. When you bind a component, the IDE normally identifies the data type for you and sets the appropriate converter when you establish a binding to the value property. However, you can also  add converters manually in the IDE by setting the component's converter property.     
+	<p><span class="bold">Note</span>: Conversions are performed before the validation process starts. If a user provides a value that the application cannot convert to the specified data type, the web application rejects the input and sends an error message. This error message appears in the Message Group component and the associated Message component if they exist on the page. The Number Converter is a useful converter because you can use it to specify patterns that the input must match.	
+	<p>Other converter components include (but are not limited to) the following:
+    <ul>
+  <li>The Big Decimal Converter converts between <tt>java.lang.String</tt> values and data types of <tt>java.math.BigDecimal</tt> data types, for example binding a JSF component to an Oracle database column of type NUMBER. </li>
+  <li>The Boolean Converter Component
+
+converts between <tt>java.lang.String</tt> values and either <tt>java.lang.Boolean</tt> data types or the Java <tt>boolean</tt> primitive type, for example binding a JSF component to a database column of type BOOLEAN.</li>
+  <li>The Byte Converter Component
+  
+converts between java.lang.String values <tt>java.lang.Byte</tt> data types or the Java <tt>byte</tt> primitive type, for example binding a JSF component to a database column of type SMALLINT or TINYINT. </li>
+  <li>The Calendar Converter Component
+    
+converts between <tt>java.lang.String</tt> values and <tt>java.util.Calendar</tt> data types. This converter applies, for example, when you bind to a web service that has a field of type dateTime. </li>
+  </ul> 
+  </p>
+  <p>In the previous steps you set up a validator to verify that an input Celsius temperature fell between absolute zero and 1000&deg;. In the following steps you use a Double Converter to convert the user's input to a double so that you can use the double to calculate the Fahrenheit value of a Celsius input. </p>
+		<ol> 
+            <li> 
+                <p>Expand the Converters section of the Palette. Drag the Double Converter from the Palette onto the Text Field component.</p> 
+            This converter specifies that the Text Field component returns a Double object rather than a String. The default value <code>doubleConverter1</code> appears in the Properties window and in the Navigator window.</li> 
+            <li> 
+                <p>Double-click the Text Field component to open its source code in the Java Editor. </p> 
+            </li> 
+            <li> 
+                <p>Add the following code (shown in <strong>bold</strong>) to the <code>textField1_processValueChange</code> action method.</p> 
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode"> 
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 1: Value Change Event Handler Method</b></td> 
+                    </tr> 
+                    <tr> 
+                        <td><pre>public void textField1_processValueChange(ValueChangeEvent event) {
+   <span style="font-weight: bold;">double celsiusTemp = ((Double) textField1.getText()).doubleValue();
+   double fahrenheitTemp = 9.0 * celsiusTemp / 5.0 + 32.0;
+   staticText1.setText(new Double(fahrenheitTemp));</span>
+}</pre></td> 
+                    </tr> 
+                </table> <br>
+				<p>This code sets two variables: <tt>celsiusTemp</tt>, the value entered into <tt>textField1</tt>, and <tt>fahrenheitTemp</tt>, the value into which <tt>celsiusTemp</tt> is converted by applying the specified calculation. The last line sets the new value of <tt>fahrenheitTemp</tt> in the Static Text field.</p>
+            </li> 
+        </ol> 
+         
+        <h2><a name="05"></a>Testing the Application </h2> 
+		<p>In this section, you run the application with various inputs that demonstrate possible validation and conversion errors.</p>
+        <ol> 
+            <li>Choose Run > Run Main Project, to build and run the application.</li> 
+            <li> 
+                <p>Delete 0.0 from the text field and press Enter without entering a value. Verify that an  error is displayed for the text field, as shown in the figure below. </p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="423"> 
+                    <tr> 
+                      <td align="center"><img src="../../../images/articles/60/web/convert-validate/requiredvalidationerror.png" width="413 height="326" border="0" alt="Figure 4: Validation Error When Input is Required"><br> 
+                      <b>Figure 4 </b>: Validation Error When Input is Required</td> 
+                    </tr> 
+                </table> <br>
+				<p>This error actually occurs because the we set the <tt>required</tt> property of the text field to <tt>true</tt>. When a page visitor submits a page, the web application performs the input verifications in the following order:
+				<ol type="a"><li>Conversions</li>
+				<li>Required input</li>
+				<li>Validations</li></ol>
+Note: Value change events occur only when the value actually changes and all validations are successful.
+</p>
+            </li> 
+            <li> 
+                <p>Enter various numbers to test the application. The figure below shows the results when you enter 100.</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="426"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/successfulvalidation.png" width="416" height="330" border="0" alt="Figure 5: Successful Validation"> <br> 
+                        <b>Figure 5</b>: Successful Validation</td> 
+                    </tr> 
+                </table> 
+            </li> 
+            <li> 
+                <p>Verify that the validation error displays when you enter a value outside the range and the conversion error displays when you enter a non-numeric string value.</p> 
+                <p>The figure below shows the result when you enter -1000. Note that when a validation or conversion error occurs, the value change listener method is not called and the value in the Static Text component does not change.</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="472"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/validationerror.png" width="462" height="357" border="0" alt="Figure 6: Validation Error When Value is Outside Range"> <br> 
+                        <b>Figure 6 </b>: Validation Error When Value is Outside Range</td> 
+                    </tr> 
+                </table> 
+            </li> 
+            <li> 
+                <p>Enter an alphanumeric string, such as <tt>20x</tt>. Because the application is configured only to convert number formats, it returns a conversion error as shown in the figure below. </p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="472"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/conversionerror.png" width="462" height="357" border="0" alt="Figure 7: Conversion Error When Entered Value In Incorrect Format"> <br> 
+                        <b>Figure 7</b>: Conversion Error When Entered Value In Incorrect Format</td> 
+                    </tr> 
+                </table> 
+            </li> 
+        </ol> 
+		 
+        <h2><a name="06"></a>Doing More: Using the Number and Date Time Converters </h2> 
+        <p>Two of the standard converters, the Number converter and the Date Time converter, have their own properties that enable you to specify the format and type of the data. This mini tutorial shows how to use these two converters. </p>
+        <p>The following figure shows the page you will create in this section: </p>
+       <table border="0" cellpadding="2" cellspacing="0" width="474"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/currency-converter.png" width="464" height="322" border="0" alt="Figure 8: Currency Converter Application"> <br> 
+                        <b>Figure 8 :</b>Currency Converter Application</td> 
+                    </tr> 
+    </table>
+        <ol> 
+            <li><!-- If you are working in NetBeans 6.0, right-click on ValidatorConverter &gt; New &gt; Other and select Visual Web JSF Page. Name the page Currency and click Finish. -->In the Projects window, right-click on ValidatorConverter &gt; Web Pages and select New &gt; Visual Web JSF Page. Name the page Currency and click Finish.
+              
+		    </li> 
+            <li>Right-click ValidatorConverter &gt; Web Pages &gt; Currency.jsp and select Set As Start Page. </li> 
+            <li>From the Basic section of the Components Palette, drag a Text Field component and drop it on the page. In the Properties window, set the Text Field's <tt>label</tt> property to <tt>Dollar Amount:</tt>, and set its <tt>required</tt> property to <tt>True</tt>.</li> 
+            <li>Place a Button component to the right of the Text Field component. Change the text of the button to <tt>Convert</tt>.
+			<ul class="note">
+			  <li><b>Important Note:</b> There is a known issue that affects the width of the JSF 1.2 Button component in IE7. The workaround is to place the Button component in a layout component (Grid Panel, Group Panel, or Layout Panel). Resizing the layout component automatically resizes the Button component.   </li>
+			</uL></li> 
+            <li> 
+              <p>Drag two Label components from the Basic section of the Palette onto the page.</p> 
+              Set the text of the first label to <tt>Converted to Euros:</tt> and the text of the second label to <tt>Date and Time:</tt>.
+                 
+                 
+            </li> 
+            <li>Place Static Text components next to each of these labels.</li> 
+            <li> 
+                <p>From the Basic section of the Palette, drag a Message component and drop it below the Date and Time label.</p> 
+            Hold down the Ctrl+Shift keys and drag a line from the Message component to the Text Field component. </li> 
+            <li> 
+                <p>From the Converters section of the Palette, drag the Number Converter and drop it on the Text Field component.</p> 
+            The number converter specifies that the Text Field component returns a Number object rather than a String.</li> 
+            <li> 
+                <p>In the Number Format dialog box, choose Currency from the Type drop-down list. Set the Fractional Digits Max property to 2 and the Locale to English (United States), as shown in the figure below, and click OK. </p> 
+                <p>Note how the Currency Code defaults to <tt>USD United States of America, Dollars</tt>, the currency abbreviation, country, and curreny name associated with the Locale. Choose different Locales to display their various currencies. 
+				</p>
+				
+                <table border="0" cellpadding="2" cellspacing="0" width="428"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/number-format.png" width="418" height="466" border="0" alt="Figure 9: Number Format Dialog Box"> <br> 
+                        <b>Figure 9 </b>: Number Format Dialog Box</td> 
+                    </tr> 
+                </table> 
+                <br> 
+                <p> The Number Converter appears in the converter property of the Properties window and in the Outline window.</p> 
+            </li> 
+            <li>Drag a Number Converter from the Palette and drop it on the Static Text next to the Converted to Euros label.</li> 
+            <li>
+              <p>In the Number Format dialog box, choose Currency from the Type drop-down list and German (Germany) from the Locale drop-down list. 
+  
+
+   Set the Fractional Digits Max property to 2
+  
+and click OK.</p> 
+          This time the Currency Code defaults to <tt>EUR, Euro Member Countries, Euro</tt>. (If, for example, you select German (Switzerland), the Currency Code defaults to <tt>CHF, Switzerland, Francs</tt> because Switzerland is not in the Euro zone.) 
+		 </li> 
+            <li>Drag a Date Time Converter from the Palette and drop it on the Static Text next to the Date and Time label. </li> 
+            <li>In the Navigator window, select <tt>dateTimeConverter1</tt>.</li> 
+            <li>In the Properties window for the converter, click the ellipsis button <img src="../../../images/articles/60/web/ellipsis.png" align="absmiddle"> for the <tt>pattern</tt> property.</li> 
+          <li> 
+                <p>Type <tt>EEE, d MMM yyyy HH:mm:ss zzzz</tt> in the Pattern field, and click OK. As you add elements to the pattern, the current value appears in the pattern property of the Properties window.</p> 
+                <p>Note how the value changes as you enter the elements. For example, if you type EEEE at the beginning instead of EEE, the pattern includes the full day of the week instead of its abbreviation. If you enter only one z at the end, the time zone is abbreviated.</p> 
+            Refer to the <a href="http://java.sun.com/docs/books/tutorial/i18n/format/simpleDateFormat.html" target="_blank">Customizing 
+Formats</a> lesson of the Java Tutorials for more information on formatting dates 
+and times  <i>(external link displays in separate page)</i>.</li>
+ 
+        </ol> 
+        <h3>Adding Code</h3> 
+        <ol> 
+            <li>Double-click the Convert Button to open its source code in the Java Editor.</li> 
+            <li>
+              <p>Add the following two lines immediately above the <tt>button1_action</tt> method. 0.74 approximates the exchange rate of euros to dollars. </p>
+              <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode"> 
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 2: Constant Value for Dollars to Euros Exchange</b></td> 
+                    </tr> 
+                    <tr> 
+                        <td><pre>// constant value for dollars to euros exchange 
+private static final double us2euros = 0.74;</pre></td> 
+                    </tr> 
+              </table> 
+          </li> 
+            <li> 
+                <p>Add the following code (<strong>in bold</strong>) to the <tt>button1_action</tt> method. The comments in the code indicate what each line achieves.</p> 
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode"> 
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 3: Constant Value for Dollars to Euros Exchange</b></td> 
+                    </tr> 
+                    <tr> 
+                        <td><pre>public String button1_action( ) { 
+	//<strong> get the amount of dollars the user entered 
+	Number dollars = (Number) textField1.getValue(); 
+	// exchange the dollars for euros 
+	double euros = dollars.doubleValue() * us2euros; 
+	// display the amount of euros 
+	staticText1.setText(new Double(euros)); 
+	// figure out the date and time 
+	Date date = new Date(); 
+	staticText2.setText(date); 
+</strong>	return null;
+}</pre></td> 
+                    </tr> 
+                </table> 
+            </li> 
+            <li><!--  If you are using NetBeans 6.0, the Fix All Imports dialog may display the text ERROR in the Class Name column. This error is resolved when you import <tt>java.util.Date</tt>. -->Right-click in the Java Editor and choose Fix Imports. Select the Fully Qualified Name <tt>java.util.Date</tt> and click OK. 
+             
+            </li> 
+        </ol> 
+        <h3>Testing the Application</h3> 
+        <ol> 
+            <li> Run the application.</li> 
+            <li> Enter strings of various amounts, such as <tt>$10</tt>. Note the following rules:<br> 
+                <ul> 
+                    <li> The converter throws an exception if the first character in the input string is not the currency symbol (in this case a $) or if there is a space between the currency symbol and the first digit. The Message component displays the error. </li> 
+                    <li>You can use commas as separators, as in $1,234, but they are not required. Commas placed in the wrong location, even to right of the decimal point, are ignored. Commas are redisplayed in the correct location after conversion. </li> 
+                    <li>Entering more than two digits to the right of the decimal point results in rounding to the nearest penny. This is locale-specific and is different for locales such as Japan, where currency values are rarely displayed with decimal values.</li> 
+                </ul> 
+                <p>The figure below shows the result when you enter <tt>$100.00</tt>.</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="446"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/conversion-results.png" width="436" height="356" border="0" alt="Figure 10: Page Showing Conversion Results"> <br> 
+                        <b>Figure 10</b>: Page Showing Conversion Results</td> 
+                    </tr> 
+                </table> 
+                <br> 
+                <p>The following figure shows the result when you enter 100 without the $. The converted value from the previous figure remains, but the conversion error displays. </p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="446"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/conversion-error.png" width="436" height="356" border="0" alt="Figure 11: Page Showing Conversion Error"> <br> 
+                        <b>Figure 11</b>: Page Showing Conversion Error</td> 
+                    </tr> 
+                </table> 
+            </li> 
+        </ol> 
+		<p>For more information on number formatting, see the Java tutorial <a href="http://java.sun.com/docs/books/tutorial/i18n/format/decimalFormat.html" target="_blank">Customizing Formats</a> <i>(external link displays in separate page)</i>.</p>
+         
+        <h2><a name="07"></a>Doing More: Adding Your Own Validation Handler</h2> 
+        <p>If the standard validators do not perform the validation checking you need, you can easily add your own validation handler. This section uses the NetBeans Visual Web JSF Application functionality to create a validation handler that checks the user's input and constrains it to a three-digit number. You can add these steps to the page Currency.jsp you created in the previous section.</p> 
+        <ol> 
+            <li>Click the Design button to return to the Visual Designer.</li> 
+            <li>Select the <tt>Dollar Amount</tt> Text Field component and set its required property to False. </li>
+            <li>From the Basic section of the Components Palette, drag a Text Field component and drop it on the page. Set the Text Field's label property to <tt>Value</tt>: and the required property to <tt>True</tt>.</li> 
+            <li>Place a Button component to the right of the Text Field component. Change the text of the button to Submit.</li> 
+            <li> 
+                <p>Place a Message component under the Text Field component. Hold down the Ctrl+Shift keys and drag a line from the Message component to the Text Field component.</p> 
+            The text of the Message component changes to Message summary for textField2.</li> 
+            <li> 
+                <p>Right-click the Text Field component and choose Edit Event Handler > validate.</p> 
+            This opens the Java Editor. The IDE automatically adds import statements for the ValidatorException, FacesContext, and FacesMessage classes to the code. The insertion point is in the validate event for the text field. The third parameter, <tt>value</tt>, is the String that you will validate.</li> 
+            <li> 
+                <p>Enter the following code (in <strong>bold</strong>). </p> 
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode"> 
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 4: Custom Validator Code</b></td> 
+                    </tr> 
+                    <tr> 
+                        <td><pre>public void textField2_validate(FacesContext context, UIComponent component, Object value) {
+	<strong>String s = String.valueOf(value);
+	if (!s.matches("\\d\\d\\d")){
+		throw new ValidatorException(new FacesMessage
+		("Not a three-digit number."));
+	}
+</strong>}</pre></td> 
+                    </tr> 
+                </table> 
+                <br> 
+                <p>The <tt>matches</tt> method on <tt>String s</tt> uses a regular expression to specify the legal values that the String may accept. The <tt>\d</tt> matches a digit (0-9). </p> <p>The character "\" in a String literal has special meaning to the Java parser. You specify an extra "\" to escape the second "\", ensuring that it is passed unchanged through the parser to the pattern interpreter. So the expression <tt>\d\d\d</tt> matches any three-digit number from 000 to 999.</p>
+                <p>If the String does not match the regular expression, a message is passed to the ValidatorException constructor. The message is queued onto the FacesMessage and is displayed on the page during the render response phase.</p> 
+            </li> 
+            <li>Right-click in the Java editor and select Fix Imports. In the Fix All Imports dialog, click OK. The IDE imports the <tt>javax.faces.validator.ValidatorException</tt> and <tt>javax.faces.application.FacesMessage</tt> packages. </li> 
+            <li> 
+                <p>Run the Application. Enter number and character strings of varying lengths to test the application. Also verify that the standard validation error is displayed when no value is entered in the text field.</p> 
+                <p>The figure below shows the result when you enter a four-digit number. </p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="446"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/customvalidatorexample.png" width="436" height="524" border="1" alt="Figure 12: Custom Validator Example With Results"><br> 
+                        <b>Figure 12</b>: Custom Validator Example With Results</td> 
+                    </tr> 
+                </table> 
+            </li> 
+        </ol> 
+        <h2><a name="08"></a>Doing More: Customizing a Standard Validator Message </h2> 
+         <p>You can override the built-in error messages that NetBeans IDE provides when a standard validation fails.<!-- Under JSF 1.1/J2EE 1.4,  -->
+          You create a resource bundle for the project in which you want to provide a custom message. Note that this is a global override, not a component level override. This means that all required components return the same value.</p>
+        
+<h3>Customizing Messages<!-- in JSF 1.1 / J2EE 1.4--></h3>
+        <p>This section shows how to customize messages for the Length, Double Range, and Long Range validators in JSF 1.1 / J2EE 1.4. As you can see, this is a slightly longer process than adding customized messages in JSF 1.2. You use the IDE to customize the default error message for required input. First you create a resource bundle which maps keys used by the program to the strings displayed to the user, then you edit the <tt>faces-config.xml</tt> to point to the <tt>MyResources.properties</tt> resource bundle.</p> 
+		<p> <strong>Note: </strong>The steps in this section depend on the project being named ValidatorConverter. If you chose a different name, please adjust all uses of the project name to reflect the name of your project.</p> 
+        <ol> 
+            <li>In the Projects window, right-click ValidatorsConverter and choose New > Other. </li> 
+            <li>In the New File wizard, select Other in the Categories field and Properties File in the File Types field and click Next.</li> 
+          <li> 
+                <p>Enter <tt>MyResources</tt> in the File Name field, and type <tt>src\java\validatorconverter</tt> in the Folder field, and click Finish.</p> 
+            The IDE creates the resource bundle and opens the MyResources.properties file in the IDE.  The <tt>MyResources.properties</tt> file provides the replacement text for the messages that are used by the components. </li> 
+            <li> 
+                Close the MyResources.properties file.
+            </li> 
+            <li>
+              <p>In the Files window, expand ValidatorConverter > src&gt; java > validatorconverter, right-click <tt>MyResources.properties</tt>, and select Open to open the Key-Values Properties Editor.</p>
+              In the Key-Values Properties Editor you can add key-value pairs to the resource bundle. </li>
+            <li>Click New Property. </li> 
+            <li> 
+                <p>In the New Property dialog, type <tt>javax.faces.component.UIInput.REQUIRED</tt> in the Key field. In the Value field, type <tt>Please enter a value and then press Enter</tt>.</p> 
+                <p><strong>Important: </strong>Make sure that there are no spaces at the end of the key. Spaces prevent the application from working at run time. </p> 
+            For a list of all the keys for the standard messages, see <a href="convert-validate.html#smk">Standard Message Keys</a> below. </li> 
+            <li> 
+                <p>Click OK. The values are displayed in the Properties Editor, as shown in the figure below.</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="660"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/bundleproperties.png" width="650" height="324" border="0" alt="Figure 13: Properties Editor for MyResources.properties"> <br> 
+                        <b>Figure 13</b>: Properties Editor for MyResources.properties</td> 
+                    </tr> 
+                </table> 
+            </li> 
+            <li>In the Projects window, expand ValidatorConverter > Web Pages > WEB-INF. Right-click on <tt>faces-config.xml</tt> and choose Open. </li> 
+            <li>In the editing toolbar, click XML. </li> 
+            <li> 
+                <p>In the  the faces.config file, enter the following code.  Note that this code contains the name of the project. If your project is not named ValidatorConverter, change the text in the code as appropriate. Note that you should change upper-case characters in your project name to lower-case characters in the message-bundle element. </p> 
+                <pre class="examplecode">&lt;application&gt;<br>    &lt;message-bundle&gt;webapplication6.MyResources&lt;/message-bundle&gt;<br>&lt;/application&gt;</pre> 
+                <p>The <tt>message-bundle</tt> element represents a set of localized messages. This element contains the fully-qualified path to the resource bundle containing the localized messages, in this case, <tt>validatorconverter.MyResources</tt>. </p> 
+                
+            </li> 
+            <li>Run the project.</li> 
+            <li> 
+                <p>Delete any text in the text field and Press Enter.</p> 
+                <p>Your customized message appears in the message field as shown in the figure below.</p> 
+                <table border="0" cellpadding="2" cellspacing="0" width="446"> 
+                    <tr> 
+                        <td align="center"><img src="../../../images/articles/60/web/convert-validate/custommessage.png" width="436" height="524" border="1" alt="Figure 14: Custom Validator Message"><br> 
+                        <b>Figure 14</b>: Custom Validator Message</td> 
+                    </tr> 
+                </table> 
+            </li> 
+        </ol> 
+        <h3><a name="smk"></a>Standard Message Keys</h3> 
+        <p>In the NetBeans IDE, you can use a resource bundle to handle informational messages that occur as a result of conversion, validation, or other application actions during the request processing lifecycle. The keys for the standard messages are listed in the following table.</p> 
+        <table border="1" cellpadding="5" cellspacing="0" summary="key properties"> 
+            <tr align="left" valign="top"> 
+                <th>Key</th> 
+                <th>Description</th> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/component/UIInput.html" target="_blank">javax.faces.component.UIInput.CONVERSION</a></code></th> 
+                <td> Conversion error occurred</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/component/UIInput.html" target="_blank">javax.faces.component.UIInput.REQUIRED</a></code></th> 
+                <td> Value is required </td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/component/UISelectOne.html" target="_blank"> javax.faces.component.UISelectOne.INVALID</a></code></th> 
+                <td> Value is not a valid option</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/component/UISelectMany.html" target="_blank"> javax.faces.component.UISelectMany.INVALID</a></code></th> 
+                <td> Value is not a valid option</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/Validator.html" target="_blank"> javax.faces.validator.NOT_IN_RANGE</a></code></th> 
+                <td> Specified attribute is not between the expected values of {0}and {1} </td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/DoubleRangeValidator.html" target="_blank"> javax.faces.validator.DoubleRangeValidator.MAXIMUM</a></code></th> 
+                <td> Value is greater than allowable maximum of {0}</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a  href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/DoubleRangeValidator.html" target="_blank"> javax.faces.validator.DoubleRangeValidator.MINIMUM </a></code></th> 
+                <td> Value is less than allowable minimum of {0}</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/DoubleRangeValidator.html" target="_blank"> javax.faces.validator.DoubleRangeValidator.TYPE</a></code></th> 
+                <td> Value is not of the correct type</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/LengthValidator.html" target="_blank"> javax.faces.validator.LengthValidator.MAXIMUM</a></code></th> 
+                <td> Value is greater than allowable maximum of {0}</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/LengthValidator.html" target="_blank"> javax.faces.validator.LengthValidator.MINIMUM</a></code></th> 
+                <td> Value is less than allowable minimum of {0}</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/LongRangeValidator.html" target="_blank"> javax.faces.validator.LongRangeValidator.MAXIMUM</a></code></th> 
+                <td> Value is greater than allowable maximum of {0}</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/LongRangeValidator.html" target="_blank">javax.faces.validator.LongRangeValidator.MINIMUM</a></code></th> 
+                <td> Value is less than allowable minimum of {0}</td> 
+            </tr> 
+            <tr align="left" valign="top"> 
+                <th><code><a href="http://java.sun.com/javaee/javaserverfaces/1.1/docs/api/javax/faces/validator/LongRangeValidator.html" target="_blank"> javax.faces.validator.LongRangeValidator.TYPE</a></code></th> 
+                <td> Value is not of the correct type </td> 
+            </tr> 
+        </table> 
+		<!--  <h2>Going Further</h2> 
+        <p>As you might have noted above in the sections <a href="#03">Using Validators</a> and <a href="#04">Using Converters</a>, these groups of components enable you to provide much more functionality than we have covered in depth.</p>  -->
+        <h2><a name="09"></a>Summary</h2> 
+        <p>In this tutorial you learned how to:</p> 
+        <ul> 
+            <li>Use converters to convert string inputs to numeric values in order to convert between temperature formats and currency values, and to display date formats.</li> 
+            <li>Use validators to ensure that entered values are within a specified range and format.</li> 
+            <li>Create your own validation handler and customize  messages displayed to users.</li> 
+        </ul> 
+        <br> 
+        <p><b>See Also</b>:</p> 
+        <ul> 
+            <li><a href="intro.html">Getting Started With NetBeans Visual Web JSF Application Development</a></li> 
+            <li><a href="helloweb.html">Developing a Web Application</a></li> 
+            <li><a href="http://developers.sun.com/ajax/index.jsp?cid=216424" target="_blank">AJAX Developer Resource Center</a> <i>(external link displays in separate page)</i></li> 
+        </ul> 
+        <div><br> 
+            <br> 
+        <hr class="light"> 
+        <div align="right">This page was last modified: December, 2007</div> 
+        <table border="0" cellpadding="0" cellspacing="0" class="full-width"> 
+            <tr> 
+                <td><br> 
+                    <div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div> 
+                <br style="clear:both;" /></td> 
+            </tr> 
+        </table> 
+    </body>
+</html>

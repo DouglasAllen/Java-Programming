@@ -1,0 +1,713 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+
+
+<html>
+
+
+
+<head>
+
+<title>Introducing the WSDL Editor's Partner View</title>
+
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="description" content="This tutorial introduces you to the Partner view of the WSDL Editor.">
+<meta name="author" content="Jeff Stein">
+
+</head>
+
+
+
+<body>
+
+<a name="top"></a>
+
+
+<h1>Introducing the WSDL Editor's Partner View</h1>
+
+
+
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+
+
+<br>
+<div class="articledate" style="margin-left: 0px; font-style: italic;">
+Contributed by Jeff Stein
+<br>
+September 2007 
+<br>
+This publication is applicable to NetBeans IDE 6.0.<br>
+</div><br>
+
+<!-- END INTRO -----------------------------------------------------------------------------------------* -->
+
+
+
+<p>This tutorial introduces you to the Partner view of the WSDL Editor.</p>
+ 
+<p>The Partner view of the WSDL Editor represents the abstract elements of a WSDL file as interactions between partners. 
+The abstract elements include partner link types, roles, port types, operations, and messages.</p>
+
+
+
+<!-- START Link to Support and Docs paragraph ----------------------------------------------------------* -->
+<!-- <p>For more information about working with NetBeans IDE, see the <a href="../kb/index">Support and Docs</a> page on the NetBeans web site.</p> -->
+<!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+
+<!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+<!-- Taking this out until we can verify location and accuracy of videos.
+<p><b>Note:</b> Wherever you see the <img src="../images/articles/ep-wsdl-partnerview/60/flash_demo_button_med.gif" border="0"> icon, you can click to view a detailed interactive demonstration of the steps that are described in the tutorial.</p> -->
+
+<!-- END Note about videos in your-tutorial -------------------------------------------------------------->
+
+
+
+<h3>Contents</h3>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="wsdl-partnerview.html#tut_req" title="Tutorial Requirements">Tutorial Requirements</a></li>
+  <li><a href="wsdl-partnerview.html#ConfiguringtheTutorialEnvironment" title="Configuring and Starting the Sun Java System Application Server">Configuring and Starting the Sun Java System Application Server</a></li>
+
+  <li><a href="wsdl-partnerview.html#CreatingTheBPELModuleProject" title="Creating the BPEL Module Project">Creating the BPEL Module Project</a></li>
+  <li><a href="wsdl-partnerview.html#CreatingTheWSDLFile" title="Creating the WSDL File">Creating the WSDL File</a></li>
+  <li><a href="wsdl-partnerview.html#CreatingTheBusinessProcess" title="Creating the Business Process">Creating the Business Process</a></li>
+
+  <li><a href="wsdl-partnerview.html#CreatingAndDeployingTheCompositeApplicationProject" title="Creating and Deploying the Composite Application Project">Creating and Deploying the Composite Application Project</a></li>
+  <li><a href="wsdl-partnerview.html#TestingTheCompositeApplication" title="Testing the Composite Application">Testing the Composite Application</a></li>
+
+  <li><a href="wsdl-partnerview.html#Summary" title="Summary">Summary</a></li>
+  <li><a href="wsdl-partnerview.html#see_also" title="See Also">See Also</a></li>
+         </ul></td>
+         
+       </tr>
+     </table>
+<ul>
+
+  
+
+</ul>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+
+<div class="indent">
+
+
+
+<h3>Prerequisites</h3>
+
+<p>This tutorial assumes that you have some basic knowledge of, or programming experience with, the Java language and platform and the NetBeans IDE.</p>
+
+
+
+<!-- <h3>System Requirements</h3>
+
+<p>This tutorial assumes that your system meets the requirements specified in the <i>System Requirements</i> topic of the 
+<a href="../../../community/releases/60/relnotes.html" title="NetBeans 6.0 Release Notes">
+NetBeans 6.0 Release Notes</a>.</p> -->
+
+
+
+<h3>Software Needed for the Tutorial</h3>
+Before you begin, you need to install the following software on your computer: 
+<ul>
+<li>NetBeans IDE 6.0</a> <br>
+ 
+  <br>Select the Download All option. The Download All option includes SOA Pack and GlassFish V2, which are required for this tutorial.</li>
+</ul>
+
+</div>
+
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="ConfiguringtheTutorialEnvironment"></a>Configuring and Starting the Sun Java System Application Server</h2>
+
+<p>Before you can deploy your composite application, 
+the Sun Java System Application Server and the BPEL Service Engine must be configured correctly and running.</p>
+
+<!-- <p><b>Note:</b> In the following procedures, <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server</tt>
+node refers to the node that represents the
+Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server 9.1 Beta 2 installation
+of the application server.</p>
+ -->
+<p><b>To check the status of the Sun Java System Application Server:</b></p>
+
+<ol>
+<li>If the Runtime window is not visible, choose Window &gt; Runtime.</li>
+<li>In the Runtime window, expand the <tt>Servers</tt> node.<br>
+The <tt>Servers</tt> node should contain a <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server</tt> subnode. If a <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server</tt> node does not appear, go to <a href="wsdl-partnerview.html#configure-sjas">To configure the Sun Java System Application Server</a>.<br>
+If a green arrow badge appears on the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server</tt> node, the server is running. If a green arrow badge does not appear, go to <a href="wsdl-partnerview.html#start-sjas">To start the Sun Java System Application Server</a>.</li>
+</ol>
+
+<p><a name="configure-sjas"></a><b>To configure the Sun Java System Application Server:</b></p>
+
+<ol>
+<li>If the Runtime window is not visible, choose Window &gt; Runtime.</li>
+<li>In the Runtime window, right-click the <tt>Servers</tt> node and choose Add Server from the pop-up menu.<br>
+The Add Server Instance dialog box opens.</li>
+<li>In the Choose Server page, from the Server drop-down list, select Sun Java System Application Server.</li>
+<li>(Optional) In the Name field, change the default name for the server.<br>
+The IDE uses this name to identify the server.</li>
+<li>Click Next.<br>
+The Platform Location Folder page opens.</li>
+<li>In the Platform Location field, use the Browse button to navigate
+to and select the installation location of the application server.<br>
+The default installation location is different depending on the type of installation and the platform, as shown in <a href="wsdl-partnerview.html#table-1">Table 1</a>.<br>
+<br>
+<p><a name="table-1"></a><b>Table 1: Default Application Server Installation Directory</b></p>
+<table class="tablebg">
+<tbody><tr>
+<td class="tblheader">Platform</td>
+<td class="tblheader">Installing As...</td>
+<td class="tblheader">SOA Installation</td>
+<td class="tblheader">Tools Bundle Installation</td>
+</tr>
+<tr>
+<td class="tbltd0">Solaris&nbsp;OS&nbsp;<br>
+Linux</td>
+<td class="tbltd0">root</td>
+<td class="tbltd0"><tt>/opt/SUNWappserver</tt></td>
+<td class="tbltd0"><tt>/opt/SDK</tt></td>
+</tr>
+<tr>
+<td class="tbltd1">Solaris&nbsp;OS<br>
+Linux</td>
+<td class="tbltd1">user</td>
+<td class="tbltd1"><tt>~/SUNWappserver</tt></td>
+<td class="tbltd1"><tt>~/SDK</tt></td>
+</tr>
+<tr>
+<td class="tbltd0">Mac OS X</td>
+<td class="tbltd0">N/A</td>
+<td class="tbltd0"><tt>~/SUNWappserver</tt></td>
+<td class="tbltd0"><tt>~/SDK</tt></td>
+</tr>
+<tr>
+<td class="tbltd1">Windows</td>
+<td class="tbltd1">N/A</td>
+<td class="tbltd1"><tt>C:\Sun\AppServer</tt></td>
+<td class="tbltd1"><tt>C:\Sun\SDK</tt></td>
+</tr>
+</tbody></table>
+</li>
+<li>Select the Register Local Default Domain radio button and click Next. </li>
+<li>Enter the user name and password for the domain's administrator.<br>
+If you accepted the default values during the installation, the user name is <tt>admin</tt> and the password is <tt>adminadmin</tt>.</li>
+<li>Click Finish.</li>
+</ol>
+
+<p><a name="start-sjas"></a><b>To start the Sun Java System Application Server:</b></p>
+
+<ol>
+<li>In the Runtime window, right-click the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server</tt> node and choose Start.</li>
+<li>Wait until the following message appears in the Output window:<br>
+<tt>Application server startup complete.</tt><br>
+When the server is running, the IDE displays a green arrow badge on the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server</tt> node.</li>
+</ol>
+
+<p><b>To check the status of the BPEL Service Engine:</b></p>
+
+<ol>
+
+<li>In the Runtime window, expand <tt>Sun Java System Application Server</tt> &gt; <tt>JBI</tt> &gt; <tt>Service Engines</tt>.</li>
+
+<li>Right-click the <tt>sun-bpel-engine</tt> node.<br>
+If the Start option is not available, then the service engine is started and you can skip the remainder of this procedure.</li>
+
+<li>Click Start.</li>
+
+<li>Wait until the following message appears in the Output window:<br>
+<tt>BPEL service engine started</tt></li>
+
+</ol>
+
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="CreatingTheBPELModuleProject"></a>Creating the BPEL Module Project</h2>
+
+<p>In this section, you create a BPEL Module project called <tt>PartnerView</tt>.</p>
+
+
+
+<p><b>To create the BPEL Module project:</b></p>
+
+<ol>
+<li>From the IDE's main menu, choose File &gt; New Project.<br>
+The New Project wizard opens.</li>
+<li>In the Categories list, select the <tt>SOA</tt> node.</li>
+<li>In the Projects list, select the <tt>BPEL Module</tt> node.</li>
+<li>Click Next.</li>
+<li>In the Project Name field, type <tt>PartnerView</tt>.</li>
+<li>Click Finish.<br>
+The Projects window now contains a node for a BPEL Module project called <tt>PartnerView</tt>.</li>
+</ol>
+
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="CreatingTheWSDLFile"></a>Creating the WSDL File</h2>
+
+<p>In this section, you add a WSDL file to the BPEL Module project.</p>
+
+<p>The WSDL file describes a basic service that receives a string value as input and sends a string value as output. 
+You use the Partner view of the WSDL Editor to add the input message, output message, partner link type, port type, and operation. 
+You use the WSDL view of the WSDL Editor to add the binding and service.</p>
+
+<p>A <i>partner link type</i> characterizes the conversational relationship between two services. 
+  A partner link type can have one role or two roles. 
+  A role describes the function that a service has in the relationship.</p>
+
+<p>A role must specify the port type that the service will use to receive messages. 
+  A <i>port type</i> contains one or more related <i>operations</i> that the web service can perform. 
+  The WSDL Editor supports the following categories of operations:</p>
+
+<ul>
+  <li><b>Request-response</b>. The operation receives a message as input, and sends a message as output.</li>
+  <li><b>One-way</b>. The operation receives a message as input.</li>
+</ul>
+
+<p>The port type in this WSDL file contains a request-response operation.</p>
+
+
+
+<p><b>To create the <tt>PartnerView.wsdl</tt> file:</b></p>
+
+<ol>
+<li>In the Projects window, right-click the <tt>Process Files</tt> node 
+in the <tt>PartnerView</tt> project and choose New &gt; WSDL Document.<br>
+The New WSDL Document wizard opens.</li>
+<li>In the File Name field, type <tt>PartnerView</tt>.</li>
+<li>Click Finish.<br>
+The WSDL Editor appears with the WSDL view opened.</li>
+<li>In the toolbar of the WSDL view, click the Partner button.<br>
+The Partner view appears.</li>
+</ol>
+<!-- 
+<p align="center">
+  <a href="wsdl-partnerview/60/ep-wsdl-partnerview-swf-create-wsdl.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'>
+    <img src="../images/articles/ep-wsdl-partnerview/60/flash_demo_button_med.gif" border="0">&nbsp;View&nbsp;Demo</a>
+</p> -->
+
+
+
+<p><b>To add the input message:</b></p>
+
+<ol>
+<li>If the Palette is not visible, then choose Window &gt; Palette from the IDE's main menu.</li>
+<li>In the Palette, select the Message icon.</li>
+<li>Drag the Message icon to the Messages area of the Partner view.<br>
+The IDE adds a message. The name of the message is <tt>message1</tt>.</li>
+<li>In the Part Name column, double-click the default value <tt>part1</tt> to make the field editable.</li>
+<li>Type <tt>inputType</tt> and press Enter.</li>
+<li>In the Part Element or Type column, click the ellipsis (...) button.</li>
+<li>Select the <tt>string</tt> node.</li>
+<li>Click OK.</li>
+</ol>
+
+<!-- <p align="center">
+  <a href="wsdl-partnerview/60/ep-wsdl-partnerview-swf-add-input.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'>
+    <img src="../images/articles/ep-wsdl-partnerview/60/flash_demo_button_med.gif" border="0">&nbsp;View&nbsp;Demo</a>
+</p> -->
+
+
+
+<p><b>To add the output message:</b></p>
+
+<ol>
+<li>In the Palette, select the Message icon.</li>
+<li>Drag the Message icon to the Messages area of the Partner view.<br>
+The IDE adds a message. The name of the message is <tt>message2</tt>.</li>
+<li>In the Part Name column, double-click the default value <tt>part1</tt> to make the field editable.</li>
+<li>Type <tt>resultType</tt> and press Enter.</li>
+<li>In the Part Element or Type column, click the ellipsis (...) button.</li>
+<li>Select the <tt>string</tt> node.</li>
+<li>Click OK.</li>
+</ol>
+
+<!-- <p align="center">
+  <a href="wsdl-partnerview/60/ep-wsdl-partnerview-swf-add-output.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'>
+    <img src="../images/articles/ep-wsdl-partnerview/60/flash_demo_button_med.gif" border="0">&nbsp;View&nbsp;Demo</a>
+</p>
+ -->
+
+
+<p><b>To add the partner link type, port type, and operation:</b></p>
+
+<ol>
+<li>In the Palette, select the Partner Link Type icon.</li>
+<li>Drag the Partner Link Type icon to the Partner Link Types area of the Partner view.<br>
+The IDE adds a partner link type. 
+The name of the partner link type is <tt>partnerlinktype1</tt>. 
+The partner link type has a default role called <tt>role1</tt>.</li>
+<li>Double-click <tt>Enter or Select a Port Type</tt> and press Enter.<br>
+The IDE adds a port type called <tt>portType1</tt>.</li>
+<li>In the Palette, select the Request-Response icon.</li>
+<li>Drag the Request-Response icon onto the dashed vertical line that extends below the <tt>portType1</tt> box.<br>
+The IDE adds an operation called <tt>operation1</tt>.</li>
+<li>Under <tt>operation1</tt>, double-click the first <tt>&lt;No Message Selected&gt;</tt> and select <tt>tns:message1</tt>. 
+This is the input message that you created.</li>
+<li>Under <tt>operation1</tt>, double-click the second <tt>&lt;No Message Selected&gt;</tt> and select <tt>tns:message2</tt>. 
+This is the output message that you created.</li>
+</ol>
+
+<!-- <p align="center">
+  <a href="wsdl-partnerview/60/ep-wsdl-partnerview-swf-add-plt.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'>
+    <img src="../images/articles/ep-wsdl-partnerview/60/flash_demo_button_med.gif" border="0">&nbsp;View&nbsp;Demo</a>
+</p> -->
+
+
+
+<p><b>To add the binding and service:</b></p>
+
+<ol>
+<li>In the toolbar of the Partner view, click the WSDL button.<br>
+The WSDL view appears.</li>
+<li>Right-click the <tt>portType1</tt> node and choose Add &gt; Binding and Service Port.<br>
+The Generate Binding and Service Port dialog box opens.</li>
+<li>The default value of the Binding Type field is SOAP. Do not change the default value.</li>
+<li>The default value of the Binding Subtype field is RPC Literal. Do not change the default value.</li>
+<li>Click OK.<br>
+The binding and service are added. You have successfully created the WSDL file.</li>
+<li>From the IDE's main menu, choose File &gt; Save.</li>
+</ol>
+
+<!-- <p align="center">
+  <a href="wsdl-partnerview/60/ep-wsdl-partnerview-swf-add-binding.html" target="demoWin" onClick='demoWin=open(this.href,this.target,"resizable=yes,menubar=yes,status=yes,toolbar=no,height=660,width=860,scrollbars=yes");demoWin.focus();return false'>
+    <img src="../images/articles/ep-wsdl-partnerview/60/flash_demo_button_med.gif" border="0">&nbsp;View&nbsp;Demo</a>
+</p>
+ -->
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="CreatingTheBusinessProcess"></a>Creating the Business Process</h2>
+
+<p>In this section, you add a business process to the BPEL Module project. 
+You use the IDE's BPEL Designer to configure the business process.</p>
+
+<p>The business process will contain the following activities:</p>
+
+<ul>
+<li><b>Receive activity.</b> The Receive activity waits for a message to arrive from a partner service.</li>
+<li><b>Assign activity.</b> The Assign activity copies data from an input variable to an output variable.</li>
+<li><b>Reply activity.</b> The Reply activity sends a response to the partner service.</li>
+</ul>
+
+<p>The Receive and Reply activities both interact with a partner link. 
+A <i>partner link</i> is a reference to an external web service with which a business process interacts.</p>
+
+
+
+<p><b>To create the <tt>PartnerView.bpel</tt> file:</b></p>
+
+<ol>
+<li>In the Projects window, right-click the <tt>Process Files</tt> node 
+in the <tt>PartnerView</tt> project and choose New &gt; BPEL Process.<br>
+The New BPEL Process wizard opens.</li>
+<li>In the File Name field, type <tt>PartnerView</tt>.</li>
+<li>Click Finish.<br>
+The BPEL Designer appears with the Design view opened. 
+A red cross next to the <tt>PartnerView</tt> box indicates that the business process is not valid. 
+The red cross will remain until you add the Receive activity later in this section.</li>
+<li>If the Palette is not visible, then choose Window &gt; Palette from the IDE's main menu.</li>
+</ol>
+
+
+
+<p><b>To add a partner link:</b></p>
+
+<ol>
+<li>In the Projects window, select the <tt>PartnerView.wsdl</tt> node.</li>
+<li>Drag the <tt>PartnerView.wsdl</tt> node from the Projects window to a blank portion of the design area.<br>
+The Create New Partner Link dialog box opens.</li>
+<li>Accept the default values and click OK.<br>
+The IDE adds a partner link called <tt>PartnerLink1</tt>.</li>
+</ol>
+
+
+
+<p><b>To add a Receive activity:</b></p>
+
+<ol>
+
+<li>In the Web Service section of the Palette, select the Receive icon.</li>
+<li>Drag your selection to the <tt>PartnerView</tt> box in the design area, 
+between the <tt>Process Start</tt> and <tt>Process End</tt> activities.<br>
+The IDE provides visual clues that indicate where you can drop the selection.<br>
+The <tt>Receive1</tt> activity is added.</li>
+
+<li>Double-click the <tt>Receive1</tt> activity to edit the properties.<br>
+The Receive1 [Receive] - Property Editor dialog box opens.</li>
+
+<li>From the Partner Link drop-down list, select <tt>PartnerLink1</tt>.<br>
+The IDE fills in the Operation field with <tt>operation1</tt>.</li>
+
+<li>Create a new input variable by doing the following:
+<ol type="a">
+<li>Click Create.</li>
+<li>In the Name field, change the default value to <tt>inputVar</tt>.</li>
+<li>Click OK.</li>
+</ol></li>
+
+<li>Click OK to close the Receive1 [Receive] - Property Editor dialog box.<br>
+The IDE adds a connection from the <tt>operation1</tt> operation to the <tt>Receive1</tt> activity.</li>
+
+</ol>
+
+
+
+<p><b>To add a Reply activity:</b></p>
+
+<ol>
+
+<li>In the Web Service section of the Palette, select the Reply icon.</li>
+<li>Drag your selection to the <tt>PartnerView</tt> box in the design area, 
+between the <tt>Receive1</tt> and <tt>Process End</tt> activities.<br>
+The IDE provides visual clues that indicate where you can drop the selection.<br>
+The <tt>Reply1</tt> activity is added.</li>
+
+<li>Double-click the <tt>Reply1</tt> activity to edit the properties.<br>
+The Reply1 [Reply] - Property Editor dialog box opens.</li>
+
+<li>From the Partner Link drop-down list, select <tt>PartnerLink1</tt>.<br>
+The IDE fills in the Operation field with <tt>operation1</tt>.</li>
+
+<li>Create a new output variable by doing the following:
+<ol type="a">
+<li>Ensure that the Normal Response radio button is selected.</li>
+<li>Click Create.</li>
+<li>In the Name field, change the default value to <tt>outputVar</tt>.</li>
+<li>Click OK.</li>
+</ol></li>
+
+<li>Click OK to close the Reply1 [Reply] - Property Editor dialog box.<br>
+The IDE adds a connection from the <tt>Reply1</tt> activity to the <tt>operation1</tt> operation.</li>
+
+</ol>
+
+
+
+<p><b>To add an Assign activity:</b></p>
+
+<ol>
+
+<li>In the Basic Activities section of the Palette, select the Assign icon.</li>
+<li>Drag your selection to the <tt>PartnerView</tt> box in the design area, 
+between the <tt>Receive1</tt> and <tt>Reply1</tt> activities.<br>
+The IDE provides visual clues that indicate where you can drop the selection.<br>
+The <tt>Assign1</tt> activity is added.</li>
+
+<li>Select the <tt>Assign1</tt> activity.</li>
+<li>If the BPEL Mapper window is not visible, then choose Window &gt; Other &gt; BPEL Mapper from the IDE's main menu.</li>
+
+<li>In the left pane of the BPEL Mapper, expand the <tt>inputVar</tt> node.<br>
+The <tt>inputType</tt> node appears.</li>
+
+<li>In the right pane of the BPEL Mapper, expand the <tt>outputVar</tt> node.<br>
+The <tt>resultType</tt> node appears.</li>
+
+<li>In the left pane, select the <tt>inputType</tt> node and drag the pointer to the <tt>resultType</tt> node in the right pane.<br>
+A link connects the nodes.</li>
+
+<li>From the IDE's main menu, choose File &gt; Save.</li>
+
+</ol>
+
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="CreatingAndDeployingTheCompositeApplicationProject"></a>Creating and Deploying the Composite Application Project</h2>
+
+<p>In this section, you create a Composite Application project and add the Java Archive (JAR) file of the BPEL Module project. 
+You then deploy the Composite Application project to the Sun Java System Application Server.</p>
+
+
+
+<p><b>To create the Composite Application project:</b></p>
+
+<ol>
+<li>From the IDE's main menu, choose File &gt; New Project.<br>
+The New Project wizard opens.</li>
+<li>In the Categories list, select the <tt>SOA</tt> node.</li>
+<li>In the Projects list, select the <tt>Composite Application</tt> node.</li>
+<li>Click Next.</li>
+<li>In the Project Name field, type <tt>PartnerViewCompositeApp</tt>.</li>
+<li>Click Finish.<br>
+The Projects window now contains a node for a Composite Application project called <tt>PartnerViewCompositeApp</tt>.</li>
+</ol>
+
+
+
+<p><b>To add the JAR file of the BPEL Module project:</b></p>
+
+<ol>
+<li>In the Projects window, right-click the <tt>PartnerViewCompositeApp</tt> node and choose Add JBI Module from the pop-up menu.<br>
+The Select Project dialog box opens.</li>
+<li>Select the <tt>PartnerView</tt> project. 
+This project is the BPEL Module project that you created in the preceding sections.</li>
+<li>Click Add Project JAR Files.</li>
+<li>In the Projects window, expand the <tt>PartnerViewCompositeApp</tt> node and then expand the <tt>JBI Modules</tt> node.<br>
+Notice that a <tt>PartnerView.jar</tt> node has been added.</li>
+</ol>
+
+
+
+<p><b>To deploy the Composite Application project:</b></p>
+
+<ol>
+<li>In the Projects window, right-click the <tt>PartnerViewCompositeApp</tt> node and choose Deploy Project.</li>
+<li>Watch for the <tt>BUILD SUCCESSFUL</tt> message in the Output window.</li>
+</ol>
+
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="TestingTheCompositeApplication"></a>Testing the Composite Application</h2>
+
+<p>In this section, you perform a test run to verify that the composite application works as expected. 
+The test case that you create invokes the <tt>operation1</tt> operation in the <tt>PartnerView.wsdl</tt> file.</p>
+
+
+
+<p><b>To add a test case:</b></p>
+
+<ol>
+
+<li>In the Projects window, expand the <tt>PartnerViewCompositeApp</tt> node, right-click the <tt>Test</tt> node, 
+and choose New Test Case from the pop-up menu.<br>
+The New Test Case wizard opens.</li>
+
+<li>In the Enter the Test Case Name page, set the name to <tt>PartnerViewTestCase</tt> and click Next.</li>
+
+<li>In the Select the WSDL Document page, expand the <tt>PartnerView - Process Files</tt> node, 
+select <tt>PartnerView.wsdl</tt>, and click Next.</li>
+
+<li>In the Select the Operation to Test page, select <tt>operation1</tt> and click Finish.<br>
+The <tt>PartnerViewTestCase</tt> node is added. 
+The <tt>PartnerViewTestCase</tt> node has two subnodes: <tt>Input</tt> and <tt>Output</tt>. 
+The Source Editor contains a tab for the input file, <tt>Input.xml</tt>.</li>
+
+<li>Locate the following line in the <tt>Input.xml</tt> file:<br>
+<tt>&lt;inputType&gt;?string?&lt;/inputType&gt;</tt></li>
+
+<li>Change the line to:<br>
+<tt>&lt;inputType&gt;Hello World&lt;/inputType&gt;</tt></li>
+
+<li>From the IDE's main menu, choose File &gt; Save.</li>
+
+<li>In the Projects window, double-click the <tt>Output</tt> node.<br>
+The Source Editor now contains a tab for the output file, <tt>Output.xml</tt>. Initially, the output file is empty.</li>
+
+</ol>
+
+
+
+<p><b>To run the test case:</b></p>
+
+<ol>
+<li>In the Projects window, right-click the <tt>PartnerViewTestCase</tt> node and choose Run from the pop-up menu.<br>
+Because the output file is empty, the test fails. 
+The Overwrite Empty Output dialog box opens so you can confirm that you want to overwrite the <tt>Output.xml</tt> file.</li>
+<li>Click Yes.</li>
+<li>In the Projects window, right-click the <tt>PartnerViewTestCase</tt> node and choose Run from the pop-up menu.<br>
+The test passes.</li>
+<li>View the test results in the <tt>Output.xml</tt> file.</li>
+</ol>
+
+
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="Summary"></a>Summary</h2>
+
+<p>In this tutorial, you explored the Partner view of the WSDL Editor while creating and deploying a composite application.</p>
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="see_also"></a>See Also</h2>
+
+<ul>
+  <li><a href="wsdl-guide.html">Developer Guide to the WSDL Editor</a></li>
+  <li><a href="../soa/bpel-guide.html">Developer Guide to the BPEL Designer</a></li>
+</ul>
+
+<br>
+<hr class="light">
+
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="wsdl-partnerview.html#top">top</a></p>
+
+</body>
+
+</html>

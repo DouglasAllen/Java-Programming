@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><!-- -*- xhtml -*- -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Building Secure Enterprise Beans in Java EE 5</title>
+<meta name="description" content="A guide to creating a simple enterprise application with NetBeans IDE 4.1."/>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css"/>
+<meta name="AUDIENCE" content="NBUSER"/>
+<meta name="TYPE" content="ARTICLE"/>
+<meta name="TOPIC" content="ADVANCED"/>
+<meta name="EXPIRES" content="N"/>
+<meta name="indexed" content="y"/>
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+</head>
+<body>
+<h1>Building Secure Enterprise Beans in Java EE 5</h1>
+
+<p>Support for the Java EE 5 specification in NetBeans IDE 6.0 enables 
+you to take full advantage of the many Java EE 5 features simplifying application development. 
+A significant development in the Java EE 5 specification was the incorporation of annotations.
+Using annotations enables you to eliminate a lot of the boilerplate code used when coding applications
+and minimizes the amount of configuration needed when deploying your application.
+</p>
+
+<p>One area that has become greatly simplified through the use of annotations
+is the development and configuration of enterprise beans. 
+Annotations enable you to specify many configuration properties that were previously specified
+in deployment descriptor files, making many of the deployment descriptor files unnecessary.
+Though applications may still require some deployment descriptor files (such as <tt>web.xml</tt>),
+the IDE's multi-view deployment descriptor editor makes editing the files much easier.</p>
+
+<p>Using annotations, building secure enterprise beans is now much easier.
+Instead of configuring enterprise bean security in the <tt>ejb-jar.xml</tt> deployment descriptor
+you can use security annotations to configure authorization directly in the source code.
+Java EE 5 enterprise applications no longer require <tt>ejb-jar.xml</tt> or <tt>application.xml</tt>.</p>
+
+<p>For an overview of some of the features of the Java EE 5 specification, see <a href="javaee-intro.html">Introduction to Java EE 5 Technology</a>.
+For more information about annotation specifications, see 
+<a href="http://jcp.org/en/jsr/detail?id=250" target="_blank">
+JSR 250: Common Annotations for the Java Platform</a>.</p>
+<p style="text-align:center;"><b>Expected duration: 30 minutes</b></p>
+
+<div class="indent">
+<h3 class="tutorial">Tutorial Exercises</h3>
+
+    <p>This tutorial demonstrates how to create a simple secure enterprise application using NetBeans IDE 6.0.
+    In this tutorial you will go through the following steps:</p>
+<img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans
+IDE 6.0" height="45" width="206" style="float:right;border:0px;margin:10px auto;" />
+
+    <ul>
+      <li><a href="#ex1">Getting Started</a></li>
+      <li><a href="#ex2">Creating a Security Group on the Application Server</a></li>
+      <li><a href="#ex3">Creating the Enterprise Application</a>
+          <ul>
+          <li><a href="#ex3a">Creating the Enterprise Application Project</a></li>
+          <li><a href="#ex3b">Securing a Method in a Session Bean</a></li>
+          <li><a href="#ex3c">Accessing the Session Bean with an Application Client</a></li>
+          </ul>
+      </li>
+      <li><a href="#ex4">Configuring the Deployment Descriptors</a></li>
+      <li><a href="#ex5">Running the Application</a></li>
+    </ul>
+</div>
+
+<a name="ex1"></a>
+<h2>Getting Started</h2>
+<p>Before you begin, make sure that you have the following software installed on your computer:</p>
+    <ul>
+        <li>"Web &amp; Java EE" or "All" download of NetBeans IDE 6.0.</li>
+        <li>Java Standard Development Kit (JDK) version 5.0 or version 6.0.</li>
+        <li>GlassFish V2 Application Server (bundled with full IDE download) or
+        Sun Java System Application Server, Platform Edition 9 (<a href="http://www.sun.com/software/products/appsrvr_pe/index.xml" target="_blank">download</a>)</li>
+    </ul>
+    <p>For this tutorial you need to register a local instance of GlassFish/Sun Java System Application Server with the IDE.
+    If you have installed a "Full" or "Web &amp; Java EE" version of the IDE,
+    the application server should already be installed and registered.
+    If the application server is not registered in the IDE, choose 
+    Tools &gt; Servers to register the server in the Servers manager.
+    You cannot deploy enterprise applications to the Tomcat web server.</p>
+
+
+<a name="ex2"></a>
+<h2>Creating a Security Group on the Application Server</h2>
+  <p>In our example, we only want users from the group <tt>bank_users</tt> to access our enterprise 
+    bean. We will create the user <tt>manager</tt> in the group <tt>bank_users</tt> in the <tt>file</tt> 
+    security realm on the application server.</p>
+  <ol>
+    <li>Start the application server by right-clicking its node in the Services 
+      window and choosing Start.</li>
+    <li>Right-click the application server node and choose View Admin Console. 
+      Log into the admin console and select Configuration &gt; Security &gt; Realms 
+      &gt; file in the left navigation bar.</li>
+    <li>Click the Manage Users button in the center frame of the admin console. 
+      Under Current Users, click the New button.</li>
+    <li>Type <tt>manager</tt> for the User ID, <tt>password</tt> for the Password, 
+      and <tt>bank_users</tt> for the Group List. Then click OK.</li>
+  </ol>
+  <img src="../../../images/articles/secure-ejbs/file-users-small.png" width="600" height="386" alt="File Users panel in admin console" style="margin:5px;border:1px solid #333;" />
+
+<a name="ex3"></a>
+  <h2>Creating the Enterprise Application</h2>
+<p>Our enterprise application will consist of a simple session bean and an application client 
+  that attempts to access it. </p>
+<div class="indent">
+<a name="ex3a"></a>    
+  <h3 class="tutorial">Creating the Enterprise Application Project</h3>
+  <ol>
+    <li>Choose File &gt; New Project (Ctrl-Shift-N) and select the Enterprise 
+      Application template from the Enterprise category. Click Next.</li>
+    <li>Name the application <tt>Secure</tt> and specify a location for the project.</li> 
+    <li>Make sure that GlassFish is selected as the server, and that the Java EE Version is set to Java EE 5.</li>
+    <li>Select Create EJB Module and Create Application Client Module and 
+    deselect Create Web Module. Click Finish.</li>
+  </ol>
+<a name="ex3b"></a>
+  <h3 class="tutorial">Securing a Method in a Session Bean</h3>
+  <p>Our session bean doesn't do anything fancy. It just returns a sample balance amount.
+  We will create a <tt>getStatus</tt> method and secure the method bean by annotating it with the <tt>@RolesAllowed</tt> 
+  annotation and specify the security roles allowed to access the method. 
+This security role is used by the application and is not the same as the users and groups on the server.
+We will map the security role to the users and groups later when we configure the deployment descriptors.</p>
+
+  <p>Security annotations can be applied 
+  individually to each method in a class, or to an entire class.
+  In this simple exercise we will use the <tt>@RolesAllowed</tt> to annotate a method, but the Java EE 5 specification
+  defines other security annotations that can be used in enterprise beans. </p>
+  <ol>
+    <li>In the Projects window, right-click the EJB module's node (Secure-ejb) 
+      and choose New &gt; Session Bean.</li>
+    <li>Name the bean <tt>AccountStatus</tt>, name the package <tt>bean</tt>, 
+      and set the bean to have a remote interface. Click Finish.
+    <p>When you click Finish, the IDE creates <tt>AccountStatusBean</tt> and opens the file in the
+    Source editor. The IDE also creates the <tt>AccountStatusRemote</tt> remote interface for the bean.</li>
+    <li>In the Source editor, add the following field declaration (in bold) to <tt>AccountStatusBean</tt>:<br/>
+      <pre class="examplecode">public class AccountStatusBean implements AccountStatusRemote {
+    <b>private String amount = "250";</b></pre>
+    </li>
+    <li>In the Source Editor, right-click anywhere inside <tt>AccountStatusBean</tt> 
+      and choose EJB Methods &gt; Add Business Method. Name the method <tt>getStatus</tt>, 
+      set the return type to <tt>String</tt><!--, and add a <tt>String</tt> parameter 
+      called <tt>user</tt>-->. The IDE automatically exposes the business method in the remote interface.</li>
+    <li>In the Source Editor, add the following line in bold to the <tt>getStatus</tt> 
+      method:<br/>
+      <pre class="examplecode">public String getStatus() {
+<b>    return "The account contains $" + amount;</b>
+}</pre>
+    </li>
+    <li>Type the following (in bold) to annotate the <tt>getStatus</tt> method:
+    <pre class="examplecode"><b>@RolesAllowed({"USERS"})</b>
+public String getStatus() {</pre>
+    <p>This annotation means that only users in the security role <tt>USERS</tt> can access the <tt>getStatus</tt> method.</p>
+    </li>
+    <li>Fix the import statements and save your changes. 
+    Make sure that <tt>javax.annotation.security.RolesAllowed</tt> is added to the file.</li>
+  </ol>
+  
+<a name="ex3c"></a>
+  <h3 class="tutorial">Accessing the Session Bean with an Application Client</h3>
+  <p>Our application only needs to have a simple method that will access the session bean.
+  We will call the enterprise bean by using the <tt>@EJB</tt> annotation.</p>
+  <ol>
+    <li>In the Projects window, expand
+    Secure-app-client &gt; Source Packages &gt; secure and double-click <tt>Main.java</tt> to open the file in the Source editor.</li>
+    <li>Right-click in the Source editor and choose Enterprise Resources &gt; Call Enterprise Bean.</li>
+    <li>In the Call Enterprise Bean dialog box, expand the Secure-ejb node and select AccountStatusBean.
+    Click OK.
+    <p>The IDE adds the following to the application client to look up the session bean:
+    <pre class="examplecode">@EJB
+private static AccountStatusRemote accountStatusBean;</pre></li>
+    <li>Modify the <tt>main</tt> method to add the following and save your changes:
+    <pre class="examplecode">public static void main(String[] args) {
+    <b>System.out.println(accountStatusBean.getStatus());</b></pre></li>
+  </ol>
+  
+  
+  <!--
+  <h3 class="tutorial">Coding the Web Application Client</h3>
+  <p>Now let's create a web application that will access the session bean.</p>
+  <ol>
+    <li> In the Projects window, right-click the Secure-WebModule node and choose 
+      New &gt; Servlet. Name the servlet <tt>AccountState</tt> and put it in the 
+      <tt>web</tt> package. </li>
+    <li> In the Source Editor, right-click anywhere in the servlet class' body 
+      and choose Enterprise Resources &gt; Call Enterprise Bean. Select the <tt>AccountStatus</tt> 
+      session bean, set the servlet to access the bean's local interfaces, and 
+      click OK. The IDE inserts the @EJB annotation to inject the servlet. </li>
+    <li>In the <tt>processRequest</tt> method, remove the lines that comment out 
+      the body of the method and add the following line in bold: 
+      <pre class="examplecode">protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+ throws ServletException, IOException {
+   response.setContentType("text/html");
+   PrintWriter out = response.getWriter();
+   out.println("&lt;html&gt;");
+   out.println("&lt;head&gt;");
+   out.println("&lt;title&gt;Servlet customerDetail&lt;/title&gt;");
+   out.println("&lt;/head&gt;");
+   out.println("&lt;body&gt;");
+   out.println("&lt;h1&gt;Servlet customerDetail at " + request.getContextPath () + "&lt;/h1&gt;");
+   <b>if
+out.println(accountStatusBean.getStatus(request.getUserPrincipal().getName()));</b>
+   out.println("&lt;/body&gt;");
+   out.println("&lt;/html&gt;");
+   out.close();
+}
+</pre>
+    </li>
+  </ol>
+
+-->
+</div>
+
+<a name="ex4"></a>
+<h2>Configuring the Deployment Descriptors</h2>
+    <p>In Java EE 5, enterprise applications usually do not require deployment descriptor files such as <tt>ejb-jar.xml</tt>.
+    If you expand the Configuration Files node under Secure-ejb or the Secure enterprise application, 
+    you can see that there are no deployment descriptors.
+    We can use annotations to specify many of the properties that were configured in <tt>ejb-jar.xml</tt>. 
+    In this example, we specified the security roles for our EJB methods by 
+    using the <tt>@RolesAllowed</tt> annotation in our session bean.</p>
+
+    <p>However, when configuring security for an application we still have to specify some properties
+    in the deployment descriptors.
+    In our example, we need to map the security roles used in the enterprise application (<tt>USERS</tt>)
+    to the users and groups we configured on the application server.
+    We created the group <tt>bank_users</tt> on the application server, and we now need to map this group to 
+    the security role <tt>USERS</tt> in our enterprise application.
+    To do this we will edit the <tt>sun-application.xml</tt> deployment descriptor for our enterprise appplication.</p>
+      
+    <p>Because the enterprise application does not need deployment descriptors to run,
+    the IDE did not create the deployment descriptors by default. So we first need to create
+    the deployment descriptor and then configure it.</p>
+    <ol>
+        <li>In the Projects window, right-click the Secure enterprise application project node and choose 
+        New &gt; GlassFish Deployment Descriptor. Click Finish.<br>
+        When you click Finish, the IDE creates <tt>sun-application.xml</tt> and opens the file in the
+        multi-view deployment descriptor editor. We will use the security tab of the multi-view editor
+        to configure the security role mappings.</li>
+        <li>In the Security tab, click Add Security Role Mapping and type <b>USERS</b> for the Security Role Name.</li>
+        <li>Click Add Group, type <b>bank_users</b> for the Group Name and click OK.</li>
+        <li>Save your changes.</li>
+    </ol>
+    <img src="../../../images/articles/60/javaee/secure-ejb/secure-appclient-dd1.png" width="529" height="402" alt="Dialog prompting for username and password" style="margin:5px;border:1px solid #333;" />
+    <p>You can click on the XML tab in the multi-view editor to view deployment descriptor file in XML view.
+    You can see that the deployment descriptor file now contains the following:</p>
+    <pre class="examplecode">&lt;sun-application&gt;
+  &lt;security-role-mapping&gt;
+    &lt;role-name&gt;USERS&lt;/role-name&gt;
+    &lt;group-name&gt;bank_users&lt;/group-name&gt;
+  &lt;/security-role-mapping&gt;
+&lt;/sun-application&gt;</pre>
+
+          
+<!--  </ol>
+  <h3 class="tutorial">Configuring the Web Module Deployment Descriptor</h3>
+  <ol>
+    <li>In the Projects window, expand the Configuration Files node for the Secure-WebModule 
+      project, right-click <tt>web.xml</tt>, and choose Edit.</li>
+    <li>Add the following code in bold to the root <tt>web-app</tt> element: 
+      <pre class="examplecode">...
+  &lt;/welcome-file-list&gt;
+<b>  &lt;security-role&gt;
+    &lt;description&gt;Bank's users&lt;/description&gt;
+    &lt;role-name&gt;USERS&lt;/role-name&gt;
+  &lt;/security-role&gt;</b>
+  <b>&lt;security-constraint&gt;
+    &lt;web-resource-collection&gt;
+      &lt;web-resource-name&gt;Bank-security&lt;/web-resource-name&gt;
+      &lt;description&gt;Account information&lt;/description&gt;
+      &lt;url-pattern&gt;/AccountState&lt;/url-pattern&gt;
+      &lt;http-method&gt;GET&lt;/http-method&gt;
+      &lt;http-method&gt;POST&lt;/http-method&gt;
+    &lt;/web-resource-collection&gt;
+    &lt;auth-constraint&gt;
+      &lt;role-name&gt;USERS&lt;/role-name&gt;
+    &lt;/auth-constraint&gt;
+  &lt;/security-constraint&gt;
+  &lt;login-config&gt;
+    &lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+  &lt;/login-config&gt;
+</b>&lt;ejb-local-ref&gt;
+...
+</pre>
+
+      <p>The <tt>security-role</tt> element declares a <tt>USERS</tt> security 
+        role just like in the EJB deployment descriptor. The <tt>security-constraint</tt> 
+        element limits access to the resources defined in <tt>web-resource-collection</tt> 
+        (in this case, everything matching the URL pattern <tt>/AccountState</tt>) 
+        to the group defined in <tt>auth-constraint</tt> (<tt>USERS</tt>). The 
+        <tt>login-config</tt> element specifies that the user will be asked in 
+        a standard dialog box to enter their user name and password. 
+    </li>
+    <li>Save the file.</li>
+  </ol>-->
+
+<a name="ex5"></a>
+<h2>Running the Application</h2>
+    <p>Our application is now ready. When we run the project we will be prompted for a username and password for a user
+    in the <tt>bank_users</tt> group.</p>
+    <ol>
+      <li>Right-click the Secure project node and choose Run project. The IDE builds 
+      the EAR file, starts the application server (if it's not running) and deploys the EAR file to the application 
+      server. A dialog box appears prompting us for a username and password.<br>
+      <img src="../../../images/articles/60/javaee/secure-ejb/secure-appclient-login.png" width="352" height="175" alt="Dialog prompting for username and password" style="margin:5px;"/></li>
+      <li>Enter the user name (<tt>manager</tt>) and password (<tt>password</tt>) 
+      in the dialog box and click OK. The following will appear in the Output window: 
+      <pre class="examplecode">The account contains 250$</pre></li>
+    </ol>
+
+<p>This is very basic example demonstrates how to secure a method in an enterprise bean using Java annotations.
+    </p>
+
+    <br>
+    <div class="feedback-box">
+        <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a>
+    </div>
+
+    <br style="clear:both;" />
+    <!-- ======================================================================================= -->
+    <h2><a name="nextsteps"></a>Further References</h2>
+    <p>For more information about using annotations to secure enterprise beans, see the following resources:</p>
+    <ul>
+        <li><a href="http://java.sun.com/mailers/techtips/enterprise/2007/TechTips_March07.html#2" target="_blank">Using Security Annotations in Enterprise Beans</a>, an 
+        <a href="http://java.sun.com/developer/EJTechTips/index.html" target="_blank">Enterprise Java Technologies Tech Tips</a> at <a href="http://developers.sun.com/">developers.sun.com/</a></li>
+        <li><a href="http://java.sun.com/javaee/5/docs/tutorial/doc/" target="_blank">Java EE 5 Tutorial</a>, in particular the chapters
+        Introduction to Security in the Java EE Platform and Securing Java EE Applications, in Part VI Services</li>
+    </ul>
+
+    <p>For more information about using NetBeans IDE 6.0 to develop Java EE applications, see the following resources:</p>
+    <ul>
+        <li><a href="javaee-intro.html">Introduction to Java EE 5 Technology</a></li>
+        <li><a href="../web/customer-book.html">Using Java Persistence in a Web Application</a></li>
+        <li><a href="../../trails/java-ee.html">Java EE Applications Learning Trail</a></li>
+    </ul>
+
+    </body>
+</html>
+
+

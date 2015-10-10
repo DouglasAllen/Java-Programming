@@ -1,0 +1,694 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html lang='en'>
+<head>
+<title>NetBeans IDE 6.0 - Tutorials  - Using Databound Components to Access a Database</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="Using NetBeans IDE, add components to a page, bind those data-aware components to a local database, and build and deploy to an application server.">
+<meta name="date" content="2006-10-30">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+
+</head>
+<!--stopindex-->
+<body>
+
+<a name="top"></a>
+
+<!-- END GENERIC MASTHEAD -->
+
+<!-- BEGIN VNV3 PAGETITLE, two-level variation -->
+
+<h1>Using Databound Components to Access a Database</h1>
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+<!--startindex-->
+<!-- ============ -->
+<!-- MAIN CONTENT -->
+<!-- ============ -->
+<a name="skip2content"></a>
+
+<!--  BEGIN VCD4 BYLINE AND TOOLS  -->
+<div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team</div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="smaller" valign="top">
+<em>December, 2006 </em>&nbsp;[Revision number: V6.0]</td>
+<td width="10">&nbsp;</td>
+<td align="right" valign="bottom">&nbsp;
+</td></tr>
+</table>
+
+<!--  END VCD4 BYLINE AND TOOLS  -->
+
+<!-- BEGIN VCD1 OVERVIEW COMPONENT  -->
+
+<table border="0" cellpadding="4" cellspacing="0" width="100%" >
+<tr>
+<td><p>In this tutorial, you use the NetBeans IDE to create and deploy a web application that displays master-detail
+  data from a database that is bundled with the IDE. In the application, you select a 
+  person from a drop-down list, and the application displays a table that shows all 
+  the trip records for that person. </p></td>
+</tr>
+</table>
+
+<!-- END VCD1 OVERVIEW COMPONENT  -->
+
+
+<!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  -->
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="left" valign="top">
+<p><b>Contents</b></p>
+<table border="0" cellpadding="0" cellspacing="0" class="vatop">
+<tr>
+<td class="hyphen">-&nbsp;</td>
+<td><a href="databoundcomponents.html#01">Creating a Page That Includes a Drop Down List Component</a></td>
+</tr>
+<tr>
+<td class="hyphen">-&nbsp;</td>
+<td><a href="databoundcomponents.html#02">Connecting the Component to a Database</a></td>
+</tr>
+<tr>
+<td class="hyphen">-&nbsp;</td>
+<td><a href="databoundcomponents.html#03">Adding a Table Component</a></td>
+</tr>
+<tr>
+<td class="hyphen">-&nbsp;</td>
+<td><a href="databoundcomponents.html#04">Modifying the SQL Query</a></td>
+</tr>
+<tr>
+<td class="hyphen">-&nbsp;</td>
+<td><a href="databoundcomponents.html#05">Controlling the Rows That Are Displayed</a></td>
+</tr>
+<tr>
+<td class="hyphen">-&nbsp;</td>
+<td><a href="databoundcomponents.html#06">Doing More</a></td>
+</tr>
+</table>
+</td>
+<td width="20">&nbsp;</td>
+<td align="right" valign="top">  <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td>
+
+</tr></table>
+<!-- END VCD5 ANCHOR LINKS COMPONENT  -->
+<span class="sp20">&nbsp;</span><br />
+
+<p>Before you use this tutorial, you must have the NetBeans IDE 6.0 with Web and Java EE support installed on your system. Familiarize yourself with the basic parts of the IDE and read the <a href="intro.html">Getting
+Started With NetBeans Visual Web JSF Development</a> for an introduction to the NetBeans IDE's development environment.
+</p>     
+
+
+<p><a name="00"></a><b>This tutorial works with the following technologies and resources</b></p>
+
+<table border="1" cellpadding="1">
+  <tbody>
+  <tr>
+    <td valign="top">JavaServer Faces Components/<br>
+      Java EE Platform</td>
+    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br>
+      <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 
+  </td></tr>
+  <tr>
+    <td valign="top">Travel Database</td>
+    <td colspan="4" valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">Required</td>
+  </tr>
+  
+</tbody></table>
+<p>* As of the date this tutorial was published, only the Sun Java System Application Server supported Java EE 5.</p>
+<p>This tutorial has been tailored for use with the GlassFish v2 Application Server. 
+If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. 
+For detailed information about the supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p>
+<!-- END RESOURCE MATRIX --><h2><a name="01"></a>Creating a Page That Includes a Drop Down List Component</h2>
+
+<p>In this tutorial, you build a Travel Center application as shown in the following figure of the deployed application.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="502">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/finalWebApp.png" width="492" height="360" border="0" alt="Figure 1: Travel Center Web Application">
+<div class="pad3"> <b>Figure 1</b>: Deployed Travel Center Web
+Application</div></td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<br>
+<div>You begin by adding a Table and a Drop Down List component to the default Page 1.jsp created with the new project.</div>
+      <ol>
+<li>  
+  <p>Create a new web application project named <code>DataboundComponents</code> that uses the GlassFish V2 Application Server and the Visual Web JavaServer Faces framework.</p> 
+  The IDE creates the first page named Page1 and displays the page in the Visual Designer. </li>
+<li>Expand the Basic node in the Palette window and drag a Label component onto the left side of the page. Type <code>Select Name:</code>
+and press Enter.</li>
+<li>Drag a Drop Down List component to the right of the Label component. </li>
+<li>In the Properties window, change the id to <code>personIdDD</code>. </li>
+<li><p>Ctrl-Shift-Drag from the Drop Down List component to the Label component to associate the two components.</p>
+The <code>for</code> property for the Label component is now set to <code>personIdDD</code>.</li>
+<li><p>Drag a Message Group component from the Palette window onto an out-of-the-way place on the page, such as the upper-right corner of the page.</p>
+This component is useful for diagnosing programming errors. You can make diagnostic messages appear in this component by calling the <code>info(<i>String</i>)</code>,
+<code>error(<i>String</i>)</code>, <code>warn(<i>String</i>)</code>,
+or <code>fatal(<i>String</i>)</code> method. The Message Group component displays the value of the <code>String</code> argument. In addition, messages about runtime errors, validation errors, and conversion errors appear in this component by default.
+</li>
+</ol>
+<h2><a name="02"></a>Connecting the Component to a Database</h2>
+<p>The Services window, which appears on the left side of the IDE workspace, includes
+a Databases node. The Databases node shows all of the database drivers and connections that have been
+added to the IDE.
+</p>
+
+<p>
+ The NetBeans IDE comes with a <a href="../../../community/releases/60/install.html">sample Travel database</a> that appears under
+  the Databases node.
+</p>
+
+  <p>When you bind a database to a component, you create two layers between the component and the database table: the RowSet layer and the Data Provider layer. The RowSet layer makes the connection to the database, executes the queries, and manages the result set. The Data Provider layer provides a common interface for accessing many types of data, from rowsets, to Array objects, to Enterprise JavaBeans objects.
+  </p>
+
+  <p>Typically, the only time that you work with the RowSet object is when you need to set query parameters. In most other cases, you should use the Data Provider to access and manipulate the data. You can lower your learning curve by using the Data Provider API, because the same APIs work no matter what kind of data you are wrapping (that is, which Data Provider implementation you are using).
+  </p>
+
+<div>In this section of the tutorial, you use the PERSON table from the Travel database to supply
+  the choices for the Drop Down List component.</div>
+
+<ol>
+<li>
+  <p>In the Services window, expand the Databases node and check if the TRAVEL database is connected.</p>
+
+If the jdbc node for the TRAVEL database's badge is broken and you cannot expand the node, 
+the IDE is not connected to the database. To connect to the TRAVEL database, right-click the jdbc node for TRAVEL and choose Connect from the pop-up menu. 
+
+
+ If the Connect dialog box appears,
+
+enter <code>travel</code> for the User and Password, select Remember Password During This Session, and click OK. If you do not see a jdbc node for the TRAVEL database, see the FAQ <a href="http://wiki.netbeans.org/wiki/view/FaqDatabaseConnectivityTravelDb" target="_blank">How do I enable the sample Travel database for MySQL in NetBeans IDE 6.0</a> for information about making the database available to the IDE.</li>
+<li>
+  <p>Expand the Travel &gt; Tables node.</p>
+    <p>Under
+  Tables, you see nodes for each table in the database, such as CARRENTAL and FLIGHT. The following figure
+  shows the Services window with the Tables node expanded.
+  </p>
+
+  
+<!-- BEGIN FIGURE COMPONENT -->
+  <table border="0" cellpadding="2" cellspacing="0" width="347">
+    <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/services.png" width="337" height="376" border="0" alt="Figure 2: Services Window">
+    <div class="pad3"> <b>Figure 2 </b>: Services Window</div></td>
+    </tr>
+  </table>
+  <!-- END FIGURE COMPONENT -->
+</li>
+<li>
+  <p>Drag PERSON from the Services window and drop it on the Drop Down List.
+</p>
+
+The text <code>abc</code> appears in the Drop Down List component. The <code>abc</code> text indicates that the display field is bound to a <code>String</code> object, which, in this case, is a database column of the SQL type <code>varchar</code>. In addition, the IDE adds a nonvisual personDataProvider component for the database table. The personDataProvider component appears in the Navigator window. The IDE also
+      adds a <code>personRowSet</code> property to SessionBean1.
+
+</li>
+<li><p>Right-click the Drop Down List and choose Bind to Data from the pop-up
+menu. The Bind to Data dialog box appears, as shown in the following figure. </p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="519">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/bind-dialog.png" width="509" height="452" border="0" alt="Figure 3: Binding Data to the Drop Down List">
+<div class="pad3"> <b>Figure 3 </b>: Binding Data to
+the Drop Down List</div></td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<span class="sp5">&nbsp;</span><br />
+When you bind data to a Drop Down List component, you must specify 
+what to display in the list (the Display Field) and you must specify what
+values to use in the underlying program (the Value Field). Typically, you want
+to display some meaningful value from the database table, such as a person's name,
+but you want to use a unique identifier in the underlying program, such as the
+person's ID. With this application, however, you want to bind both the Value field
+and the Display field to the same database column, the PERSON.NAME column, as
+described in the next two steps.</li>
+<li> In the Bind to Data dialog box, select PERSON.PERSONID in the Value Field list to make the component's getSelected method return the PERSON.PERSONID for the current selection. </li>
+<li> Select PERSON.NAME in the Display Field list to cause the browser to populate the drop-down list with values from the PERSON.NAME database column. </li>
+<li>Click OK.</li>
+<li>
+  <p>Click Run &gt; Run Main Project in the main toolbar.</p>
+  The IDE saves all changes and then builds, deploys, and runs the web application.
+First, the Output window appears at the bottom of the IDE. The IDE writes compilation
+and deployment preparation information to this window. (So if there are any problems
+with a build, check the Output window first.) Next, a dialog box displays
+the status of the deployment. After the deployment is complete, the IDE opens
+a web browser
+for the application. When the browser renders the page, it populates the drop-down
+list with data from the NAME column of the PERSON table.</li>
+</ol>
+
+
+ 
+<h2><a name="03"></a>Adding a Table Component</h2>
+
+<div>Next, you add a Table component to your application and connect the component to a database table.</div>
+<ol>
+<li>From the Palette, drag a Table component and place it below the Drop Down List
+component.</li>
+ <li>In the Services window, expand the Travel &gt; Tables node. </li>
+
+ 
+  
+  <li>
+    <p>Drag TRIP from the Services window and drop it on the Table component title bar.</p>
+  <b>Note:</b> If you drop the TRIP database onto another part of the table component, the Choose Target dialog box opens. In the Choose Target dialog box, select table1 and click OK.</li>
+  <li>
+    <p>Right-click the Table component and select Table Layout.</p>
+The Selected list in the Table Layout box shows all of the table's columns. You use items from the Selected list to specify
+which columns should appear in the Table component.</li>
+<li>Use Ctrl-Click to select all entries in the Selected list except TRIP.DEPDATE, TRIP.DEPCITY, and TRIP.DESTCITY.
+</li>
+<li><p>Click the <code>&lt;</code> button.</p>
+<p>The selected entries are moved to the Available list and the following three entries remain in the Selected list, as shown in the following figure:</p>
+
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="445">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/table-layout.png" width="435" height="547" border="0" alt="Figure 4: Table Layout Dialog Box">
+<div class="pad3"> <b>Figure 4</b>: Table Layout Dialog Box</div></td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+<li><p>Click OK.</p>
+<p>The Visual Designer now displays three columns in the Table component, as shown
+in the following figure.
+</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="370">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/dataTableComponent.png" width="360" height="111" border="0" alt="Figure 5: Table Column Display">
+<div class="pad3"> <b>Figure 5</b>: Table Column Display</div></td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+</ol>
+
+
+<h2><a name="04"></a>Modifying the SQL Query</h2>
+
+<div>Next, you modify the SQL query in the tripRowSet object so that the query also returns
+data from the TRIPTYPE table. You also modify the Table component to display the
+trip type description.</div>
+<ol>
+<li><p>In the Navigator window, expand the SessionBean1 node if it is not already expanded.</p>
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="347">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/navigator-sb.png" width="337" height="231" border="0" alt="Figure 6: SessionBean1 Section in Navigator Window">
+<div class="pad3"> <b>Figure 6</b>: SessionBean1 Section in Navigator Window</div></td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+<li><p>In the SessionBean1 section of the Navigator window, right-click the tripRowSet
+node and choose Edit SQL Statement.</p>
+<p>The Query Editor appears in the editing area, with a tripRowSet tab.</p>
+<span class="note"><b>Tip</b></span>: If the Output window is open, close it to give
+you more room to work with the Query Editor.</li>
+<li>
+  <p>Drag the Travel &gt; Tables &gt; TRIPTYPE node from the Services window and
+drop it on the Design View, as shown in Figure 7.</p>
+Another table diagram appears with a link between the two table diagrams. This link represents a join. Notice how the IDE has
+modified the select
+statement in the Source Code pane.</li>
+<li><p>Clear the checkbox for TRIPTYPEID in the TRIPTYPE table.</p>
+<p>This action removes the column from the result set and from the SQL query that
+is in the Source Code pane, as shown in the following figure.
+</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="524">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/databoundcomponents/queryeditor.png" width="514" height="251" border="0" alt="Figure 7: The Query Editor">
+<div class="pad3"> <b>Figure 7</b>: The Query Editor</div></td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+<li>Leave the Query Editor open.</li>
+<li>Click the Page1 tab in the editing area.
+</li>
+<li><p>In the Visual Designer, right-click the Table component and choose Table Layout.</p>
+The Table Layout dialog box appears. Because you have changed the SQL query for
+the tripRowSet, there are more columns that you can display.</li>
+<li>
+  <p>Add the TRIPTYPE.DESCRIPTION column to the Selected list, and click OK.</p>
+  A fourth column appears in the Table component.</li>
+
+</ol>
+
+
+
+<h2> <a name="05"></a>Controlling the Rows That Are Displayed</h2>
+
+<p>When you added a Data Provider for the TRIP table, the IDE created a <code>RowSet</code> object with an SQL query that returns all the rows for all the columns in the
+table. If you deploy and run the application at this point, the Table component
+shows all the trip information in the TRIP table.</p>
+
+<div>For this application, the Table component must display only the trip information
+for the person whose name is selected from the Drop Down List component. You constrain
+the information that is displayed in the table by editing the query for the tripRowSet
+object to create a master-detail relationship between the Drop Down List component
+and the Table component.</div>
+<ol>
+<li>Click the <tt>jdbc:derby://localhost:1527/travel</tt> tab in the editing area
+to switch to the Query
+Editor.</li>
+<li>In the Design Grid of the Query Editor, right-click any cell in the PERSONID
+row and choose Add Query Criteria.</li>
+<li>Set the Comparison drop-down list to <code>=Equals, </code>select the Parameter
+radio button <code></code> and click OK.</li>
+<li><p>You see <code>=?</code> in the Criteria column for PERSONID, which
+adds the following WHERE clause in the SQL query.</p>
+
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Sample 1: WHERE Clause in the SQL Query</b></td>
+</tr>
+<tr>
+<td><pre>WHERE TRAVEL.TRIP.PERSONID = ?</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+<b>Troubleshooting Hint:</b> At this point, you can verify that your query is properly set. Right-click in the query editor, and choose Run Query. In the Specify Parameters Value dialog box, type 1 for the Value of Parameter 
+TRAVEL.TRIP.PERSONID, and click OK. The output of your query for Person 1 is in the query editor results pane.  
+
+</li>
+<li>
+  <p>In the Design Grid of the Query Editor, click the Sort Type cell in the DEPDATE row and choose Ascending from the drop-down list.</p>
+The IDE automatically sets the Sort Order and adds the sort clause to the SQL
+query.</li>
+
+<li>Close the Query Editor.</li>
+<li><p>In the Visual Designer, double-click the Drop Down List component.</p>
+The source for the <code>Page1</code> class opens in the Java Editor, and the
+cursor is placed inside the body of the <code>personIdDD_processValueChange</code>
+method. The IDE creates this event handler method stub the first time that you
+double-click the Drop Down List component.</li>
+<li><p>Replace the body of the <code>personIdDD_processValueChange</code> 
+method with the following code shown in bold.</p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Sample 2: Value Change Event Handling for the Drop Down List Component</b></td>
+</tr>
+<tr>
+<td><pre>public void personIdDD_processValueChange(ValueChangeEvent event) {
+<span style="font-weight:bold">    try {
+       getSessionBean1().getTripRowSet().setObject(
+         1, personIdDD.getSelected());
+       tripDataProvider.refresh();
+     } catch (Exception e) {
+       error("Cannot switch to person " +
+         personDataProvider.getValue(
+         "PERSON.PERSONID"));
+       log("Cannot switch to person " +
+         personDataProvider.getValue(
+         "PERSON.PERSONID"), e);
+    }</span>
+}
+</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+<p>
+This code binds the value of the PERSONID for the currently selected NAME in the
+drop-down list to the parameter in the prepared SQL statement for the tripRowSet
+object, executes the query, and gets the new result set.</p>
+<p>
+The <code>setObject</code> method replaces the ? in the query with the value
+of the PERSONID. The <code>refresh</code> method submits the
+new query and refreshes the result
+set. To learn more about either method, right-click the method call
+and choose Show Javadoc from the pop-up menu. View the 
+
+
+ Data Provider and the RowSet Javadocs by choosing Help &gt; Javadoc References &gt; Data Provider and Help &gt; Javadoc References &gt; RowSet.</p>
+The <code>log</code> method sends a message and the associated
+stack trace to the application server's log to assist
+in discovering and diagnosing user problems. You can view
+the server's log by right-clicking 
+
+
+ the server's node in the Services window
+
+ and choosing View Server Log from the pop-up menu. </li>
+<li>Press Alt-Shift-F to reformat the code.</li>
+<li>Find the <code>prerender</code> method in the source code.
+</li>
+<li><p>Replace the body of the <code>prerender</code> method with the following code shown in bold.</p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Sample 3: Synchronizing the Master-Detail Data When the Page Is First Displayed</b></td>
+</tr>
+<tr>
+<td><pre>public void prerender() {
+<span style="font-weight:bold">    if ( personIdDD.getSelected() == null ) {
+        try {
+          personDataProvider.cursorFirst();
+          getSessionBean1().getTripRowSet().setObject(
+            1, personDataProvider.getValue("PERSON.PERSONID"));
+          tripDataProvider.refresh();
+        } catch (Exception e) {
+          error("Cannot switch to person " +
+              personDataProvider.getValue("PERSON.PERSONID"));
+            log("Cannot switch to person " +
+              personDataProvider.getValue("PERSON.PERSONID"), e);
+        }
+    }</span>
+}</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+Code in the prerender method is invoked before a web browser starts to display the page. </li>
+<li>Press Alt-Shift-F to reformat the code.</li>
+<li>Click Design in the editing toolbar to return to the Visual Designer. </li>
+<li><p>Right-click the Drop Down List component and choose Auto-Submit on Change.</p>
+<p>In the Properties window, the following code appears in the onchange property.</p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Sample 4: onchange Property Code</b></td>
+</tr>
+<tr>
+<td><pre>webuijsf.suntheme.common.timeoutSubmitForm(this.form, 'personIdDD');
+</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+Now when the user changes the drop-down list selection in the running web application,
+the web browser automatically submits the page. </li>
+<li><p>Click Run Main Project in the main toolbar.</p>
+The IDE saves all changed files, rebuilds the application, and redeploys the application
+to the server. </li>
+<li>Select a person from the Drop Down List component to see how the Table component
+synchronizes the master and detail data. Click the DESTCITY column header to see
+how the Table component sorts the rows.</li>
+</ol>
+
+
+ 
+<h2><a name="06"></a>Doing More</h2>
+
+<p><b>Try It.</b>
+Add a Static Text component to the right of the Drop Down List component. Right-click  the Static Text component, choose Bind to Data, and  bind the component to PERSON.JOBTITLE. Run the program and choose a different name from the drop-down list. Notice that the job title does not change. This is because the application
+needs to synchronize the personDataProvider with the selected item from the drop-down list. Add the code shown below in bold to the <code>prerender</code> method and run the application again. The job titles should now match the selected name.</p>   
+
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Sample 5: Synchronizing personDataProvider With Selected Person</b></td>
+</tr>
+<tr>
+<td><pre>  
+public void prerender() {
+    if ( personIdDD.getSelected() == null ) {
+        try {
+            personDataProvider.cursorFirst();
+            getSessionBean1().getTripRowSet().setObject(
+                1, personDataProvider.getValue("PERSON.PERSONID"));
+            tripDataProvider.refresh();
+        } catch (Exception e) {
+            error("Cannot switch to person " +
+                    personDataProvider.getValue("PERSON.PERSONID"));
+            log("Cannot switch to person " +
+                    personDataProvider.getValue("PERSON.PERSONID"), e);
+        }
+    }
+    <span style="font-weight:bold">else {
+        try {
+            // Synchronize data provider with current selection
+            personDataProvider.setCursorRow(
+                    personDataProvider.findFirst(
+                    "PERSON.PERSONID", personIdDD.getSelected()));
+        } catch (Exception e) {
+            error("Cannot switch to person " +
+                    personIdDD.getSelected());
+            log("Cannot switch to person " +
+                    personIdDD.getSelected(), e);
+        }
+    }</span>      
+}
+</pre></td>
+
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+
+<p><b>Try It.</b> Play with the table's layout options.
+Right-click the Table component and choose Table Layout
+from the pop-up menu.
+Change the Header Text to Departure Date, Departure City, Destination City, and
+Description. Use the Options table in the dialog box to set the table's title
+to Trips. Select Enable Pagination and set the Page Size to 3. Run the application
+and see how your changes affect the way the table is displayed.</p>
+
+<p><b>Note:</b> If you use the pagination option, add the following code 
+after the <code>tripDataProvider.refresh()</code> statement in the 
+<code>personIdDD_processValueChange</code>
+method: <code>tableRowGroup1.setFirst(0);</code>. This ensures that
+the first page is always displayed when a new name is selected
+from the drop-down list.</p>
+
+<p><b>Try It.</b> Build a web application with a Drop Down List component and
+a Table component. Make the Drop Down List component display TRIPTYPE.DESCRIPTION.
+Make the Table component show all the TRIP records that have the same TRIPTYPEID
+as the selected TRIPTYPE.</p>
+
+<div><b>Try It.</b> You might wonder whether the duplicate code in the
+<code>prerender</code> and <code>personIdDD_processValueChange</code>
+methods causes a double refreshing of the detail rowset. The answer is no.
+To illustrate, add a <code>log(</code><i>method-name</i><code>)</code>
+statement to the constructor, the <code>prerender</code> method,
+and the <code>personIdDD_processValueChange</code>. 
+
+
+ In the Services window, right-click a server node
+
+ and choose View Server Log. Run the program and
+select a new name. In the server log (in the Output window), you see that
+the methods are invoked in the following order:
+</div>
+<ol>
+<li>constructor</li>
+<li>prerender</li>
+<li>constructor</li>
+<li>personIdDD_processValueChange</li>
+</ol>
+<p>When the browser first requests the page, the application creates an
+instance of Page1 and calls <code>prerender</code>.  The server sends the response
+(the HTML page) and the Page1 instance is destroyed. The application does
+not call the value change event handler, because the application
+only generates value change
+events when a page is submitted (in this case, when a new
+person is selected).
+</p>
+
+<p>When you choose a new name from the drop-down
+list, the browser submits the page. The application
+creates a new instance of Page1 and restores the values from the
+previous instance (they are passed in the request). Because this is a
+post-back (a submission), and because the name has changed, 
+the application generates a value
+change event. Thus <code>personIdDD_processValueChange</code>
+gets called and the application refreshes the rowset.
+</p>
+
+<p>After the value change event handlers are called, the application calls the <code>prerender</code>
+method. Because the dropdown now has a selected value, the application skips over the <code>if</code>
+section in the <code>prerender</code> method.
+</p>
+<!--            
+<p>To learn more about the lifecycle of a web application that uses JavaServer Faces components, see
+<a 
+href="/prodtech/javatools/jscreator/reference/fi/2/event-life-cycle.html"
+>Event Processing LifeCycle in NetBeans Visual Web Pack 5.5</a>.
+</p>
+-->
+
+<h2>Summary</h2>
+
+<div>The steps for binding a component to a database table are as follows:</div>
+<ol>
+<li>You bind a component to a database table by dropping the database table's
+node on the component, or by choosing Bind to Data from the pop-up menu
+and selecting an existing Data Provider from
+the drop-down list.</li>
+<li>You use the Bind to Data dialog box to configure the database 
+columns that the component displays and, for a list-type component, what
+column it returns. You can also use the Table Layout menu action
+to configure which database table columns the Table component displays.</li>
+<li>To modify a query for a RowSet object, you open the Query Editor on the RowSet
+object from the Navigator window.</li>
+<li>You call the RowSet object's <code>setObject</code> method to set the values for the
+query parameters. You call the data provider's <code>refresh</code> method
+to execute the query and refresh the result set.</li>
+
+<li>Use the Auto-Submit on Change menu action to cause a page to be submitted
+automatically whenever a component's value changes.</li>
+<li><p>Do the following steps to synchronize a detail component with a master component:</p>
+<ol type="a">
+<li>Add code to the Page Bean's <code>prerender</code> method to call the detail
+RowSet object's <code>setObject</code> method to set the query parameters to some
+default, such as the first person in a drop-down list. Then call the <code>refresh</code>
+method to execute the query. </li>
+<li>Bind the master component to a <i>processValueChanged</i> method. Have this
+method call the detail RowSet object's <code>setObject</code> method to set the
+new query parameters. Then call the <code>refresh</code> method to execute the
+query.</li>
+</ol>
+</ol>
+<br>
+<p><b>See Also</b>:</p>
+<ul>
+<!-- <li><a href="about-components.html">Delving Into Components</a></li> -->      
+<li>Help > Javadoc References > Data Provider</li>
+<li>Help> Javadoc References > RowSet</li>
+</ul>
+<hr class="light">
+
+<br>
+<div class="date-stamp" align="right">This page was last modified:&nbsp; <span class="smaller"><em>December</em></span>, 2007</div>
+<!-- =================== -->
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+<!--stopindex-->
+<!-- END CENTRAL COLUMN COMPONENTS -->
+
+<!-- BEGIN SPACER ROW -->
+<table border="0" cellpadding="10" cellspacing="0" class="full-width">
+<tr>
+<td><br>
+<div class="feedback-box">
+<a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">
+Send Us Your Feedback</a></div>
+<br style="clear:both;" /></td>
+</tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+
+</body>
+</html>

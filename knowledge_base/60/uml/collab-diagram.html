@@ -1,0 +1,279 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>UML: Creating Collaboration Diagrams</title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- Replace this CSS URL with the appropriate relative URL -->
+<meta name="description" content="">
+<meta name="author" content="your-name"> <!--Optional tag-->
+<meta name="keywords" content=""> 
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>UML: Creating Collaboration Diagrams</h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:bob.may@sun.com"><i>Cindy Castillo, Bob May </i></a><br>
+November 2007</em> [Revision number: V1-3]<br>
+This publication is applicable to NetBeans IDE 6.0  release<br>
+<!-- This paragraph should contain an overview or an intro to your-tutorial ----------------------------* -->
+</p>
+</div>
+<!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+<!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+<!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+<!-- Update the image reference below so it references the file in your images directory ---------------* -->
+In this tutorial, you learn how to use the UML features of the IDE to create a UML Collaboration diagram. A Collaboration Diagram is an interaction diagram that emphasizes the structural organization of the objects that send and receive messages. It is a diagram that shows interactions organized around instances and their links to each other.
+<p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+<h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li class="tut"><a href="collab-diagram.html#using">Using Collaboration Diagrams</a></li>
+             <li class="tut"><a href="collab-diagram.html#create">Creating Collaboration Diagrams</a></li>
+             <li class="tut"><a href="collab-diagram.html#add-links">Adding Connector Links</a></li>
+             <li class="tut"><a href="collab-diagram.html#msg">Showing Message Numbers</a></li>
+             <li class="tut"><a href="collab-diagram.html#flow">Showing Operation Flows</a></li>
+             <li class="tut"><a href="collab-diagram.html#add">Adding Operations to a Class</a></li>
+             <li class="tut"><a href="collab-diagram.html#save">Saving Your Diagram</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top">  <a href="../../index.html"> <img src="../../../images/articles/60/netbeans-stamp.gif" 
+	  alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206"></a>
+
+   </td>
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirement</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<!-- tutorial. Examples: Java programming, XML, BPEL, and so on ----------------------------------------* -->
+<p>This tutorial requires that you complete the companion tutorial, <a href="use-case.html" title="UML: Creating Class Diagrams">UML: Creating Class Diagrams</a>. This tutorial uses the completed Class diagram from that tutorial.</p>
+  <p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a></p>
+  <!-- ======================================================================================== -->
+  <!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+
+
+<p>Before you begin, download and install the following software:</p>
+ 
+<ul>
+	<li>NetBeans IDE 6.0 <br>
+		<br>
+	Select the All Download option.	</li>
+</ul>
+<!-- ======================================================================================== -->
+<!-- ======================================================================================== -->
+<!--<h3>Contents</h3> -->
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+<!-- <ul>
+	<li><a href="#first_h2_head" title="First H2 Heading">First H2 Heading</a></li>
+	<li><a href="#second_h2_head" title="Second H2 Heading">Second H2 Heading</a></li>
+	<li><a href="#third_h2_head" title="Third H2 Heading">Third H2 Heading</a></li>
+	<li><a href="#summary" title="Summary">Summary</a></li>
+	<li><a href="#next_steps_h2_head" title="Next Steps">Next Steps</a></li>
+</ul>-->
+</div>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<div class="indent"></div>
+<h2><a name="using"></a>Using Collaboration Diagrams</h2>
+<p>Collaboration diagrams let you show a spatial organization of components and interactions rather than concentrating on the sequence of the interactions. A collaboration diagram shows an interaction organized around the objects in the interaction and their links to each other. Unlike a Sequence diagram, a collaboration diagram shows the relationships among the objects. On the other hand, a collaboration diagram does not show time as a separate dimension, so sequence numbers determine the sequence of messages and the concurrent threads. A collaboration diagram is a cross between a symbol diagram and Sequence diagram, in that it describes a specific scenario by numbered arrows that show the movement of messages during the course of a scenario.</p>
+<p>The Collaboration diagram may be used to:</p>
+<ul>
+  <li class="tut">Describe a specific scenario by depicting the movement of messages between the objects</li>
+  <li class="tut">Show a spatial organization of objects and their interactions, rather than the sequence of the interactions</li>
+</ul>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="create"></a>Creating Collaboration Diagrams</h2>
+<p>This tutorial uses the Class diagram that is created in the tutorial <a href="class-diagram.html" title="UML: Creating Class Diagrams">UML: Creating Class Diagrams</a>. You should complete the Class diagram tutorial before proceeding with these steps.</p>
+<p>This section contains the following procedures:</p>
+<ul>
+  <li class="tut"><a href="collab-diagram.html#auto">To Generate a Collaboration Diagram</a></li>
+  <li class="tut"><a href="collab-diagram.html#rearrange">To Refine a Generated Diagram </a></li>
+</ul>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<div class="indent">
+  <h3 class="tutorial"><a name="auto"></a>To Generate a Collaboration Diagram</h3>
+  <ol>
+    <li class="tut">If necessary, start the IDE.</li>
+    <li class="tut">In the Projects window, expand the UMLTutorialProject &gt; Model node.</li>
+    <li class="tut">Select the following Class nodes:<br>
+        <ul>
+          <li class="tut">ATM</li>
+          <li class="tut">Branch</li>
+          <li class="tut">Consortium</li>
+        </ul>
+        <b>Note: </b>You can select multiple classes by pressing the CTRL key and clicking each class node.</li>
+    <li class="tut">Right-click the last selected class and choose Create Diagram From Selected Elements from the pop-up menu.<br>
+      The New Wizard opens and displays the Create New Diagram page.</li>
+    <li class="tut">In the Diagram Type list, select Collaboration Diagram.</li>
+    <li class="tut">In the Diagram Name field, type <tt>CollaborationDiagram</tt>.</li>
+    <li class="tut">Leave the default setting in the Namespace field and click Finish.<br>
+      The IDE does the following:<br>
+      <ul>
+        <li class="tut">Creates the <tt>CollaborationDiagram</tt> node under the <tt>Model</tt> node in the Projects window </li>
+        <li class="tut">Displays the new diagram in the Diagram editor (the diagram consists of three classes depicted as Lifeline elements)</li>
+        <li class="tut">Opens the Modeling Palette</li>
+      </ul>
+    </li>
+  </ol>
+  <p align="center"><a href="collab-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="rearrange"></a>To Refine a Generated Diagram</h3>
+  <ol>
+    <li class="tut">Click and drag the elements to rearrange the diagram to resemble the following figure.<br>
+        <p align="center"><img src="../../../images/articles/uml-collab-diagram/lifelines.gif" alt="Collaboration Diagram with Rearranged Lifelines" border="0"></p>
+    </li>
+    <li class="tut">In the Projects window, select the Class node labeled <tt>User</tt>.</li>
+    <li class="tut">Drag the selected class onto the Diagram editor and place it above the ATM Lifeline element as shown in the following figure.<br>
+        <p align="center"><img src="../../../images/articles/uml-collab-diagram/add-lifeline.gif" alt="Collaboration Diagram with Added Lifeline" border="0"></p>
+    </li>
+  </ol>
+</div>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="add-links"></a>Adding Connector Links</h2>
+<p>Each element in a Collaboration diagram may be connected by Connector links to other elements. These links can be identified and have message flows added to them.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Connector icon <img src="../../../images/articles/uml-collab-diagram/connector-icon.gif" alt="Actor icon is displayed.">.</li>
+  <li class="tut">Click the Lifeline element labeled User and then click ATM.<br>
+    A connector link is drawn between the two elements.</li>
+  <li class="tut">Use the same procedure to draw the following links:<br>
+      <ul>
+        <li class="tut">ATM to Consortium </li>
+        <li class="tut">Consortium to Branch</li>
+        <li class="tut">ATM to Branch</li>
+      </ul>
+      <b>Note: </b>When you create the link from ATM to Branch, draw the link straight out to the right from the ATM Lifeline, click once directly above the Branch Lifeline. A vertex is placed on the link line, then draw the link straight down to the Branch Lifeline.<br>
+      <br>
+    The diagram should now resemble the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-collab-diagram/with-links.gif" alt="Collaboration Diagram With Links" border="0"></p>
+  </li>
+  <li class="tut">Deselect the Connector icon by right-clicking anywhere in the Diagram editor. </li>
+</ol>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="msg"></a>Showing Message Numbers</h2>
+<p>A Collaboration diagram represents a specific scenario by using numbered messages. The default UML setting hides these numbers. Use the following steps to show the message numbers:</p>
+<ol>
+  <li class="tut">Right-click in the background of the <tt>CollaborationDiagram</tt> Diagram editor.</li>
+  <li class="tut">Choose Show Message Numbers from the pop-up menu.<br>
+    When you insert the operation flows (in the next section), the message numbers appear.<br>
+    <br>
+    <b>Note: </b>The integer represents the sequential order of the message within the next higher level of procedural calling. Messages that differ by one integer are sequentially related at that level of nesting. For example, message 3.1.4 follows message 3.1.3 within activation 3.1.</li>
+</ol>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="flow"></a>Showing Operation Flows</h2>
+<p>An operation flow is shown on the diagram as a labeled arrow placed parallel to a link. This link is used to transport or implement the delivery of the message to the target element.</p>
+<ol>
+  <li class="tut">In the Diagram editor, select the Connector link between User and ATM.</li>
+  <li class="tut">Right-click the portion of the Connector link closest to the ATM Lifeline.</li>
+  <li class="tut">Choose Operations &gt; <tt>public float getCashOnHand</tt> from the pop-up menu.<br>
+    The operation flow is placed on the diagram and numbers it with the integer 1.<br>
+    <br>
+    <b>Note</b>: Click the Fit to Window button <img src="../../../images/articles/uml-collab-diagram/fit-to-window.png" alt="image of the Fit To Window icon is displayed." width="16" height="16"> to see the entire diagram in the Diagram editor. </li>
+  <li class="tut">Select the Connector link between ATM and Consortium, right-click the link close to the Consortium element.</li>
+  <li class="tut">Choose Operations &gt; <tt>public void validateAccountInfo</tt> from the pop-up menu.<br>
+    The IDE places the selected operation on this link and numbers it with the integer 1.1. <br>
+    <br>
+    <b>Note: </b>You can select the operation flow and move it if needed. </li>
+</ol>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="add"></a>Adding Operations to a Class</h2>
+<p>In this procedure, you add a new operation to the Connector link. This operation is also added to the Branch class in the <tt>ClassDiagram</tt> diagram and to the Java source code.</p>
+<ol>
+  <li class="tut">Right-click the Connector link between Consortium and Branch, close to the Branch Lifeline element.</li>
+  <li class="tut">Choose Operations &gt; Add Operation from the pop-up menu.<br>
+    The label appears in the diagram with the word <tt>Unnamed</tt> highlighted.</li>
+  <li class="tut">Type <tt>verifyCardWithBank.</tt></li>
+  <li class="tut">Use the right arrow to move the cursor to the operation parameter field.</li>
+  <li class="tut">Type <tt>int stringCardStrip</tt> for the parameter and press Enter. <br>
+    The link is labeled <tt>1.1.1:public void verifyCardWithBank(int stringCardSTrip)</tt> and the operation appears in the Branch class in the <tt>ClassDiagram</tt> diagram.</li>
+  <li class="tut">On the Connector link between ATM and Branch, right-click close to the Branch Lifeline.</li>
+  <li class="tut">Choose Operations &gt; <tt>public char getConnected</tt> from the pop-up menu.<br>
+    The link is labeled <tt>1.2:public char getConnected()</tt>.</li>
+</ol>
+<p>Your finished diagram should resemble the following figure. </p>
+<p align="center"><img src="../../../images/articles/uml-collab-diagram/finished-collab-diagram.gif" alt="Completed Collaboration Diagram" border="0"></p>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="save"></a>Saving Your Diagram</h2>
+<p>After you have completed your Collaboration diagram, you can save it.</p>
+<ol>
+  <li class="tut">In the Diagram editor, right-click on the <tt>CollaborationDiagram</tt> tab.</li>
+  <li class="tut">Select Save Document from the pop-up menu.<br>
+    The menu closes and the diagram is saved.<br>
+    <br>
+    <b>Note: </b>When you exit from the IDE, you are prompted to save your project.</li>
+</ol>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2>Summary</h2>
+<p> In this tutorial, you learned to create a Collaboration diagram using an existing Class diagram. You learned how to perform the following tasks:</p>
+<ul>
+  <li class="tut">Generate a Collaboration diagram</li>
+  <li class="tut">Add Connector links to the diagram </li>
+  <li class="tut">Show message numbers on the diagram</li>
+  <li class="tut">Show and label operation flows</li>
+  <li class="tut">Add operations to existing links on the diagram</li>
+  <li class="tut">Save the diagram</li>
+</ul>
+<p>You can create a scoped Sequence diagram directly from this Collaboration diagram. Use the tutorial <a href="sequence-diagram.html" title="UML: Creating Sequence Diagrams">UML: Creating Sequence Diagrams</a> to learn how to do this.<br style="clear: both;">
+  <!-- ======================================================================================== -->
+</p>
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul><li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list<br>
+</p>
+    </li>
+</ul>
+<p>
+  <!-- Update your-tutorial-title below to reflect your tutorial title -----------------------------------* -->
+  <br>
+</p>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="collab-diagram.html#top">top</a></p>
+<p><small>&gt;&gt; <a href="index.html">More NetBeans IDE Documentation</a></small></p>
+
+</body>
+</html>

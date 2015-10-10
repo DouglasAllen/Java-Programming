@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Mixing Ruby and Java Applications - NetBeans IDE 6.0 Tutorial</title>
+<meta name="description" content="Mixing Ruby and Java Applications with NetBeans IDE 6.0">
+<meta name="author" content="Tor Norbye, Beth Stearns"> <!--Optional tag-->
+<meta name="keywords" content=""> 
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+</head>
+<body>
+
+<h1>Mixing Java and Ruby  Applications</h1>
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed by Tor Norbye and maintained by <a href="mailto:beth.stearns@sun.com"><i>Beth Stearns  </i></a><br>
+October 2007</em> [Revision number: V6.0-1]<br>
+This publication is applicable to NetBeans IDE 6.0 release</p>
+</div>
+
+<!-- IN PROGRESS: Sample Project space - This is an element used for links to any sources that may be used in the tutorial -->
+<p>This article shows how to combine Ruby and Java applications using the NetBeans IDE.</p>
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top"><p><b>Contents</b></p>
+        <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+          <tr valign="top">
+            <td width="13" class="hyphen">-&nbsp;</td>
+            <td width="374"><a href="java-ruby.html#tut_req">Article Requirements</a></td>
+          </tr>
+          <tr valign="top">
+            <td width="13" class="hyphen">-&nbsp;</td>
+            <td width="374"><a href="java-ruby.html#JavaProject">Create the Java Project </a></td>
+          </tr>
+          <tr valign="top">
+            <td width="13" class="hyphen">-&nbsp;</td>
+            <td><a href="java-ruby.html#edit">Edit the Java Project </a></td>
+          </tr>
+          <tr valign="top">
+            <td width="13" class="hyphen">-&nbsp;</td>
+            <td><a href="java-ruby.html#rails">Write the Rails Application </a></td>
+          </tr>
+      </table></td>
+    <td width="20"></td>
+    <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to NetBeans IDE 6.0" border="0"></td>
+  </tr>
+</table>
+<p>
+  <!-- Consider including a table of contents into your tutorial -------------------------------* -->
+  <!-- Use the sample format shown below -------------------------------------------------------* --></p>
+<h2><a name="tut_req"></a>Article Requirements</h2>
+<br>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<p>This article  shows how to combine Java applications with Ruby applications. Along the way, it demonstrates some of the latest Ruby capabilities in the NetBeans IDE 6.0. </p>
+<p>This article  requires the following:</p>
+<ul>
+  <li>A basic knowledge of programming with the <a href="http://www.ruby-lang.org" target="_blank">Ruby</a> technologies</li>
+  <li>NetBeans IDE 6.0 with Ruby on your computer 
+    <!-- ======================================================================================== -->
+</li>
+</ul>
+<h3>Set Up Instructions</h3>
+<p>There are several set-up tasks, principally involving database set up and including TopLink JAR files. Here is how to add the required currency data to a database table. When you set up the Rails project, you will add the necessary TopLink JAR files. </p>
+<p>You need to configure a database as follows:</p>
+<ul>
+  <li>Create a table named CURRENCY. </li>
+  <li>Create three string (or VARCHAR) columns in the CURRENCY table: Country, Currency, and Name. </li>
+  <li>Populate the table with some data. For example, you might add these three currencies plus any others you want: &quot;USA&quot;, &quot;Dollar&quot;, &quot;USD&quot;; &quot;Czech Republic&quot;, &quot;Koruna&quot;, &quot;CZK&quot;; "Norway&quot;, &quot;Krone&quot;, &quot;NOK".</li>
+</ul>
+<p> You also must set up NetBeans so that it can access the database table. That is, if need be,   configure a JDBC driver for the database and add a data source in the  Services window. </p>
+<p>For example, the following SQL creates a CURRENCY table in a Derby   database called SAMPLE (with a username and password combination of APP/APP). If you want to use the same SAMPLE database, you can execute this SQL from within the IDE (after connecting to the SAMPLE database) and create the table. Feel free to create your own Derby database, too, using the Tools-&gt;Java DB Database-&gt;Create Database action. The SQL to create the same table on a different database system may  differ from this example.</p>
+<pre>drop table &quot;APP&quot;.&quot;CURRENCY&quot;; 
+  create table &quot;APP&quot;.&quot;CURRENCY&quot; ( 
+country VARCHAR(20), currency VARCHAR(20), name VARCHAR (20), 
+id INTEGER GENERATED always AS IDENTITY); 
+ 
+ alter table CURRENCY add constraint currencyPK PRIMARY KEY (id); 
+  INSERT INTO CURRENCY VALUES ('USA', 'Dollar', 'USD',DEFAULT); 
+  INSERT INTO CURRENCY VALUES ('Czech Republic', 'Koruna', 'CZK',DEFAULT); 
+  INSERT INTO CURRENCY VALUES ('Norway', 'Krone', 'NOK',DEFAULT); 
+  INSERT INTO CURRENCY VALUES ('France', 'Euro', 'EU',DEFAULT);</pre>
+<h2><a name="JavaProject" id="JavaProject"></a>Create the Java Project </h2>
+<p>Once you have completed the setup tasks, you can create your project. Begin by creating a Java Desktop application, which is really a Swing application, and choose the option for database binding. The wizard takes you through the steps to connect the project, which we call Money, to the datasource, which in our case is the CURRENCY table on the Derby sample database. In a few button clicks you have a fully functional database CRUD application. </p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 1: Create a Desktop Database Application Called Money </b></p>
+  <p><span class="imgcap" style="margin:10px auto;"><a href="../../../images/articles/60/ruby/java-ruby/crudapp1.png" target="_blank"><img src="../../../images/articles/60/ruby/java-ruby/crudapp1-small.png" alt="Create database application" width="513" height="316" border="0" class="thumbimage" style="margin:5px auto;"></a></span></p>
+  <p><a href="../../../images/articles/60/ruby/java-ruby/crudapp1.png" title="Click to Enlarge" target="_blank">Click to enlarge</a></p>
+</div>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 2: Connect the Project to the Datasource </b></p>
+  <p><span class="imgcap" style="margin:10px auto;"><a href="../../../images/articles/60/ruby/java-ruby/crudapp2.png" target="_blank"><img src="../../../images/articles/60/ruby/java-ruby/crudapp2-small.png" alt="Connect project to datasource" width="469" height="272" border="0" class="thumbimage" style="margin:5px auto;"></a></span></p>
+  <p><a href="../../../images/articles/60/ruby/java-ruby/crudapp2.png" title="Click to Enlarge" target="_blank">Click to enlarge</a></p>
+</div>
+<p>Run the Money application (right click the project and select Run) and you should see a screen something like the following. (Use Ctrl+Q to quit the application.) </p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 3: Money Application </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/crudapp3.png" alt="Money Applicaton" class="thumbimage" style="margin:5px auto;" height="332" width="439"> </div>
+<h2><a name="edit"></a>Edit the Java Project </h2>
+<p>Start by examining the generated Java classes; in particular, the <tt>Currency.java</tt> class. Here are some tips for viewing the pieces of the project.</p>
+<p>From the Projects window, expand the project's Source Packages-&gt;money node and double-click <tt>Currency.java</tt> to open the file in the Source editor. The Editor window displays the entire class and its code. </p>
+<h3>Class Members </h3>
+<p>Press Ctrl+F12 to see a  list of the members of the Currency class. You can use the Members dialog to move around quickly within the class.  </p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 4: Currency.java Class Members </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/members.png" alt="Class members" class="thumbimage" style="margin:5px auto;" height="518" width="566"> </div>
+  <p>For example, to see the class definition, enter <tt>Cur</tt> in the Filter field.</p>
+  <div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 5: Currency Class Definition </b></p>
+  <p><img src="../../../images/articles/60/ruby/java-ruby/members1.png" alt="Curency Class definition" class="thumbimage" style="margin:5px auto;" height="345" width="566"></p>
+  </div>
+  <p><strong>Note</strong>: Be sure that the generated <tt>Currency.java</tt> code correctly declares the <tt>ID</tt> identifier field. You may have to add a line to the Java file that indicates that the identifier is generated and unique. The correct code for the identifier field follows. Note, too, adding the line for the generation type (<tt>@GeneratedValue (strategy=GenerationType.IDENTITY)</tt>) will probably result in a missing imports error and the line will be underlined in red. You can fix easily fix this by clicking the error and pressing Alt+Enter. </p>
+  <pre> @Id 
+ @GeneratedValue (strategy=GenerationType.IDENTITY) 
+ @Column(name = &quot;ID&quot;, nullable = false) 
+ private Integer id; </pre>
+  <h3>Task List</h3>
+<p>The IDE automatically maintains a task list showing compilation errors, warnings, and so forth. You can open and view the Task List at any time by pressing Ctrl+6.</p>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 6: Task List </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/tasklist.png" alt="Task List display" class="thumbimage" style="margin:5px auto;" height="188" width="583"> </div>
+<p>Examine the Currency source code. Notice that it contains Java Persistence API annotations. These annotations indicate the binding to the database columns and are marked with  an at sign (<tt>@</tt>). For example, the bindings to the  database columns are marked with <tt>@Column</tt>, followed by the column name and the Java variable, such as: <tt>@Column(name=&quot;COUNTRY&quot;) private String country;</tt> </p>
+<h3>Create a Java Class to Access Database Columns</h3>
+<p>You need to create a new Java class, which you call <tt>CurrencyLookup</tt>, that accesses these Java Persistence entities, the database columns. Later, your Rails application calls this <tt>CurrencyLookup</tt> class  to get the list of currencies from the database. The IDE Source editor code completion and template features help you with this task.</p>
+<p>In the <tt>CurrencyLookup</tt> class, write a <tt>getAll</tt> method to return the list of currencies. The completed method will look as follows. Note that the persistence unit, <tt>samplePU</tt>, matches the name of the <tt>SAMPLE</tt> database that we used; your persistence unit may be different. </p>
+<pre>public List&lt;Currency&gt; getAll() { 
+   EntityManager em = Persistence.createEntityManagerFactory(&quot;samplePU&quot;).createEntityManager(); 
+   Query query = em.createQuery(&quot;select c from Currency c&quot;);  
+   return query.getResultList();  
+}; </pre>
+<ol>
+  <li>Right click the <tt>money</tt> node in Source Packages and select New-&gt;Java Class. </li>
+  <li>Enter <tt>CurrencyLookup</tt> for the Class Name field in  the New Java Class dialog. (Be sure that the dialog indicates that the location is Source Packages and the package name is <tt>money</tt>. If not, set those fields accordingly.) The IDE creates a <tt>CurrencyLookup.java</tt> class and places it within the Source Packages-&gt;money node. </li>
+  <li>Write the method to return a list of all currencies. The IDE  functions (such as code completion, fix imports, and so forth) can help. Start by typing in <tt>pu</tt> (for <tt>public</tt>) somewhere within the <tt>CurrencyLookup</tt> class, then press Ctrl+Space. Notice that the IDE completes the text for you.
+    (Note that the short cut key combinations  shown here are for a Windows platform and may be different on other platforms.
+    You should refer to the Help-&gt;Keyboard Shortcuts file for the exact key combination for your environment.)
+    <div class="imgcap" style="margin:10px auto;">
+      <p><b>Figure 7: Code Completion </b></p>
+      <img src="../../../images/articles/60/ruby/java-ruby/edit1.png" alt="Code completion" class="thumbimage" style="margin:5px auto;" height="172" width="309"> </div>
+  </li>
+  <li>Type in <tt>List&lt;Cu</tt>, followed by the key combination Ctrl+K to complete the <tt>Currency</tt> class name. The IDE completes the name as <tt>CurrencyLookup</tt>, so be sure to delete <tt>Lookup</tt>. 
+    <div class="imgcap" style="margin:10px auto;">
+      <p><b>Figure 8: Class Name Completion </b></p>
+      <img src="../../../images/articles/60/ruby/java-ruby/edit2.png" alt="Code completion" class="thumbimage" style="margin:5px auto;" height="105" width="384"> </div>
+  </li>
+  <li>Continue to enter the method name and the rest of the code for the method.  </li>
+</ol>
+<h3>More Source Code Editing Tips </h3>
+<p>Here are some other source code editing tips:</p>
+<ul>
+  <li> Use the Editor window's context menu Fix Imports function to import any missing classes. </li>
+  <li>Press Alt+Enter to see a tip regarding  missing components from a method. </li>
+  <li>When editing a method body, pressing Return inserts the matching right brace (<tt>}</tt>). </li>
+  <li>You can replace a word quickly by placing the cursor on that word, then pressing Ctrl+R and entering the new text. </li>
+</ul>
+<p>When you complete the <tt>CurrencyLookup</tt> query class, you can test it if you want. Use the Tools-&gt;Create JUnit Test function, or use the shortcut key combination Ctrl+Shift+U. This generates a skeleton <tt>CurrencyLookupTest</tt>  class. You can delete the dummy code and add an <tt>assertFalse</tt>  line for testing. For example, you might add the following line to test that a line of data returned from the database is not empty: assertFalse("contains data", new CurrencyLookup().getAll().isEmpty());. Then, use Shift+F6 to run the test. </p>
+<h2><a name="rails"></a>Write the Rails Application </h2>
+<p>Now create the Rails application that will access the Java code in the Money application. You first have to do some minor set-up work, including building the Money project and adding some Java JAR files to the Rails project.</p>
+<h3>Create and Set-Up the Rails Project  </h3>
+<ol>
+  <li>First, be sure that the Money Java desktop application is built. Select the project's context menu Clean and Build function, or  press Shift+F11. </li>
+  <li>Create a new Ruby-&gt;Ruby on Rails project. Accept the wizard's defaults and the IDE generates the Rails project. 
+    (If you have installed  native C Ruby, then you are asked to choose a Ruby interpreter. You should choose the bundled JRuby interpreter.)
+    <div class="imgcap" style="margin:10px auto;">
+      <p><b>Figure 9: Create the Rails Project </b></p>
+      <p><span class="imgcap" style="margin:10px auto;"><a href="../../../images/articles/60/ruby/java-ruby/ruby1.png" target="_blank"><img src="../../../images/articles/60/ruby/java-ruby/ruby1-small.png" alt="Create Rails project" width="492" height="321" border="0" class="thumbimage" style="margin:5px auto;"></a></span></p>
+      <p><a href="../../../images/articles/60/ruby/java-ruby/ruby1.png" title="Click to Enlarge" target="_blank">Click to enlarge</a></p>
+    </div>
+  </li>
+  <li>Next,  set up some Java properties for the Rails project. Specifically, you need to add the TopLink JAR files for the Java Persistence API, plus the JAR file for the Money Java desktop application. (The <tt>Money.jar</tt> file is in the Money project's <tt>/dist</tt> directory.) Right click the Rails project node and select Properties. Select the Java category, then the Add JAR/Folder button. Navigate to the three JAR files and include them.  
+    Be sure to include the <tt>toplink-essentials-agent.jar</tt> and <tt>toplink-essentials.jar</tt>, both of which can  be found in your NetBeans installation's <tt>java1/modules/ext/toplink/</tt> directory. It's not necessary  to    edit the Rails' <tt>config/database.yml</tt> file in this project since the Rails application uses Java code for its database lookup operations.
+    <div class="imgcap" style="margin:10px auto;">
+      <p><b>Figure 10: Include the JAR Files </b></p>
+      <img src="../../../images/articles/60/ruby/java-ruby/ruby3.png" alt="Include JAR files" class="thumbimage" style="margin:5px auto;" height="468" width="560"> </div>
+  </li>
+</ol>
+<h3>Add Currency Lookup to Rails Project </h3>
+<p>Here you modify the generated Rails project to use the currency lookup code from the Money Java project. </p>
+<ol>
+  <li>First, run the Rails project to bring up the default, empty Rails page in the browser. Edit the default URL to set it to the application. For example, you should see a URL something like <tt>http://localhost:3001/</tt> to which you append <tt>/money/list</tt>. The browser displays a routing error message. When you complete your coding--you will be adding an action to respond to this URL--then the application will run correctly in the browser. </li>
+  <li>Use the Rails code generator to create a money controller and a list view. From the Rails project context menu, select Generate. In the Rails Generator dialog, select <tt>controller</tt> in the Generate field, and type <tt>money</tt> in the Name field and <tt>list</tt> in the View field. Click OK.</li>
+</ol>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 11: Generate Money Controller </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/generate.png" alt="Generate mondey controller" class="thumbimage" style="margin:5px auto;" height="457" width="423"> </div>
+<p>The generated <tt>money</tt> controller  opens in the Editor window. Add code to the controller to enable the application to access Java code (<tt>require 'java'</tt>) and include the <tt>CurrencyLookup</tt> Java class (<tt>include_class 'money.CurrencyLookup'</tt>). Once you've done that, you can  call the Money project <tt>CurrencyLookup</tt> Java class just like any other class. Keep in mind, too, that the IDE has Ruby and Rails-specific code completion available; press Ctrl+K and Ctrl+Space for help completing method names and so forth. </p>
+<p>Here's the complete code for the <tt>MoneyController</tt> class:</p>
+<pre>class MoneyController &lt; ApplicationController 
+  def list 
+    require 'java' 
+    include_class 'money.CurrencyLookup' 
+    lookup = CurrencyLookup.new 
+    @list = lookup.get_all 
+  end<br>end</pre>
+<h3>Set Up the View</h3>
+<p>Here's how to  produce a nicely formatted table showing the three columns from the database. We also show you  some of the IDE Ruby shortcuts. </p>
+<ol>
+  <li>Open the list view generated for the <tt>MoneyController</tt> class. Use the Navigate-&gt;Goto Rails Action/View function, or Ctrl+Shift+A. The <tt>list.rhtml</tt> file, or <tt>Money#list</tt> view, opens in the Editor window. </li>
+  <li>Insert a table skeleton in the list view. To do this quickly, type <tt>table</tt> and press the Tab key. The IDE adds the HTML for the table rows and cells.</li>
+
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 12: Using Tab Shortcut </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/table.png" alt="Using Tab shortcut" class="thumbimage" style="margin:5px auto;" height="192" width="411"> </div>
+<p>&nbsp; </p>
+
+  <li>Select the table row (<tt>&lt;tr&gt;</tt>) block and press Alt+Enter. Since you want the code to iterate over the list of currencies, you want to surround the table rows with a <tt>for</tt> loop. The Alt+Enter shortcut  displays a quick fix option, which appears with a lightbulb icon. Choose the option <tt>Surround with for</tt>, then press Enter. </li>
+
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 13: Using Alt+Enter Shortcut </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/view1.png" alt="Using Alt+Enter shortcut" class="thumbimage" style="margin:5px auto;" height="397" width="408"> </div>
+<li>Now, change the parameters of the <tt>for</tt> loop to match the currency data. Use the Tab key to move through these parameters. Call the loop variable <tt>c</tt> instead of <tt>f</tt> and change <tt>@field</tt> to <tt>@list</tt>. Use the code completion shortcut to add additional table cell tags (<tt>&lt;td&gt;&lt;/td&gt;</tt>) within the row tag (<tt>&lt;tr&gt;&lt;/tr&gt;</tt>). </li>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 14: Using Code Completion to Add HTML Tags </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/table1.png" alt="Using code completion to add HTML tags" class="thumbimage" style="margin:5px auto;" height="529" width="552"> </div>
+<li>Insert a code template for a Ruby expression within the table cell tags. Type <tt>re</tt> then press the Tab key. The IDE inserts the Ruby expression <tt>&lt;%= %&gt;</tt>. </li>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 15: Inserting Ruby Expressions </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/table2.png" alt="Inserting Ruby expressions" class="thumbimage" style="margin:5px auto;" height="141" width="285"> </div>
+<li>Set up three such table cell blocks, each containing the <tt>&lt;%= %&gt;</tt> Ruby expression. Insert the currency column names (<tt>c.country</tt>, <tt>c.code</tt>, and <tt>c.name</tt>) within the <tt>&lt;%= %&gt;</tt> blocks. When you're done, the code should look as follows: </li>
+<pre>&lt;h1&gt;Money#list&lt;/h1&gt; 
+  &lt;p&gt;Find me in app/views/money/list.rhtml&lt;/p&gt; 
+  &lt;table border=&quot;1&quot;&gt; 
+&lt;% for c in @list %&gt; 
+&lt;tr&gt; 
+  &lt;td&gt;  
+     &lt;%= c.country %&gt;  
+  &lt;/td&gt;  
+  &lt;td&gt; 
+     &lt;%= c.currency %&gt;  
+  &lt;/td&gt; 
+  &lt;td&gt; 
+     &lt;%= c.name %&gt;  
+  &lt;/td&gt; 
+&lt;/tr&gt;
+&lt;%end%&gt;
+&lt;/table&gt;</pre>
+<li>Press Shift+F6 to view the table in the browser. You should see something like the following, depending on the currencies you have added to the database:</li></ol>
+<div class="imgcap" style="margin:10px auto;">
+  <p><b>Figure 16: Displaying the Ruby Currency Table </b></p>
+  <img src="../../../images/articles/60/ruby/java-ruby/table4.png" alt="Displaying the currency table via Ruby project" class="thumbimage" style="margin:5px auto;" height="438" width="422">
+  <!-- ======================================================================================== -->
+</div>
+<h2><a name="summary"></a>Summary</h2>
+<p>This article demonstrated how you can combine a Ruby on Rails application with a Java desktop application. The Java desktop application contained code to access a database table and the Ruby application called the Java database table access code to retrieve and display the data. </p>
+<p>The article also illustrated a number of the keyboard shortcuts available when developing Java and Ruby applications. </p>
+<br>
+<!-- ======================================================================================== -->
+<!-- ======================================================================================== -->
+<h2><a name="see_also"></a>Next Steps </h2>
+<br>
+<ul>
+<li>Check out the <a href="../../trails/ruby.html">Ruby and Rails Learning Trail</a> to learn  more about NetBeans IDE support for Ruby. </li>
+<li>To obtain support and stay informed of the latest 
+  changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a> mailing lists. </li>
+  <li>
+  To submit your own NetBeans Ruby tutorial, please visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+</ul>
+<br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear: both;">
+</body>
+</html>

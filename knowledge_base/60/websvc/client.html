@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!-- -*- xhtml -*- -->
+<title>Getting Started with JAX-WS Web Service Clients</title>
+  <meta name="description"
+ content="NetBeans IDE 6.0 Tutorial for Web Service Clients">
+  <link rel="stylesheet" type="text/css"
+ href="../../../netbeans.css">
+  <meta name="AUTHOR" content="Geertjan Wielenga">
+  <meta name="description"
+ content="An overview, including a simple example, of web service consumption support in NetBeans IDE 6.0.">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+</head>
+<body>
+<h1>Getting Started with JAX-WS Web Service Clients</h1>
+
+
+<p>In this tutorial, you use the web service facilities provided by
+ NetBeans IDE 6.0 to analyze a Spell Checker web service, after which
+ you build a web client that interacts with it. 
+ 
+<div class="indent"> 
+ 
+ <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+	  <ul>
+                  <li><a href="client.html#exploringthefacilities">Consuming the Spell Checker Web Service</a></li>
+                  <ul><li><a href="client.html#creatingtheclient">Creating the Client</a></li>
+                <li><a href="client.html#developingtheclient">Developing the Client</a></li>
+                <ul>
+                <li><a href="client.html#codingthejsppage">Coding the JSP Page</a></li>
+                <li><a href="client.html#creatingandcodingtheservlet">Creating and Coding the Spell Check Servlet</a></li>
+                </ul>
+                 <li><a href="client.html#deployingtheclient">Deploying the Client</a></li></ul>
+                <li><a href="client.html#applyingwhatyouhavelearned">Applying What You Have Learned</a></li>
+                 <li><a href="client.html#nextsteps">Next Steps</a></li>
+         </ul>
+      </td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+
+  
+ <h3 class="tutorial">Software Needed for the Tutorial</h3>
+<p>Before you begin, you need to download or install the following software on your computer:</p>
+<ul>
+    <li>NetBeans IDE 6.0 Web &amp; Java EE. </li>
+    <li>Java Standard Development Kit (JDK) version 5.0 or version 6.0.</li>
+    <li>Glassfish V2 or Tomcat Web Server, both of which you can select from the installer
+    that you use to install NetBeans IDE 6.0.</li>
+
+</ul>
+ 
+</div>
+  
+ <p>This is what your client will
+ look like, with all data received from the web service:
+ 
+ <p><img src="../../../images/articles/jaxws/jaxwsc-spellchecker-report.png" border="1" align="middle" alt="Entry page" vspace="5" hspace="5"></p>
+
+ 
+
+<p>By the end of this tutorial, you discover that your only contribution to the application consists of
+ providing the text to be checked, invoking an operation on the web service, and rendering the result. 
+ The IDE generates all the code needed
+ for contacting the web service and sending the text. The spell checker web service takes care of the
+ rest, it identifies the misspelled words and provides a list of suggested alternatives.
+
+     
+<p><b>Note:</b> The spell checker web service used in this tutorial is provided by
+ the <a href="http://www.cdyne.com/account/home.aspx" target="_blank">CDYNE Corporation.</a> CDYNE develops, markets and supports 
+ a comprehensive suite of data enhancement, data quality and data analysis web services and business intelligence 
+ integration. The spell checker web service is one of the web services provided by CDYNE. Note that
+ the strength of an application based on one or more web services depends on the availability and reliability of the web services. However, 
+ CDYNE's <a href="http://www.cdyne.com/company/faqs.aspx" target="_blank">FAQ</a> points out that it has a "100% availability 
+ objective" and that in the event of "natural disaster, act of terror, or other catastrophe, web service traffic 
+ is transferred to our secondary data center". NetBeans thanks CDYNE for enabling this tutorial to be written
+ and for supporting its development.
+
+<h2>Consuming the Spell Checker Web Service<a name="exploringthefacilities"></a></h2>
+
+<p>To consume a web service, you need to create a web service client.
+ For the creation of web service clients, NetBeans IDE 6.0 provides a client creation facility&#8212;the Web Service Client 
+ wizard that generates code for looking up a web service. It also provides facilities for developing the created web service client 
+&#8212;a work area consisting of nodes in the Projects window. 
+ These facilities are part of the standard NetBeans IDE installation, they're available straight out of the box and no plug-ins
+are needed.</p> 
+
+<div class="indent">	
+  
+<h3 class="tutorial">Creating the Client<a name="creatingtheclient"></a></h3>
+
+<p>In this section, we use a wizard to generate Java objects from the web service's
+WSDL file.</p>
+
+<ol>
+
+    <li>Choose File &gt; New Project (Ctrl-Shift-N). Under Categories, choose Web. Under Projects,
+    choose Web Application. Click Next. Name the project <tt>SpellCheckService</tt> and make sure
+that you specify an appropriate server as your target server. (Refer
+to the "Getting Started" section for details.) Click Finish.</li>
+
+<li>In the Projects window, right-click the <tt>SpellCheckService</tt> project 
+node and
+ choose New &gt; Other. In the New File wizard choose Web 
+ Services &gt; Web Service Client. In the
+Web Service Client wizard, specify the URL to the web service:
+
+<p><p><a href="http://ws.cdyne.com/SpellChecker/check.asmx" target="_blank">http://ws.cdyne.com/SpellChecker/check.asmx</a></p>
+
+<p>If you are behind a firewall, you might need
+        to specify a proxy server&#8212;otherwise the WSDL file cannot be downloaded. If so, click Proxy Settings in the Web Service Client wizard and set
+        your proxy host and port number.</p></li>
+        
+        <li>Enter <tt>org.netbeans.end2end.check.client</tt> as the package
+    name. The package name specifies the package to which the client objects 
+    will be generated.
+    You should now see this:
+
+<p><img src="../../../images/articles/jaxws/jaxwsc-websvc-wizard.png" border="1" align="middle" alt="Cdyne service" vspace="5" hspace="5"></li>
+        
+<li>Click Finish.</li>
+</ol>
+
+<p>In the Projects window, within the Web Service References node, you should see the following:</p>
+
+<p><img src="../../../images/articles/jaxws/jaxwsc-projects-window.png" border="1" align="middle" alt="Projects window" vspace="5" hspace="5"></p>
+
+<p>The Projects window shows that a web service called 'check' has made the operation 'CheckTextBody'
+available to your application. The 'CheckTextBody' operation checks a string for spelling errors and returns data
+to be processed by the client. You will use this operation throughout this tutorial.</p> 	 
+
+<p>In the Files window, within the <tt>build</tt> node, you should see the following:</p>
+
+<p><img src="../../../images/articles/jaxws/jaxwsc-files-window.png" border="1" align="middle" alt="Files window" vspace="5" hspace="5"></p>
+
+<p>The Files window shows the client stubs that were generated by the JAX-WS Web Service Client wizard.
+
+
+  <h3 class="tutorial">Developing the Client<a name="developingtheclient"></a></h3>
+<div class="indent">
+
+<p>There are many ways to implement a web service client. The web service's WSDL file restricts the type of
+ information that you can send to the web service, and it restricts the type of information you should expect to receive in return.
+ However, the WSDL file lays no restrictions on <i>how </i> you pass the information it needs, nor on <i>what</i> the
+ user interface consists of. The client implementation you build below consists of a JSP page which allows the user to enter text
+to be checked and a servlet which passes the text to the web service and then produces a report containing the result.</p>
+	
+<h4>Coding the JSP Page<a name="codingthejsppage"></a></h4>
+
+<p>Our JSP page will simply consist of a text area, where the user will enter some text,
+and a button for sending the text to the web service.</p>
+
+<ol>
+    
+    <li>In the Projects window, expand the Web Pages node and double-click <tt>index.jsp</tt>
+    so that it opens in the Source Editor.</li> 
+    
+    <li>Copy the following code and paste it over the <tt>&lt;body&gt;</tt> tags in <tt>index.jsp</tt>:
+
+<pre class="examplecode">&lt;body&gt;
+  &lt;form name="Test" method="post" action="SpellCheckServlet"&gt;
+     &lt;p&gt;Enter the text you want to check:&lt;/p&gt;
+     &lt;p&gt;
+     &lt;p&gt;&lt;textarea rows="7" name="TextArea1" cols="40" ID="Textarea1"&gt;&lt;/textarea&gt;&lt;/p&gt;
+     &lt;p&gt;
+     &lt;input type="submit" value="Spell Check" name="spellcheckbutton"&gt;
+  &lt;/form&gt;
+&lt;/body&gt;</pre>
+
+<p>The above code specifies that when the submit button is clicked, the content of the <tt>textarea</tt> is posted
+to a servlet called <tt>SpellCheckServlet</tt>.</li> 
+
+</ol>
+
+<h4>Creating and Coding the Servlet<a name="creatingandcodingtheservlet"></a></h4>
+
+<p>In this section we create a servlet that will interact with the web service. However,
+    as we will see, the code that performs the interaction will be provided by the IDE. As
+ a result, you only need to deal with the business logic, that is, the preparation of
+the text to be sent and the processing of the result.</p>
+
+<ol>
+    <li>Right-click the project node in the Projects window,
+        choose New &gt; Other and then choose Web &gt; Servlet. Click
+        Next. Name the servlet <tt>SpellCheckServlet</tt> and type <tt>org.netbeans.end2end.check.client</tt> in the Package drop-down. 
+    Click Next. Note that the URL mapping for this servlet is <tt>/SpellCheckServlet</tt>, as shown below:
+ 
+<p><img src="../../../images/articles/jaxws/jaxwsc-servlet.png" border="1" align="middle" alt="Display in browser" vspace="5" hspace="5"></p>
+ 
+ <p>Click Finish. The servlet opens in the Source Editor.</li>
+ 
+ 
+     <li>Put your cursor inside the Source Editor, inside the 
+     <tt>processRequest</tt> method, add some new lines right
+     at the top of the method. 
+     
+     <li>Right-click in the space that you created in the
+     previous step, and choose Web Service
+     Client Resources &gt; Call Web Service Operation. Click the <tt>CheckTextBody</tt>
+ operation in the "Select Operation to Invoke" dialog box,as shown below:
+ 
+<p><img src="../../../images/articles/jaxws/jaxwsc-select-operation.png" border="1" align="middle" alt="Display in browser" vspace="5" hspace="5"></p>
+
+<p>Click OK.</p>
+
+<p><b>Note:</b> You can also drag and drop the operation node
+ directly from the Projects window into the editor, instead
+ of calling up the dialog shown above.
+ 
+
+
+<p>At the top of
+the <tt>processRequest</tt> method you see a snippet of code that 
+ invokes the web service, as shown below:
+ 
+<pre>try { // Call Web Service Operation
+    org.netbeans.end2end.check.client.CheckSoap port = service.getCheckSoap();
+    // TODO initialize WS operation arguments here
+    java.lang.String bodyText = "";
+    java.lang.String licenseKey = "";
+    // TODO process result here
+    org.netbeans.end2end.check.client.DocumentSummary result = port.checkTextBody(bodyText, licenseKey);
+    out.println("Result = "+result);
+} catch (Exception ex) {
+    // TODO handle custom exceptions here
+}</pre> 
+ 
+<p>This method is all you need to work with to invoke
+the operation on the web service. In addition, the 
+following lines of code are declared at the top
+ of the class:
+ 
+ <pre>@WebServiceRef(wsdlLocation = "http://ws.cdyne.com/SpellChecker/check.asmx?WSDL")
+private Check service;</pre>
+
+<li>Replace the entire <tt>processRequest</tt> method with
+ the code that follows. The in-line comments throughout the code below explain the purpose of
+ each line.
+ 
+ <pre class="examplecode">protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    PrintWriter out = response.getWriter();
+
+    try {
+
+        <b>// Call Web Service Operation</b>
+        String TextArea1 = request.getParameter("TextArea1");
+
+        org.netbeans.end2end.check.client.CheckSoap port = service.getCheckSoap();
+
+        <b>// TODO initialize WS operation arguments here</b>
+        java.lang.String bodyText = TextArea1;
+        java.lang.String licenseKey = "0";
+
+        <b>// TODO process result here</b>
+        org.netbeans.end2end.check.client.DocumentSummary doc = port.checkTextBody(bodyText, licenseKey);
+        String allcontent = doc.getBody();
+
+        <b>//From the retrieved document summary,
+        //identify the number of wrongly spelled words:</b>
+        int no_of_mistakes = doc.getMisspelledWordCount();
+
+        <b>//From the retrieved document summary,
+        //identify the array of wrongly spelled words:</b>
+        List allwrongwords = doc.getMisspelledWord();
+
+        out.println("&lt;html&gt;");
+        out.println("&lt;head&gt;");
+
+        <b>//Display the report's name as a title in the browser's titlebar:</b>
+        out.println("&lt;title&gt;Spell Checker Report&lt;/title&gt;");
+        out.println("&lt;/head&gt;");
+        out.println("&lt;body&gt;");
+
+        <b>//Display the report's name as a header within the body of the report:</b>
+        out.println("&lt;h2&gt;&lt;font color='red'&gt;Spell Checker Report&lt;/font&gt;&lt;/h2&gt;");
+
+        <b>//Display all the content (correct as well as incorrectly spelled) between quotation marks:</b>
+        out.println("&lt;hr&gt;&lt;b&gt;Your text:&lt;/b&gt; \"" + allcontent + "\"" + "&lt;p&gt;");
+
+        <b>//For every array of wrong words (one array per wrong word),
+        //identify the wrong word, the number of suggestions, and
+        //the array of suggestions. Then display the wrong word and the number of suggestions and
+        //then, for the array of suggestions belonging to the current wrong word, display each
+        //suggestion:</b>
+        for (int i = 0; i &lt; allwrongwords.size(); i++) {
+            String onewrongword = ((Words) allwrongwords.get(i)).getWord();
+            int onewordsuggestioncount = ((Words) allwrongwords.get(i)).getSuggestionCount();
+            List allsuggestions = ((Words) allwrongwords.get(i)).getSuggestions();
+            out.println("&lt;hr&gt;&lt;p&gt;&lt;b&gt;Wrong word:&lt;/b&gt;&lt;font color='red'&gt; " + onewrongword + "&lt;/font&gt;");
+            out.println("&lt;p&gt;&lt;b&gt;" + onewordsuggestioncount + " suggestions:&lt;/b&gt;&lt;br&gt;");
+            for (int k = 0; k &lt; allsuggestions.size(); k++) {
+                String onesuggestion = (String) allsuggestions.get(k);
+                out.println(onesuggestion);
+            }
+        }
+
+        <b>//Display a line after each array of wrong words:</b>
+        out.println("&lt;hr&gt;");
+
+        <b>//Summarize by providing the number of errors and display them:</b>
+        out.println("&lt;font color='red'&gt;&lt;b&gt;Summary:&lt;/b&gt; " + no_of_mistakes + " mistakes (");
+        for (int i = 0; i &lt; allwrongwords.size(); i++) {
+            String onewrongword = ((Words) allwrongwords.get(i)).getWord();
+            out.println(onewrongword);
+        }
+
+        out.println(").");
+        out.println("&lt;/font&gt;");
+        out.println("&lt;/body&gt;");
+        out.println("&lt;/html&gt;");
+        out.close();
+
+    } catch (Exception ex) {
+        System.out.println("exception" + ex);
+        out.println("exception" + ex);
+    }
+
+    out.println("&lt;/body&gt;");
+    out.println("&lt;/html&gt;");
+    out.close();
+}</pre>
+
+    <p>Note that error handling has not been dealt with in the code above. 
+     See <a href="client.html#applyingwhatyouhavelearned">Applying What You Have Learned</a>
+     for details.
+</ol>
+
+</div>
+
+
+<h3 class="tutorial">Deploying the Client<a name="deployingtheclient"></a></h3>
+
+<p>The IDE uses an Ant build script to build and run your application. The IDE generates the 
+build script based on the options you entered when creating the project. You can finetune these options in the
+project's Project Properties dialog box (right-click the project node in the Projects window and choose Properties).
+
+<ol>
+        <li>Right-click the project node and choose Run Project. <p><p>After a while, the application should deploy 
+            and display the JSP page that you coded in the previous section. Enter some text, making sure that
+        some of it is incorrectly spelled:</p>
+
+<p><img src="../../../images/articles/jaxws/jaxwsc-spellchecker-form.png" border="1" align="middle" alt="Entry page" vspace="5" hspace="5">
+
+<li>Click Spell Check and see the result:
+<p><img src="../../../images/articles/jaxws/jaxwsc-spellchecker-report.png" border="1" align="middle" alt="Entry page" vspace="5" hspace="5"></p>
+
+	<!--<li>Use the application as described in <a href="#gettingtoknowthesample">Getting to Know the Sample</a>. For
+	troubleshooting, see <a href="#troubleshooting">Troubleshooting</a>.-->
+</ol>
+
+</div>
+<br/>
+
+<h2><a name="applyingwhatyouhavelearned"></a>Applying What You Have Learned</h2>
+<p>Now that you have completed your first web service client in the IDE, it is time
+    to stretch your skills and extend the application to be all that it was destined to be.
+Below are two suggested tasks to get you started.</p>
+        <ul>
+	<li>Add error handling code to the servlet.</li>
+        <li>Rewrite the client so that the user can interact with the data returned from the web service.
+            For inspiration, see <a href="http://www.cdyne.com/SpellChecker/" target="_blank">the client implementation on the CDYNE site</a>.
+        It looks like this:
+    <p><img src="../../../images/articles/jaxws/jaxwsc-cdyne.png" border="1" align="middle" alt="Cdyne service" vspace="5" hspace="5"></li>
+</ul>
+
+
+
+
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;" />
+<!-- ======================================================================================= -->
+<h2><a name="nextsteps"></a>Next Steps</h2>
+<p>For more information about using NetBeans IDE 6.0 to develop Java EE applications, see the following resources:
+</p>
+<ul>
+    <li><a href="http://www.netbeans.org/kb/60/websvc/ejb.html" target="_blank">End-to-End Web Service Creation and Consumption</a></li>
+    <li><a href="jax-ws.html">Getting Started with JAX-WS Web Services</a></li>
+    <li><a href="http://www.netbeans.org/kb/60/websvc/jaxb.html" target="_blank">Getting Started with JAXB</a></li>
+    <li><a href="rest.html" target="_blank">Getting Started with RESTful Web Services</a></li>
+    <li><a href="http://www.netbeans.org/kb/60/websvc/google.html" target="_blank">Consuming Google Web Services in Web Applications</a></li>
+    <li><a href="http://www.netbeans.org/kb/60/websvc/strikeiron.html" target="_blank">Consuming StrikeIron Web Services in Web Applications</a></li>
+    <li><a href="http://www.netbeans.org/kb/60/websvc/wsit.html" target="_blank">Advanced Web Service Interoperability</a></li>
+    <li><a href="../../trails/java-ee.html">Java EE Applications Learning Trail</a></li>
+
+</ul>
+<p>To send comments and suggestions, get support, and keep informed on the latest
+    developments on the NetBeans IDE Java EE development features, <a href="http://www.netbeans.org/community/lists/top.html" target="_blank">join
+the nbj2ee@netbeans.org mailing list</a>.</p>
+</body>

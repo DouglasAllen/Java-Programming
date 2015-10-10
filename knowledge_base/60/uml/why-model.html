@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Why Model With UML?</title>
+<meta name="description" content="Why Model With UML?">
+<meta name="author" content="Kris Richards">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<script type="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=800,height=600,left=500,top=100,scrollbars=yes');
+return false;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+.style1 {color: #FF0000}
+.style2 {font-style: italic}
+-->
+</style>
+</head>
+<body>
+<a name="top"></a>
+<h1>Why Model With UML?</h1>
+<div class="articledate" style="margin-left: 0px;">
+<p> <i>Contributed by Kris Richards and Cindy Castillo, maintained by Bob May </i></p>  
+<p>Last Updated:  October 2007</p>
+</div>
+<h2>Abstract</h2>
+<p>The purpose of the Unified Modeling Language (hereinafter referred to as UML) is to provide a language-independent and platform independent modeling notation. UML tools 
+are as versatile as the UML is foundational. This article serves as a primer for the basic concepts of UML while providing an understanding 
+of the purposes of modeling. It is not meant to be a how-to manual, but links are provided, where appropriate, to take you to well-executed tutorials to illustrate the steps on how to use the UML features offered in the NetBeans IDE. </p>
+<p>This article is written for those engineers who can never find time to model a project before starting to code and for those engineers 
+who have not yet considered creating models of their systems prior to coding them. This article presents some methods and strategies to 
+help you be more efficient and possibly even save time. The information in this article might even enable you to challenge the rationale, 
+&quot;We never have time to do it right, but always have time to do it again.&quot;</p>
+
+<h2>Contents</h2>
+<div style="margin-left: 40px;"><a href="why-model.html#introduction">Introduction</a><br>
+<a href="why-model.html#compiling_napkin">Compiling the Napkin </a><br>
+<a href="why-model.html#thinking">What Were They Thinking</a><br>
+<a href="why-model.html#summary">Summary</a><br>
+</div>
+<h2><a name="introduction" id="introduction"></a>Introduction <br>
+</h2>
+<p>At the coffee shop, when you envisioned &quot;an amazing&quot; piece of software, you excitedly grabbed a napkin and drew pictures to 
+add clarity to your thoughts. Your pictures were most likely a collection of chicken scratches that meant nothing to anyone but yourself. </p>
+<p>But it did mean something to you: Those chicken scratches were the explanation of an idea that you might dedicate the next two years 
+of your life to seeing realized. What you created was a rudimentary model. In your mind, the boxes
+represented one element, while the circles, triangles and lines represented another element. You invented a modeling language on the 
+back of a napkin. If you could just compile and run the napkin, you would be done. This is not as impossible as it might sound. If you 
+spent the next couple of months teaching the computer what each napkin object represented and how to generate source code for each 
+object, compiling the napkin would be possible.</p>
+<p>Throughout the last 25 years of napkin modeling, a handful of very good modeling languages have been created. Enter the Unified Modeling
+Language (UML). Modelers gathered all their napkins and agreed on the definitions of each object and the relationships between the objects. With this Unified 
+Modeling Language, language-specific programmers started developing templates to create code for the different objects. Now, as long as you
+draw objects on your napkin that are part of UML, your napkin can be compiled.</p>
+<p>&quot;Why should I model?&quot; This is a great question! In this article, two answers are submitted for your consideration: Think of them 
+as UML use cases. The first answer, under &ldquo;<a href="why-model.html#compiling_napkin">Compiling the Napkin</a>,&rdquo;  focuses on the engineer 
+sketching ideas on the whiteboard or coffee shop napkin. The objective of this section is to show you the benefits of modeling during the 
+planning stages of your project. Multiple tutorials linked throughout the section can lead you through the details of performing the 
+modeling.</p>
+<p>The second answer to &ldquo;why model&rdquo; question, found in &ldquo;<a href="why-model.html#thinking">What Were They Thinking</a>&rdquo; section, 
+focuses on that frustrated sustaining engineer who was handed 300,000 lines of code and given the task to maintain it and fix bugs. He is 
+happy to see that the original programmer knew about packages, but still does not see how it all fits together. If this is you and you are 
+visual, you long to see a diagram of the system to get an idea of what the original programmer was thinking. This is a common use case for UML tools.
+You effectively parse the code to create a model (called &ldquo;reverse engineering&rdquo;), from which you can create diagrams.
+</p>
+<!-- The following images give a glimpse of the different diagrams offered with the UML Modeling in NetBeans IDE 5.5. Click on the image thumbnails to view the larger image.><br> 
+</font></p>
+<TABLE align="center" width=65% BORDER=0 CELLPADDING=2 CELLSPACING=10>
+	<TR>
+	  <TD width="13%" height="80"><A NAME="id1"></A>
+        <a href="why-uml-files/Activity.png"><img src="why-uml-files/Picture7.png" name="graphics1" alt="Activity Diagram" align=center width=52 height=52 border=0></a> </TD>
+		<TD width="13%"><A NAME="id2"></A>
+			<a href="why-uml-files/Class.gif"><IMG SRC="why-uml-files/Completed-Class-Diagram.png" alt="Completed Class Diagram" NAME="graphics2" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></TD>
+		<TD width="13%"><A NAME="id3"></A>
+			<a href="why-uml-files/Collab.gif"><IMG SRC="why-uml-files/finished-collab-diagram.png" alt="Finished Collaboration Diagram" NAME="graphics3" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></TD>
+		<TD width="13%">
+			<A NAME="id4"></A><a href="why-uml-files/Component.png"><IMG SRC="why-uml-files/Component.png" alt="Component Diagram" NAME="graphics4" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A>
+		</TD>
+		<TD width="13%"><A NAME="id7"></A>
+			<a href="why-uml-files/UseCase.gif"><IMG SRC="why-uml-files/UseCase3-finished-diagram.png" alt="Finished Use Case Diagram" NAME="graphics5" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></TD>
+		<TD width="13%"><A NAME="id6"></A>
+			<a href="why-uml-files/State.png"><IMG SRC="why-uml-files/State.png" alt="State Diagram" NAME="graphics6" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></TD>
+		<TD width="13%"><A NAME="id5"></A>
+			<a href="why-uml-files/Sequence.gif"><IMG SRC="why-uml-files/finished-seq-diag.png" alt="Finished Sequenced diagram" NAME="graphics7" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></TD>
+	</TR>
+</TABLE -->
+The following table lists the different types of UML diagrams that can be found online in many places, and it is included here for convenience.&nbsp;Click on the thumbnail image to view a sample of the specific diagram. <br>
+<i></i><br>
+<table width="800" border="1" align="center">
+  <tr>
+    <td><b>Use Case Diagram</b></td>
+    <td><a href="../../../images/articles/uml-why-model/UseCase.gif"><IMG SRC="../../../images/articles/uml-why-model/UseCase3-finished-diagram.png" alt="Finished Use Case Diagram" NAME="graphics5" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></td>
+    <td>Primarily consists of <i>actors</i> and <i>use cases</i>. Use Case diagrams help capture the functional requirement of your system. This is always a great diagram with which to start a project. </td>
+    <td><a href="use-case.html">view tutorial</a></td>
+  </tr>
+  <tr>
+    <td><b>Component Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/Component.png"><img src="../../../images/articles/uml-why-model/Component.png" alt="Component Diagram" name="graphics4" width=52 height=52 border=0 align=center></a></td>
+    <td>Primarily consists of <i>major system components</i> and their <i>relationships</i>. This is meant to be a high-level overview diagram of your complicated system. Whether in your head, on a napkin, or with a UML tool, this diagram has been created for every project you have ever worked on.</td>
+    <td>tutorial coming soon</td>
+  </tr>
+  <tr>
+    <td><b>Class Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/Class.gif"><IMG SRC="../../../images/articles/uml-why-model/Completed-Class-Diagram.png" alt="Completed Class Diagram" NAME="graphics2" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></td>
+    <td><B></B>Primarily consists of <i>classes</i>, <i>interfaces</i>, and their <i>relationships</i>. The classes and interfaces are fairly straightforward, but the relationships can grow a bit complicated with multiplicity, generalizations, and associations. After you know what the components in your system are, the natural progression is to diagram the classes that make up the components</td>
+    <td><a href="class-diagram.html">view tutorial</a></td>
+  </tr>
+  <tr>
+    <td><b>Activity Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/Activity.png"><img src="../../../images/articles/uml-why-model/Picture7.png" name="graphics1" alt="Activity Diagram" align=center width=52 height=52 border=0></a></td>
+    <td>Primarily consists of <i>activities</i> and <i>decisions</i>. These diagrams are essentially flowcharts and data flow diagrams that you use to get the general flow of the code</td>
+    <td><a href="activity-diagram.html">view tutorial</a></td>
+  </tr>
+  <tr>
+    <td><b>Collaboration Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/Collab.gif"><IMG SRC="../../../images/articles/uml-why-model/finished-collab-diagram.png" alt="Finished Collaboration Diagram" NAME="graphics3" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></td>
+    <td>Primarily consists of <i>objects</i> and <i>messages</i>. This diagram focuses on the communication between objects and is similar to the Sequence Diagram.</td>
+    <td><a href="collab-diagram.html">view tutorial</a></td>
+  </tr>
+  <tr>
+    <td><b>Deployment Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/Deployment_Diagram.png"><IMG SRC="../../../images/articles/uml-why-model/small-deploy-diag.png" alt="Deployment Diagram" NAME="graphics3" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></td>
+    <td>Primarily consists of <i>deployment elements</i>, such as servers, and their <i>relationships</i>. This is a logical topography of your system.</td>
+    <td> tutorial coming soon</td>
+  </tr>
+  <tr>
+    <td><b>Sequence Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/Sequence.gif"><IMG SRC="../../../images/articles/uml-why-model/finished-seq-diag.png" alt="Finished Sequenced diagram" NAME="graphics7" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></td>
+    <td>Primarily consists of <i>objects</i>(with lifelines) and <i>invocation messages</i>. Sequence diagrams depict the order of invocations in your system as well as the creation of the different objects.</td>
+    <td><a href="sequence-diagram.html">view tutorial</a></td>
+  </tr>
+  <tr>
+    <td><b>State Diagram </b></td>
+    <td><a href="../../../images/articles/uml-why-model/State.png"><IMG SRC="../../../images/articles/uml-why-model/State.png" alt="State Diagram" NAME="graphics6" WIDTH=52 HEIGHT=52 BORDER=0 ALIGN=center></A></td>
+    <td>Primarily consists of <i>states</i>, <i>transitions</i>, <i>events,</i> and <i>actions</i>. State diagrams are seldom necessary except when logic is very complicated.</td>
+    <td>tutorial coming soon</td>
+  </tr>
+</table>
+
+<br>
+<p align="center"><a href="why-model.html#top"><u>top</u></a></p>
+<h2><a name="compiling_napkin" id="compiling_napkin"></a>Compiling the Napkin </h2>
+<p><IMG SRC="../../../images/articles/uml-why-model/napkin.jpg" alt="Napkin with sketched diagram" NAME="graphics8" WIDTH=213 HEIGHT=160 BORDER=0 ALIGN=RIGHT></p>
+<p>You return from the coffee shop with your ideas sketched on a napkin. You need to describe a solution to your group or your boss. 
+So you transcribe your ideas from the napkin to your whiteboard and drag all your colleagues into your cube to show them. No software 
+tool will ever replace the conversations that happen around the whiteboard, but if you have to send your idea out of the 
+office, it is generally frowned on to mail Polaroids or send an email with digital photos of your whiteboard. The whiteboard does not 
+make it easy to document your ideas so you can refer to them later. You might not like it, but you have to locate a UML tool and create 
+the model that describes your idea.</p>
+
+<p>Though a model is simply a collection of model elements and their relationships, these elements can be grouped to form diagrams. 
+These diagrams are greater than the sum of the elements as they provide various views of your model. The different views can be used 
+to tell a story about how the application is structured.  The type of diagrams you use to visualize your model depends on your problem.
+</p>
+<p>As you are getting started, you might choose to create a Use Case Diagram. This is a good overview diagram
+that identifies the major components of your project. Though the Use Case Diagram can be made as complicated as needed, it really has only
+two major parts: the Actor and the Use Case. An Actor represents an entity that will interact with your system. An example of
+an entity might be a &ldquo;Customer&rdquo; or &ldquo;Bank Teller&rdquo; that interacts with your program. The actor could even be
+a third-party library or a piece of hardware.  The main idea of the Use Case diagram is to show these actors can interact with your program. 
+For example, a Bank Teller might &ldquo;Deposit Money&rdquo; or &ldquo;Withdraw Money.&rdquo; In this case, the Deposit Money&rdquo;
+and &ldquo;Withdraw Money&rdquo; are Use Cases. No code is directly
+related to the Actor or Use Cases, but these interactions expose the need for certain components in your project.</p>
+
+<p>Thinking through the use cases is frequently skipped during planning and as any programmer knows, a use case analysis
+will have to happen eventually. Thinking through what your project requirements are saves implementing unnecessary features and
+forgetting others. Creating a Use Case diagram might well expose any overlooked points. The diagram can't keep you from adding features 
+that are unnecessary, but it at least tells you that they are not needed. So, the first step is to perform a use case analysis and 
+create Use Case diagrams. A <A HREF="use-case.html"> tutorial</A> guides you through the process of
+creating a Use Case diagram.</p>
+<p>Completion of the use case analysis and diagrams leads naturally to sketching out the components of your system. Whether in the mind, on
+a napkin, or with a UML tool, this step has never been skipped in the development of a successful system. The benefit of formally creating
+a Component diagram is that it can help you define the classes and interfaces that will make up your components. If you completed the Use 
+Case diagram tutorial, you can see how important that analysis is. From the Use Case diagram at the conclusion of the tutorial, some of the
+necessary components become evident: a Customer component, an Account component, and a Database component. The interactions between components 
+can be further defined with Collaboration and Sequence diagrams. These components represent the deliverable pieces of your system.
+These are the pieces that your boss, your customer, or both parties must sign off on as sufficient. Until the components are agreed on, 
+the architect and programmers are shooting at a moving target. But after the components are set, fine-grain structural work can begin.
+</p>
+<p>This fine-grain design is started by creating the Class Diagram. Again, a ready-made <a HREF="class-diagram.html">
+tutorial</a> will lead you through the details of creating a Class Diagram. If you went to the effort to creating Use Case and 
+Component diagrams that were accurate, you might be tempted to just sit down and start coding. But remember the last time you did that and 
+later had to re-create interfaces and superclasses because you did not see the necessary relationships when you started coding?
+</p>
+<p>As you create your Class diagram, you are forced to make all the pieces fit together, reflecting on where you need interfaces, 
+superclasses, and even entire design patterns. So, you see, the benefit to these diagrams is that they expose structures of
+inheritance before you write several classes and see that you are writing the same
+methods repeatedly.</p>
+<p>Using the NetBeans UML tool adds another great dimension to the Class Diagram, namely design patterns. If you know that a
+certain component of your system will utilize a design pattern or set of patterns, simply dragging and dropping the pattern onto 
+the canvas creates the basic component for you. Better yet, the tool creates it correctly. Forget about trying to remember how 
+the design pattern is actually structured. The NetBeans UML feature
+provides the Gang of Four (GoF) and Enterprise Java Beans (EJB) design patterns ready for use. If you use a custom
+design pattern often, you can save it for future use. 
+</p>
+<p>The best news is that none of this work will be wasted. If you are using the NetBeans UML feature, a Class diagram can be turned 
+into Java source code with the click of a button. You can even set the options for how the code is to be generated: headers, comments, 
+variable placement, and other formatting. These settings would even include adding copyright information to all the generated files.
+The code generation alone should make this step worth doing during your development cycle. Therefore, it is worth
+your time to create the model first and let the tool generate all the basic code.</p>
+
+<p>Everyone diagrams in one form or another. The difference is that those who diagram by using a UML tool have
+something to show for their planning effort when the diagrams are completed. Napkins have a tendency to be used to clean up spilled
+drinks and thrown away.  Every project that is well thought out will have some form of Use Case diagrams, Component diagrams, and Class
+diagrams that can live long after &ldquo;imagineering&rdquo; at the coffee shop has ended.
+<p align="center"><a href="why-model.html#top"><u>top</u></a></p>
+<h2><a name="thinking"></a>What Were They Thinking?</h2>
+<p>UML is simply a modeling language and is independent of any coding language. Therefore, just as UML can be translated into a coding
+language, so can a coding language be translated into UML. This process is known as &ldquo;reverse engineering.&rdquo;
+There are numerous uses for this process, but the most common is to simply get a view of how code is structured: What are the
+objects and how are they related? Seeing diagrams of the code can expose design patterns and other complexities that might
+not be obvious while reading the code. For the &ldquo;how-to&rdquo; tutorial using the NetBeans UML tool, see the tutorial named <A HREF="re.html"> <u>Reverse Engineering Java Applications</u></a>
+<p>Though this article is not meant to be a tutorial, if you are using NetBeans to do your reverse engineering, a couple of steps are 
+worth noting. You start with a free formed Java code base. The first step in reverse-engineering this code base is to create a NetBeans
+&ldquo;Java Project with Existing Sources.&rdquo; Wizards in NetBeans can help you with this process. After the project is created, a 
+menu item is added to the project to reverse-engineer it. Even with large projects, this process only takes a few moments. When complete, 
+a UML Project appears in the project tree. </P>
+
+<p>This project can now be manipulated at will. Diagrams can be created from the generated model elements. If alterations need to be 
+made to the diagrams, simply make the alterations and regenerate the code (called &ldquo;forward
+engineering<FONT COLOR="#008000">&rdquo;)</FONT>.
+You can either replace the code from which the model came or store it somewhere else. Notice the power in these features. You 
+can develop your code from the model itself. This flexibility enables you to retain all the visual and reporting abilities 
+of the model while also being able to compile and run your code. It really is the best of both worlds. If you like typing your 
+code instead of creating it from diagrams, you can do exactly that. When your manager asks for a code review, simply
+reverse-engineer your code to update your model and take the diagrams into the meeting.
+<p>Though reverse engineering is a tremendously useful tool to help you understand legacy code, it does not provide answers to 
+all the questions. For instance, use cases cannot be drawn from a model that has been created by reverse engineering. You would 
+not expect this outcome, as the code contains a different level of information than that required by the use cases. Other 
+diagrams that do not make sense to create from reverse engineered model are Component, Activity, Collaboration, State, and Deployment. 
+But, because the class elements and relationships are all known, any of these diagrams can be quickly created and you can then deduce 
+the answers to the questions that naturally follow: What are the use cases? What is the deployment structure? What are the major components?
+You only need to supply the missing information pertinent to that diagram &nbsp;to have a fully developed model.</p>
+<p align="center"><a href="why-model.html#top"><u>top</u></a></p>
+<h2><a name="summary"></a>Summary</h2>
+<p>UML is a language. Even though great tools exist for working in UML, it is still a language. If you do not understand the structures 
+of the language, the design palettes in the tools can only frustrate you. To make the language &ldquo;unified,&rdquo; UML has encompassed 
+a great deal of functionality. This bulk can make the UML tools cumbersome and hard to use. Sun Microsystems offers a class to learn UML 
+in the context of <a href='http://www.sun.com/training/catalog/courses/OO-226.xml?intcmp=1366' target="_blank">object-oriented analysis and design</a>. Using your 
+understanding of the context of the different elements in UML, your models can take on a high level of practicality and efficiency. If 
+you are creating models by using the wrong elements, your models will not translate into code.
+<p>Whether you are an architect or a programmer, modeling is a necessary step in any project that is more complicated than HelloWorld. 
+Some modeling languages, for example, are tuned for things like database design, but if you only have time to learn one modeling language, 
+UML has become the industry-standard for modeling. The UML tools, such as the NetBeans UML feature, have evolved so far that modeling is no longer 
+a waste of &nbsp;cycles or simply an academic exercise that is tossed after the programming starts. The tools can and do actually help you 
+get your programming done, giving you a chance to start the cycle again at the coffee shop.</p>
+<br>
+<div><br><small>&gt;&gt; <a href="../../index.html">More NetBeans UML Modeling Documentation</a></small></div>
+<hr align="left" size="4" width="100%">
+<!-- Feedback Link -->
+<p align="right"><i>This article was last updated October 19, 2007</i></p>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear: both;">
+
+<!-- ======================================================================================== -->
+<p align="center"><a href="why-model.html#top">top</a></p> 
+</body>
+</html>

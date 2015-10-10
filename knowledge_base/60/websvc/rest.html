@@ -1,0 +1,371 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>Getting Started with RESTful Web Services</title>
+    <meta name="description"
+          content="This tutorial shows how to use NetBeans IDE 6.0
+          to work with RESTful web services.">
+    <link rel="stylesheet" href="../../../netbeans.css">
+</head>
+<body>
+    <h1>Getting Started with RESTful Web Services</h1>
+
+       <p>REpresentational State Transfer (REST) is an architectural style for 
+       distributed hypermedia systems, such as the World Wide Web. Central to the RESTful 
+       architecture is the concept of resources identified by universal resource identifiers (URIs). 
+       These resources can be manipulated using a standard interface, such as HTTP, 
+       and information is exchanged using representations of these resources.</p>
+       
+       <div class="indent">        
+           
+           <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                   <td align="left" valign="top"><h3>Contents</h3>
+                       <ul>
+                           <!--    <li><a href="#Exercise_0">Exercise 0: Install and configure the tutorial environment</a></li>-->
+                           <li><a href="rest.html#Exercise_0"> 
+                                   <!--Exercise 0: -->
+                           Introduction</a></li>
+                           <li><a href="rest.html#Exercise_1"> 
+                                   <!--Exercise 1: -->
+                           Generating Entity Classes from a Database</a></li>
+                           <li><a href="rest.html#Exercise_2"> 
+                                   <!--Exercise 2: -->
+                           Generating RESTful Web Services from Entity Classes</a></li>
+                           <li><a href="rest.html#Exercise_3"> 
+                                   <!--Exercise 3: -->
+                           Testing the RESTful Web Services</a></li>
+                           <li><a href="rest.html#Exercise_4"> 
+                                   <!--Exercise 3: -->
+                           Adding a Google Map Feature</a></li>
+                       </ul>
+                   </td>
+                   <td width="20">&nbsp;</td>
+                   <td align="right" valign="top"> 
+                       <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+                        to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+               </tr>
+           </table>
+           
+           
+           
+           
+           <h3 class="tutorial">Software Needed for the Tutorial</h3>
+           <p>Before you begin, you need to download and install the following software on your computer:</p>
+           <ul>
+               <li>NetBeans IDE 6.0 Web & Java EE.
+               <li>Java Standard Development Kit (JDK) version 5.0 or above.</li>
+               <li>Glassfish V2 or Tomcat Web Server, both of which you can select from the installer
+               that you use to install NetBeans IDE 6.0.</li>
+               <li>In the IDE, go to the Plugin Manager, under the Tools menu,
+                   and install the RESTful Web Services plugin, as shown below:
+               <p><p align="left"><img border="1" src="../../../images/articles/jaxws/rest-from-plugin-manager.png" alt="restful from plugin manager"></p></li> 
+               
+           </ul>
+       </div>                
+                   
+     <h2><a name="Exercise_0"></a> 
+                       <!--Exercise 1: -->
+                   Introduction</h2>
+       <p>RESTful web services are services built using the RESTful architectural style. 
+       Building web services using the RESTful approach is emerging as a popular 
+       alternative to using SOAP-based technologies for deploying services on the 
+       internet, due to its lightweight nature and the ability to transmit data 
+       directly over HTTP.</p>
+                   
+       <p>The IDE supports rapid development of RESTful web services using 
+       JSR 311 - Java API for RESTful Web Services (JAX-RS) and Jersey, 
+       the reference implementation for JAX-RS.</p>
+       
+       <p>For detailed information, refer to the following:</p>
+       
+       <ul>
+           <li><a href="http://jcp.org/en/jsr/detail?id=311" target="_blank">JSR 311: JAX-RS: The Java API for RESTful Web Services</a>
+           <li><a href="https://jersey.dev.java.net/" target="_blank">Jersey, the open source JAX-RS (JSR 311) Reference Implementation for building RESTful Web services</a>    
+       </ul>    
+       
+       <p>In addition to building RESTful web services, the IDE also supports testing, 
+       building client applications that access RESTful web services, and generating code 
+       for invoking web services (both RESTful and SOAP-based.)</p>
+       
+       <p>Here is the list of RESTful features provided by the IDE:</p>
+       
+       <ol>
+           <li>Rapid creation of RESTful web services from JPA entity 
+           classes and patterns.</li>
+           <li>Rapid code generation for invoking web services such as 
+           Google Map, Yahoo News Search, and StrikeIron web services by 
+           drag-and-dropping components from the RESTful component palette.</li>
+           <li>Generation of JavaScript client stubs from RESTful web 
+           services for building RESTful client applications.</li>
+           <li>Test client generation for testing RESTful web services.</li>
+           <li>Logical view for easy navigation of RESTful web service implementation 
+           classes in your project.</li>
+       </ol>
+       
+                   <p>In
+                   this
+                   tutorial, you will be shown how the IDE supports you in generating,
+                   implementing, and testing
+                   RESTful web services.
+                   
+                   
+                   
+                   <!-- ===================================================================================== -->
+                   <h2><a name="Exercise_1"></a> 
+                       <!--Exercise 1: -->
+                   Generating Entity Classes from a Database</h2>
+                   <p>The goal of this exercise is to create a project and generate entity classes from a database.</p>
+                   
+                   <ol>
+                   
+                   <li>Choose File &gt; New Project. Under Categories, select Web.
+                   Under Projects, select Web Application and click Next.</li>
+                   <li>Under Project Name, enter <tt>CustomerDB</tt>.</li>
+                   <li>Under Server, select Sun Java System Application Server
+                       or GlassFish. Click Finish.</li>
+                   <li>Right-click the <tt>CustomerDB</tt> node and
+                   choose Entity Classes from Database,
+               as shown below:
+                 <p><p align="left"><img border="1" src="../../../images/articles/jaxws/rest-entity-from-db.png" alt="entity classes from db"></p></li> 
+               <p>Alternatively, you can select it from the Persistence category in the New File wizard, shown below:
+                       <p align="left"><img border="1" src="../../../images/articles/jaxws/new-entity-wiz-1.png" alt="new entity wiz 1"></p> 
+                       <p>Click Next.</p>
+                   <li>In the Database Tables panel, select the <tt>jdbc/sample</tt> data source. Next,
+                   under Available Tables, select CUSTOMER and then click Add. The DISCOUNT_CODE
+                   table, which has a relationship with the CUSTOMER table, is automatically
+                   added to the Selected Tables list. You should now
+               see the following:
+               <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/new-entity-wiz-2.png" alt="new entity wiz 2"></p> 
+                   
+                   <p>Click Next.</p></li>
+                       
+                   <li>Under Package, type <tt>customerdb</tt>. You should now see the following:
+                   <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/new-entity-wiz-3.png" alt="new entity wiz 2"></p> 
+               
+                 
+                   
+                   <li>Click Create Persistence Unit. The following dialog appears:
+                   <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/new-entity-wiz-5.png" alt="new entity wiz 2"></p> 
+               
+                   
+                       <p>Click Create and then click Finish.</p></li> 
+                       
+                       <li>Look in the Projects window. You should now see
+                   the following:
+                   
+                   <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/new-entity-wiz-4.png" alt="new entity wiz 2"></p></li> 
+                   
+                   </ol>
+                   
+                   
+                   <h2><a name="Exercise_2"></a> 
+                       <!--Exercise 2: -->
+                   Generating RESTful Web Services from Entity Classes</h2>
+                   <p>The goal of this exercise is to generate
+                       RESTful web services from the entity classes that
+                   we generated in the previous section.</p>
+                   
+                   <ol>
+                   
+                   <li>Right-click the package that contains the entity classes
+               and choose New &gt; RESTful Web Services from Entity Classes, as shown below:
+             <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/rest-from-entity-wiz-0.png" alt="choosing the wizard"></p> 
+
+           </li>
+               <li>In the New RESTful Web Services from Entity Classes wizard, click
+           Add All. You should now see the following:
+           
+           <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/rest-from-entity-wiz-1.png" alt="choosing the entity classes"></p> 
+
+<p>Click Next.</p></li>
+
+            <li>In the next panel, leave the defaults unchanged, as shown below:
+              
+            <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/rest-from-entity-wiz-2.png" alt="Change"></p> 
+            
+              <p>Here you can see everything that the IDE
+                   will generate for you.
+                   The IDE uses the container-item pattern to
+                   generate the resource classes.  For example,
+                   for the Customer entity class, the IDE generates
+                   a container resource called CustomersResource
+                   and an item resource called CustomerResource.  Also,
+                   for each resource class, the IDE generates a
+                   converter class used for generating the resource
+                   representation from the corresponding entity 
+                   instance, such as CustomersConverter and 
+                   CustomerConverter. Furthermore, there is an
+                   additional converter class called reference 
+                   converter, such as CustomerRefConverter,
+                   for representing relationships.
+
+            
+            <p>Click Finish.</p></li> 
+                
+            <li>Look in the Projects window. You should now show the following:
+            
+             <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/rest-from-entity-wiz-3.png" alt="Regenerate"></p></li> 
+        
+             
+<p>The RESTful Web Services node in the Projects window 
+displays all the RESTful web services in your project.
+The value between the square brackets, such as <tt>[/customers/]</tt>,
+is the value for the URI template.  You can also navigate to the 
+source file by doubling click on this node.  This view also displays
+all the HTTP methods and Sub-resource locator methods. Again, you
+can navigate to the methods by double clicking on the nodes.              
+             
+    </ol>
+
+          <p>Now that our entity classes and RESTful web services have been
+          generated, let's test our application. The IDE provides a useful
+          utility for testing RESTful web services. We will make use of it
+              in the next section.</p>    
+              
+              <!-- ===================================================================================== -->
+              <h2><a name="Exercise_3"></a> 
+                  <!--Exercise 2: -->
+              Testing the RESTful Web Services</h2>
+              
+              <p>The goal of this exercise is to try out our application.</p>
+              
+
+              
+              <ol>
+              <li>Right-click the project node and choose Test RESTful Web Services, as shown below:
+        
+          <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/test-rest-1.png" alt="completion"></p> 
+              
+          <p>The server starts and the application is deployed. 
+          Finally, the browser should display your application, with a link for
+      each of the web services:
+     
+     <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/test-rest-3.png" alt="template2"></p></li> 
+     
+     <p>On the left-hand side is the set of root resources, here they
+      are named <tt>customers</tt> and <tt>discountCodes</tt>.
+     
+      <li>First select a root resource, such as <tt>customers</tt>.
+      Click on the Methods drop-down list to select either
+      <tt>GET(application/xml)</tt> or <tt>GET(application/json)</tt>. 
+      Click Test. The result will be displayed in the Test Output section.
+   
+              <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/test-rest-4.png" alt="template3"></p></li>
+              
+  <p>There are 4 tabs in the Test Output section. 
+  The Tabular View is a flattened view that displays all 
+  the URIs in the resulting document, which you can navigate
+  to by clicking on the links. The Raw View displays
+  the actual data returned. Depending on which mime type 
+  you selected (<tt>application/xml</tt> or <tt>application/json</tt>),
+  the data displayed will be in either XML or JSON format, respectively.
+  The Headers Tab displays the HTTP header information. There is also
+  a tab called HTTP Monitor, which displays the actual HTTP requests
+  and responses sent and received. 
+    
+              
+              <li>Exit the browser and return to the IDE.</li>
+              
+              
+              </ol>
+              
+              
+              <!-- ===================================================================================== -->
+              <h2><a name="Exercise_4"></a> 
+                  <!--Exercise 2: -->
+              Adding a Google Map Feature</h2>
+              
+              <p>The goal of this exercise is to add Google map
+              functionality to our RESTful web services.</p>
+              
+              <ol>
+              <li>Open the <tt>CustomerResource</tt> class
+              in the editor, as shown below. Notice that a palette appears on the right side
+              of the editor, containing RESTful code snippets:
+        
+          <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/google-map-1.png" alt="completion"></p></li> 
+              
+              <li>Sign up for a Google map key at <a href="http://www.google.com/apis/maps/signup.html" target="_blank">http://www.google.com/apis/maps/signup.html</a>.</li>    
+          
+              <li>From the Google category, drag the Map item and drop it in
+          the class, and enter the Google Map key into the "Google Map Key" field, as shown here:
+               
+          <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/google-map-2.png" alt="template"></p></li> 
+              
+          <li>Right-click the project node and choose Test RESTful Web
+          Services again and, once the browser opens again, click
+          customers in the left-hand side and then click one of
+          the resources. When you test the input, as shown below,
+          one of the links is for Google map:
+     
+          <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/google-map-3.png" alt="template2"></p></li> 
+              
+          <li>Click the link and notice that the Google map opens in the browser:
+        
+   <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/google-map-4.png" alt="template3"></p></li>
+ 
+   
+   <li>Whenever you click a Google map link,
+    the same address will open. That is because
+    the address is hard coded in the
+    CustomerResource:
+   
+<pre class="exampleCode">@UriTemplate("googleMap/")
+public GoogleMapResource getGoogleMapResource() {
+    String address = "16 Network Circle, Menlo Park, CA";
+    String mapKey = "abcdef";
+    String httpProxy = "";
+    return new GoogleMapResource(address, mapKey, httpProxy);
+}</pre>  
+
+<p>Change it to the following:
+
+<pre class="exampleCode">@UriTemplate("googleMap/")
+public GoogleMapResource getGoogleMapResource(@UriParam("customerId") Integer id) {
+    Customer c = getEntity(id);
+    String address = c.getAddressline1() + " " + c.getAddressline2() +
+            " " + c.getCity() + " " + c.getState() + " " + c.getZip();
+    String mapKey = "abcdef";
+    String httpProxy = "";
+    return new GoogleMapResource(address, mapKey, httpProxy);
+}</pre>
+
+<p>The code extracts the address information from the 
+customer entity and passes it to the GoogleMapResource instance.
+
+
+<li>Test the application again and notice that the correct
+ Google map entry is now returned for each customer:
+  <br><br><p align="left"><img border="1" src="../../../images/articles/jaxws/google-map-5.png" alt="template5"></p></li>
+ 
+   
+    </ol>
+
+    
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;" />
+<!-- ======================================================================================= -->
+<h2><a name="nextsteps"></a>Next Steps</h2>
+<p>For more information about using NetBeans IDE 6.0 to develop Java EE applications, see the following resources:
+</p>
+
+<ul>
+    <li><a href="client.html">Getting Started with JAX-WS Web Service Clients</a></li>
+    <li><a href="jax-ws.html">Getting Started with JAX-WS Web Services</a></li>
+    <li><a href="rest.html">Getting Started with RESTful Web Services</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/ejb.html" target="_blank">End-to-End Web Service Creation and Consumption</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/strikeiron.html" target="_blank">Consuming StrikeIron Web Services in Web Applications</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/google.html" target="_blank">Consuming Google Web Services in Web Applications</a></li>
+    <li><a <a href="http://www.netbeans.org/kb/60/websvc/wsit.html" target="_blank">Advanced Web Service Interoperability</a></li>
+    <li><a href="../../trails/java-ee.html">Java EE Applications Learning Trail</a></li>
+    <li>YouTube: <a href="http://www.youtube.com/watch?v=cDdfVMro99s" title="RESTful Web Services, Building and Deploying (Part 1)" target="_blank">RESTful Web Services, Building and Deploying (Part 1)</a></li>
+    <li>YouTube: <a href="http://www.youtube.com/watch?v=_c-CCVy4_Eo" title="NetBeans RESTful Testing and Invoking RESTful Resources (Part 2)" target="_blank">NetBeans RESTful Testing and Invoking RESTful Resources (Part 2)</a></li>
+
+</ul>
+<p>To send comments and suggestions, get support, and keep informed on the latest
+    developments on the NetBeans IDE Java EE development features, <a <a href="http://www.netbeans.org/community/lists/top.html" target="_blank">join
+the nbj2ee@netbeans.org mailing list</a>.</p>
+</body>

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+  <head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+    <title>Developer Guide to the BPEL Designer - Overview</title>
+    <meta name="description" content="Developer Guide to the BPEL Designer">
+    <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+    <meta name="author" content="Dmitry Markovski">
+</head>
+  <body>
+    <a name="top"></a>
+	<h1>
+       Developer Guide to the BPEL Designer: Overview    </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br> 
+December 2007<br>
+<br>
+</p>
+</div>
+    <!-- ======================================================================================== -->
+    <h2><a name="contents"></a>
+       Contents    </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><span class="orange"><b>Overview</b>
+               <ul>
+                 <li><a href="bpel-guide-overview.html#using">Overview of the JBI Runtime Environment</a></li>
+                 <li><a href="bpel-guide-overview.html#bpelse">The BPEL Service Engine</a> </li>
+                 <li><a href="bpel-guide-overview.html#composite_app">The Composite Application Project</a></li>
+               </ul>
+             </li>
+             <li><a href="bpel-guide-project.html">The BPEL Module Project</a> </li>
+             <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a> </li>
+             <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+             <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> </li>
+             <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+             <li> <a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+             <li> <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> </li>
+             <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+         </ul>         </td>
+         <td width="20"></td>
+         <td align="right" valign="top">  
+	  <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right">
+   </td>
+     </tr>
+</table>
+   
+    <p>One of the primary means of orchestrating web services is the use of  Business Process Execution Language (BPEL). This guide explores ways in which the IDE enables you to edit, compile, and deploy BPEL processes compliant with the WS-BPEL 2.0 specification. Using the BPEL Designer feature of the  IDE, you can easily create and edit BPEL processes, deploy them to the BPEL Service Engine, and run these processes in test or debug modes.    </p>
+    <p>
+       To better understand the BPEL Designer features provided by the NetBeans IDE 6.0 release, see  the following tutorials:    </p>
+    <ul>
+        <li>
+            <a href="synchsample.html">Developing a Simple Synchronous BPEL Process</a>        </li>
+        <li><a href="asynchsample.html">Developing a Simple Asynchronous BPEL Process</a> </li>
+        <li><a href="understand-trs.html">Understanding the Travel Reservation Service</a></li>
+  </ul>
+    <div class="indent">
+      <h3 class="tutorial">
+         Note on Reading This Document      </h3>
+        <p>
+           For readability, some images have been provided in thumbnail format. Click those images to see a larger version.        </p>
+      <h3 class="tutorial">
+         Structure of This Document      </h3>
+        <p>
+            This document consists of several sections, each related to a particular feature of the BPEL Designer included in the NetBeans IDE. A list of sections is given in the <a href="bpel-guide-overview.html#contents">Contents</a>.        </p>
+    </div>
+    <p align="center">
+      <a href="bpel-guide-overview.html#top">top</a>    </p>
+    <br>
+    <!-- ======================================================================================== -->
+    <h2>
+      <a name="using"></a>Overview of the JBI Runtime Environment</h2>
+    <p>The Java Business Integration (JBI) runtime environment provides the runtime capability for SOA tools in the IDE. The JBI runtime environment includes several components that interact using a services model. This model is based on Web Services Description Language (WSDL) 2.0. Components that supply or consume services within the JBI environment are referred to as Service Engines. One of these components is the <a href="bpel-guide-overview.html#bpelse">BPEL Service Engine</a> that provides services for executing business processes. Components that provide access to services that are external to the JBI environment are called Binding Components. </p>
+    <p> The JBI components are installed as part of the GlassFish application server, which is  packaged with the NetBeans IDE. </p>
+    <p><b>To view the installed or deployed JBI components:</b></p>
+    <ol>
+      <li> In the IDE, open the Services window, expand the <tt>GlassFish V2</tt> node, and expand the <tt>JBI</tt> node. </li>
+      <li>If you do not see the <tt>JBI node</tt>, you need to start the Application Server by choosing Start from the pop-up menu of the <tt>GlassFish V2</tt> node.</li>
+    </ol>
+	<p align="center">
+        <img src="../../../images/articles/ep-bpel-guide/60/jbi.png" alt="JBI Nodes">      </p>
+    <p>For a detailed overview of the Java Business Integration concept and a description of JBI nodes, see the <a href="/kb/60/soa/jbi-tech-overview.html" title="JBI Component Technical Overview" target="_blank">JBI Component Technical Overview</a>.</p>
+    <h2><a name="bpelse"></a> The BPEL Service Engine </h2>
+    <p>The BPEL Service Engine is a JSR 208-compliant JBI runtime component that provides    services for executing WS-BPEL 2.0 compliant business processes. The BPEL Service Engine provides runtime services for deploying BPEL processes. To deploy a BPEL process, you need to add it as a JBI module to a Composite Application project. </p>
+    <p>The BPEL Service Engine starts together with the Application Server. Thus, before deploying and performing test runs of a Composite Application project, make sure that the Application Server is started.      </p>
+    <p><b>To check the status of the GlassFish V2 Application Server:</b></p>
+    <ol>
+      <li>If the Services window is not visible, choose Window &gt; Services.</li>
+      <li>In the Services window, expand the <tt>Servers</tt> node.<br>
+        The <tt>Servers</tt> node should contain a <tt>GlassFish V2 </tt> subnode. If the <tt>GlassFish V2</tt> node does not appear, go to <a href="bpel-guide-overview.html#configure-sjas">To configure the GlassFish V2 Application Server</a>.<br>
+        If a green arrow badge appears on the <tt>GlassFish V2 </tt> node, the server is running. If a green arrow badge does not appear, go to <a href="bpel-guide-overview.html#start-sjas">To start the GlassFish V2 Application Server</a>.</li>
+    </ol>
+    <p><a name="configure-sjas"></a><b>To configure the GlassFish V2 Application Server:</b></p>
+    <ol>
+      <li>If the Services window is not visible, choose Window &gt; Services.</li>
+      <li>In the Services window, right-click the <tt>Servers</tt> node and choose Add Server from the pop-up menu.<br>
+        The Add Server Instance dialog box opens.</li>
+      <li>In the Choose Server page, from the Server drop-down list, select GlassFish V2 Application Server/GlassFish.</li>
+      <li>(Optional) In the Name field, change the default name for the server.<br>
+        The IDE uses this name to identify the server.</li>
+      <li>Click Next.<br>
+        The Platform Location Folder page opens.</li>
+      <li>In the Platform Location field, use the Browse button to navigate to and select the installation location of the application server.      </li>
+      <li>Select the Register Local Default Domain radio button and click Next. </li>
+      <li>Enter the user name and password for the domain's administrator.<br>
+        If you accepted the default values during the installation, the user name is <tt>admin</tt> and the password is <tt>adminadmin</tt>.</li>
+      <li>Click Finish.</li>
+    </ol>
+    <p><a name="start-sjas"></a><b>To start the GlassFish V2 Application Server:</b></p>
+    <ol>
+      <li>In the Services window, right-click the <tt>GlassFish V2  </tt> node and choose Start.</li>
+      <li>Wait until the following message appears in the Output window:<br>
+          <tt>Application server startup complete.</tt><br>
+        When the server is running, the IDE displays a green arrow badge on the<tt>GlassFish V2 </tt>node.</li>
+  </ol>
+    <p>The BPEL Service Engine is represented as <tt>sun-bpel-engine </tt> in the Services window of the IDE, under the <tt>GlassFish V2</tt> &gt; <tt>JBI</tt> nodes. </p>
+    <p>See the <a href="https://open-esb.dev.java.net/kb/preview3/ep-bpel-se.html" target="_blank">BPEL Service Engine User's Guide</a> for details about the BPEL Service Engine and supported BPEL 2.0 language constructs. </p>
+    <p align="center">
+      <a href="bpel-guide-overview.html#top">top</a>    </p>
+    <h2><a name="composite_app"></a>The Composite Application Project</h2>
+    <p> The Composite Application project is used to create a Service Assembly that can be deployed to the Java Business Integration (JBI) runtime environment. Within the Composite Application project, you can: </p>
+    <ul>
+      <li> Assemble an application that uses multiple project types (for example, BPEL Module or XSLT Module projects). </li>
+      <li> Configure external/edge access protocols (SOAP, JMS, SMTP, and others). </li>
+      <li> Build JBI deployment packages. </li>
+      <li> Deploy the application image to the target JBI component. </li>
+      <li> Monitor the status of JBI components and applications. </li>
+    </ul>
+    <p>To deploy a Composite Application to the BPEL Service Engine, it must include a JBI module created from a BPEL Module project. Within a Composite Application Project that includes a JBI module, you can also create and execute test cases that can then be run against the deployed BPEL processes. </p>
+    <p>For more information about working with Composite Application projects, see <a href="bpel-guide-project.html">The BPEL Module Project</a> and <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> sections of this guide. </p>
+    <br>
+    <!--================ BPELSE ===================-->
+  <br>
+  <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+    <p align="center">
+      <a href="bpel-guide-overview.html#top">top</a></p>
+  </body>
+</html>

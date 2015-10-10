@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Getting Started with Java EE Applications</title>
+        <meta name="description"
+        content="A tutorial on how to use NetBeans IDE 6.0 to develop an enterprise application 
+            using EJB 3.0 technology.">
+        <link rel="stylesheet" href="../../../netbeans.css">
+        <meta name="author" content="ken ganfield, jan horvath">
+    </head>
+    <body>
+        <h1>Getting Started with Java EE Applications</h1>
+        
+        <p>This document takes you through the basics of developing an enterprise application 
+            using EJB 3.0 technology which is part of the Java EE 5 platform.
+            This document shows how the EJB 3.0 technology can simplify the process of developing
+            enterprise applications.
+            This document uses the NetBeans IDE 6.0 Release. </p>
+        
+        <p style="text-align:center;"><b>Expected duration: 30 minutes</b></p>
+        <div class="indent"> 
+                       
+            <h3 class="tutorial">Tutorial Exercises</h3>
+            <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans
+            IDE 6.0" height="45" width="206" style="float:right;border:0px;margin:10px auto;">
+            <ul>
+                <li><a href="ejb30.html#Exercise_1">Setting Up the Enterprise Application Project</a></li>
+                <li><a href="ejb30.html#Exercise_2">Coding the EJB Module</a></li>
+                <li><a href="ejb30.html#Exercise_3">Coding the Web Module</a></li>
+                <li><a href="ejb30.html#Exercise_4">Running the Project</a></li>
+                <li><a href="ejb30.html#Exercise_5">Troubleshooting</a></li>
+            </ul>
+ <h3 class="tutorial">Prerequisites</h3>
+            <p>This document assumes you have some basic knowledge of, or programming experience 
+            with, the following technologies:</p>
+            <ul>
+                <li>Java Programming</li>
+                <li>NetBeans IDE</li>
+            </ul>
+            
+            <h3 class="tutorial">Software Needed for the Tutorial</h3>
+            <p>For this tutorial you need to have the following software installed on your computer:</p>
+            
+            <ul>
+                <li>"Web &amp; Java EE" or "All" download of NetBeans IDE 6.0.</li>
+                <li>Java Standard Development Kit (JDK) version 5.0 or version 6.0.</li>
+                <li>GlassFish V2 Application Server (bundled with full IDE download) or
+                Sun Java System Application Server, Platform Edition 9 (<a href="http://www.sun.com/software/products/appsrvr_pe/index.xml" target="_blank">download</a>)</li>
+            </ul>
+            <p>For this tutorial you need to register a local instance of GlassFish/Sun Java System Application Server with the IDE.</p>
+
+        </div>
+        <br />
+        <!-- ===================================================================================== -->
+        <h2><a name="Exercise_1"></a> 
+            <!--Exercise 1: -->
+        Setting Up the Enterprise Application Project</h2>
+        <p>The goal of this exercise is to create the NewsApp enterprise application project
+            containing an EJB module and a web module. 
+            The NewsApp application uses a message-driven bean to receive and process messages 
+            sent to the queue by a servlet. 
+        The application uses servlets to send messages to the message-driven bean and to display messages.</p>
+        <div class="indent">
+            <h3 class="tutorial">Creating an Enterprise Application</h3>
+            <ol>
+                <li>Choose File &gt; New Project (Ctrl-Shift-N) from the main menu.</li> 
+                <li>Select Enterprise Application from the Enterprise category and click Next. </li>
+                <li>Name the project NewsApp and set the server to Sun Java System Application Server.</li>
+                <li>Set the Java EE Version to Java EE 5, and select Create EJB Module and Create Web Application Module, if unselected.</li>
+                <li>Click Finish.</li>
+            </ol>
+            <h3 class="tutorial">Summary</h3>
+            <p>In this exercise we created a Java EE 5 enterprise application containing an EJB module and a web module.</p>
+        </div>
+        
+        <h2><a name="Exercise_2"></a>Coding the EJB Module</h2>
+        <p>In this exercise we will create the objects in the EJB module. 
+            We will create an entity class, a message-driven bean and a session facade.
+            We also will create a persistence unit to provide the container with information for managing our entities, and
+        the Java Message Service (JMS) resources that our message-driven bean will use.</p>
+        <div class="indent">
+            <h3 class="tutorial">Creating a Persistence Unit</h3>
+            <p>First we create a persistence unit that defines the data source and entity manager used in our application.</p>
+            <ol>
+                <li>Right-click the EJB module and choose New &gt; File/Folder.</li>
+                <li>From the Persistence category, select Persistence Unit and click Next.</li>
+                <li>Keep the default Persistence Unit Name.</li>
+                <li>For the Persistence Provider, choose <tt>TopLink (default)</tt>.</li>
+                <li>For the Data Source, choose the default data source <tt>jdbc/sample</tt>.</li>
+                <li>Check that the persistence unit is using the Java Transaction API 
+                    and that the Table Generation Strategy is set to Create 
+                so that the tables based on our entity classes are created when the application is deployed.</li>
+                <li>Click Finish.</li>
+            </ol>
+            <img src="../../../images/articles/javaee5/newsapp_persistence_unit_wizard.png" width="578" height="315" alt="The New Persistence Unit wizard" style="margin:10px auto;" />
+            <p>When you click Finish, the IDE creates <tt>persistence.xml</tt> and opens it in 
+            the Source Editor in Design view. Close <tt>persistence.xml</tt>.</p>
+
+            <h3 class="tutorial">Creating the <tt>NewsEntity</tt> Entity Class</h3>
+            <p>In this exercise we will create the <tt>NewsEntity</tt> entity class. 
+                An entity class is a simple Java class.
+                When you create the entity class, the IDE adds the <tt>@Entity</tt> annotation to define the class as an entity class.
+            After we create the class, we will create fields in the class to represent the data that we want in our table.</p>
+            <p>Each entity class must have a primary key. 
+                When you create the entity class, the IDE adds the <tt>@Id</tt> annotation to declare which field to use as the primary key.
+            The IDE also adds the <tt>@GeneratedValue</tt> annotation and specifies the key generation strategy for the primary Id.</p>
+            <p>To create the <tt>NewsEntity</tt> class, do the following:</p>
+            <ol>
+                <li>Right-click the EJB module in the Project window and choose New &gt; File/Folder to open the New File wizard.</li>
+                <li>From the Persistence category, select Entity Class and click Next.</li>
+                <li>Type <tt>NewsEntity</tt> for the class name, type <tt>ejb</tt> for the 
+                package, and leave the Primary Key Type as <tt>Long</tt>. Click Finish.</li>
+            </ol>
+            <p>When you click Finish, the entity class <tt>NewsEntity.java</tt> opens in the Source Editor.
+            In the Source Editor, do the following:</p>
+            <ol>
+                <li>Add the following field declarations to the class: 
+                    <pre class="examplecode">
+private String title;
+private String body;</pre>
+                </li>
+                <li>Right-click in the Source Editor and choose Insert Code and select Getter and Setter to generate getters and setters for each of the fields.</li>
+                <li>In the Generate Getters and Setters dialog box, select the <tt>body</tt> and <tt>title</tt> fields and click Generate.</li>
+                <li>Save your changes.</li>
+            </ol>
+            <img src="../../../images/articles/60/javaee/ejb30/ejb30-gettersetter.png" width="334" height="283" alt="Generate Getters and Setters dialog box" style="margin:10px auto;" />
+            
+            <p>In the next step we will create the <tt>NewMessage</tt> message-driven bean.</p>
+            
+            <h3 class="tutorial">Creating the <tt>NewMessage</tt> Message-Driven Bean</h3>
+            <p>Now we will create the <tt>NewMessage</tt> message-driven bean in our EJB module.
+                We will use the New Message-Driven Bean wizard to create the bean and the necessary JMS resources. 
+            </p>
+            <p>To create the <tt>NewMessage</tt> message-driven bean, do the following:</p>
+            <ol>
+                <li>Right-click the EJB module in the Projects window and choose New &gt; File/Folder to open the New File wizard.</li>
+                <li>From the Enterprise category, select Message-Driven Beans and click Next.</li>
+                <li>Type <tt>NewMessage</tt> for the class name.</li>
+                <li>Select <tt>ejb</tt> from the Package drop-down list.</li>
+                <li>Click Add to open the Add Message Destination dialog box.</li>
+                <li>In the Add Message Destination dialog box, type <b>jms/NewMessage</b> and
+                select Queue for the destination type. Click OK.</li>
+                <li>Make sure that the project destination is correct and click Finish.</li>
+            </ol>
+            <img src="../../../images/articles/60/javaee/ejb30/ejb30-newmdb-dialog.png" width="572" height="375" alt="New Message-Driven Bean Wizard" style="margin:10px auto;" />
+            <p>When you click Finish, the new message-driven bean class <tt>NewMessage.java</tt> opens in the Source Editor.
+            You can see that the @MessageDriven annotation and configuration properties are added to the class.</p>
+            <pre class="examplecode">       
+@MessageDriven(mappedName = &quot;jms/NewMessage&quot;, activationConfig =  {
+        @ActivationConfigProperty(propertyName = &quot;acknowledgeMode&quot;, propertyValue = &quot;Auto-acknowledge&quot;),
+        @ActivationConfigProperty(propertyName = &quot;destinationType&quot;, propertyValue = &quot;javax.jms.Queue&quot;)
+    })</pre>
+            <p>This annotation tells the container that the component is a message-driven bean and the JMS resource used by the bean.
+                When the IDE generates the class, the Mapped Name of the resource (<tt>jms/NewMessage</tt>) is derived from the name of the class (<tt>NewMessage.java</tt>).
+                The JMS resource is mapped to the JNDI name of the destination from which the bean receives messages.
+                <!--We provided the JNDI name when we created the resource.-->
+                The New Message-Driven Bean wizard has already add the information for the JMS resources to <tt>sun-resources.xml</tt>.  
+                The EJB 3.0 API enables us to look up objects in the JNDI namespace from within the bean class
+            so that we do not need to configure deployment descriptors to specify the JMS resources.</p> 
+            <p>The EJB 3.0 specifications allow us to use annotations to introduce resources directly into a class.
+                We will now use annotations to introduce the <tt>MessageDrivenContext</tt> resource into our class, and then inject 
+                the <tt>PersistenceContext</tt> resource which will be used by the EntityManager API to manage the persistent entity instances. 
+            We will add the annotations to the class in the Source Editor.</p>
+            <ol>
+                <li>Inject the <tt>MessageDrivenContext</tt> resource into the class by adding the following 
+                    annotated field (in bold) to the class:
+                    <pre class="examplecode">
+public class NewMessage implements MessageListener {
+
+<b>@Resource
+private MessageDrivenContext mdc;</b></pre>
+                </li>
+                <li>Introduce the entity manager into the class by right-clicking in the code and 
+                    selecting Persistence &gt; Use Entity Manager from the pop-up menu.<br />
+                    This adds the following annotation to your source code:
+                    <pre class="examplecode">
+@PersistenceContext
+private EntityManager em;</pre>
+                    and generates the following method in your code:
+                    <pre class="examplecode">
+public void persist(Object object) {
+    em.persist(object);
+}</pre>
+                </li>
+                <li>Modify the <tt>persist</tt> method to change the name to <tt>save</tt>. 
+                The method should look like the following:
+                    <pre class="examplecode">
+public void <b>save</b>(Object object) {     
+    em.persist(object);
+}</pre>
+                </li>
+                <li>Modify the <tt>onMessage</tt> method by adding the following to the body:
+                    <pre class="examplecode">
+    ObjectMessage msg = null;        
+    try {
+        if (message instanceof ObjectMessage) {
+            msg = (ObjectMessage) message;
+            NewsEntity e = (NewsEntity) msg.getObject();
+            save(e);            
+        }
+    } catch (JMSException e) {
+        e.printStackTrace();
+        mdc.setRollbackOnly();
+    } catch (Throwable te) {
+        te.printStackTrace();
+    }</pre>
+                </li>
+                <li>Press Alt-Shift-F to generate any necessary import statements.<br>
+                <b>Note:</b> When generating the import statements, we want to <b>make sure to import the <tt>jms</tt> and <tt>javax.annotation.Resource</tt> libraries</b>.</li>
+                <li>Save the file.</li>
+            </ol>
+            
+            <h3 class="tutorial">Creating the Session Bean</h3>
+            <p>Next we create a session facade for the <tt>NewsEntity</tt> entity class.
+            To create the session facade, do the following:</p>
+            <ol>
+                <li>Right-click the EJB module and choose New &gt; File/Folder.</li>
+                <li>From the Persistence category, select Session Beans for Entity Classes and click Next.</li>
+                <li>From the list of available entity classes, select ejb.NewsEntity and click Add and then click Next.</li>
+                <li>Check that the Package is set to <tt>ejb</tt> and that a local interface will be created.</li>
+                <li>Click Finish.</li>
+            </ol>
+            <p>When you click Finish, the session facade class <tt>NewsEntityFacade.java</tt> is created
+            and opens in the Source Editor. The IDE also creates the local interface <tt>NewsEntityFacadeLocal.java</tt>. </p>
+            <p>EJB 3.0 technology simplifies the creation of session beans by reducing the amount of required code.
+                You can see that the annotation <tt>@Stateless</tt> is used to 
+                declare the class as a stateless session bean component and that the class no longer needs a statement implementing
+                <tt>javax.ejb.SessionBean</tt>.
+            The code is also much cleaner because with EJB 3.0 technology the business methods no longer need to have code declaring they throw checked exceptions.</p>
+            <p>You can see that the <tt>PersistenceContext</tt> resource was injected directly into the session bean component
+            when we created the session facade.</p>
+            
+            <h3 class="tutorial">Summary</h3>
+            <p>In this exercise, we coded an entity class and a message-driven bean in the EJB module. 
+                We then created a session facade for the entity class. 
+            We also created the JMS resources that will be used by our application.</p>
+        </div>
+        
+        
+        
+        <!-- ===================================================================================== -->
+        <h2><a name="Exercise_3"></a> 
+        Coding the Web Module</h2>
+        <p>We will now create the servlets <tt>ListNews</tt> and <tt>PostMessage</tt> in our web module.
+        These servlets will be used to read and add messages.</p>
+        <div class="indent"> 
+            <h3 class="tutorial">Creating the <tt>ListNews</tt> Servlet</h3>
+            <p>In this exercise we will create a simple servlet for displaying our data.
+            We will use annotations to call our entity bean from our servlet.</p>
+            <ol>
+                <li>Right-click the web module project and choose New &gt; Servlet.</li>
+                <li>Type <tt>ListNews</tt> for the Class Name.</li>
+                <li>Enter <tt>web</tt> for the Package name and click Finish.</li>
+            </ol>
+            <p>When you click Finish, the class <tt>ListNews.java</tt> opens in the Source Editor.
+            In the Source Editor, do the following:</p>
+            <ol>
+                <li>Right-click in the source code and select Enterprise Resources &gt; Call Enterprise Bean.</li>
+                <li>In the Call Enterprise Bean dialog box, select NewsEntityFacade and click OK.
+                When you click OK, the entity bean resource is injected in the servlet using the <tt>@EJB</tt> annotation.</li>
+                <li>In the <tt>processRequest</tt> method, modify the method by uncommenting the code and adding the following lines in bold to the body of the method:
+                    <pre class="examplecode">
+out.println(&quot;&lt;h1&gt;Servlet ListNews at &quot; + request.getContextPath () + &quot;&lt;/h1&gt;&quot;);
+
+<b>List news = newsEntityFacade.findAll();
+for (Iterator it = news.iterator(); it.hasNext();) {
+    NewsEntity elem = (NewsEntity) it.next();
+    out.println(&quot; &lt;b&gt;&quot;+elem.getTitle()+&quot; &lt;/b&gt;&lt;br /&gt;&quot;);
+    out.println(elem.getBody()+&quot;&lt;br /&gt; &quot;);
+}
+out.println(&quot;&lt;a href='PostMessage'&gt;Add new message&lt;/a&gt;&quot;);</b>
+
+out.println(&quot;&lt;/body&gt;&quot;);
+                    </pre>
+                </li>
+                <li>Press Alt-Shift-F to generate any necessary import statements for the class.
+                When generating the import statements, we want to <b>import the <tt>java.util</tt> libraries</b>.</li>
+                <li>Save the changes to the file.</li>
+            </ol>
+            
+            
+            
+            <h3 class="tutorial">Creating the <tt>PostMessage</tt> Servlet</h3>
+            <p>In this exercise we will create the <tt>PostMessage</tt> servlet that will be used to post messages. 
+                We will use annotations to inject the JMS resources we created directly into the servlet, 
+                specifying the variable name and the name to which it is mapped. 
+                We will then add the code to send the JMS message and the code for the
+            HTML form for adding a message.</p>
+            <ol>
+                <li>Right-click the web module project and choose New &gt; Servlet.</li>
+                <li>Type <tt>PostMessage</tt> for the Class Name.</li>
+                <li>Enter <tt>web</tt> for the Package name and click Finish.</li>
+            </ol>
+            <p>When you click Finish, the class <tt>PostMessage.java</tt> opens in the Source Editor.
+            In the Source Editor, do the following:</p>
+            <ol>
+                <li>Use annotations to inject the <tt>ConnectionFactory</tt> and <tt>Queue</tt> resources by adding the following field declarations (in bold):
+                    <pre class="examplecode">
+public class PostMessage extends HttpServlet {                
+    <b>@Resource(mappedName=&quot;jms/NewMessageFactory&quot;)
+    private  ConnectionFactory connectionFactory;
+
+    @Resource(mappedName=&quot;jms/NewMessage&quot;)
+    private  Queue queue;</b></pre>
+                </li>
+                <li>We now add the code to send the JMS messages by adding the following code in bold to the <tt>processRequest</tt> method:
+                    <pre class="examplecode">
+response.setContentType(&quot;text/html;charset=UTF-8&quot;);
+
+// Add the following code to send the JMS message
+<b>String title=request.getParameter(&quot;title&quot;);
+String body=request.getParameter(&quot;body&quot;);
+if ((title!=null) &amp;&amp; (body!=null)) {
+    try {
+        Connection connection = connectionFactory.createConnection();
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        MessageProducer messageProducer = session.createProducer(queue);
+
+        ObjectMessage message = session.createObjectMessage();
+        // here we create NewsEntity, that will be sent in JMS message
+        NewsEntity e = new NewsEntity();
+        e.setTitle(title);
+        e.setBody(body);
+
+        message.setObject(e);                
+        messageProducer.send(message);
+        messageProducer.close();
+        connection.close();
+        response.sendRedirect(&quot;ListNews&quot;);
+
+    } catch (JMSException ex) {
+        ex.printStackTrace();
+    }
+}</b>
+                        
+PrintWriter out = response.getWriter();
+                    </pre>
+                </li>
+                <li>We now uncomment the code to print the HTML and add the web form for adding a message.
+                Add the following lines in bold to the <tt>processRequest</tt> method
+                <pre class="examplecode">
+out.println(&quot;Servlet PostMessage at &quot; + request.getContextPath() + &quot;&lt;/h1&gt;&quot;);
+
+// Add the following code to add the form to the web page
+<b>out.println(&quot;&lt;form&gt;&quot;);
+out.println(&quot;Title: &lt;input type='text' name='title'&gt;&lt;br/&gt;&quot;);
+out.println(&quot;Message: &lt;textarea name='body'&gt;&lt;/textarea&gt;&lt;br/&gt;&quot;);
+out.println(&quot;&lt;input type='submit'&gt;&lt;br/&gt;&quot;);
+out.println(&quot;&lt;/form&gt;&quot;);</b>
+
+out.println(&quot;&lt;/body&gt;&quot;);
+                </pre>
+                <li>Press Alt-Shift-F to generate any necessary import statements for the class.<br>
+                    <b>Note:</b> When selecting the which libraries to import for <tt>Connection</tt>, <tt>ConnectionFactory</tt>, <tt>Session</tt> and 
+                <tt>Queue</tt>, <b>make sure you import the <tt>java.jms</tt> libraries</b>. </li>
+                <li>Save your changes to the file.</li>
+            </ol>
+            </div>
+            
+            
+            <h2><a name="Exercise_4"></a> Running the Project</h2>
+            <p>We can now run our project. 
+                When we run the project, we want our browser to open to the page with the <tt>ListNews</tt> servlet.
+                We do this by specifying the URL in the Properties dialog box for our Enterprise Application.
+                The URL is relative to the context path for our application.
+            After we enter the relative URL, we can build, deploy and run our application from the Projects window.</p>
+            <p>To set the relative URL and run our application, do the following:</p>
+            <ol>
+                <li>In the Projects window, right-click the NewsApp enterprise application node and select Properties in the pop-up menu.</li>
+                <li>Select Run in the Categories pane.</li>
+                <li>In the Relative URL textfield, type /ListNews.</li>
+                <li>Click OK.</li>
+                <li>In the Projects window, right click the NewsApp enterprise application node and choose Run Project.</li>
+            </ol>
+            
+            <p>When you run the project, the <tt>ListNews</tt> servlet opens in your browser and displays a list of the messages in the database.
+            When you first run the project, the database is empty, but you can click Add Message to add a message.</p>
+            <img src="../../../images/articles/javaee5/newsapp_listnews_servlet_pg.png" width="642" height="426" alt="The ListNews Servlet page" style="margin:10px auto;" />
+            <p>When you add a message with the <tt>PostMessage</tt> servlet, the message is sent to the 
+                message-driven bean for writing to persistent storage, and the <tt>ListNews</tt> servlet is called to display the messages in the database.
+                The list of messages in the database retrieved by <tt>ListNews</tt> often does not yet contain the new message because our message service is asynchronous.
+            </p>
+            
+            
+            <h2><a name="Exercise_5"></a>
+                
+            Troubleshooting</h2>
+            <p>The following are some of the problems you may encounter when creating your project.</p>
+            <div class="indent">
+                <h3 class="tutorial">Problem with JMS Resources</h3>
+                <p>When using the wizard to create JMS resources, 
+                you may see the following server error message in the output window:</p>
+                <pre>[com.sun.enterprise.connectors.ConnectorRuntimeException:
+                    JMS resource not created : jms/Queue]
+                </pre>
+                <p>This message could indicate that the JMS resource was not created or was not registered with the application server.
+                You can use the Admin Console of the Sun Java System Application Server to check, create and edit JMS resources.</p>
+                <p>To open the Admin Console, do the following:</p>
+                <ol>
+                    <li>Confirm that the Sun Java System Application Server is running by expanding the Servers node in the Runtime of the IDE.
+                    A small green arrow next to the Sun Java System Application Server node indicates the server is running.</li>
+                    <li>Right-click the Sun Java System Application Server node and choose View Admin Console to open the login window in your browser.</li>
+                    <li>Log in to the Sun Java System Application Server. The default user name and password are <tt>admin</tt> and <tt>adminadmin</tt>.</li>
+                    <li>In the Admin Console in your browser, expand the Resources node and JMS Resources node in the left frame.</li>
+                    <li>Click on the Connection Factories and Destination Resources links in the left frame to check if the resources are
+                        registered with the server and if necessary modify the resources. If the resources do not exist, you can create them
+                    in the Admin Console.</li>
+                </ol>
+                <p>You need to make sure that the JMS connection factory resource
+                   in the PostMessage servlet is mapped to the correct JNDI name of the JMS connection factory resource
+                   registered with the Sun Java System Application Server.</p>
+                <p>The following resources should be registered with the Sun Java System Application Server:</p>
+                <ul>
+                    <li>a Destination resource with the JNDI name <tt>jms/NewMessage</tt> and type <tt>javax.jms.Queue</tt></li>
+                    <li>a Connection Factory resource with the JNDI name <tt>jms/NewMessageFactory</tt> and type <tt>	
+                    javax.jms.QueueConnectionFactory</tt></li>
+                </ul>
+                
+            </div>
+            <br>
+            <div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+            <br style="clear:both;" />
+            <!-- ======================================================================================= -->
+            <h2><a name="nextsteps"></a>Next Steps</h2>
+            <p>For more information about using NetBeans IDE 5.5 to develop Java EE applications, see the following resources:
+            </p>
+            <ul>
+            <li><a href="javaee-intro.html">Introduction to Java EE 5 Technology</a></li>
+            <li><a href="../web/customer-book.html">Introduction to Using Java Persistence in a Web Application</a></li>
+            <li><a href="../../trails/java-ee.html">Java EE Applications Learning Trail</a></li>
+            </ul>
+            <p>You can find more information about using EJB 3.0 Enterprise Beans in the
+            <a href="http://java.sun.com/javaee/5/docs/tutorial/doc/" target="_blank">Java EE 5 Tutorial</a>.</p>
+
+    </body>
+</html>

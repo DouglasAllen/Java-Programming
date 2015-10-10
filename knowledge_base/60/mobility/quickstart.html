@@ -1,0 +1,535 @@
+<html>
+<head>
+<title>NetBeans 6.0 CLDC/MIDP Development Quick Start Guide</title>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="author" content="">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+</head>
+
+<body>
+<h1>NetBeans 6.0 CLDC/MIDP Development Quick Start Guide</h1>
+
+
+<p>This document takes you through the basics of using NetBeans IDE 6.0 to create 
+  a Java&#8482; Platform, Micro Edition (Java&#8482; ME platform), Mobile Information 
+  Device Profile (MIDP) application. This document is designed to get you going 
+  as quickly as possible. 
+<!--More information about using the Java ME support in 
+  the NetBeans development environment is provided in the following document:</p>
+<ul>
+  <li><a href="import-mobility.html">Importing Existing Java ME MIDP/CLDC Source
+    Code into the NetBeans IDE </a></li>
+</ul>
+--->
+<p>The following tutorial takes you through some of the basic steps of working with the new project system.
+ We show you two ways to create a Java ME MIDP project named "MyHello" that displays the text "Hello World" 
+ in a device emulator. We also take a quick look at other Mobility features for CLDC/MIDP development.</p>
+<h3>Contents</h3>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="quickstart.html#reqs" title="Tutorial Requirements">Tutorial Requirements</a></li>
+             <li><a href="quickstart.html#vmd" title="Creating Applications in the VMD">Creating an Application in the Visual Mobile Designer </a></li>
+             <li><a href="quickstart.html#source" title="Creating Applications in the Source Editor">Creating Applications in the Source Editor</a></li>
+             <li><a href="quickstart.html#configs" title="Using Configurations to Address Device Fragmentation">Using Configurations to Address Device Fragmentation</a>/li>
+             <li><a href="quickstart.html#websvcs" title="Connecting to Web Services">Connecting to Web Services</a></li>
+             <li><a href="quickstart.html#games" title="Designing MIDP Games">Designing MIDP Games</a></li>
+             <li><a href="quickstart.html#nextsteps" title="Next Steps">Next Steps</a></li>
+           </ul></td>
+         <td width="20"> </td>
+         <td align="right" valign="top"> 
+       <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0" height="45" width="206" align="right">
+   </td>
+       </tr>
+     </tbody></table>
+<h2><a name="reqs"> Requirements</h2>
+<p>You must have the NetBeans IDE 6.0 Mobility or Full edition  
+  installed before you can start Java ME MIDP/CLDC development. The Client/Server 
+  sections require the Full Edition for Web Services support. If you installed 
+  only the Mobility Edition, you need to download the following plugins from the 
+  Update center (Tools &gt; Plugins):</p>
+<ul>
+  <li>Web Applications</li>
+  <li>Web Services</li>
+  <li>Sun Java System Application Server
+
+</li>
+</ul>
+<h2><a name="vmd"></a>Creating a MIDP Application Using the Visual Mobile Designer</h2>
+  <p>The NetBeans IDE provides a wizard that enables you to quickly create a MIDP
+    project. When creating the project, you can choose to develop your application
+    in the Visual Mobile Designer (VMD) or in the Source Code Editor.</p>
+<p>Using the Visual Mobile Designer gives you the ability to graphically plan
+  out the flow of the application and design the screens the application
+  uses. The designer automatically creates the code for the application. </p>
+  <div class="indent">
+  <h3 class="tutorial">Creating a MIDP/CLDC Application </h3>
+  <ol>
+    <li>Choose File &gt; New Project (Ctrl+Shift+N). Under Categories, select 
+      Mobility. Under Projects, select MIDP Application and click Next.</li>
+    <li>Enter <code>MyHello</code> in the Project Name field. Change the Project 
+      Location to any directory on your system. In this tutorial we refer to 
+      this directory as <code>$PROJECTHOME</code>. </li>
+    <li>Check the Set as Main Project and Create Hello MIDlet check boxes (both 
+      are checked by default). Click Next. </li>
+    <li>Leave the J2ME Wireless Toolkit as the selected Target Platform. Click 
+      Next. </li>
+    <li><a name="template"></a>Expand &quot;Configuration templates provided by 
+      installed CLDC platforms&quot; and &quot;J2ME Wireless Toolkit 2.2&quot; 
+      folders. Check the boxes next to each of the configurations. <br>
+      The IDE automatically creates a new project configuration for each template 
+      listed. <br>
+      <br>
+      <img src="../../../images/mobility/60/cldcqs/newprojectdialog.png"> </li>
+    <li>Click Finish. The IDE creates the <code>$PROJECTHOME/MyHello</code> project 
+      folder. The project folder contains all of your sources and project metadata, 
+      such as the project Ant script.
+      The application itself is displayed in the Flow Design window of the Visual 
+      Mobile Designer.</li>
+    <p><img src="../../../images/mobility/60/cldcqs/newmobileproject.png" width="600" height="322">&nbsp;</p>
+  </ol>
+  <h3 class="tutorial">Editing the Java Source Code</strong></h3>
+  <p>Now let's edit the text displayed by the MIDlet.</p>
+  <ol>
+    <li>Click on Screen.
+      This opens the Screen Designer window, and displays the Device
+      screen, which is the only screen available in the application. </li>
+    <li>In the Properties window, click in the Text field and type in some new 
+      text. </li>
+  </ol>
+  <h3 class="tutorial"><strong>Compiling and Running the Project</strong></h3>
+  <ol>
+    <li>Choose Run &gt; Run Main Project (F6) from the Run menu. Follow the progress 
+      of the project compilation in the Output window. Note that the <code>HelloMIDlet.java 
+      </code>file is built before it is executed. A device emulator opens to display 
+      the results of the executed MIDlet. The default device emulator is <code>DefaultColorPhone</code>.</li>
+    <li>In the device emulator window, click on the button below the Launch command. 
+      The device emulator launches the MIDlet and displays the text you entered 
+      in the source code. <br>
+      <br>
+      <img src="../../../images/mobility/60/cldcqs/60midpqs-emulator.png" width="366" height="729"> 
+    </li>
+    <li>Click on the button below Exit to close the MIDlet. Then click on the 
+      button in the upper right corner of the device to close the emulator window. 
+    </li>
+  </ol>
+</div>
+
+<h2><a name="source"></a>Creating a MIDP Application Using the Source Editor</h2>
+<p>Using the Source Code Editor, you manually create the code for your MIDlets.
+  Creating code in the Source Code Editor gives you more flexibility when editing
+  the code, and enables you to insert preprocessor code blocks.</p>
+<p>Now we'll create the same application using the New Project and New File wizards, 
+  and complete the code using the Source Editor. </p>
+<div class="indent">
+  <h3 class="tutorial"><strong>Creating a New Java ME MIDP project </strong></h3>
+  <ol>
+    <li>Choose File &gt; New Project (Ctrl-Shift-N). Under Categories, select 
+      Mobility. Under Projects, select MIDP Application and click Next.</li>
+    <li>Enter <code>MyHelloMIDlet</code> in the Project Name field (note that 
+      &quot;MID&quot; is in upper case letters). Change the Project Location to 
+      any directory on your system. We refer to this directory 
+      as <code>$PROJECTHOME</code> in this tutorial. </li>
+    <li>Check the Set as Main Project checkbox and remove the check from the Create 
+      Hello MIDlet checkbox. Click Next. </li>
+    <li>Leave the J2ME Wireless Toolkit as the selected Target Platform. </li>
+    <li>Expand &quot;Configuration templates provided by installed CLDC platforms&quot; 
+      and &quot;J2ME Wireless Toolkit 2.2&quot; folders. Check the boxes next 
+      to each of the configurations. <br>
+      The IDE automatically creates a new project configuration for each 
+      template listed. </li>
+    <li>Click Finish. The IDE creates the <code>$PROJECTHOME/MyHelloMIDlet</code> 
+      project folder. The project folder contains all of your sources and project 
+      metadata, such as the project Ant script. </li>
+    <li>Right-click the <code>MyHelloMIDlet</code> node in the Explorer window 
+      and choose New &gt; MIDlet</li>
+    <li>Enter <code>HelloMIDlet</code> as the MIDlet name (note that &quot;MID&quot; 
+      is in upper case letters). Click Finish. The <code>HelloMIDlet.java</code> 
+      file is created.</li>
+    <li>Double click the <code>HelloMIDlet.java</code> file to display the source 
+      code in the Editor. </li>
+    <li>Click in the Source Editor and change 
+      <pre class="examplecode">public class HelloMIDlet extends MIDlet</pre>
+      
+      to 
+      <pre class="examplecode">public class HelloMIDlet
+              extends MIDlet implements javax.microedition.lcdui.CommandListener
+              {</pre>
+    </li>
+    <li>Add the following text before the <code>startApp()</code> method: 
+      <pre class="examplecode">public HelloMIDlet() {
+}private void initialize() {  javax.microedition.lcdui.Display.getDisplay(this).setCurrent(get_helloTextBox());}
+public void commandAction(javax.microedition.lcdui.Command command, javax.microedition.lcdui.Displayable
+  displayable) {   if (displayable == helloTextBox) {      if (command == exitCommand) {         javax.microedition.lcdui.Display.getDisplay(this).setCurrent(null);         destroyApp(true);         notifyDestroyed();      }   }
+}
+private javax.microedition.lcdui.TextBox get_helloTextBox() {   if (helloTextBox == null) {       helloTextBox = new javax.microedition.lcdui.TextBox(null, "Test String",120, 0x0);       helloTextBox.addCommand(get_exitCommand());       helloTextBox.setCommandListener(this);   }   return helloTextBox;}
+private javax.microedition.lcdui.Command get_exitCommand() {   if (exitCommand == null) {       exitCommand = new javax.microedition.lcdui.Command("Exit", javax.microedition.lcdui.Command.EXIT,
+  1);   }   return exitCommand;}
+javax.microedition.lcdui.TextBox helloTextBox;javax.microedition.lcdui.Command exitCommand;</pre>
+    </li>
+    <li>Add a line <code>initialize();</code> to the <code>startApp()</code> method, 
+      so it looks like the following: 
+      <pre class="examplecode">  public void startApp() {
+   initialize();
+    }</pre>
+  </ol>
+      <h3 class="tutorial">Editing the Java Source Code</strong></h3>
+
+      <p>Now let's add some text for our MIDlet to display.</p>
+  <ol>
+    <li>In the <code>get_helloTextBox()</code> method, replace the "test string"
+      code with the text of your choice. For example, "Hello World."</ol>
+
+  <h3 class="tutorial">Compiling and Running the Project</strong></h3>
+  <ol>
+    <li>Choose Run &gt; Run Main Project (F6) from the Run menu. Follow the progress 
+      of the project compilation in the Output window. Note that the <code>HelloMIDlet.java 
+      </code>file is built before it is executed. A device emulator opens to display 
+      the results of the executed MIDlet. The default device emulator is <code>DefaultColorPhone</code>.</li>
+    <li>In the device emulator window, click on the button below the Launch command. 
+      The device emulator launches the MIDlet and displays the text you entered 
+      in the source code. </li>
+    <li>Click on the button below Exit to close the MIDlet. Then click on the 
+      button in the upper right corner of the device to close the emulator window. 
+    </li>
+  </ol>
+
+</div>
+<h2><a name="emulators"></a> Changing the Emulator Platform</h2>
+<p>Emulator platforms are provided by mobile phone manufacturers so developers
+  can simulate the behavior of specific mobile devices while coding, debugging,
+  and testing applications. The NetBeans Mobility Pack includes the J2ME Wireless
+  Toolkit, and supports many other software development kits (SDKs) that you can
+  download from provider sites, such as Nokia, Sony Ericsson, or Motorola. </p>
+<div class="indent">
+  <h3 class="tutorial">Changing the Default Emulator Device</strong></h3>
+  <ol>
+    <li>Right-click the MyHello Project node and choose Properties. In the Properties 
+      dialog, choose the Platform node. Here, you can change the device for the 
+      default configuration.</li>
+    <li>Click the Device drop-down list and choose QwertyDevice. Click OK.</li>
+    <li>Run the application again, and the application runs in the <code>QwertyDevice</code> 
+      emulator. </li>
+  </ol>
+  <h3>Changing the Project Configuration</h3>
+  <p>You created several project configurations using the <a href="quickstart.html#template">templates</a> 
+    in the New Project wizard. You can use the drop-down Configuration menu in 
+    the main toolbar to quickly change project configurations.</p>
+  <h3 class="tutorial">Adding a New Emulator Platform</h3>
+  <ol>
+    <li>Choose Tools &gt; Java Platforms from the main toolbar.</li>
+    <li>In the Java Platform Manager dialog, click the Add Platform button. </li>
+    <li>In the Select Platform Type page, choose the Java ME MIDP Edition Platform 
+      Emulator. Click Next. 
+      In the Platforms page, the IDE searches for all available Java ME platforms
+      and lists them in the window. Platforms that are compliant with the Unified
+      Emulator Interface (UEI) standard are verified and appear with a check in
+      the checkbox next to the platform name. Platforms that are not UEI-compliant,
+      or that you might not be able to install for other reasons, are listed in
+      red. The wizard also identifies which platforms have already been installed.
+      
+      <strong>NOTE:</strong> To install platforms that are not UEI-compliant,
+      click the Back button and choose Custom Java Micro Edition Platform Emulator.
+    </li>
+    <li>In the Platforms page, put a check next to any platform emulator you want 
+      to install. After the platforms are detected, they are installed. Click 
+      Finish. Then click Close. </li>
+    <li>Choose File &gt; "MyHello" Properties.</li>
+    <li>Choose the Platform node, then choose the name of the new emulator (for
+      example, J2ME Wireless Toolkit 2.2) from the Emulator Platform drop-down
+      menu. Click OK.</li>
+  </ol>
+</div>
+<h2><a name="configs"></a>Using Configurations</h2>
+<p>You can use configurations to create more than one set of distribution JAR
+  and Java Application Descriptor (JAD) files for your project. This enables you
+  to create one set of source code and customize it for each mobile device you're
+  programming for.</p>
+<div class="indent"> 
+  <h3 class="tutorial"><strong>Adding a Configuration</strong></h3>
+  <ol>
+    <li>Right-click the MyHello Project node and choose Properties. In the Properties 
+      dialog, Choose Add Configuration from the Project Configuration drop-down 
+      list. This opens the Add Configuration dialog.</li>
+    <li>Enter a name for your configuration in the Configuration Name field. The 
+      name should identify the target platform you deploy the JAR/JAD 
+      created for this configuration. For this example, enter <code>BlackWhiteDisplay</code> 
+      and click OK. You have just created a new configuration.</li>
+    <li>Configurations can also be added by clicking the Manage Configurations 
+      button in the Properties dialog. This brings up the Project Configuration 
+      Manager dialog which contains options for adding, removing, or duplicating 
+      configurations.</li>
+  </ol>
+  <h3 class="tutorial"><strong>Customizing a Configuration</strong></h3>
+  <p>You can add as many configurations as you would like to your project. You 
+    can then modify settings in the Project Properties dialog for each configuration 
+    that you've added.</p>
+  <ol>
+    <li>Right-click the MyHello Project node and choose Properties. In the Properties 
+      dialog, choose the Platform node. </li>
+    <li>Choose the <code>BlackWhiteDisplay</code> configuration from the configuration 
+      combo box at the top of the Properties dialog. </li>
+    <li>The components in the Platform dialog are all disabled. This is because 
+      this configuration is currently taking the values used by the default configuration 
+      for this panel. Uncheck the Use Values from &quot;DefaultConfiguration&quot; 
+      option at the top of the panel. All components on this panel can now be 
+      edited. </li>
+    <li>Change the Device option to DefaultGrayPhone.</li>
+    <li>Toggle the Project Configuration dialog at the top of the Properties dialog 
+      and observe that the Device option changes based on which configuration 
+      is currently selected. This method of configuration customization works 
+      for each panel (other than the general panel) in the dialog. Click OK to 
+      save your configuration changes and exit the Properties dialog.</li>
+  </ol>
+  <h3 class="tutorial"><strong>Creating an Ability</strong></h3>
+  <p>An <em>Ability</em> is a specific attribute of a project configuration. It 
+    can be a physical attribute such as screen size, or an API or JSR supported 
+    by the configuration. You can create a new ability and associate it with one 
+    or more project configurations. You can then use preprocessior code blocks 
+    to associate certain code with that ability. If you later need to add or remove 
+    configurations, you do not have to go through all your code and associate the 
+    configuration with each code block. Instead, you need only to add that ability 
+    to the configuration. The configuration is then automatically associated with 
+    any code block associated with that ability.</p>
+  <ol>
+    <li>Right-click on the MyHello project node and choose Properties.</li>
+    <li>Choose the Abilities page from the Category menu tree.</li>
+    <li>Choose a configuration from the Project Configuration dropdown menu. This 
+      associates  the ability with that  configuration.</li>
+    <li>If necessary, uncheck the Use Values from "DefaultConfiguration" checkbox.</li>
+    <li>Click the Add button. 
+      This opens the Add Ability dialog.</li>
+    <li>In the New Ability dialog, enter a name for the ability, or choose an 
+      ability from the drop-down menu. Optionally, enter a value for the ability.
+      Click Ok to close the New Ability dialog. The ability is now associated 
+      with the selected project configuration.</li>
+  </ol>
+  <p>You can associate the ability with other configurations by choosing a different 
+    configuration from the Project Configuration menu and clicking the Add button.</p>
+  <h3 class="tutorial"><strong>Adding Configuration-Specific, Preprocessor 
+    code</strong></h3>
+  <p>Preprocessor blocks enable you to create, manage and track code that is specific 
+    to one or more project configurations or abilities. The code is enabled (or 
+    disabled) only for the configurations or abilities you identify.</p>
+  <ol>
+    <li>In the HelloMIDlet.java Editor window, right-click on the source code 
+      line where TextBox is instantiated ( <code>helloTextBox = new javax.microedition.lcdui.TextBox(null, 
+      &quot;Hello, World&quot;,120, 0x0);</code>). </li>
+    <li>Right-click on the line and choose Preprocessor Blocks &gt; Create If/Else 
+      Block. In the first, pink section, append the word "Color" to the "Hello 
+      World" string. In the second, gray section, add "Gray" to the "Hello World" 
+      string. </li>
+    <li>The code marked by the <code>//#if</code> preprocessor directive is in effect whenever the active configuration matches the directive value 
+      (in this case, DefaultConfiguration.) The code encased by the <code>//#else</code> 
+      preprocessor directive is used whenever the active configuration does 
+      <strong>not</strong> match the value of the preprocessor.
+      
+      In other words, the emulator displays &quot;Hello World Color&quot; whenever 
+      the active platform is &quot;DefaultConfiguration,&quot; and displays &quot;Hello 
+      World Gray&quot; if the active platform is any other emulator platform. 
+      The //#endif preprocessor directive completes the preprocessor block. </li>
+    <p>You can test the preprocessor code by running the MIDlet using different 
+      emulator devices, as described in <a href="quickstart.html#changeemulator">Changing the 
+      Emulator Platform</a>.</p>
+  </ol>
+  <h3 class="tutorial">Running Configurations</h3>
+  <p>Configurations can be built and run individually or simultaneously.</p>
+  <ol>
+    <li>Right-click the MyHelloMIDlet Project node and choose Run. </li>
+    <li>Use the configuration combo box in the Toolbar to change the configuration 
+      to BlackWhiteDisplay. Choose Run again. </li>
+    <li>Two emulators appear, one color and one gray. The gray emulator displays 
+      "Hello World Gray" and the color emulator displays "Hello World Color."</li>
+  </ol>
+</div>
+<ul>
+  <li> 
+    <div class="indent">To build multiple configurations simultaneously, right-click 
+      on a project and choose Batch Build. In the dialog that opens, check the 
+      box next to each configuration you want to build. </div>
+  </li>
+  <li> <div class="indent">To test a device on the fly, right-click on the project and choose Run 
+    With. In the dialog that opens, choose the emulator platform and device you 
+    want to run. </div></li>
+</ul>
+<h2><a name="websvcs"></a>Connencting Mobile  Applications to Web Services </h2>
+<p>The IDE enables you to create client MIDlets that can connect to Web services
+  either through a direct &quot;two-tier&quot; architecture, or a &quot;three-tier&quot;
+  architecture that connects to Web services through a middleware Web application.
+</p>
+<p>The IDE provides two wizards for creating the connecting classes: </p>
+<ul>
+  <li>Use the The Java ME Web Service Client wizard if you want to use the JSR-172 
+    Web Services specification to create a &quot;two-tier&quot; connection to 
+    Web services. This wizard creates stub (client-side proxy) files and, optionally, 
+    a sample client MIDlet that calls a web service. You must have a device or 
+    emulator platform that supports the JSR-172 specification to use this wizard.
+  </li>
+  <li>Use the The Mobile Client to Web Application Generator to create a &quot;three-tier&quot; 
+    connection to Web services if your devices do not support the JSR-172 Web 
+    Services specification. The wizard generates a servlet that connects to a 
+    web application that includes a web service client. Before you use the Mobile 
+    Client to Web Application Generator, you must have a Web project that includes 
+    a Web service client.</li>
+</ul>
+
+  <h3 class="tutorial"><strong>Creating a Java ME Web Services
+    (JSR-172) Client</strong></h3>
+<ol>
+    
+  <li>Right-click on a project node and choose New &gt; File.
+  </li>
+    
+  <li>In the New File wizard, choose MIDP under Categories. Under File Types, 
+    choose Java ME Web Service Client. Click Next. 
+  </li>
+    <li>Identify the WSDL file location for the Web service to be added to the 
+      project. </li>
+  <ul>
+    If the WSDL service is on the Web: 
+      <ol>
+        <li>Choose Running Web Service and enter a URL for the WSDL file and 
+          enter a local filename for the retrieved WSDL.</li>
+        <li>If you are behind a firewall, click Proxy Settings to designate 
+          the appropriate HTTP host and port.</li>
+        <li>Click Retrieve WSDL to get a local copy of the WDSL file. The IDE 
+          downloads the WSDL file.</li>
+    </ol>
+ </ul>
+	<ul>
+	If you have a WSDL file in your environment:
+	<ol>
+	 <li>Select the WSDL file from your system and enter a filename.</li>
+     <li>The IDE retrieves the WSDL file and the rest of the fields on the page are filled 
+		  with default names taken from the WSDL file name. </li>
+	</ol>
+  </ul>
+	<li>Press Finish. 
+    The IDE creates an opened settings file and generates client stubs. In the 
+    Main Window, you can see a list of the Exported Services, Client Information, 
+  and Client Options you can choose.</li>
+</ol>
+  <ul>
+    <li>In some rare situations, you might need to convert CLDC 1.1 types to CLDC 
+      1.0 types, which means Float and Double types are converted to String variables. 
+      To make the conversion, select the checkbox &#8220;Convert floating point 
+      to String&#8221; on the settings file and click the Generate Stubs button.
+    </li>
+  <li>If you are behind a firewall, there is no public setting available for the 
+    HTTPS proxy within NetBeans. You can change the NetBeans proxy settings by 
+    choosing Tools&gt;Options from the main menu. These settings do not, however, 
+    propagate to emulators. You can set the proxy for the Wireless Toolkit by 
+    choosing Tools &gt; Java Platforms. Under Platforms, choose the Wireelss Toolkit, 
+    and then select the Tools &amp; Extensions tab. Click the Open Preferences 
+    button and then select the Network Configuration tab. Changing the proxy for 
+    other emulators is similar, but may differ from vendor to vendor.</li>
+    <li> The generated files should not be edited. Any changes made to the files 
+      are lost when you regenerate them.</li>
+  </ul> 
+<!---    <h3 class="tutorial"><strong>Using the Mobile Client to Web Application Generator</strong></h3>
+    <ol>
+      <li>Open the Mobile Client to Web Application Generator by selecting a Mobile 
+        Project from the Projects view and choosing File &gt; New File. In Categories, 
+        chose MIDP. In File Types, choose Mobile Client to Web Application. Click 
+        Next.</li>
+      <li>In the Servlet and Client Type Selection page, select a web project, 
+        servlet name, and package for the generated server code.</li>
+      <li>In the same page, choose the type of web application the MIDlet interacts 
+        with: 
+        <ul>
+          <li>If the mobile client connects directly to a Web application that 
+            does not use a Web service, choose Methods in Web Application. </li>
+          <li>If the mobile client connects to a Web service through a middleware 
+            Web application, choose Web Services in Web Application, then use 
+            the drop-down menu to choose the Web Service client. </li>
+        </ul>
+      </li>
+      <li>In the Service Selection page, identify the services to be exported 
+        from the server to the client application.</li>
+      <li>In the Client Options page, select a name and package for the generated 
+        client class.</li>
+      <li>In the same page, you can also determine the types of code to be generated:</li>
+    </ol>
+    <ul>
+      <li>Stub methods for each exported service</li>
+      <li>Code enabling multiple calls per session</li>
+      <li>Code that allows floating point values</li>
+      <li>Tracing code</li>
+      <li>A sample MIDlet you can examine and modify</li>
+    </ul>
+    <p>The template creates:</p>
+    <ul>
+      <li>a Java ME client class</li>
+      <li>a servlet and supporting classes</li>
+      <li>a mapping file in xml format.</li>
+      <li>if you choose, a MIDlet you can examine and modify. </li>
+    </ul>
+    <p>The Java ME client , mapping file and the MIDlet are generated under the 
+      Java ME project. The servlet and supporting classes are generated under 
+      the web project. The servlet is also added to the web application (<code>web.xml</code>).</li> </ol> 
+    </p>
+  </div>
+  --->
+ <h2><a name="games"></a>Creating a Game Using the Game Designer</h2>
+ <p class="tutorial">The Visual Mobile Designer now supports the MIDP 2.0 Gaming 
+    API. In the VMD, you can arrange tiled layers into scenes and populate the 
+    game with animated sprites.</p>
+  <p class="tutorial">Before you begin, save all the images you want to use for 
+    scenery and sprites into the src directory of your project. Then continue 
+    as follows:</p>
+<ol>
+  <li> 
+    <div class="tutorial">Create a new MIDP project with the &quot;Create Hello 
+      MIDlet&quot; option unchecked. Then right-click the project and choose New 
+      &gt; File. Under categories, choose MIDP. Under File Types, choose Visual 
+      Game Design. Click Next. </div>
+  </li>
+  <li> 
+    <div class="tutorial">Give the new class a name and click Finish. </div>
+  </li>
+  <li> 
+    <div class="tutorial">The Game Builder Design Component screen opens. </div>
+  </li>
+  <li>Click on Create Scene. <br>
+    A &quot;Scene&quot; is a level of a game. In the Game Designer Window, an 
+    empty scene opens. </li>
+  <li>To create a tiled layer (scenario environment), click the Create Tiled Layer 
+    button in the upper right corner of the window.<br>
+    Note that you can use sample images packaged with the IDE. To get the sample 
+    images, click the Import sample images button. </li>
+  <li>In the dialog that pops up, enter a name for your layer adjust the size 
+    of your tiles to match the device you're programming for. Then Click OK. <br>
+    After you create a new tiled layer, drag and drop tiles on the grid to create 
+    a level for your game. <br>
+    <br>
+    <img src="../../../images/mobility/60midpqs-layer.png" width="525" height="726"> 
+  </li>
+  <li>You can create sprites for your game by choosing Sprites from the drop-down 
+    menu, then dragging an image from the images window at the bottom of the IDE. 
+    <br>
+    You can use the Game Builder to animate your sprites and tiled layers. Game 
+    Builder treats sprites as animated sequences, and you can edit and animate 
+    multiple sprites simultaneously. <br>
+    <br>
+    <img src="../../../images/mobility/60midpqs-sprite.png" width="523" height="578"> 
+  </li>
+</ol>
+
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;" />
+
+<h2><a name="nextsteps"></a>Next Steps</h2>
+
+<p>For more information about using the NetBeans Mobility Pack, see the following 
+  resources: </p>
+<ul>
+  <li><a href="http://www.netbeans.org/kb/55/import-mobility.html" target="_blank">Importing Existing Java ME MIDP/CLDC Source 
+    Code into the NetBeans IDE</a></li>
+</ul>
+</body>
+</html>

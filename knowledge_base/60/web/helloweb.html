@@ -1,0 +1,547 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html lang='en'>
+<head>
+<title>NetBeans 6.0 - Tutorials - Developing a Web Application</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="Use the NetBeans IDE to create a simple example, Hello Web. The example asks you to input your name, and then repeats it back to you.">
+<meta name="date" content="2006-04-27">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<!--stopindex-->
+<body>
+
+<a name="top"></a>
+
+<!-- BEGIN VNV3 PAGETITLE, two-level variation -->
+<h1>Developing a Visual Web JSF Application</h1>
+
+<a name="skip2content"></a>
+
+<!--  BEGIN VCD4 BYLINE AND TOOLS  -->
+<div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team</div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="smaller" valign="top"><em>December, 2007</em>&nbsp;[Revision number: V6.0]</td>
+<td width="10">&nbsp;</td>
+<td align="right" valign="bottom">&nbsp;
+</td></tr>
+</table>
+
+
+<table border="0" cellpadding="4" cellspacing="0" width="100%" >
+<tr>
+<td><p>In this tutorial, you use the NetBeans IDE to create and run a simple web application, Hello Web. The example
+  application asks you to input a name and then displays a message that uses that
+  name. At first, you implement this page with an input field. Then you replace
+  the input field with a drop-down list from which the user can choose a name. The
+  drop-down list is populated with names from a database table. </p></td>
+</tr>
+</table>
+ <p align="center"><b>Expected duration: <i>25</i> minutes</b></p>
+<!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  -->
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="left" valign="top">
+<h3>Contents</h3>
+<ul>
+<li><a href="helloweb.html#01">Creating a Project</a></li>
+<li><a href="helloweb.html#02">Designing the Page</a></li>
+<li><a href="helloweb.html#03">Adding Some Behavior</a></li>
+<li><a href="helloweb.html#04">Running the Application</a></li>
+<li><a href="helloweb.html#05">Replacing the Text Field With a Drop Down List</a></li>
+<li><a href="helloweb.html#06">Binding the Drop Down List to the Database Table</a></li>
+<li><a href="helloweb.html#07">Adding Some Behavior</a></li>
+<li><a href="helloweb.html#08">Running the Application</a></li>
+<li><a href="helloweb.html#10">Doing More</a></li>
+</ul>
+</td>
+<td width="20">&nbsp;</td>
+<td align="right" valign="top">  <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td>
+</tr>
+</table>
+<span class="sp20">&nbsp;</span><br />
+<!-- END VCD5 ANCHOR LINKS COMPONENT  -->
+
+<p><b>This tutorial works with the following technologies and resources</b></p>
+
+<table border="1" cellpadding="1">
+  <tbody>
+  <tr>
+    <td valign="top">JavaServer Faces Components/<br>
+      Java EE Platform</td>
+    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br>
+      <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 
+  </td></tr>
+  <tr>
+    <td valign="top">Travel Database (installed)</td>
+    <td colspan="4" valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">Required</td>
+  </tr>
+  </tbody></table>
+<p>* To take advantage of NetBeans IDE 6.0's Java EE 5 capabilities, use an application server that is fully compliant with the Java EE 5 specification, such as the Sun Java System Application Server 9 (GlassFish Project).</p>
+<p>If you are using MySQL, see the FAQ <a href="http://wiki.netbeans.info/wiki/view/FaqDatabaseConnectivityTravelDb" target="_blank">How do I enable the sample Travel database for MySQL in NetBeans IDE 6.0</a> for appropriate instructions. </p>
+<p>This tutorial has been tailored for use with the GlassFish v2 Application Server. 
+If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. 
+For detailed information about the supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p>
+<!-- END RESOURCE MATRIX -->
+<!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<br>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+
+
+
+<p>Before you begin, you need to install the following software on your computer:</p>
+<ul>
+	<li>NetBeans IDE 6.0 with Web and Java EE features enabled (included in the Web &amp; Jave EE and All versions of the download).</li>
+</ul>
+
+<!-- ======================================================================================== -->
+<a name="01"></a> 
+<h2>Creating a Project</h2>
+<ol>
+<li>From the main menu, choose File &gt; New Project.</li>
+<li>In the New Project Wizard, select Web from the Categories list and select
+ Web Application from the Projects list.
+Click Next.</li>
+<li>Name the project <code>HelloWeb</code> and click Next.</li>
+<li><p>Select the Visual Web JavaServer Faces framework and click Finish</p>
+Your project appears with the initial page (<code>Page1</code>) open in the Visual Designer.  
+</li>
+</ol>
+
+<a name="02"></a> 
+<h2>Designing the Page</h2>
+
+<p>To begin, you design a page like the one shown in the following figure.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="430">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/helloweb/design1.png" width="420" height="311" border="0" alt="Figure 1: Page1 Design">
+<b>Figure 1</b>: Page1 Design</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+
+<ol>
+<li>
+  <p>In the Properties window, type <code>Hello Web</code> in the <code>Title</code> property's text box as shown in the following figure.</p>
+<p>The <code>Title</code> property's value appears in the browser's title bar when this page (or project) is deployed.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="277">
+<tr>
+<td align="center" >
+<img src="../../../images/articles/60/web/helloweb/title-prop.png" width="267" height="212" border="0" alt="Figure 2: Page Properties in the Properties Window">
+<b>Figure 2</b>: Page Properties in the Properties Window</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<br>
+<p><strong>Tip:</strong> You can access a component's properties  in the Properties windows by selecting the component in
+either the Visual Designer or the Navigator window. To open the Navigator window, select Window &gt; Navigating &gt; Navigator. </p> You access a page's properties
+by clicking on a blank spot on the page.</li>
+<li><p>If the Basic node in the Palette window is not expanded, expand it now.</p>
+<p>All the components that you use in this example are in the Basic section of the
+Palette.</p>
+If the Palette is not visible, choose Window &gt; Palette to display it.</li>
+<li>
+  <p>Drag a Label component from the Basic section of the Palette to the
+left side of the page in the Visual Designer, type <code>Name:</code> and
+press Enter.</p>
+  <p>Note that the component snaps to the grid on the page. Also 
+note that the value of the <code>text</code> property in the Properties window changes to <code>Name:</code>. </p>
+<span class="note"><strong>Tip:</strong></span> You can switch the component to edit mode by right-clicking the 
+component and choosing Edit Label Text from the pop-up menu.</li>
+<li>Drag a Text Field component from the Basic section of the Palette onto the
+Visual Designer, type <code>Enter Your Name</code>, and press Enter.</li>
+<li>In the Properties window, change the <code>id</code> property of the Text Field 
+from <code>textField1</code> to <code>nameField</code>.</li>
+<li><p>Select the Label component and Ctrl-Shift-Drag from the Label component to the Text Field component.
+</p>
+Note that the <code>for</code> property for the Label component is
+now set to <code>nameField</code>.</li>
+<li>Drag a Button component to the right of the Text Field component, type <code>Say Hello</code>, and press
+Enter.<ul class="note">
+  <li><b>Important Note:</b> There is a known issue that affects the wdith of the JSF 1.2 Button component in IE7. The workaround is to place the Button component in a layout component (Grid Panel, Group Panel, or Layout Panel). Resizing the layout component automatically resizes the Button component.   </li>
+</uL></li>
+<li>In the Properties window, change the Button component's <code>id</code> property from <code>button1</code>
+to <code>helloButton</code>.</li>
+<li>Drag a Static Text component to a spot below the Label component.</li>
+<li>Change the Static Text component's <code>id</code> property from <code>staticText1</code>
+to <code>helloText</code>.</li>
+<li><p>Drag a Message Group component onto an out-of-the-way spot on the
+page, such as under the Static Text component.</p>
+Adding a Message Group component, which displays runtime errors among other types
+of messages, is useful for diagnosing programming errors.</li>
+<li><p>In the Editing toolbar, click JSP to switch to the JavaServer Pages (JSP)
+Source Editor.</p>
+Scan through the code and note how the changes that you made in the Properties window
+are saved. When a page is first displayed in the browser, the page appears exactly
+as indicated by the tags in the JSP page. If your page bean has code that changes
+the property values, such changes appear only on requests where the page is submitted
+and subsequently redisplayed. 
+</li>
+</ol>
+ 
+<a name="03"></a> 
+<h2>Adding Some Behavior</h2>
+<div>In this section, you add code to make the page redisplay with the
+message <code>Hello <i>entered-name</i></code>. You do this by adding an event
+handler that the application calls whenever the button is clicked. This event handler
+sets the Static Text component's <code>text</code> property to a "hello" message and then causes
+the page to be redisplayed so that the text appears.</div>
+
+<ol>
+<li>In the Editing toolbar, click Design to switch to the Visual Designer.</li>
+<li><p>Double-click the Button component.</p>
+The Editing Area switches to the Java Editor and shows the page bean for Page1.
+The button's event handler, <code>helloButton_action</code>, has been added to
+the page bean.</li>
+
+<li>
+  <p>Replace the body of the <code>helloButton_action</code> method with the following
+lines of code (shown in <strong>bold</strong>). Then press Alt-Shift-F to reformat the code.</p>
+<p>
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Example 1: helloButton_action() Code</b></td>
+</tr>
+<tr>
+<td><pre>    public String helloButton_action() {
+        <span style="font-weight:bold">String name = (String)nameField.getText();
+        helloText.setText("Hello, " + name + "!");</span>
+        return null;
+</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+<p>
+The first line in <b>bold</b> gets the value of the <code>text</code> property for the 
+<code>nameField</code> Text Field component using the <code>getText</code> method. That
+value is an object of type <code>Object</code>, which needs to be a string, so
+it is cast to a <code>String</code> object. Then the object is assigned to the
+<code>name</code> variable.</p> 
+
+The second line in <b>bold</b> sets the value of the <code>text</code> property 
+for the <code>helloText</code> Static Text component. This value contains the name that
+the user entered into the <code>nameField</code> Text Field component. 
+For example, if the user enters <code>Fred</code>,
+this line of code sets the Static Text component's <code>text</code> property
+to <code>Hello, Fred!</code></li>
+</ol>
+
+<a name="04"></a> 
+<h2>Running the Application</h2>
+<ol>
+<li>
+  <p>In the Java Editor, ensure that your Java code does not contain any errors.</p>
+<p>
+Errors are indicated by red underlines or red boxes along the left side of the
+code.
+Your project will not build if there are errors in the code.</p>
+<span class="note"><strong>Tip:</strong></span> Hold the cursor over the red box on the left side of the code to
+see a description of the error.
+</li>
+<li>
+  <p>Click the Run Main Project button <img src="../../../images/articles/60/web/runprojectbtn.png" alt = "Run Project toolbar icon" align = "absmiddle" height = "19" width = "11">.</p>
+The IDE saves your files and builds your project. The Build Output window appears
+at the bottom of the screen and displays relevant status messages. Once your application
+is built and deployed, the IDE launches your default web browser (if it is not already
+running), and your web application appears.
+
+</li>
+<li>
+  <p>Enter your name in the text field and click Say Hello.  </p>
+  "Hello <em>your name</em>" is then displayed below. </li>
+<p>The browser submits the form to the web server, which calls your web application.
+The application executes the button action method, updates the page elements, rerenders
+the same page with the changed data, and sends the page back to the web browser.
+The following figure is the result if the name submitted is <code>Gus Townsend</code>.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="416">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/helloweb/webapp1.png" width="406" height="305" border="0" alt="Figure 3: Hello Web, With Result">
+<b>Figure 3</b>: Hello Web, With
+Result</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+
+</ol>
+
+<a name="05"></a> 
+<h2>Replacing the Text Field With a Drop Down List</h2>
+<p>The remainder of this tutorial shows how to use a Drop Down List component
+instead of a Text Field to get user input, as shown in the following figure. This
+Drop Down List component gets its list of choices from the bundled <code>PERSON</code>
+database table.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="426">
+<tr>
+<td align="center" ><td align="center" ><img src="../../../images/articles/60/web/helloweb/finalwebapp.png" width="416" height="204" border="0" alt="Figure 4: Hello Web, Final Version">
+<b>Figure 4: </b>: Hello Web, Final Version</table>
+<ol><li> In the Editing toolbar, click Design to switch to the Visual Designer. </li>
+<li>In the Visual Designer, right-click the <code>nameField</code> Text Field component
+  and choose Delete from the pop-up menu.
+  </li>
+  <li><p>Drag a Drop Down List component from the Basic section of the Palette onto
+your page in the Visual Designer. Move the component into the area where the Text
+Field component was. </p>
+<p>Notice, as shown in the following figure, that the Navigator window shows a 
+dropDown1 component and a dropDown1DefaultOptions object. 
+The Drop Down List component's <code>items</code> property
+identifies the object that contains the choices in the list. 
+When you add a Drop Down List component to the page, the IDE creates a 
+Default Options object (<code>dropDown1DefaultOptions</code>) 
+and sets this object as the value of the Drop Down List
+component's <code>items</code> property. Only the Drop Down List component is visible in the Visual Designer. The Default Options object merely supplies the choices that appear in the list. Later in this tutorial, you modify the Drop Down List 
+component to obtain its choices from a different source.</p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="302">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/helloweb/app-outline-navigator.png" width="292" height="373" border="0" alt="Figure 6: Components in the Navigator Window">
+<b>Figure 5</b>: Components in the Navigator Window</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+</li>
+<li>In the Properties window, change the component's <code>id</code> to <code>nameDropDown</code>.
+</li>
+<li><p>Select the Label component and Ctrl-Shift-Drag from the Label component to the Drop Down List component.</p>
+Note that the <code>for</code> property for the Label component is now <code>nameDropDown</code>.
+</li>
+</ol>
+
+<a name="06"></a> 
+<h2>Binding the Drop Down List to the Database Table</h2>
+
+<div>The Services window, which appears on the left side of the IDE workspace, includes
+a Databases node. The Databases node shows all the database drivers and connections that have been
+added to the IDE.</div>
+<br> 
+<div>The NetBeans IDE comes with a sample Travel database. The Travel database appears under
+the Databases node. In this section of the tutorial, you use the PERSON table from the Travel database to supply
+the choices for the Drop Down List component.</div>
+
+<ol>
+<li>
+  <p>In the Services window, expand the Databases node and check if the Travel database is connected.</p>
+
+If the jdbc node for the TRAVEL database's badge is broken and you cannot expand the node, 
+the IDE is not connected to the database. To connect to the TRAVEL database, right-click the jdbc node for TRAVEL and choose Connect from the pop-up menu. Enter <code>travel</code> for the Password, select Remember Password During This Session, and click OK. If you do not see a jdbc node for the TRAVEL database, see the 
+NetBeans Installation Instructions for information about making the database available to the IDE.</li>
+<li>
+  <p>Expand the TRAVEL database's Tables node.</p>
+    <p>Under
+  Tables, you see nodes for each table in the database, such as CARRENTAL and FLIGHT. The following figure
+  shows the Runtime window with the Tables node expanded.
+  </p>
+
+  
+<!-- BEGIN FIGURE COMPONENT -->
+  <table border="0" cellpadding="2" cellspacing="0" width="361">
+    <tr>
+    <td align="center" ><img src="../../../images/articles/60/web/helloweb/services.png" width="351" height="400" border="0" alt="Figure 7: Services Window">
+    <b>Figure 6</b>: Services Window</td>
+    </tr>
+  </table>
+  <!-- END FIGURE COMPONENT -->
+</li>
+<li>
+  <p>Drag PERSON from the Services window and drop it on the Drop Down List.</p>
+<p>The display on the list changes from <code>item 1</code> to <code>abc</code>, indicating
+that the list is displaying bound data and that the data 
+being displayed is of the type <code>String</code>.</p>
+
+The IDE adds a nonvisual personDataProvider component for the database table.
+The personDataProvider component appears in the Navigator window. The IDE also
+adds a <code>personRowSet</code> property to SessionBean1.
+</li>
+<li><p>Right-click the Drop Down List and choose Bind to Data from the pop-up
+menu. The Bind to Data dialog box appears, as shown in the following figure. </p>
+
+<!-- BEGIN FIGURE COMPONENT -->
+<table border="0" cellpadding="2" cellspacing="0" width="565">
+<tr>
+<td align="center" ><img src="../../../images/articles/60/web/helloweb/bind-dialog.png" width="555" height="438" border="1" alt="Figure 8: Binding Data to the Drop Down List">
+<b>Figure 7</b>: Binding Data to
+the Drop Down List</td>
+</tr>
+</table>
+<!-- END FIGURE COMPONENT -->
+<br>
+When you bind data to a Drop Down List component, you must specify 
+what to display in the list (the Display Field) and you must specify what
+values to use in the underlying program (the Value Field). Typically, you want
+to display some meaningful value from the database table, such as a person's name,
+but you want to use a unique identifier in the underlying program, such as the
+person's ID. With this application, however, you want to bind both the Value field
+and the Display field to the same database column, the PERSON.NAME column, as
+described in the next two steps.</li>
+<li>Set the Value field in the dialog box to <code>PERSON.NAME</code>, leave the Display field set to <code>PERSON.NAME</code>, and click OK.</li>
+</ol>
+<h2><a name="07"></a>Adding Some Behavior</h2>
+<ol>
+<li><p>In the Visual Designer, double-click the Button component.</p>
+The Editing Area switches to the Java Editor and moves to the <code>helloButton_action</code>
+method.</li>
+<li><p>Replace the body of the <code>helloButton_action</code> method with the following
+code (shown in <b>bold</b>).</p>
+
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Example 2: helloButton_action Replacement Code</b></td>
+</tr>
+<tr>
+<td><pre>    public String helloButton_action() {
+        <span style="font-weight:bold">String name = (String)nameDropDown.getSelected();
+        String splitnames[] = name.split(",");
+        helloText.setText("Hello, " + splitnames[1] + "!");</span>
+        return null;</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+<br>
+<p>
+The first line uses the <code>getSelected</code> method to get the current value
+of the Drop Down List, which is the currently selected name in the list. </p>
+<p>
+Because data is stored in the database as <i>lastname</i>, <i>firstname</i>, the
+string must be modified before it is displayed. Otherwise, the application will
+print &quot;Hello, <i>lastname</i>, <i>firstname</i>!&quot; The second line uses the <code>split</code>
+method to split the string into an array, using the comma as a delimiter. The
+first item in the array (at position 0) contains the last name, and position 1
+contains the first name.</p>
+<p>
+In the third line, the <code>text</code> property for the Static Text component
+is set to a value that includes the first name.</p>
+<span class="note"><strong>Note</strong></span><strong>:</strong> This method assumes that all values in this table
+are in the format <i>lastname, firstname</i>. It does not robustly handle strings
+that do not follow this format.
+</li>
+<li><p>Add the following code to the <code>prerender</code> method. This code sets
+the first item in the list as the default selection. </p>
+
+<!-- BEGIN CODE SAMPLE COMPONENT  -->
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+<tr class="bg-white">
+<td><b>Code Sample 3: prerender Method Code</b></td>
+</tr>
+<tr>
+<td><pre>    public void prerender() {
+        <span style="font-weight:bold">// If no selection, set default selection
+        if (nameDropDown.getSelected() == null) {
+            personDataProvider.cursorFirst();
+            nameDropDown.setSelected
+                    ((String)personDataProvider.getValue("person.name"));
+        }</span>    
+    }
+</pre></td>
+</tr>
+</table>
+<!-- END CODE SAMPLE COMPONENT  -->
+</li>
+</ol>
+
+<a name="08"></a> 
+<h2>Running the Application</h2>
+
+<ol>
+<li><p>Click the Run Main Project button.</p>
+The IDE builds and deploys the application and displays the page in the web browser.
+</li>
+<li><p>Select a name from the list and click Say Hello.</p>
+The browser sends the Drop Down List component's selected value to the server,
+and the server executes the button's <code>helloButton_action</code> method. 
+</li>
+
+</ol>
+
+<a name="10"></a> 
+<h2>Doing More</h2>
+
+<p><b>Try It.</b> A Listbox component is similar to a Drop Down List component.
+Try replacing the Drop Down List component with a Listbox component. In this application,
+the Listbox component's <code>multiple</code> property must not be checked, because only one
+item can be selected at a time. Remember to bind the Listbox to the database table
+and to change the <code>helloButton_action</code> method to get the Listbox's
+selected value. </p>
+<p> <b>Try It.</b> Using steps that are similar to the ones that you have learned
+in this tutorial, try building a web application that has a Drop Down List component
+that shows all the DESCRIPTION values in the TRIPTYPE table. When a user clicks a Show
+Type Id button, have the page display the trip type's TRIPTYPEID. To do this, you
+must bind the Drop Down List component's Display field to TRIPTYPE.DESCRIPTION and the
+component's Value field to TRIPTYPE.TRIPTYPEID.</p>
+
+<a name="summary"></a> 
+<h2>Summary</h2>
+
+<div>The typical workflow for designing a web page from the IDE consists of the
+following steps:</div>
+<ol>
+<li>Create the page.</li>
+<li>Place components, such as the Text Field component and the Button component,
+onto the page.</li>
+<li>Edit the components' properties to change their appearance and behavior.</li>
+<li>Bind the components to their data connection, when appropriate.</li>
+<li>Edit the Java source to control server-side behavior, such as event handling.</li>
+<li>Build and test your application.</li>
+</ol>
+<br>
+<p><b>See Also</b>:</p>
+<ul>
+<!-- <li><a href="vwp-intro.html">Getting Started With NetBeans Visual Web Pack</a></li> -->
+<li><a href="databoundcomponents.html">Using Databound Components to Access a Database</a></li>
+</ul>
+
+<hr class="light">
+<br>
+<div class="date-stamp" align="right">This page was last modified:&nbsp;December, 2007</div>
+<!-- =================== -->
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+<!--stopindex-->
+<!-- END CENTRAL COLUMN COMPONENTS -->
+<table border="0" cellpadding="10" cellspacing="0" class="full-width">
+<!-- BEGIN SPACER ROW -->
+<tr>
+
+<td><br>
+<div class="feedback-box">
+<a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">
+Send Us Your Feedback</a></div>
+<br style="clear:both;" /> 
+</td>
+</tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+
+
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Using Java Persistence in a Web Application</title>
+        <meta name="description"
+        content="A comparison of writing a simple J2EE application with J2EE 1.4 and Java EE 5.0 technology using NetBeans IDE 5.5.">
+        <link rel="stylesheet" href="../../../netbeans.css">
+        <meta name="author" content="Ken Ganfield, Jan Horvath">
+    </head>
+    <body>
+        <h1>Using Java Persistence in a Web Application</h1>
+        <p>This document is a basic introduction to using the Java Persistence API in a web application and demonstrates how
+            the development process using the Java<sup>TM</sup> Platform, Enterprise Edition 5 ("Java EE 5") technology 
+            simplifies the development of Java applications.</p>
+            
+            <p>In this document you will use NetBeans IDE 6.0 to create 
+            a web application that will access a database. 
+            In the web application, you will use the IDE to generate entity classes corresponding to tables in a database.
+            You will then create a servlet that displays the information in the database.
+            The application uses Java Persistence to manage the database transaction.</p>
+            <p>To see how the same application was created using Java EE 1.4, see the
+            <a href="http://www.netbeans.org/kb/50/quickstart-j2ee.html" target="_blank">NetBeans IDE 5.0 Quick Start Guide for J2EE Applications</a>
+            
+        <p style="text-align:center;"><b>Expected duration: 15 minutes</b></p>
+        <div class="indent">
+            
+            <h3 class="tutorial">Tutorial Exercises</h3>
+            <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans
+            IDE 6.0" height="45" width="206" style="float:right;border:0px;margin:10px auto;">
+            <ul>
+                <li><a href="#Exercise_0">Configuring the IDE to Use the Application Server</a></li>
+                <li><a href="#Exercise_1">Setting Up the Web Application Project</a></li>
+                <li><a href="#Exercise_2">Coding the Web Application</a></li>
+                <li><a href="#Exercise_3">Running the Project</a></li>
+            </ul>
+
+<h3 class="tutorial">Prerequisites</h3>
+            <p>This document assumes you have some basic knowledge of, or programming experience 
+            with, the following technologies:</p>
+            <ul>
+            <li>Java Programming</li>
+            <li>NetBeans IDE</li>
+            </ul>
+        
+            <h3 class="tutorial">Software Needed for This Tutorial</h3>
+            <p>For this tutorial you need to have the following software installed on your computer:</p>
+            <ul>
+                <li>"Web &amp; Java EE" or "All" download of NetBeans IDE 6.0.</li>
+                <li>Java Standard Development Kit (JDK) version 5.0 or version 6.0 </li>
+                <li>GlassFish V2 Application Server (bundled with full IDE download) or 
+                Sun Java System Application Server Platform Edition 9 (<a href="http://www.sun.com/software/products/appsrvr_pe/index.xml" target="_blank">download</a>)</li>
+            </ul>
+        </div>
+        <!-- ===================================================================================== -->
+        <a name="Exercise_0"></a>
+        <h2>Configuring the IDE to Use the Application Server</h2>
+        <p>For this tutorial you must have an instance of Glassfish V2 or
+            the Sun Java System Application Server Platform Edition 9 registered with the IDE.
+        In this exercise we will register the application server with the IDE.</p>
+        <ol>
+            <li>Choose Tools &gt; Server Manager from the main menu.</li>
+            <li>Click Add Server. Select your application server (GlassFish or Sun Java System Application Server) and give a name 
+            to the instance. Then click Next.</li>
+            <li>Specify the installation directory of the application server (for example, <tt>C:\Sun\Appserver</tt>).</li>
+            <li>Leave the Register Local Default Domain radio button selected and select a domain.</li>
+            <li>Optionally, click Next and enter your administrator username and password. 
+            If you do not want to store the username and password in your IDE user directory, you can leave these fields blank. 
+            The IDE will prompt you every time it needs the information.<br />
+            <b>Note:</b> The default admin password is <tt>adminadmin</tt>.</li>
+            <li>Click Finish. The IDE registers the server and lists it under the Servers node in the Runtime window.</li>
+        </ol>
+        <div class="indent">
+        <h3 class="tutorial">Summary</h3>
+            <p>In this exercise we registered the application server with the IDE. </p>
+        </div>    
+        <!-- ===================================================================================== -->
+        <h2><a name="Exercise_1"></a> 
+        <!--Exercise 1: -->
+        Setting Up the Web Application Project</h2>
+        <p>In this example developing for the Java EE 5 platform, we do not need a full enterprise application because we do not 
+        need an EJB module or session beans. 
+        Instead, we can create a simple web application and put our entity classes directly in the web application.</p>
+        <p>When developing for the J2EE 1.4 platform it was necessary to create a full enterprise application 
+        and put our entity and session beans in the EJB module.
+        We then had to add lookup code to the web module to access the entity beans.</p>
+
+        <ol>
+            <li>Choose File &gt; New Project (Ctrl-Shift-N). 
+            Select Web Application from the Web category. </li>
+            <li>Name the project CustomerBook, set the server to GlassFish or Sun Java System Application Server, 
+            set the Java EE Version to Java EE 5, and click Finish.</li>
+        </ol>
+        <div class="indent">
+            <h3 class="tutorial">Summary</h3>
+            <p>In this exercise we created a Java EE 5 web application which will contain the entity classes. </p>
+        </div>
+        <!-- ===================================================================================== -->
+        <a name="Exercise_2"></a>
+        <!--Exercise 2: -->
+        <h2>Coding the Web Application</h2>
+        <p>Generally some basic setup is necessary before you can start coding the web application.
+        This would include establishing a connection with the database and creating a connection pool and data source.
+        Because we are using the jdbc/sample database that comes bundled with the IDE, much of this is already configured.
+        The connection to the database is already registered with the IDE and the connection pool and data source are already created.
+        You can view the view the connection and data source properties in the Services window.</p>
+
+        <p>Once the setup is complete, development for the Java EE 5 platform is much easier than before because 
+        the container does more of the work.
+        Because the container is managing persistence, 
+            we do not need to edit any deployment descriptors to configure the CMP mappings or specify the finder methods.
+            In fact, in this example we do not need any deployment descriptors at all. 
+            In the Java EE 5 platform, persistence is no longer limited to an EJB component. 
+            Java EE 5 introduces the Java Persistence API, which can be used by non-EJB components, such as a web application.</p>
+            <p>Java EE 5 technology also eliminates the need for a lot of the
+            boilerplate code needed in J2EE 1.4 development. EJB development has been streamlined so that fewer interfaces are needed,
+            lookup is simpler, and annotations make component definition and resource injection simple and clear.</p>
+        
+        
+            <div class="indent">
+            <!-- Persistence -->
+            <h3 class="tutorial">Managing Persistence</h3>
+            <p>To manage persistence in our application we only need to create a persistence unit, specify which data source and entity manager to use, and 
+                then let the container do the work of managing entities and persistence. The container discovers the entity beans at runtime.</p>
+
+            <p>We create a persistence unit by definining it in <tt>persistence.xml</tt>.
+            If there is no <tt>persistence.xml</tt> in our project or module, we need to create it.
+            We can add a persistence unit to our project with the New Persistence Unit wizard, which will help us create the 
+            <tt>persistence.xml</tt> and define the properties of the persistence unit. 
+            <b>Note:</b> We can also create a persistence unit in the New Entity Class wizard.
+            When creating an entity class, the wizard will prompt us to create a persistence unit if one does not exist.</p>
+  
+            <ol>
+                <li>Choose New File (Ctrl-N) to open the New File wizard.</li>
+                <li>From the Persistence category, select Persistence Unit and click Next.</li>
+                <li>Leave the default name for the persistence unit suggested by the wizard.</li>
+                <li>Use the <tt>TopLink (default)</tt> listed in the Persistence Provider drop-down list.
+                <p>The default provider is the <tt>TopLink Essential.jar</tt>. 
+                <tt>TopLink Essential.jar</tt> contains the libraries for Java Persistence.
+                Our entity manager is located in <tt>TopLink Essential.jar</tt>.</p></li>
+                <li>Use the default <tt>jdbc/sample</tt> data source listed in the Data Source drop-down list.
+                <p>The default data source <tt>jdbc/sample</tt> is used to connect to the Java DB database that is bundled
+                with GlassFish/Sun Java System Application Server.</p>
+                </li>
+                <li>Click Finish.</li>
+            </ol>
+            <img src="../../../images/articles/60/web/custbook/custbook-pu.png" width="590" height="304" alt="new persistence unit wizard" style="margin:10px auto;" />
+
+            <p>When you click Finish, <tt>persistence.xml</tt> is created for your project and opens in the Source Editor. 
+            You can click XML in the toolbar of the Source Editor to see the XML view of <tt>persistence.xml</tt>.
+            This file contains all the information the Java EE 5 container needs to manage the entities 
+            and persistence of our application.</p>
+                        
+            
+            <!-- Entity Classes -->
+            <h3 class="tutorial">Creating the Entity Classes</h3>
+            <p>When developing for the J2EE 1.4 platform, when you created entity beans you placed them in an EJB module 
+            even when the application was a simple web application.
+            Each entity bean required several interfaces, and you had to configure
+            the deployment descriptors in <tt>ejb-jar.xml</tt> to define the entity beans, 
+            the interfaces, persistence and finder queries for each entity bean.</p>
+            <p>In Java EE 5, instead of creating entity beans and putting them in the EJB module, 
+            we can use simple entity classes, and the entity classes can be placed anywhere in a Java EE 5 application. 
+            Writing classes for Java EE 5 applications is also easier than it was for the J2EE 1.4 platform because you can use annotations to 
+            define components and inject resources. </p>
+
+            <p>We will now use the Entity Classes from Database wizard to create the entity classes based on our relational database.</p>
+
+             
+            <ol>
+                <li>Start the Java DB database by choosing Tools &gt; Java DB Database &gt; Start Server from the main menu.</li>
+                <li>Choose New File (Ctrl-N) to open the New File wizard. 
+                Select Entity Classes from Database from the Persistence category and click Next. </li>
+                <li>In the Entity Classes from Database wizard, select the <tt>jdbc/sample</tt> data source for our database from the Data Source drop-down list
+                and supply the password if necessary. (The password should be "app".)   
+                When you select the data source, a list of available tables appears in the Available Tables pane.</li>
+                <li>Select the <tt>CUSTOMER</tt> table from the Available Tables and click Add. 
+                <p>When you click Add, any tables related to the selected table are also added.
+                In this example, the <tt>DISCOUNT_CODE</tt> table is also added. <tt>DISCOUNT_CODE</tt> table is greyed-out because it is referenced
+                by <tt>CUSTOMER</tt> table and an entity class for it must be generated in order to generate the <tt>Customer</tt> entity class.
+                To see how the greyed-out table is related to the selected table, you can hover your mouse over the table name in the Selected Tables pane.</p>
+                
+                <li>Click Next. 
+                <p>The wizard displays the selected table and any related tables.
+                The wizard also displays the entity classes that will be created based on the selected tables.
+                If you want to modify the name of the class that will be generated, you can type the name in the Class Name field.</p></li> 
+                <li>Specify <tt>ejb</tt> as the package for the generated classes and click Finish. </li>
+            </ol>
+            <img src="../../../images/articles/javaee5/custbook_entityfromdatabase2.png" width="692" height="503" alt="new entity classes from database wizard" style="margin:10px auto;" />
+            <p>When you click Finish, the IDE generates entity classes for the <tt>CUSTOMER</tt> table and the tables related 
+            to <tt>CUSTOMER</tt> table. If you expand the <tt>ejb</tt> source package in the Projects window 
+            you can see that the IDE created the Java classes <tt>Customer.java</tt> and <tt>DiscountCode.java</tt>.
+            You can see that the IDE created only two classes, one for each of the database tables.</p>
+            <p>If you look at <tt>Customer.java</tt> in the Source Editor, you will notice that the <tt>@Entity</tt> annotation is
+            used to declare the class an entity class. 
+            Other annotations provide additional information such as the 
+            database table and columns the entity class and its properties are mapped to.</p>
+            <p>You will also notice that much of the boilerplate code commonly found in entity beans is gone. 
+            Methods such as <tt>ejbRemove</tt>, <tt>setMessage</tt>, <tt>setSessionContext</tt>, <tt>ejbActivate</tt>, and <tt>ejbPassivate</tt> 
+            are no longer needed in your entity class in Java EE 5.</p>
+            
+            
+            <h3 class="tutorial">Coding the Servlet</h3>
+            <p>We now need to add a servlet to our web application.
+            Instead of adding resource creation and lookup code to our servlet, with Java EE 5 we can use resource injection to move that work to the container.
+            We can use annotations to inject resources directly into our servlet, and
+            the container will manage the creation and lookup of the requested resource.
+            In this case, we want to use an entity manager as specified in our persistence unit.</p>
+            <ol>
+                <li>Right-click the project node in the Projects window and choose New &gt; Servlet.</li>
+                <li>In the New Servlet wizard, name the servlet <tt>CustomerDetails</tt> and put the servlet into a package named <tt>web</tt>. Click Finish. 
+                When you click Finish, <tt>CustomerDetails.java</tt> opens in the Source Editor.</li>
+                <li>In the Source Editor, right-click in <tt>CustomerDetails.java</tt> and choose Persistence &gt; Use Entity Manager to 
+                inject the PersistenceContext in the class. The IDE adds the following annotation that specifies the persistence unit used by the servlet.
+                The annotation is added above the class declaration.
+                    <pre class="examplecode">    
+  @PersistenceContext(name = &quot;persistence/LogicalName&quot;, unitName = &quot;CustomerBookPU&quot;)
+                    </pre>
+                <p>The IDE also adds the following annotation injecting a resource for managing transaction boundaries:</p>
+                <pre class="examplecode">
+  @Resource
+  private javax.transaction.UserTransaction utx;</pre>
+                <p>If you expand the editor fold you can see that the IDE adds the following default code to the servlet:</p>
+                <pre class="examplecode">
+  public void persist(Object object) {
+      try {
+          Context ctx = (Context) new InitialContext().lookup(&quot;java:comp/env&quot;);
+          utx.begin();
+          EntityManager em =  (EntityManager) ctx.lookup(&quot;persistence/LogicalName&quot;);
+          em.persist(object);    
+          utx.commit();
+      } catch(Exception e) {
+          Logger.getLogger(getClass().getName()).log(Level.SEVERE,&quot;exception caught&quot;, e);
+          throw new RuntimeException(e);
+      }
+  }</pre>
+                <p>This code looks up the persistence unit defined by <tt>@PersistenceContext</tt> and an instance of the entity manager.</p>
+                </li>
+                <li>In <tt>CustomerDetails.java</tt>, modify the generated lookup code shown above to refer to our entity object.
+                When you are finished, the modified code should look like the following 
+                (the code shown in bold indicates the changed lines):
+                <pre class="examplecode">
+  <b>public Customer findByID(Integer customerNr) {
+        Customer customer = null;</b>
+        try {
+            Context ctx = (Context) new InitialContext().lookup("java:comp/env");
+            EntityManager em =  (EntityManager) ctx.lookup("persistence/LogicalName");
+            utx.begin();
+<b>            customer = em.find(Customer.class, customerNr);
+            utx.commit();</b>
+        } catch(Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"exception caught", e);
+            throw new RuntimeException(e);
+        }
+<b>        return customer;</b>
+    }              
+                </pre>
+                </li>
+                <li>Uncomment the code in the <tt>processRequest</tt> method and add the following code in bold: 
+                    <pre class="examplecode">    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("&lt;html&gt;");
+        out.println("&lt;head&gt;");
+        out.println("&lt;title&gt;Servlet CustomerDetails&lt;/title&gt;");
+        out.println("&lt;/head&gt;");
+        out.println("&lt;body&gt;");
+<b>        out.println("&lt;h1&gt;Search Customer Information&lt;/h1&gt;");
+        String customerNr = request.getParameter("customer_nr");
+        if((customerNr != null) && !(customerNr.equals(""))) {
+
+            Customer customer = findByID(new Integer(customerNr));
+            if(customer != null){
+                out.println("Customer's info for nr. " + customerNr + ": " + customer.getName());
+            }else{
+                out.println("Customer not found.");
+            }
+        }
+        out.println("&lt;form&gt;");
+        out.println("Customer number: &lt;input type='text' name='customer_nr' /&gt;");
+        out.println("&lt;input type=submit value=Select /&gt;");
+        out.println("&lt;/form&gt;");        
+</b>        out.println("&lt;/body&gt;");
+        out.println("&lt;/html&gt;");
+        out.close();
+    }
+                    </pre>
+                </li>
+                <li>Press Alt-Shift-F to generate any missing import statements.</li>
+            </ol>
+        </div>
+        
+        <h2 class="tutorial"><a name="Exercise_3"></a>Running the Project</h2>
+        <ol>
+            <li>In the Projects window, right-click the CustomerBook project node and choose Properties. 
+            In the Run panel of the 
+            Project Properties dialog box, type <tt>/CustomerDetails</tt> in the Relative URL field 
+            and click OK.</li>
+            <li>Right-click the project node and choose Run Project. The IDE starts the 
+            application server, builds the project, and opens the CustomerDetails page in your browser.</li>
+            <li>Enter an ID number (for example, &quot;1&quot;) in the Customer number field and click Submit. The servlet shows you 
+                the name of the customer with that ID number. </li>
+        </ol>
+        <img src="../../../images/articles/javaee5/custbook_browser_results.png" width="635" height="326" alt="servlet displaying customer information" style="margin:10px auto;" />
+            
+        <div class="indent">
+            <h3 class="tutorial">Summary</h3>
+            <p>In this exercise, you built the CustomerBook application using Java EE 5 technology. 
+            You then deployed the project and tested the web application.<br />
+        </div>
+        <br>
+        <div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+            <br style="clear:both;" />
+            <!-- ======================================================================================= -->
+            <h2><a name="nextsteps"></a>Next Steps</h2>
+            <p>For more information about using NetBeans IDE 5.5 to develop Java EE applications, see the following resources:
+            </p>
+            <ul>
+            <li><a href="../javaee/javaee-intro.html">Introduction to Java EE 5 Technology</a></li>
+            <li><a href="../javaee/ejb30.html">EJB 3.0 Enterprise Beans</a></li>
+            <li><a href="../../trails/java-ee.html">Java EE Applications Learning Trail</a></li>
+            <li><a href="../../trails/web.html">Web Applications Learning Trail</a></li>
+            </ul>
+
+    </body>
+</html>

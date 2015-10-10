@@ -1,0 +1,411 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+    <head>
+        <title>Building Relationships Between Rails Models - NetBeans IDE 6.0 Tutorial</title>
+        <meta name="DESCRIPTION" content="This tutorial describes how to build relationships (one-to-one and one-to-many) between models
+in a NetBeans Ruby on Rails project" >
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+	
+
+    </head>
+<body>
+<h1>Building Relationships Between Rails Models</h1>
+<div class="articledate" style="margin-left: 0px; font-style: italic;">
+<p><em>Contributed by Brian Leonard, maintained by Gail Chappell<br>
+December 2007</em> [Revision number: V6.0-2]<br>
+</p>
+</div>
+<p>This tutorial describes how to build relationships (one-to-one and one-to-many) between models
+in a NetBeans Ruby on Rails project.
+</p>
+
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><p><b>Contents</b></p>
+      <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="414"><a href="model.html#01">Tutorial Requirements</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td width="414"><a href="model.html#02">Creating the Sample Database </a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="model.html#03">Creating the Comment Model</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="model.html#03a">Migrating the Database</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13" class="hyphen">-&nbsp;</td>
+          <td><a href="model.html#04">Defining a Relationship Between the Comment and Post Models </a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="model.html#05">Modifying the Controller Scaffolding </a></td>
+        </tr>
+        <tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="model.html#06">Modifying the View to Display Comments</a></td>
+        </tr>
+	<tr valign="top">
+          <td width="13"  class="hyphen">-&nbsp;</td>
+          <td><a href="model.html#07">Displaying the Comments</a></td>
+        </tr>
+      </table>
+	  </td>
+      <td width="20"></td>
+      <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to NetBeans IDE 6.0" border="0"></td>
+
+    </tr>
+</table>
+ <a name="01"></a>
+  <h2>Tutorial Requirements</h2>
+ <p>This tutorial requires the following technologies and resources: </p>
+ <ul>
+    <li>A database server </li>
+    <li>NetBeans IDE 6.0 with Ruby support</li>
+</ul>
+ 
+
+<a name="02"></a>
+ <h2>Creating the Sample Database </h2>
+ <div>This tutorial builds on the tutorial <a href="rapid-ruby-weblog.html">Creating a Ruby Weblog in 10 Minutes</a>.
+ If you completed that tutorial, you can start with the project that you built when you finished the tutorial and proceed to the <a href="model.html#03">next section</a>. Otherwise, download the <a href="../../../files/documents/40/1524/RubyWebLog.zip">RubyWebLog.zip</a> file
+ and follow these steps to create the sample database.</div>
+ <br>
+  <div><b>Note:</b> This tutorial uses the MySQL database server. See <a href="setting-up.html">Installing and Configuring Ruby Support</a>
+for information about using a MySQL database server
+in a Ruby application. 
+
+
+ This document also describes how to use the Java DB database server instead. </div>
+  <ol>
+<li>Open a command window.</li>  
+<li>If it has not already been started, start the MySQL database server.</li>
+<li>Type the following command to create the development database
+and press Enter.
+<pre>mysqladmin -u root -p create rubyweblog_development</pre>
+<b>Note:</b> If the root user does not have a required password,
+omit the <b>-p</b> argument.
+<br>
+</li>
+<li><p>Open the rubyweblog project in the IDE.</p>
+  <strong>Note:</strong> The first time that you open or create a Ruby project in the IDE, the IDE checks if you have any other Ruby installations in addition to the bundled JRuby software. If you do, the IDE displays a dialog box asking you to select which software to use. Choose JRuby if you want to use the bundled JRuby interpreter, or choose your Ruby installation if you prefer to use it instead. For more information, see <a href="setting-up.html#native">Configuring the IDE to Use Your Own Ruby Installation</a> in the Installing and Configuring Ruby tutorial. </li>
+<li><p>If your database requires a password, edit the <code>database.yml</code> file and provide the <em>password</em> under
+the development configuration. Save the file.</p>
+To quickly access the <code>database.yml</code> file, press Alt+Shift+O (Ctrl+Shift+O on the Mac), type <code>database.yml</code> in the File Name text field, and press Enter.</li>
+<li>
+<p>Right-click the rubyweblog node and choose Migrate Database &gt; To Current Version.</p>
+This action updates the  database to include the posts table and then adds a body field.
+  The Output window indicates when the migration is complete.
+</li>
+</ol> 
+
+<a name="03"></a>
+ <h2>Creating the Comment Model</h2>
+ <div>This tutorial enhances the rubyweblog project by enabling readers to add comments to a blog post. 
+ You begin by creating the Comment model to store instances of readers' comments. The project already includes a Post model for storing instances of blog posts.</div>
+ <ol><li>
+   <p>In the Projects window, expand the rubyweblog node if it is not already expanded, right-click the Models node, and choose Generate.
+ </li>
+ <li><p>Type <code>Comment</code>
+ in the Arguments field and click OK.</p>
+<p>The Rails Generator creates a model named Comment. This model includes the following files:</p>
+ <ul>
+ <li><b>app/models/comment.rb.</b>  A file that holds the methods for the Comment model.
+This file is opened in the editing area. </li>
+ <li><b>test/unit/comment_test.rb.</b> A unit test for checking the model.
+ </li>
+ <li><b>
+ test/fixtures/comments.yml.</b> A test fixture for populating the model.
+ </li>
+ <li>
+ <strong>db/migrate/migrate/003_create_comments.rb</strong>. 
+
+
+ 
+
+
+ A migration file for altering the structure of the database.
+This file is version 003 because the project  already has two migration files, <code>001_create_posts.rb</code> and <code>002_add_body.rb</code>, which create and modify the posts table. </li>
+</ul>
+</li>
+</ol>
+<a name="03a"></a>
+ <h2>Migrating the Database</h2>
+<div>Here you add information to the migration file so that each instance of a reader's comment has, in addition to the automatically created id column, the id of the parent post, a time of creation, and a text description.</div>
+ <ol>
+  <li><p>In the Output window, click the link for the <code>003_create_comments.rb</code> file.</p>
+  The file opens in the editing area.</li>
+  <li>
+    <p>
+  Add the following code (shown in <strong>bold</strong>) to <code>create_table</code> in the
+  <code>self.up</code> method:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td width="486"><b>Code Sample 1: <code>self.up</code> method</b></td>
+      </tr>
+      <tr>
+        <td><pre>
+class CreateComments < ActiveRecord::Migration
+  def self.up
+    create_table :comments do |t|
+      <b>t.column 'post_id', :integer
+      t.column 'created_at', :datetime
+      t.column 'comment', :text</b>
+    end
+  end
+
+  def self.down
+    drop_table :comments
+  end
+end</pre></td>
+      </tr>
+    </table> 
+	<br>
+ This migration creates a comments table with four fields: <code>id</code>, which contains an integer, <code>post_id</code>, which contains an integer; <code>created_at</code>, which stores the date and time; and <code>comment</code>, which contains a text description.</li>
+   <li>Choose File > Save All.</li>
+  <li><p>
+    Right-click the rubyweblog node and choose Migrate Database > To Current Version.</p>
+	This action updates the the database to include the comments table. The Output window indicates when the migration is complete.</li>
+</ol>
+<a name="04"></a>
+<h2>Defining a Relationship Between the Post and Comment Models </h2>
+<div>You now have two models in the application: the Post model, which creates a new blog post, and the Comment model, which adds a comment to a blog post. 
+Here you define a relationship between the two models so that a comment is associated with a single post, 
+and a post can contain multiple comments.</div>
+
+<ol>
+  <li>Expand the Models node and open <code>post.rb</code>.</li>
+  <li>
+    <p>Add the following <code>has_many</code> association to <code>post.rb</code>:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td width="486"><b>Code Sample 2: <code>has_many</code> association in <code>post.rb</code></b></td>
+      </tr>
+      <tr>
+        <td><pre>
+class Post < ActiveRecord::Base
+  <b>has_many :comments</b>
+end
+</pre></td>
+      </tr>
+    </table> 
+	<br>
+	The <code>has_many</code> method indicates that the post can have 
+
+
+ zero, one, or more comment records associated with it. 
+  </li>
+  
+  <li>
+    <p>Open Models &gt; <code>comment.rb</code> and add the <code>belongs_to</code> association:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td width="486"><b>Code Sample 3: <code>belongs_to</code> association in <code>comment.rb</code></b></td>
+      </tr>
+      <tr>
+        <td><pre>
+class Comment < ActiveRecord::Base
+  <b>belongs_to :post</b>
+end
+</pre></td>
+      </tr>
+  </table>
+  <br>
+  The <code>belongs_to</code> method indicates that a comment can be associated with only one post. 
+
+
+ By default, ActiveRecord uses the <code>post_id</code>&nbsp; to associate a comment with the post that has a matching <code>post.id.</code></li>
+</ol>
+<a name="05"></a>
+<h2>Modifying the Controller Scaffolding </h2>
+<div>Next you work with the controller, <code>blog_controller.rb</code>, which  generates the scaffolding, or the basic interface for creating, reading, updating, and deleting entries in the blog post. </div>
+  <ol><li>
+    <p>Expand Controllers node and open <code>blog_controller.rb</code>.</p>
+  The controller has all of the scaffold actions, including <code>index</code>, <code>list</code>, <code>show</code>, <code>new</code>, <code>create</code>, <code>edit</code>, <code>update</code>, and <code>destroy</code>.</li>
+
+    <li>
+    <p>Modify the <code>show</code> action as shown in the following code sample to save the post_id to the <a href="http://api.rubyonrails.com/classes/ActionController/Flash.html" target="_blank">flash</a>:</p>
+	 <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 4: </b><strong><code>show</code> action</strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+  def show
+    @post = Post.find(params[:id])
+    <b>flash[:post_id] = @post.id</b>
+  end</pre>
+</td>
+      </tr>
+    </table> 
+<br>
+ The code finds the post associated with the <code>id</code> parameter passed in with the request. It then stores the <code>id</code> in the flash for later use. The flash is similar to an HTTP session, but across a single request. When you put something in the flash, it is available for the next request, and then is gone (hence the name flash).</li>
+  <li>
+  <a name="post_comment"></a>
+    <p>Scroll to the end of the <code>blog_controller.rb</code> file and add the following <code>post_comment</code> action before the final <code>end</code> statement:</p>
+	 <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 5: </b><strong><code>post_comment</code> action</strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+<b>def post_comment
+    @comment = Comment.new(
+      "post_id" => flash[:post_id],
+      "created_at" => Time.now,
+      "comment" => params[:comment]['comment']
+      )
+      if @comment.save
+        flash[:notice] = 'Comment was successfully added.'
+        redirect_to :action => 'show', :id => flash[:post_id]
+      end
+  end</b></pre>
+</td>
+      </tr>
+    </table>
+	<br>
+	<p> The <code>post_comment</code> action is called when the user clicks the Post button to submit a comment. The first block of code gets the <code>post_id</code> from the flash (which is something like 1, 2, or so on) and uses it to find the blog post associated with that <code>id</code>. The code then creates a new Comment object to be associated with that<code> post_id</code>, also consisting of the time created and the actual comment. The Rails framework passes the submitted parameters from the page as a hash (params[:comment]), from which the code pulls out the comment parameter (params[:comment]['comment']).</p>
+	<p>
+Comment is an ActiveRecord class, so calling its save method saves the comment record to the database. 
+The message is then put in the flash. The code calls the <code>show</code> action, which loads the <code>show.rhtml</code> page. This page reloads the post and all of its comments, including the new one.
+</p>
+</li>
+</ol>
+   <a name="06"></a>
+<h2>Modifying the View to Display Comments </h2>
+<div>Here you edit the <code>show.rhtml</code> file, which displays an individual blog entry.</div>
+<ol>
+  <li>
+    Expand Views > blog and open <code>show.rhtml</code>.
+  </li>
+  <li>
+    <p>Add the following code at the end of <code>show.rhtml</code>:</p>
+	  <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 6:</b><strong> Code for <code>show.rhtml</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+<b>&lt;hr&gt;
+&lt;h4&gt;Comments&lt;/h4&gt;
+
+&lt;% form_tag :action  =&gt; 'post_comment' do %&gt;
+&lt;p&gt;&lt;label for="comment_comment"&gt;Comment&lt;/label&gt;&lt;br/&gt;
+&lt;%= text_area 'comment', 'comment' %&gt;&lt;/p&gt;
+&lt;%= submit_tag "Post" %&gt;
+&lt;%end %&gt;</b></pre>
+</td>
+      </tr>
+    </table>
+  <br>
+ This code produces a form that includes a a text input area for writing the comment, and a Submit button labeled Post, as shown in Figure 1. The <code>post_comment</code> action is called when the form is submitted. </li>
+    <li>
+      Save your files and run the application. If there are no new posts, create a new one.</li>
+	  <li>
+	    <p>Click a Permalink to view the details of a blog entry. 
+      Try adding a comment in the text area, but note that the blog does not yet display comments when you click the Post button.
+	  </p>
+	    <p>
+  If your posting is successful, you see a message at the top of the view, as shown in the following figure.  In the next steps you add code 
+  to collect and display the comments.
+        </p>
+      <!-- img in div tag. left aligned, caption, no click to enlarge -->
+<div style="margin:10px auto;">
+<p><b>Figure 1: View of Comment Model,  Without Comments</b></p>
+<img src="../../../images/articles/60/ruby/model/comment_model_2.png" alt="View Of Comment Model, But Without Comments" style="margin:5px auto;" height="647" width="488">
+</div>
+  </li>
+</ol>
+    <a name="07"></a>
+<h2>Displaying the Comments</h2>
+<div>The blog does not yet display the comments that a reader adds, so here you fix that problem.</div>
+<ol>
+
+    <li>
+      <p>In <code>blog_controller.rb</code>, find the <code>show</code> action and insert the following <code>post_comments</code> instance variable to collect the comments:</p>
+		 <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 7: Code for </b><strong><code>blog_controller.rb</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+def show
+    @post = Post.find(params[:id])
+    <strong>@post_comments = @post.comments.collect</strong>
+    flash[:post_id] = @post.id
+end</pre>
+</td>
+      </tr>
+    </table>    </li>
+    <li>
+      <p>Modify <code>show.rhtml</code> by 
+
+
+ copying and pasting the contents of the following &lt;ul&gt; tag to just after the &lt;h4&gt;Comments&lt;/h4&gt; line:</p>
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 8: Code for </b><strong><code>show.rhtml</code></strong> </td>
+      </tr>
+      <tr>
+        <td><pre>
+&lt;ul&gt;
+<strong>&lt;% for comment in @post_comments %&gt;
+&lt;li&gt;&lt;%= comment.comment %&gt;&lt;br&gt;
+  &lt;div style=&quot;color: #999; font-size: 8pt"&gt;
+      Posted on &lt;%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %&gt;
+  &lt;/div&gt;
+&lt;/li&gt;
+&lt;% end %&gt;
+&lt;/ul&gt;
+</strong>
+</pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+	This code stylizes the comments, displays them in a bulleted list, and includes the date and time that the comment was posted. </li>
+    <li>
+      <p> Choose File &gt; Save All, then refresh your browser.</p>
+   
+	  
+	  <p>The comments now appear in the blog in a bulleted list, as shown in the following figure.</p>
+      <!-- img in div tag. left aligned, caption, no click to enlarge -->
+<div style="margin:10px auto;">
+<p><b>Figure 2: View of Comment Model, With Comments </b></p>
+<img src="../../../images/articles/60/ruby/model/comment_model_success.png" alt="Figure 2:  View of Comment Model, With Comments" style="margin:5px auto;" height="735" width="484">
+</div>
+</li>
+</ol>
+<!-- ======================================================================================== -->
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul>
+
+<li>
+  <p>To continue with the Ruby web log tutorial and learn more about NetBeans Ruby on Rails, go to <a href="ajax.html">Using Ajax With Ruby on Rails</a>.</p>
+</li>
+  <li><p>To obtain support and stay informed of the latest 
+  changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and  
+  <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a>
+  mailing lists.</p>
+  </li>
+  <li>
+    To submit your own NetBeans Ruby tutorial,  visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+</ul>
+
+<br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div> 
+<br style="clear: both;">
+
+</body>
+</html>

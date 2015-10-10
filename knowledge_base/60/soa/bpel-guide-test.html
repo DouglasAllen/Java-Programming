@@ -1,0 +1,538 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+  <head>
+    <title>Developer Guide to the BPEL Designer - Testing and Debugging BPEL Processes</title>
+    <meta name="description" content="Using the BPEL Designer Feature">
+    <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="author" content="Dmitry Markovski">
+  </head>
+  <body>
+    <a name="top"></a>
+    <h1>
+       Developer Guide to the BPEL Designer: Testing and Debugging BPEL Processes
+    </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007<br>
+</p>
+</div>
+    <h2>
+       Contents
+    </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><ul>
+            <li><a href="bpel-guide-overview.html">Overview</a></li>
+          <li><a href="bpel-guide-project.html">The BPEL Module Project</a> </li>
+          <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a> </li>
+          <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+          <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> </li>
+          <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+          <li> <a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+          <li><b>Testing and Debugging BPEL Processes</b>
+            <ul>
+              <li><a href="bpel-guide-test.html#test">Testing a BPEL Process</a> </li>
+              <li> <a href="bpel-guide-test.html#debug">Debugging BPEL Processes</a> </li>
+              <li><a href="bpel-guide-test.html#debugwindows">BPEL Debugger Windows</a>  </li>
+            </ul>
+          </li>
+          <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+        </ul></td>
+        <td width="20"></td>
+        <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"> </td>
+      </tr>
+    </table>
+    <br>
+    <!-- ======================================================================================== -->
+<h2>
+    <a name="test"></a>Testing a BPEL Process
+</h2>
+<p>
+     Testing a deployed business process application involves using test cases that act as remote partner services which send SOAP messages to the BPEL Service Engine runtime.
+</p>
+<p>
+     In simple words, the interaction process is the following: The BPEL Service Engine runtime receives the SOAP message and creates an instance of the BPEL process and starts executing the instance. A BPEL process can have many running instances. The BPEL Service Engine runtime receives a message and, using correlation, routes it to the appropriate instance of the process. If an instance does not yet exist, a new instance is created.</p>
+<p>
+     To test-run a deployed business process application, you need to configure test cases to act as remote partner services sending SOAP messages to the BPEL Service Engine runtime.
+</p>
+<div class="indent">
+    <h3 class="tutorial">
+         <a name="createtestcase"></a>Creating and Running a Test Case    </h3>
+    <p>
+         In order to obtain test results you must do the following:
+    </p>
+        <ol>
+            <li>
+                <a href="bpel-guide-test.html#AddingBinding">Add a test case and bind it to a BPEL operation</a>.
+            </li>
+            <li>
+                <a href="bpel-guide-test.html#SettingProps">Set the test properties</a>.
+            </li>
+            <li>
+                <a href="bpel-guide-test.html#Customizing">Customize test input</a>.
+            </li>
+            <li>
+                <a href="bpel-guide-test.html#Running">Run the Tester</a>.
+            </li>
+        </ol>
+        <p>
+            All steps in this section assume the following:
+        </p>
+            <ul>
+                <li>
+                     You have already <a href="bpel-guide-project.html#createnew">created a BPEL Module project</a> containing a WSDL file that defines an operation you want to test.                </li>
+                <li>
+                     You have successfully <a href="bpel-guide-project.html#buildproject">built your BPEL Module project</a>.                </li>
+                <li>
+                     You have <a href="bpel-guide-project.html#addjbi">added</a> your BPEL Module project to a Composite Application project as a JBI Module.                </li>
+            </ul>
+    <h3 class="tutorial">
+        <a name="AddingBinding"></a>Adding/Binding a Test Case
+    </h3>
+    <p>
+        <b>To add a test case and bind it to a BPEL operation:</b>
+    </p>
+    <ol>
+        <li>
+             In the IDE Projects window, open the Composite Application project to expose its Test folder.
+        </li>
+        <li>
+             Right-click Test, and choose pop-up menu item New Test Case.
+            <br>
+             This launches the New Test Case wizard.
+        </li>
+        <li>
+             In the Enter the Test Case Name step, enter a name for the test case and click Next.
+        </li>
+        <li>
+             In the Select the WSDL Document step, open the BPEL Module project, select the <tt>.wsdl</tt> file containing the operation you want to test, and then click Next.</li>
+        <li>
+             In the next step, select the operation you want to test, and then click Finish.
+            <br>
+             In the project tree, under Test, a new folder is created in the form of an upper case T, containing two files: <tt>Input.xml</tt> and <tt>Output.xml</tt>.
+        </li>
+    </ol>
+    <p>
+         <b>Note</b>: If you view the test case in the Files window, you  see <tt>Concurrent.properties</tt> as a third file.    </p>
+    <h3 class="tutorial">
+        <a name="SettingProps"></a> Setting the Test Properties
+    </h3>
+    <p>
+        <b>To set the test properties:</b>
+    </p>
+    <ol>
+        <li>
+             In the Projects window, under the Composite Application project's node, right-click the node for the test case and choose Properties from the pop-up menu.        </li>
+        <li>
+             Set the properties of the test case as follows:
+            <div>
+            <dl>
+                <dt>
+                    <strong>Description</strong> : string                </dt>
+                <dd>
+                    User-entered text to help user know what the test is about.                </dd>
+                <dt>
+                    <strong>Destination</strong> : URL (from the <tt>.wsdl</tt> file's <tt>&lt;soap:address location=&quot;THIS&quot;&gt;</tt> tag)                </dt>
+                <dd>
+                    Identifies the location of the web service to be tested.                </dd>
+                <dt>
+                    <strong>SoapAction</strong> (default: blank)                </dt>
+                <dd>                </dd>
+                <dt>
+                    <strong>Input File</strong> (read-only; generated by system)                </dt>
+                <dd>
+                    Name of the input file. This file contains the input data for the test case.      </dd>
+                <dt>
+                    <strong>Output File</strong> (read-only; generated by system)                </dt>
+                <dd>
+                    Name of the output file. This file contains the output data for the test case.       </dd>
+                <dt>
+                    <strong>Concurrent Threads</strong> : integer; default = 1                </dt>
+                <dd>
+                    Each thread can invoke the test case multiple times (see the following property). Thus, if conc=2 and inv=3, the test case will be run 6 times (two threads, each run thrice).                </dd>
+                <dt>
+                    <strong>Invokes Per Thread</strong> : integer; default = 1                </dt>
+                <dd>
+                    Number of times each thread invokes the test case.                </dd>
+                <dt>
+                    <strong>Test Timeout (sec)</strong> : integer; default = 30                </dt>
+                <dd>
+                    How long each thread has to finish. If it does not finish in the allotted time, then an exception is thrown.                </dd>
+                <dt>
+                    <strong>Calculate Throughput</strong> : boolean                </dt>
+                <dd>
+                    If the checkbox is selected, then throughput statistics are calculated. Example: If a test specifies two threads and three invokes per thread, and if the test takes 15 seconds for the 6 invocations, then the statistics report an average of 2.5 seconds each.                </dd>
+                <dt>
+                    <strong>Comparison Type</strong> : drop-down list with the following options:                </dt>
+                <dd>
+                    <div>
+                        <ul>
+                            <li>
+                                identical: Considers the output and actual output as a stream of characters.                            </li>
+                            <li>
+                                binary: Considers the output and actual output as a stream of bytes.                            </li>
+                            <li>
+                                equals: Considers the output and actual output as a XML documents.                            </li>
+                        </ul>
+                    </div>
+                </dd>
+                <dt>
+                    <strong>Feature Status</strong> : drop-down list with the following options:                </dt>
+                <dd>
+                    <div>
+                    <ul>
+                        <li>
+                            progress: Marks test completion as &quot;success&quot;, regardless of actual outcome.                        </li>
+                        <li>
+                            done: Records actual outcome of test.                        </li>
+                    </ul>
+                    </div>
+                </dd>
+            </dl>
+          </div>
+        </li>
+    </ol>
+    <h3 class="tutorial">
+        <a name="Customizing"></a>Customizing Test Input
+    </h3>
+    <p>
+        <b>To customize test input:</b>
+    </p>
+    <ol>
+        <li>
+             In the Projects window, expand the Test node and the node for a specific test case. </li>
+        <li>Right-click <tt>Input.xml</tt> and click Edit. </li>
+        <li>
+             Modify the contents as needed. For example, wherever you see <tt>&lt;value&gt;?string?&lt;/value&gt;</tt> click within <tt>?string?</tt> and replace it with a string of any length. However, within such strings, do not include the characters <b>&lt;</b> (less-than sign) or <b>&amp;</b> (ampersand) unless you use them with  XML semantics.        </li>
+        <li>
+             When you are satisfied, click Save.        </li>
+        <li>
+             Right-click <tt>Output.xml</tt> and click Edit to examine the contents:
+             <ul>
+                <li>
+                    It is empty. This is a special state that triggers a special operation when the test is run.                </li>
+                <li>
+                    Each time the test is run, the current output is compared to the contents of <tt>Output.xml</tt>. If any differences are detected, they will be stored in the <tt>Actual_<em>yymmddhhmmss</em>.xml</tt> file under the test case folder. However, in the special case where <tt>Output.xml</tt> starts null, then the output is written to <tt>Output.xml</tt>.                </li>
+                <li>
+                    In each run after the first, assuming <tt>Output.xml</tt> is no longer null, its contents are preserved. In other words, a previous output is never overwritten by new results.                </li>
+            </ul>
+        </li>
+    </ol>
+    <h3 class="tutorial">
+        <a name="Running"></a> Running the Tester
+    </h3>
+    <p>
+        <b>To run a single test case:</b></p>
+  <ul>
+            <li>In the Projects window, expand the Composite Application project &gt; Test, right-click the node for the specific test case and choose Run.            </li>
+  </ul>
+        <b>To run all test cases in a project:</b>
+        <ul>
+            <li>
+                 Right-click the Composite Application project and choose Test Project from the pop-up menu.            </li>
+        </ul>
+        <h3 class="tutorial">
+             Looking at Test Case Results
+        </h3>
+        <ul>
+            <li>
+                 The first run correctly reports that it failed. This happens because the output produced does not match the (empty) <tt>Output.xml</tt> file, and the file&rsquo;s null content is replaced with the output of the first run.            </li>
+            <li>Test results are shown in the JUnit test results window, which opens automatically when you run a test case. </li>
+          <li>
+                 If you run the test again without changing the input, second and subsequent runs report success, since the output matches the contents of <tt>Output.xml</tt>.            </li>
+            <li>
+                 If you change the value in the <tt>Input.xml</tt> and re-run the test, then:
+                <ul>
+                    <li>
+                        If the feature-status property is set to progress, then the test indicates success even though a mismatch occurred.                    </li>
+                    <li>
+                        If the feature-status property is set to done, then the test indicates failure.                    </li>
+                </ul>
+            </li>
+            <li>
+                 If you right-click the test case node and click Diff in the pop-up menu, the window displays the difference between the latest output and the contents of <tt>Output.xml</tt>. </li>
+        </ul>
+</div>
+    <p align="center">
+      <a href="bpel-guide-test.html#top">top</a>
+    </p>
+    <br>
+    <!-- ======================================================================================== -->
+    <h2>
+      <a name="debug"></a>Debugging BPEL Processes
+    </h2>
+    <p>
+       Debugging BPEL processes follows the same general principles as debugging Java applications. Debugging BPEL processes involves setting breakpoints in the source code and executing the process step-by-step within a debugging session. The BPEL Debugger visually represents the execution of a BPEL process and allows you to view and change variables, monitor the results of executing expressions, and use fault breakpoints tomonitor the state of variables before a fault is thrown.</p>
+    <div class="indent">
+      <h3 class="tutorial">
+         Steps in Debugging BPEL Processes
+      </h3>
+      <p>
+         The main steps in debugging BPEL processes are:
+      </p>
+      <ol>
+        <li>
+           Confirm that the GlassFish application server has started.      </li>
+        <li>Create test cases.<br>
+        For sample processes, test cases are automatically created; for new projects, you need to create at least one test case.</li>
+        <li>Open the BPEL process file either in the Source view or Design view.        </li>
+        <li>
+           Set breakpoints in the code or on the diagram. Optionally, add watches for XPath expressions in your process or add fault breakpoints.    </li>
+        <li>
+           Start a debugging session. Watch the BPEL Debugger Console window for confirmation that the debugging session has started.        </li>
+        <li>
+           Within the debugging session, run one or several test cases.</li>
+        <li>View execution of  BPEL processes on the diagram in the Design view or in the BPEL Process Execution window and view running instances of BPEL processes in the BPEL Process Instances window. </li>
+        <li>
+        When an instance stops at a breakpoint, step through the code or the diagram, examine the values of variables in the BPEL Variables window, or observe the values of XPath expressions in the Watches window. </li>
+        <li>
+           Finish the debugging session.        </li>
+      </ol>
+      <h3 class="tutorial">
+         Starting and Finishing a BPEL Debugging Session
+      </h3>
+      <p>A debugging session begins when you connect the BPEL Debugger to the BPEL Service Engine. Only one debugging session can be running with the BPEL Service Engine at a given time. </p>
+      <p>After a BPEL debugging session starts, you can execute process instances step-by-step, inspecting the values of BPEL variables and XPath expressions in the BPEL Variables and Watches windows. You can monitor the execution of a BPEL process within a debugger session on the diagram in the Design view: the activities that are being executed are highlighted on the diagram as the current execution position advances. The BPEL Process Execution window also shows the execution of the BPEL process. </p>
+      <p>
+        <b>To prepare the debugging environment:</b>
+      </p>
+      <ol>
+        <li>
+           In the Services window, make sure that the GlassFish V2 Application Server is running. The Application Server is running if it has subnodes and is marked with a green triangle.<br>
+           If the server is not started, right-click it and choose Start from the pop-up menu. For details about how to start the Application Server, see the <a href="bpel-guide-overview.html#bpelse">BPEL Service Engine </a>section. <br>
+       <div>
+                <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/asrun.png" alt="Application Server is running"></p>
+          </div>
+        </li>
+        <li>
+           Set breakpoints in the BPEL process.
+            <div>
+               <ul>
+                  <li>
+                     To set breakpoints in the Source view, click next to the line where you want to set the breakpoint.
+                        <div>
+                           <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/setbp.png" alt="Set a breakpoint in the source"></p>
+                        </div>
+                 </li>
+                  <li>
+                     To set breakpoints on the diagram, switch to the Design view, right-click the element and choose Toggle Breakpoint from the pop-up menu.
+                        
+                     A red square appears at the top of the element with a breakpoint.
+                        <div>
+                           <p align="center">
+                                <img src="../../../images/articles/ep-bpel-guide/60/brkpntdiag.png" alt="Diagram Element with a Breakpoint">                           </p>
+                        </div>
+                  </li>
+                  <li>
+                    The Toggle Breakpoint pop-up menu command is also available for the elements in the Navigator BPEL Logical View. For the elements with breakpoints, the Navigator shows a small red box (ReceiveItinerary):
+                      <div>
+                        <p align="center">
+                            <img src="../../../images/articles/ep-bpel-guide/60/brkpntnav.png" alt="Navigator Element with a Breakpoint">                        </p>
+                    </div>
+                  </li>
+               </ul>
+            </div>
+        </li>
+        <li>
+            Optionally, you can add watches to monitor XPath expressions. To add a watch, copy the XPath expression you want to monitor, choose Run &gt; Add Watch from the main menu, and paste the expression into the Watch Expression field. Click OK.
+            <br>
+            <strong>Note:</strong> You can also add XPath expressions that are not present in the code, but that would be valuable from the debugging point of view.
+            <div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/addwatch.png" alt="Set a breakpoint in the source"></p>
+            </div>
+        </li>
+      </ol>
+      <p>
+        <strong>To start a debugging session on the BPEL Engine:</strong>
+      </p>
+      <ul>
+        <li>In the Projects window, right-click the Composite Applications project you want to debug and choose Debug Project (BPEL) from the pop-up menu.<br>
+          The IDE  establishes a debug session on the BPEL Service Engine. Watch 
+          the BPEL Debugger Console window for confirmation. 
+          The connection might take some time to complete. When it is successfully completed, you can see the new session in the Sessions window and the following messages in the BPEL Debugger Console:<br>
+      <tt>11:35:17 Connecting to localhost:3343<br>
+      11:36:19 Debug session started</tt></li>
+      </ul>
+      <p>Note that the Debug Project (BPEL) command performs the following actions:</p>
+         
+      <ul>
+        <li>Enables debugging with the BPEL Service Engine (sets the <tt>DebugEnabled</tt> property of the BPEL Service Engine to <tt>true</tt>) </li>
+        <li>Builds  the Composite Application project and all JBI Modules added to this project </li>
+        <li>Deploys the Composite Application project to the BPEL Service Engine</li>
+        <li>Starts the debugging session by connecting the BPEL Debugger to the BPEL Service Engine </li>
+      </ul>
+      <p>Therefore, whenever you start a debugging session you can be sure that the latest version of the BPEL process is deployed on the BPEL Service Engine. </p>
+      <p>Now you can run a test case and monitor the execution of the BPEL process until it stops or reaches a breakpoint. As the process advances, the current context is displayed on the diagram and in the BPEL Process Execution window. </p>
+      <p>
+         If you have several debugging sessions (you may have a Java debugging session running at the same time) and want to change the current session, double-click the name of this session in the Sessions window. Alternatively, right-click the session you want to make current and select Make current.      This session becomes current and the BPEL Process Instances, Watches and BPEL Variables windows are updated to show the data related to the new current session.
+      </p>
+      <p>
+         When you want to finish a debugging session, open the pop-up menu for the session you want to stop and choose Finish in the Sessions window or select Finish Debugger Session on the toolbar. A message that the debugging session is finished is displayed in the BPEL Debugger Console.
+      </p>
+      <p>
+         To finish all debugging sessions, in the Sessions window, right-click any session and choose Finish All.</p>
+  </div>
+      	  <div class="indent">
+	  <h3 class="tutorial">
+         Using Breakpoints to Debug BPEL Processes
+      </h3>
+      <p>
+         Breakpoints are used to instruct the debugger to suspend execution of a process at that place in the source code. When a BPEL process reaches a breakpoint, it becomes suspended and you can perform debugging operations, such as examining the values of variables or stepping into your code.
+      </p>
+      <p>
+        To view and organize all breakpoints currently set in the IDE, open the Breakpoints window by choosing Windows &gt; Debugging &gt; BPEL &gt; Breakpoints (Alt-Shift-5). </p>
+      <p>
+        <b>To debug a process instance that has reached a breakpoint</b>:
+      </p>
+      <p>
+         Once the execution of a process instance is suspended, choose the following commands from the Run menu or on the toolbar:
+      </p>
+        <ul>
+          <li><b>Continue (Ctrl-F5).</b> Causes the current process instance to run until 
+            it encounters the next breakpoint or until the instance completes. The state of the instance changes to Running. </li>
+          <li><b>Step Into (F7).</b> Steps to the next BPEL activity. As you step, the current line indicator advances, the current position is highlighted on the diagram, and the contents of 
+            the BPEL Debugger windows  change accordingly. The step is 
+            supported only at the granularity of an &quot;activity&quot; in BPEL language terms, not at a finer 
+            granularity. </li>
+          <li><b>Run to Cursor (F4)</b>. Runs the BPEL process to the position selected in the Navigator window (BPEL Logical View), on the diagram (in the Design view) or to the cursor location in the Source view. When the location of the cursor is reached, the process instance becomes suspended. </li>
+          </ul>
+      <p>
+         You can remove a breakpoint from the BPEL source code by placing the cursor at the line with the breakpoint and choosing Run &gt; Toggle Breakpoint, or clicking the left margin of the line that contains the breakpoint. Alternatively, on the diagram, you can right-click the element that has a breakpoint and choose Toggle Breakpoint from the pop-up menu.      </p>
+      </div>
+  <div class="indent">
+ <h3 class="tutorial">Monitoring Execution of BPEL Processes
+    </h3>
+	<p> When a running process reaches a breakpoint, the Design view highlights the current position of the debugger and uses colors to differentiate between the states of BPEL activities. As the process advances, the colors and icons for the activities on the diagram are updated to reflect the execution progress. </p>
+	<p>On the diagram, the following notation is used:</p>
+	<ul>
+	  <li>Green color (glowing). The breakpoint set for the activity is reached.</li>
+	  <li>Gray color (grayed-out effect). The activity has never been executed.</li>
+	  <li>Green triangle. The activity is now being executed. </li>
+	  <li>Blue triangle. The activity has been successfully completed. </li>
+    </ul>
+	 <div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/debug.png" alt="Monitoring debugging on the diagram"></p>
+    </div>
+	<p>You can also monitor the execution of current BPEL process instances in the BPEL Process Execution window (see below).</p></div>
+	  <h2>         <a name="debugwindows"></a>BPEL Debugger Windows      </h2>
+      <p>
+         When a debugging session starts, the IDE displays debugger windows below the IDE editing area. The Sessions, BPEL Process Instances, BPEL Variables, and BPEL Process Execution windows contain information related to BPEL processes running within the current debugging section.</p>
+      <p> If a debugger window is not displayed, choose Window &gt; Debugging &gt; BPEL &gt; <i>window-name</i> (for example, Window &gt; Debugging &gt; BPEL &gt; BPEL Variables). </p>
+      <p>
+         The Breakpoints and Watches are standard IDE debugger windows. They display all breakpoints and watches set in the IDE.</p>
+      <div class="indent">
+	  <h3 class="tutorial">Sessions Window</h3>
+  <p>The Sessions window lists all open debugging sessions, including Java and BPEL debugging sessions.  For the BPEL Service Engine, only one session can be started. However, the Sessions window also displays other open debugging sessions, such as Java sessions. Only one of the open debugging sessions can be current, and it is shown in bold. Other debugger windows, such as BPEL Process Instances, BPEL Process Execution, and BPEL Variables, display  data related only to the current debugging session. </p>
+      <p>You can perform the following actions on sessions available in the pop-up menu: </p>
+      <ul>
+        <li><b>Make current.</b> Makes the selected session current. </li>
+        <li><b>Finish.</b> Finishes the selected session.</li>
+        <li><b>Finish all.</b> Finishes all debugging sessions.</li>
+      </ul>
+	 <div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/sessions.png" alt="Sessions window"></p>
+        </div>
+	  </div>
+	  <div class="indent">
+      <h3 class="tutorial">
+         BPEL Process Instances Window
+      </h3>
+      <p>The BPEL Process Instances window lists all BPEL process instances running on the BPEL Service Engine within the current debugging session. </p>
+      <p>The  information displayed for each process instance includes the instance name, unique instance ID, and its state. Process instances can exist in one of the  following states: </p>
+      <ul>
+        <li><b>Running.</b> The instance is  currently being executed on the BPEL Service Engine.</li>
+        <li><b>Suspended.</b> The instance has been suspended for some reason. For example, the process instance has reached a breakpoint. </li>
+        <li><b>Unknown.</b> The status of the instance is unknown. </li>
+        </ul>
+      <p>The following commands are available in the pop-up menu for a process instance:</p>
+      <ul>
+        <li><b>Make current</b>. Makes the selected process instance current. The data in other BPEL Debugger windows changes accordingly. </li>
+        <li><b>Resume</b>. Resumes suspended process instances. </li>
+        <li><b>Terminate</b>. Terminates the selected process instance. </li>
+      </ul>
+      <div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/instances.png" alt="BPEL Process Instances window"></p>
+        </div>
+  </div>
+     <div class="indent"> <h3 class="tutorial">
+         BPEL Variables Window
+      </h3>
+      <p>
+         The BPEL Variables window shows the list of BPEL variables and their values for the current process instance and current position. The current position is a place at which the current process instance became suspended. When you change the current process instance, the records in the BPEL Variables window are updated to reflect the variables for the new current process instance and the new current position.      </p>
+      <p>The structure of local variables is shown as a tree. The information provided for each variable includes  the variable name and value. </p>
+      <p>In the BPEL Variables window you can do the following:</p>
+      <ul>
+        <li>View the variable structure. To do this, expand the variable node in the tree. </li>
+        <li>View and edit the values of variables. To edit the value of a variable, click the ellipsis (...) button and enter the new value in the editor window. </li>
+       <!-- <li>View and modify the XML data for variables. To do this, click the ellipsis (...) button for the variables that have the <tt>XML data</tt> entry in the Value column.</li> -->
+      </ul>
+<div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/variables.png" alt="BPEL Variables window"></p>
+       </div>
+  </div>
+	  
+	  <div class="indent"> <h3 class="tutorial">
+         Watches Window
+      </h3>
+      <p>
+         The Watches window shows the list of XPath expressions that you want to monitor. You add watches explicitly before or during the debugging session. The Watches window shows the expression and its value. The value of the expression may change as the process advances depending on the logic of your process.      </p>
+      <div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/watches.png" alt="Watches window"></p>
+        </div>
+	</div>
+	<div class="indent">
+	  <h3 class="tutorial">BPEL Process Execution Window </h3>
+      <p>The BPEL Process Execution window graphically represents the progress of executing the current BPEL process instance in the BPEL Debugger. When you change the current process instance, the process tree in the BPEL Process Execution window is updated to reflect the state of the new current process instance and the new current position. </p>
+      <p>In the BPEL Process Execution window, the following colors are used to display the state of BPEL activities:</p>
+      <ul>
+        <li>Green. The  activity is being executed at the moment.</li>
+        <li>Gray. The activity has never been executed.</li>
+        <li>Black. The activity has been executed. </li>
+      </ul>
+<div>
+                  <p align="center"><img src="../../../images/articles/ep-bpel-guide/60/execution.png" alt="BPEL Process Execution window"></p>
+      </div>
+			      <p><b>Note</b>: In the BPEL Process Execution window, you can only view the progress of executing BPEL processes. You cannot perform any actions in this window. </p>
+    
+  </div>
+	 <div class="indent">
+	  <h3 class="tutorial">BPEL Debugger Console Messages</strong> </h3>
+      <p> You can see the following messages in the BPEL Debugger Console: </p>
+      <dl>
+        <dt> <strong><tt>Connecting to &lt;host&gt;:&lt;port&gt;</tt></strong> </dt>
+        <dd> The Debugger is attempting to connect to the BPEL service engine. </dd>
+        <dt> <strong><tt>Debug session started</tt></strong> </dt>
+        <dd> The Debugger has successfully connected to the BPEL service engine and the debug session has started. </dd>
+        <dt> <strong><tt>Unable to start a debug session : Unable to connect to &lt;host&gt;:&lt;port&gt; : Connection timed out: connect</tt></strong> </dt>
+        <dd> If you see this message, verify the following:
+          <ul>
+              <li> The GlassFish V2 Application Server is running. </li>
+            <li> The BPEL service engine is started. </li>
+            <li> The DebugEnabled property of the BPEL service engine is set to <tt>true</tt>. </li>
+            <li> The host name is the host name of the machine that runs the GlassFish V2 Application Server you are connecting to (<tt>localhost</tt> by default). </li>
+            <li> The port value is the same as the DebugPort property of the BPEL service engine you are connecting to (<tt>3343</tt> by default). </li>
+          </ul>
+        </dd>
+        <dt> <strong><tt>Unable to start a debug session : Already connected to &lt;host&gt;:&lt;port&gt;</tt></strong> </dt>
+        <dd> You already have a running debug session attached to this particular service engine. </dd>
+        <dt> <strong><tt>Debug session terminated : Target disconnected</tt></strong> </dt>
+        <dd> The Debugger lost connection to the server. Check that the server is running and the network is up. </dd>
+        <dt> <strong><tt>Stop connecting</tt></strong> </dt>
+        <dd> You explicitly terminated the debug session when it was connecting. </dd>
+        <dt> <strong><tt>Debug session finished</tt></strong> </dt>
+        <dd> You explicitly terminated the debug session when it was running. </dd>
+      </dl>
+    </div>
+            <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+    <p align="center">
+      <a href="bpel-guide-test.html#top">top</a>
+    </p>
+  </body>
+</html>

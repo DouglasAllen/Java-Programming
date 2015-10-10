@@ -1,0 +1,620 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Installing and Configuring Ruby Support - NetBeans IDE 6.0 Article</title>
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css"> 
+        <meta name="description" content="How to install and configure the Ruby support for the NetBeans 6.0 IDE">
+        <meta name="author" content="Chris Kutler"><!--Optional tag-->   
+        <script src="../../../images/js/window_opener.js" type="text/javascript"></script>
+    </head>
+    
+    <body>  
+        
+        <a name="top"></a>
+        <h1>
+            Installing and Configuring Ruby Support
+        </h1>
+        <!-- START INTRO  -->
+        
+        <div class="articledate" style="margin-left: 0px; font-style: italic;">
+            <p><em>Contributed by <a href="mailto:chris.kutler@sun.com"><i>Chris Kutler</i></a><br>
+                November 2007</em> [Revision number: V6.0-3]
+            </p>
+        </div>
+        <!-- This paragraph should contain an overview or an intro to your-tutorial  -->
+        <p>This document provides information about downloading, installing, and configuring Ruby support in
+        the NetBeans IDE.</p>
+        <!-- END INTRO  -->
+        <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="left" valign="top"><h3>Contents</h3>
+                    <table border="0" cellpadding="0" cellspacing="0" class="vatop">
+                        <tr>
+                            
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#downloading">Downloading Ruby Support</a></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#native">Configuring the IDE to Use Your Own Ruby Installation 
+                            (Optional)</a></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#managinggems">Managing Gems</a></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#dbservers">Using Database Servers With JRuby</a></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#database">Adding Databases</a></td>
+                            
+                        </tr>
+                        
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#register">Registering Databases With the IDE</a></td>
+                            
+                        </tr>                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="setting-up.html#glassfish">Deploying a JRuby Application to GlassFish</a></td>
+                            
+                        </tr>  
+                    </table>
+                </td>
+                
+                <td width="20">&nbsp;</td>
+                <td align="right" valign="top">
+      <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0">
+                </td>
+            </tr>
+        </table> 
+        
+        
+        
+        <!-- ======================================================================================== -->
+        <h2><a name="downloading"></a>Downloading Ruby Support</h2>
+        <br>
+        <p>If you do not have the NetBeans 6.0 IDE, go to the <a href="http://www.netbeans.org/" target="_blank">www.netbeans.org</a>, and download 
+            a version of the IDE that contains Ruby support. 
+            If you have a NetBeans IDE 6.0 installation that does not include Ruby support, 
+        complete the following steps to add Ruby support to the IDE.</p>
+        <ol>
+            <li>If your network uses a proxy, choose Tools &gt; Options from the main 
+                menu, select the Manual Proxy Settings radio button in the 
+                Options dialog box, type the HTTP Proxy and Port for 
+            your proxy, and click OK.</li>
+            <li>Choose Tools &gt; Plugins from the main menu.</li>
+            <li>In the Plugins dialog box, click the Available Plugins tab,
+                and scroll to the Ruby category, as shown below. 
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 1: Plugin Manager</b></p>          
+                    <img src="../../../images/articles/60/ruby/setting-up/rubyplugin.png" 
+                     alt="Plugin Manager" 
+                     class="thumbimage" style="margin: 5px auto;" 
+                     width="492" height="395" > 
+                </div>
+            </li>
+            <li>Select the Ruby and Rails checkbox to obtain
+                Ruby support for the NetBeans IDE.
+            </li>
+            <li><p>(Optional) Select the JRuby and Rails Distribution checkbox to
+                download and install the JRuby software
+            and the Ruby on Rails framework.
+            </p>
+            <b>Note:</b> You must have either Ruby or JRuby software
+            installed on your system in order to use the Ruby and
+            Rails distribution. If you do not have this software, you
+            must either install this plugin, or download and install
+            JRuby or Ruby software before working with Ruby projects
+            in the IDE.</li>
+            <li><p>(Optional) Select one or more of the following plugins:</p>
+                <ul>
+                <li><b>Extra Ruby Color Themes.</b> Provides additional editor 
+                    color themes for the Ruby file types.
+                </li>
+                <li><b>Depot Sample.</b> A Sample JRuby on Rails application.
+                </li>
+                <li><b>Ruby Extra Hints.</b> Provides additional
+                    code hints for Ruby, such as the detection of 
+                    local variable name conflicts
+                    and the detection of variable names that
+                    do not follow Ruby coding conventions.
+                </li>
+                <li><b>Ruby RSpec support.</b> Provdes IDE support for
+                    the RSpec framework.
+                </li>
+              </ul>
+                        
+            </li>
+            <li><p>Click Install.</p>
+            The NetBeans IDE Installer appears.</li>
+            <li>In the NetBeans IDE Installer, click Next.</li>
+            <li>Read the license agreement, then select the I Accept the Terms in All 
+            License Agreements radio button, and click Install.</li>
+            <li>After the installation is completed, select either Restart IDE Now or Restart 
+            IDE Later and click Finish.</li>
+        </ol>
+        
+        
+        <h2><a name="native"></a>Configuring the IDE to Use Your Own Ruby Installation (Optional)</h2>
+        <br>
+        <p>The first time that you create or open a Ruby project in the IDE, the IDE checks
+            if you have any other Ruby installations in addition to the
+            bundled JRuby software. If you do, the IDE displays a dialog box asking
+        you to select which software to use.</p>
+        <p>If you decide to install the Ruby
+            software later, you can complete the following steps to configure the
+        IDE to use your Ruby installation.</p>
+        <ol>
+            <li>In the IDE, choose Tools &gt; Options from the main menu.</li>
+            <li><p>Click Ruby, and, if necessary, click the Platform tab. 
+            </p>
+            If you have not yet opened or created a Ruby project, the first time that you access the 
+            Platform tab, the IDE displays 
+                a Choose Ruby Interpreter dialog box. The dialog box shows a list of available Ruby installations, 
+                as shown in the following figure. If the dialog box does not appear, skip to <a href="setting-up.html#step5">Step 5</a>.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 2: Choose Ruby Interpreter Dialog Box</b></p>      
+                    <img src="../../../images/articles/60/ruby/setting-up/chooseRuby.png" 
+                         alt=" Choose Ruby Interpreter dialog box" 
+                     class="thumbimage" style="margin: 5px auto;" 
+                     width="353" height="230" > </div>
+            </li>
+            <li>Select the Ruby interpreter that you want to use. If you do not see your 
+            Ruby interpreter on the list, click Other.</li>
+            <li>Click Close.</li>
+            <li><a name="step5"></a>If you chose Other in Step 3, or if the
+            Choose Ruby Interpreter dialog box did not appear, click the Browse button
+            as shown in the next figure. 
+            Navigate to the location of your Ruby binary and click Open.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 3: Ruby Options Window</b></p>      
+                    <img src="../../../images/articles/60/ruby/setting-up/rubyoptions.png" 
+                     alt="Screenshot of Ruby Options window" 
+                     class="thumbimage" style="margin: 5px auto;" 
+                     width="365" height="416" > 
+            </div>
+              <b>Note:</b> You can also access the Ruby Options window by clicking the 
+              Change button in step 2 of the New Project wizard.           
+             </li>
+            <li>Click OK to close the Options dialog box.</li>
+        </ol>
+        <p>For information about obtaining Ruby software, see
+            <a href="http://www.ruby-lang.org" target="_blank">www.ruby-lang.org</a>,
+            <a href="http://instantrails.rubyforge.org/" target="_blank">instantrails.rubyforge.org</a>,
+        and <a href="http://locomotive.raaum.org/" target="_blank">locomotive.raaum.org</a>.</p>
+        
+        <h2><a name="managinggems"></a>Managing Gems</h2>
+        <br>
+        <p>Gems are third-party Ruby libraries. The IDE provides a Ruby Gems manager for 
+        adding and maintaining gems. You open the Ruby Gems manager by 
+            choosing Tools &gt; Ruby Gems from the main menu. The manager
+            contains the following tabs:
+            <ul>
+            <li><b>Updated.</b> Lists which of your installed gems have a
+            newer version available.                
+            </li>
+            <li><b>Installed.</b> Displays a list of the gems that 
+            have been
+            installed for the registered Ruby platform. See the previous
+            section for information about registering the Ruby platform. 
+            If you are using the JRuby platform and the
+            IDE includes the JRuby and Rails Distribution plugin,
+            the list contains
+            the ActiveRecord-JDBC gem and the Rails framework, as shown 
+            in the next figure.
+            </li>
+            <li><b>New Gems.</b> Lists the gems that you can add 
+        to your Ruby platform.</li>
+            <li><b>Settings.</b> Use this tab to configure the proxy.</li>
+            </ul>
+        <div class="imgcap" style="margin: 10px auto;">
+            <p><b>Figure 4: Installed Tab in Ruby Gems Manager</b></p>      
+            <img src="../../../images/articles/60/ruby/setting-up/gemsmgr.png" 
+                 alt=" Installed tab in Ruby Gems manager" 
+             class="thumbimage" style="margin: 5px auto;" 
+         width="525" height="327" > </div>
+        <p><b>Note.</b> The <a href="http://wiki.netbeans.org/wiki/view/RubyGems" target="_blank">RubyGems
+            wiki page</a> provides information about how to enable the Ruby Gems manager to
+            manage a native Ruby gems repository.
+        </p>
+        <p>For more information about Ruby Gems, go to 
+            <a href="http://www.ruby-lang.org/en/libraries/" target="_blank">www.ruby-lang.org/en/libraries/</a>.
+            For more information about Rails, go to <a href="http://rubyonrails.org/" target="_blank">rubyonrails.org</a>.
+            Information about the ActiveRecord-JDBC gem can be found at <a href="http://jruby-extras.rubyforge.org/ActiveRecord-JDBC/"
+         target="_blank">jruby-extras.rubyforge.org/ActiveRecord-JDBC.</a></p>
+        
+        <h2><a name="dbservers"></a>Using Database Servers With JRuby</h2>
+        <br>
+        <p>You can access databases from a JRuby on Rails application in
+        one of two ways.
+        <ul>
+            <li><b>MySQL Adapter.</b> The MySQL adapter is included
+                with JRuby. You use this adapter just as you would with
+                a native Ruby on Rails application.
+            </li>
+            <li><p><b>JDBC Adapter.</b> As mentioned earlier, the JRuby and Rails Distribution
+                plugin includes the ActiveRecord-JDBC gem, which
+                enables your JRuby on Rails application to access 
+                database servers that provide JDBC 3.0 compliant drivers, such
+                as MySQL, PostgreSQL, Oracle, HSQLDB, and Java DB (also known as <i>Derby</i>).
+                The JDBC driver must be a pure Java driver. At the time of this writing, ActiveRecord-JDBC does not work
+                with the Sqlite JDBC driver.
+                </p>
+                <p>
+                To use a JDBC connection, you must obtain a JDBC 3.0 client
+                driver for your database server, and put a copy of the JDBC 
+                driver in the <code>JRuby/lib</code> 
+                folder. Depending on your installation, this folder can be in one of two places.
+                </p>
+                <ul>
+                    <li><i>netbeans-install-dir</i><code>/ruby1/jruby-1.0.2/lib</code></li>
+                    <li><i>netbeans-user-dir</i><code>/jruby-1.0.2/JRuby/lib</code></li>
+
+                </ul>
+
+                <p><b>Note:</b> The MySQL and PostgreSQL JDBC drivers are
+                bundled with the IDE. If your installation includes
+                the GlassFish application server, the Java DB
+                driver is also available. To locate the drivers, expand
+                Databases &gt; Drivers in the Services window.
+                Right-click the node for the driver, and 
+                choose Customize. A dialog box opens, which 
+                shows the location of the driver file.
+                </p>
+                <p>To use the JDBC adapter in a Ruby on Rails project, select
+                the Access Database Using JDBC checkbox when you create the project,
+                as shown in the following figure.
+                </p>
+                <div class="imgcap" style="margin: 10px auto;">
+                    <p><b>Figure 5: Selecting JDBC Database Access</b></p>      
+                    <img src="../../../images/articles/60/ruby/setting-up/jdbcaccess.png" 
+                         alt="Selecting JDBC Database Access" 
+                         class="thumbimage" style="margin: 5px auto;" 
+                         width="563" height="388" > 
+                </div>
+                When you select this checkbox, the IDE puts the following
+                statements in the  <tt>environment.rb</tt> file.
+                <br><br>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 1: JDBC Environment Setup</b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre>
+if RUBY_PLATFORM =~ /java/
+  require 'rubygems'
+  gem 'ActiveRecord-JDBC'
+  require 'jdbc_adapter'
+end</pre></td>
+                    </tr>
+                </table>
+                <br>
+                When you use the JDBC adapter to access a database,
+                you configure the database settings
+                in the <tt>database.yml</tt> just as you would if you were
+                using that database's Rails adapter,
+                as shown in the following code sample.
+                <br><br>
+                
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td width="486"><b>Code Sample 2: JDBC Database Configuration Example</b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre>
+  adapter: mysql
+  database: my_development_database
+  username: fred
+  password: secret
+  host: localhost</pre></td>
+                    </tr>
+                </table>
+                <br>
+                When you create a Ruby on Rails project, the IDE adds
+                the configurations to the <tt>database.yml</tt> for the database server
+                that you select in step 2 of the Wizard as shown in Figure 5. If you are
+                using a database server that is not in the drop-down list, you can
+                edit the database configuration
+                in the <tt>database.yml</tt> file after
+                you create the project.
+                
+            </li>
+        </ul>
+       <p><b>Note:</b> If your operating system's host file does not
+           contain <tt>localhost</tt>, use  <tt>127.0.0.1</tt> instead. Note
+          also that with some systems, the database setting must be in lowercase letters.
+       </p>
+
+        <h2><a name="database"></a>Adding Databases</h2>
+        <br>
+        <p>Several of the NetBeans tutorials require that you create a database for the
+            data tables that are used by the tutorial. The steps for adding a database
+            are different for each database server. The following instructions 
+            are for the MySQL
+        and Java DB databases.</p> 
+        <h3>Adding MySQL Databases</h3>
+        
+        <ol>
+            <li>If it has not already been started, start the database server. </li>
+            <li>(Optional) Use the following steps to create a user.<br>
+                <br>
+                <ol type ="a">
+                    <li>At a command prompt, type the following command. <br>
+                        <br>
+                        <code>mysql -u</code> <i>user</i> <code>-p</code> <br>
+                        <br>
+                        Omit the <tt>-p</tt> if the user does not have a password.
+                        Otherwise, when prompted, type the password. The user
+                        must have global create user privileges or the insert privilege
+                        for the mysql database,
+                        such as the <tt>root</tt> user.
+                    </li>
+                    <li>Use syntax similar to the following example to create a user.
+                        <br><br>
+                        <code>CREATE USER 'fred'@'localhost'<br>
+                        identified by 'secret';</code>
+                    </li>
+                    <li>(Optional) Use syntax similar to the following to specify
+                        access privileges. In this example, the user is granted all privileges
+                        to all databases on the localhost database server.
+                        <br><br>
+                        <code>GRANT ALL PRIVILEGES ON *.* TO 'fred'@'localhost';</code>
+                    </li>
+                    <li>Type <tt>quit</tt> and press Enter to exit.</li>
+                </ol>
+            </li>
+            <li>To create a database, use syntax similar to the following at a command
+                prompt.<br><br>
+                <code>mysqladmin -u fred -p create mydb_development</code>
+                <br><br>
+                Omit the <tt>-p</tt> if the user does not have a password.
+                Otherwise, when prompted, type the password.
+                If you have not created users, you can use 
+                <code>root</code> as the user name.
+            </li>
+        </ol>
+
+        <p>For more information about creating MySQL users and databases, 
+            see the <a href="http://dev.mysql.com/doc/refman/5.0/en/index.html"
+         target="_blank">MySQL Reference Manual</a>.</p>
+        <h3>Adding Java DB (Derby) Databases</h3>
+        <br>
+        <p>If you installed a version of the IDE that includes the GlassFish application server,
+        the IDE is configured to access the Java DB database that is provided with GlassFish.
+        You can use the following steps to add a Java DB database from the IDE.
+        <ol>
+                <li>From the main menu of the IDE, choose Tools &gt; Java DB Database &gt; Create Database.</li>
+                <li>
+                In the Create Java DB Database dialog box, type the Database Name, User Name, 
+                and optional Password, as shown in the following example below.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 6: Create Java DB Database Dialog Box</b></p>    
+                    <img src="../../../images/articles/60/ruby/setting-up/createjdb.png" 
+                         alt="Create Java DB Database dialog box" 
+                     class="thumbimage" style="margin: 5px auto;" width="300" height="216" > </div>	
+            </li>
+            <li>(Optional) To specify a different location for the database, click Settings,
+                then click the Browse button for the Database Location, 
+                navigate to the folder in which you want the database to reside, and click 
+            Open. Click OK to close the Java DB Settings dialog box.</li>
+            <li><p>Click OK.</p>
+                <p>The IDE creates the database and adds a node to the Databases 
+                section in the Services window, as shown in the next figure.</p>
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 7: Database Node in Services Window</b></p>    
+                    <img src="../../../images/articles/60/ruby/setting-up/newjavadb.png" 
+                         alt="Database node in Services window" 
+                     class="thumbimage" style="margin: 5px auto;" width="381" height="156" > </div>	
+            </li>
+        </ol>
+         <h2><a name="register"></a>Registering Databases With the IDE</h2>
+        <br>    
+        <p>You do not need to register a database with the IDE to use 
+            it
+            from your Ruby project. However, by registering a database you can 
+            create and view tables, and exercise SQL commands directly from the IDE.
+        </p>   
+        <h3>Registering Database Servers With the IDE</h3>
+        <br>
+        <p>First, you must register the database server with the
+            IDE. The IDE has been tested with the following drivers:
+            <ul>
+            <li>Java DB 10.3.1.4</li>
+            <li>MySQL
+            Connector/J 5.0.7
+            </li>
+            <li>PostgreSQL 8.2 build 506
+            </li>
+            <li>Oracle 10.2.0.3</li>
+            </ul>
+            <p>MySQL, PostgreSQL, and, optionally, Java DB are
+            already registered with the IDE.
+            The following steps show how to register other database servers
+        with the IDE.</p>
+        <ol>
+            <li>If you haven't already, obtain a JDBC 3.0 compliant driver 
+        for your database server.
+                <p>In the next step, you specify the path to this driver.
+                    The IDE uses the JDBC driver to access the database schema 
+                    and to query the databases.  If
+                the database client driver is not fully JDBC 3.0 compliant, you might
+                have problems using the IDE's database tools.
+                </p></li>
+                <li>In the Services window, expand Databases, right-click the Drivers
+                node and choose New Driver from the pop-up menu.
+            <br><br>
+            The New JDBC Driver dialog box appears.</li>
+            <li>Click Add, then navigate to and select the driver's jar
+        file, and click Open.<br><br>
+            The New JDBC Driver dialog box displays the settings for the selected
+            driver.         
+            </li>
+            <li><p>Click OK to close the New JDBC Driver dialog box.
+            </p>
+            The IDE adds a node for your database 
+            server under the Drivers node.     
+            </li>
+          </ol>
+          <h3>Establishing a Connection to a Database Instance</h3>
+        <br>
+        <p>The following steps show how to create a connection from the 
+        IDE to a database instance, such as
+        the example mydb_development database described in the previous section.
+        </p>
+          <ol>
+            <li>In the Services window,
+        right-click the Databases node and choose New Connection.
+        <br><br>
+        The New Database Connection dialog box appears.
+           </li>
+           <li>Select your driver from the Name drop-down list, such as MySQL (Connector/J driver).
+           </li>
+           <li>Using the pattern shown in the Database URL text box as a guide, type the database's URL
+               into the text box.
+               For example, type
+               <tt>jdbc:mysql://localhost:3306/mydb_development</tt>.
+           </li>
+           <li>Provide the user name, and provide the password if it is required, as
+           shown in the next figure.
+                <div class="imgcap" style="margin: 10px auto;">
+                    <p><b>Figure 8: New Database Connection</b></p>      
+                    <img src="../../../images/articles/60/ruby/setting-up/newdatabaseconnection.png" 
+                         alt="Selecting JDBC Database Access" 
+                         style="margin: 5px auto;" 
+                         width="417" height="315" > 
+                </div>             
+           </li>
+            <li>Click OK.
+            </li>
+            <li><p>When the connection is established, click OK to dismiss the dialog box.
+                </p>
+                The IDE adds a node for the connection under the Databases node. The
+                badge for the node shows that the connection is open. When you next start
+                the IDE, the badge will be broken to indicate that the connection is closed.
+                To reconnect, right-click the node and choose connect, provide your password
+                if it is required, and click OK.
+            </li>
+        </ol>
+      
+        <h2><a name="glassfish"></a>Deploying a JRuby Application to GlassFish</h2>
+        <br>
+        <p>By default, your JRuby applications run in the WEBrick browser. If you
+            want to deploy a JRuby application to the GlassFish application server,
+            you can package the application and its dependencies in a web archive
+            (WAR) file. Then you can make the WAR file available to the application server,
+        as shown in the following steps.</p>
+        <ol>
+            <li>The deployed application will use the production database. Open
+                the <tt>database.yml</tt> file to ensure that the production configuration
+                is set correctly.
+            </li>
+            <li>When you create your JRuby application, you are given the
+                option to add rake targets to support application server deployment,
+                as shown in the following figure. If you intend to deploy to GlassFish,
+                you should select this checkbox.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 9: Option to Provide WAR Rake Targets</b></p>    
+                    <img src="../../../images/articles/60/ruby/setting-up/waroption.png" 
+                         alt="Option to Provide WAR Rake Targets" 
+                         class="thumbimage" style="margin: 5px auto;" 
+                         width="331" height="66" > 
+                </div>	
+                If you have an existing JRuby project that does not offer this rake
+                target, complete the following steps to add the Goldspike plugin
+                to the project. This plugin adds rake tasks that enable you
+                to create WAR files.
+                <br><br>
+                <ol>
+                    <li>In the Projects window, right-click the project's node
+                    and choose Rails Plugins from the pop-up menu.</li>
+                    <li>In the Rails Plugins dialog box, click the New Plugins tab.
+                    </li>
+                    <li><p>If you do not see an entry for goldspike, complete
+                    the following steps to register the repository that provides
+                    the goldspike plugin.</p>
+                    <ol type="a">
+                        <li>Click the Repositories tab.</li>
+                        <li>Click Add URL,</li>
+                        <li>In the Add Repository URL dialog box, type <tt>http://jruby-extras.rubyforge.org/svn/trunk/rails-integration/plugins</tt> and click OK.</li>
+                        <li>After the repository is added, click Close.</li>
+                        <li>Click the New Plugins tab. You should now see an entry for goldspike.</li>
+                    </ol>
+                    </li>
+                    <li>Select the entry for goldspike, and click Install.</li>
+                    <li>Click OK to start the installation.</li>
+                    <li>Close both the Installation and the Rails Plugins dialog boxes.</li>
+                    <li>Right-click the project's node and choose
+                        Run Rake Task > Refresh List from the pop-up menu.
+                    </li>
+                </ol>
+            </li>
+            <li>To package your application in a WAR file, right-click the project's
+                node and choose Run Rake Task > War > Standalone > Create.
+                <br><br>
+                The IDE creates the WAR file and puts the file in the
+                project's top folder.
+            </li>
+            <li>If you are using the JDBC adapter, put a copy of your
+                database server's JDBC client driver in <i>glassfish-install-dir</i><tt>/lib</tt>
+                and start (or restart) the GlassFish server.
+                <br><br>
+                At the time of this writing,
+                you must use the JDBC adapter unless you are connecting to a MySQL database.
+            </li>
+            <li>Place a copy of the newly created WAR file into the GlassFish
+                autodeploy
+                folder. For example, copy <i>projects-folder</i><tt>/MyRubyApp/MyRubyApp.war</tt>
+                to <i>glassfish-install-dir</i><tt>/domains/domain1/autodeploy</tt>.
+            </li>
+            <li>In a browser, go to the URL for the application, for example,
+                <tt>http://localhost:8080/MyRubyApp</tt>.
+            </li>
+            
+        </ol>
+        
+        
+        
+        
+        
+        <!-- ======================================================================================== -->
+        <h2><a name="next_steps"></a>Next Steps</h2>
+        <!-- Intro paragraph for this topic  -->
+        <br>
+        <ul>
+            <li>
+                <p>To learn how to use the IDE to quickly build a Ruby on Rails application, go to <a href="rapid-ruby-weblog.html">Creating a Ruby Weblog in 10 Minutes</a>.</p>
+                
+            </li>
+            <li><p>To obtain support and stay informed of the latest 
+                    changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and  
+                    <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a>
+                mailing lists.</p>
+            </li>
+            <li>
+            To submit your own NetBeans Ruby tutorial, visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+            
+        </ul>
+        
+        
+        <!-- ======================================================================================== -->
+        
+        <!-- Send Us Your Feedback Link  -->
+
+        
+        <!-- Update your-tutorial-title below to reflect your tutorial title -->
+        <br>
+        <div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+                
+    </body>
+</html>

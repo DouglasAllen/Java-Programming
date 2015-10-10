@@ -1,0 +1,578 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Introduction to the Wicket Web Framework</title>
+  <link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+
+  <meta name="author" content="gwielenga@netbeans.org">
+  <meta name="description"
+ content="A short guide to creating, installing, modifying, and reloading a simple 
+NetBeans Module.">
+<!--      Copyright (c) 2006 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+</head>
+<body>
+<h1>Introduction to the Wicket Web Framework</h1>
+
+
+
+<p>This document takes you through the basics of creating reusable components
+ and assembling them into a web application. Each component consists of
+ a Java class and an HTML file. The framework that allows you to develop
+ your application in this way is called Wicket. In addition to its
+  component-based approach, a distinguishing feature of Wicket is the absence
+   of XML configuration files. Instead of an XML configuration file, you
+    use a Java class for application-wide settings, such as the identification
+     of a home page. <p>Each widget in your web application is created in a Java class
+      and rendered in an HTML page. The Java class and HTML page must have
+       the same name and exist in the same source structure. They are linked
+        to each other via a Wicket identifier. You will be shown how the IDE
+         supports the development of component based applications so that
+          you can quickly and efficiently create reusable components that can
+           give your web application a consistent look and feel without
+            very much work on your part.
+
+<div class="indent"> 
+ 
+ <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+<ul>
+  <li><a href="#setup">Setting Up the Environment</a></li>
+  <ul>
+      <li><a href="#installing">Installing the Software</a>
+      <li><a href="#creating">Creating the Source Structure of a Component Based Application</a>
+      <li><a href="#examining">Examining the Source Structure of a Component Based Application</a>
+  </ul>
+  <li><a href="#widget">Adding a Widget</a></li>
+  <li><a href="#component">Adding a Reusable Component</a></li>	
+ 
+</ul>      </td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+  
+  
+  
+<h3 class="tutorial"><a name="installing"></a>Software Needed for the Tutorial</h3>
+   
+    
+      <p>Before you begin, you need to install the following software on your 
+        computer:</p>
+<ul>
+     <li>NetBeans IDE 6.0 Web & Java EE.
+    <li>Java Standard Development Kit (JDK&trade;) version
+        5.0 or version 6.0.</li>
+           <li>Wicket Support plugin for NetBeans IDE (<a href="http://plugins.netbeans.org/PluginPortal/faces/PluginDetailPage.jsp?pluginid=3586" target="_blank">download</a>).
+     The plugin consists of two modules:
+        <ul>
+            <li><b>org-netbeans-modules-web-wicket.nbm.</b> Provides templates and other Wicket-specific functionality that will be used in this tutorial.
+            <li><b>org-netbeans-modules-wicket-library.nbm.</b> Provides the Wicket JARs, installs them in the IDE's Library Manager. Therefore,
+            you do not need to download the Wicket distribution from the Wicket site, because the plugin provides everything you need.
+        </ul>
+        <p>Use the Plugin Manager under the Tools menu to install the above two modules into the IDE.
+     
+  </ul>   
+
+ 
+</div>
+
+<p>For more information on Wicket, see <a href="http://wicket.sourceforge.net/" target="_blank">http://wicket.sourceforge.net/</a>. For details on
+             support for Wicket in NetBeans IDE, see 
+<a href="https://nbwicketsupport.dev.java.net/">https://nbwicketsupport.dev.java.net/</a>. If you
+ are familiar with Wicket, you are welcome to contribute code to the Wicket Support module
+  for NetBeans IDE. 
+         
+<br />
+<!-- ===================================================================================== -->
+<h2><a name="setup"></a>Setting Up the Environment</h2>
+<p>Before you start writing your component based application, you have to make sure you have all of the necessary software
+ and that your project is set up correctly. Once you have installed
+ the Wicket Support module for NetBeans IDE, you will have a wizard that sets up all the basic files
+ needed for a Wicket application.</p>
+<div class="indent">
+
+  
+    <h3 class="tutorial"><a name="creating"></a>Creating the Source Structure of a Component Based Application</h3>
+
+    <p>The source structure of our application must include the Wicket JAR files,
+     the registration of the Wicket servlet in the <tt>web.xml</tt> file, as
+ well as some standard artifacts such as the application class and a home page.
+ Since we are using an IDE, we shouldn't need to create all these files by hand.
+ Instead, we have a wizard to do the work for us. Specifically, the final
+ panel of the Web Application wizard will be very useful in the context of
+ our component based application.
+    
+  <ol>
+	<li>Choose File &gt; New Project. Under Categories, select Web. Under
+ Projects, select Web Application. Click Next.</li>
+<li>In the Name and Location panel, type <tt>MyFirstWicketApp</tt> in Project Name.
+ Change the
+Project Location to any directory on your computer.
+<li>Leave all the other settings unchanged. Or, if you like, you can change them.
+ Wicket supports J2EE 1.4 as well as Java EE 5. A Wicket application can be deployed
+  to any server. Click Next.
+<li>In the Frameworks panel, choose Wicket, as shown here:
+ 
+ <p><p align="left"><img border="1" src="../../../images/articles/60/web/wicket/frameworks1.png" alt="frameworks 1"> 
+ 
+  <p>Leave all the defaults unchanged. The fields in the panel above provide the following:
+ 
+<p><ul>
+    <li><b>Wicket Servlet Name.</b> Shows the name of the servlet that will be defined in the <tt>web.xml</tt> file.
+    <li><b>Wicket URL Pattern.</b> Adds the relative URL pattern to the <tt>web.xml</tt> file.
+    <li><b>Wicket Application Class.</b> Specifies name of the class where the application-wide
+     settings, such as the home page, are set.
+     <li><b>Wicket Home Page.</b> Specifies the name of the home page, which will consist
+      of a file called <tt>xxx.java</tt> and <tt>xxx.html</tt>.
+      <li><b>Dummy POJO.</b> POJOs are common artifacts in Wicket. Here, you can let the IDE
+       generate a simple, empty, JavaBeans file for you.
+       <li><b>Main Package.</b> The Java package in which all the generated artifacts will be
+        put by the IDE.
+        <li><b>Add Example Formatting.</b> Adds a reusable component, consisting of
+         a Java class and HTML file, as well as a CSS stylesheet, for defining a common header
+          for all your web pages.
+</ul>
+<li>Click Finish.
+
+  
+
+  </ol>
+      
+<p>The IDE creates the <tt>MyFirstWicketApp </tt>
+project. The project contains all of your sources and
+project metadata, such as the project's Ant build script. The project
+opens in the IDE. You can view its logical structure in the Projects window (Ctrl-1):
+
+
+<p><p align="left"><img border="1" src="../../../images/articles/60/web/wicket/first-proj-window.png" alt="Initial Projects window.">
+
+
+
+<p>In the next section, we will explore each of these files in detail.
+
+  <h3 class="tutorial"><a name="examining"></a>Examining the Source Structure of a Component Based Application</h3>
+
+<p>The IDE's Web Application wizard created a lot of files for us. Here,
+     we look at the files and see how they relate to each other within
+ the context of component based development.
+    
+<ol>    
+<li>Let's begin by looking in the <tt>web.xml</tt> file, which is
+     the general deployment descriptor common to all web applications
+      that comply with the Servlet specification. Expand the <tt>WEB-INF</tt> folder
+       or the Configuration Files folder, open the file in raw XML view, and
+        notice the definition of the servlet:
+        
+<p><pre class="examplecode">&lt;servlet-name&gt;WicketApplication&lt;/servlet-name&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;WicketApplication&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.apache.wicket.protocol.http.WicketServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;applicationClassName&lt;/param-name&gt;
+        &lt;param-value&gt;<b>com.myapp.wicket.WicketApplication</b>&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;debug&lt;/param-name&gt;
+        &lt;param-value&gt;2&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;detail&lt;/param-name&gt;
+        &lt;param-value&gt;2&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;WicketApplication&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/wicket/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>        
+
+    <p>Notice the value of the application class name. In the
+     next step, we will open the application class file
+      and inspect its content.
+
+<li>Open the
+     <tt>com.myapp.wicket</tt> package in the Source Packages folder
+ and then open the <tt>WicketApplication.java</tt> file. It looks like this:
+ 
+<p><pre class="examplecode">package com.myapp.wicket;           
+
+import org.apache.wicket.protocol.http.WebApplication;
+
+public class WicketApplication extends WebApplication {
+
+    public WicketApplication() {
+    }
+
+    public Class getHomePage() {
+        return Home.class;
+    }
+}</pre>
+
+<p>This is the Java file that provides application-wide
+ settings, comparable to <tt>struts-config.xml</tt> in the
+ Struts framework and <tt>faces-config.xml</tt> in the
+ JSF framework. Notice the definition of the <tt>getHomePage()</tt> method.
+ This method is the minimum requirement of the
+ application-wide class. It specifies the first page (the home
+ page) that will be displayed when you deploy the
+ application.   Notice that <tt>Home.class</tt> is returned. In
+  the next step, we will open the <tt>Home.java</tt> file
+   and inspect its content.
+
+<li>Open <tt>Home.java</tt>.
+  It looks like this:
+  
+<p><pre class="examplecode">package com.myapp.wicket;           
+
+public class Home extends WicketExamplePage {
+
+    public Home() {
+
+    }
+
+}</pre>
+
+<p>The file is empty. Rendering of Wicket widgets
+ created in this file is done in a file with the
+  same name in the same source structure, which
+   can only be <tt>Home.html</tt>, which looks
+    as follows, currently:
+    
+<p><pre class="examplecode">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;link rel='stylesheet' type='text/css' href='style.css'/&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;span wicket:id='mainNavigation'/&gt;
+        
+    &lt;/body&gt;
+&lt;/html&gt;</pre>    
+
+<p>Notice that in <tt>Home.java</tt>
+ we are extending <tt>WicketExamplePage</tt>. In <tt>Home.html</tt>
+ we have a <tt>wicket:id</tt> attribute, which tells
+ us that this is a placeholder
+ for something created somewhere by a Java file. Also, we have
+ a reference to the CSS stylesheet that the IDE generated for us. You
+ can find it in the Web Pages folder, in the Projects window. In the
+  next step, we will open <tt>WicketExamplePage</tt>
+   and examine its content.
+
+<li>Open
+  <tt>WicketExamplePage.java</tt>. This is what
+   it looks like:
+   
+<p><pre class="examplecode">package com.myapp.wicket;           
+
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.string.Strings;
+
+public class WicketExamplePage extends WebPage {
+
+    public WicketExamplePage() {
+        this(null);
+    }
+
+    public WicketExamplePage(IModel model) {
+        super(model);
+        final String packageName = getClass().getPackage().getName();
+        <b>add(new WicketExampleHeader("mainNavigation", Strings.afterLast(packageName, '.')));</b>
+        
+    }
+}</pre>
+
+<p>This is the class that we want all our
+ web pages to extend. For example, notice the line
+  in bold above. Every class extending <tt>WicketExamplePage</tt>
+   will inherit an instance of <tt>WicketExampleHeader</tt>. The
+ Wicket id is "mainNavigation", which is the Wicket id we
+ saw in the previous step, in the <tt>Home.html</tt> file. We
+ can refer to the "mainNavigation" Wicket id at the top
+ of all our HTML pages. This
+    ensures that all our web pages will have the same header. In
+     the next step, we will open <tt>WicketExampleHeader.java</tt>
+      and inspect its content.
+     
+
+<li>Open
+  <tt>WicketExampleHeader.java</tt>. This is what
+   it looks like:    
+  
+<p><pre class="examplecode">package com.myapp.wicket;           
+
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
+
+public class WicketExampleHeader extends Panel {
+
+    public WicketExampleHeader(String componentName, String exampleTitle)
+    {
+        super(componentName);
+        <b>add(new Label("exampleTitle", exampleTitle));</b>
+    }
+
+}</pre>
+   
+
+<p>Notice the line in bold above. Here, we create
+ a Wicket Label widget. The WicketExampleHeader is a reusable
+  component. This is the Java side, where widgets are created.
+   Next we will look at the HTML side, which is where we can
+    expect the Wicket Label widget to be rendered. In the
+ next step, we will open the <tt>WicketExampleHeader.html</tt>
+ file and inspect its content.
+
+ <p>Now change the second argument to "My Very First Component Based Application",
+  so that the definition of the Label is now as follows:
+ 
+ 
+<p><pre class="examplecode">add(new Label("exampleTitle", "My Very First Component Based Application"));</pre>
+ 
+<li>Open
+     <tt>WicketExampleHeader.html</tt>. Notice that
+      it has the same name as the Java file we have
+       just looked at. It is found within
+ the same package structure. This is what it looks like:
+ 
+<p><pre class="examplecode">&lt;html xmlns:wicket&gt;
+&lt;body&gt;
+  &lt;wicket:panel&gt;
+    &lt;h1&gt;Wicket Example&lt;/h1&gt;	
+    &lt;p id="titleblock"&gt;
+        &lt;b&gt;&lt;font size="+1"&gt;Start of 
+        <b>&lt;span wicket:id="exampleTitle"&gt;Example Title Goes Here&lt;/span&gt</b>&lt;/font&gt;&lt;/b&gt;
+    &lt;/p&gt;
+  &lt;/wicket:panel&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+ 
+<p>Notice the line in bold above. This is
+       how you specify where a widget should be rendered
+        in the HTML side of a web page. Hold down the Ctrl
+         key and move your mouse over the value
+          of the <tt>wicket:id</tt> attribute in
+           the <tt>span</tt> tag. Notice that
+            the value turns into a hyperlink:
+            
+<p><p align="left"><img border="1" src="../../../images/articles/60/web/wicket/hyperlink1.png" alt="HTML side of hyperlink.">           
+
+<p>Click the hyperlink and notice that the Java side
+             of the web page opens and that the
+              cursor lands to the left
+ of the opening quotation of the Wicket identifier:
+              
+<p><p align="left"><img border="1" src="../../../images/articles/60/web/wicket/hyperlink2.png" alt="Java side of hyperlink.">                         
+
+<p>Now click the left arrow at the top of the Source Editor to
+ return to the HTMl page. In this way, you can navigate quickly
+  and efficiently between the two sides of Wicket components.
+
+<li>Right-click the project and choose Run Project. The IDE compiles
+ the application, creates a WAR file, sends it to the deployment server,
+  opens the IDE's default browser, and displays the application:
+  
+  
+<p><p align="left"><img border="1" src="../../../images/articles/60/web/wicket/deploy1.png" alt="first deployment.">           
+</ol>
+
+
+</div>
+<br />
+<!-- ===================================================================================== -->
+
+<h2><a name="widget"></a>Adding a Widget</h2>
+
+
+<p>In this section, we create our first widget in Wicket. Just like
+ most other artifacts in Wicket, a widget has a Java side and an HTML side.
+  On the Java side, the widget is created. On the HTML side, it is rendered.
+  As shown previously, navigation
+     between the two sides is made possible via a hyperlink.
+<ol>
+    <li>Open <tt>Home.html</tt> and add the tag in bold below:
+ 
+<p><pre class="examplecode">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;link rel='stylesheet' type='text/css' href='style.css'/&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;span wicket:id='mainNavigation'/&gt;
+        <b>&lt;span wicket:id="message1"&gt;this text will be replaced&lt;/span&gt;</b>
+        
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<li>Open <tt>Home.java</tt> and add a label, with the same identifier as in the HTML file:
+ 
+ <p><p><img border="1" src="../../../images/articles/60/web/wicket/hyperlink4.png" alt="palette.">
+   
+<li>Right-click the project and choose Run Project. When the
+    application is deployed again, you will see the Wicket Label,
+     rendered in the <tt>Home.html</tt> file:
+     
+  <p><p><img border="1" src="../../../images/articles/60/web/wicket/deploy2.png" alt="palette.">    
+     
+ <li>Add H2 tags around the SPAN tag in the <tt>Home.html</tt> file
+  and deploy the application again. Notice the result:
+  
+  <p> <p><img border="1" src="../../../images/articles/60/web/wicket/deploy3.png" alt="palette.">
+   
+ <p><b>Note:</b> You can create placeholders, just like the SPAN tag generated
+   in the <tt>Home.html</tt> file, and then hand the HTML file to your
+    web designer. While the web designer designs the web page, you can work
+     on the Java side and create the widgets completely independently. Since the
+      HTML tags are not embedded in the Java file, you and the web designer can
+       reap the rewards of Wicket's central focus of "separation of concerns".
+
+</ol>
+  
+
+
+<!-- ===================================================================================== -->
+
+<h2><a name="component"></a>Adding a Reusable Component</h2>
+
+<p>One of strengths of Wicket is the concept of "reusable components". Here,
+ in this section, we use a wizard to generate a panel, which again has
+  a Java side and an HTML side. We will create this panel so that we have
+   a footer that we will reuse in our web pages, so that the footer
+    is consistent across our web site. We will see how easy it is to add
+     a panel to a web page.
+
+<ol>
+    <li>Right-click the <tt>MyFirstWicketApp</tt> project node
+     and choose New &gt; File/Folder. Under Categories, choose Wicket.
+      Under File Types, notice the following templates:
+      
+<p><p><img src="../../../images/articles/60/web/wicket/panel1.png"  border="1" alt="file templates">
+      
+      <p><b>Note:</b> At the time of writing, the BodyBorder template
+  does not work.
+      
+  
+  
+    <p>Choose Panel and click Next.
+    
+    
+   <li>Type <tt>FooterPanel</tt> in Class Name, select <tt>com.myapp.wicket</tt>
+  in the Package drop-down list, and notice the superclass we are using is
+   <tt>wicket.markup.html.panel.Panel</tt>. You should now
+ see the following:
+
+<p><p><img src="../../../images/articles/60/web/wicket/panel2.png" border="1" alt="file templates">
+ 
+<p>Click Finish.
+   
+<p>Notice that we now have two new files in our package, <tt>FooterPanel.html</tt>
+and <tt>FooterPanel.java</tt>.
+   
+   
+   <li>Open <tt>FooterPanel.html</tt> and notice that the content of
+    the file is as follows:
+    
+<p><pre class="examplecode">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+     <b>&lt;wicket:panel&gt;
+        &lt;span wicket:id="message"&gt;this text will be replaced&lt;/span&gt;
+     &lt;/wicket:panel&gt;</b>
+  &lt;/body&gt;
+&lt;/html&gt;</pre>    
+  
+<p>Between <tt>wicket:panel</tt> tags, a Wicket placeholder is found. Hold down
+ the Ctrl key, move the mouse over the value of the Wicket id, and click
+  the hyperlink that appears. The <tt>FooterPanel.java</tt> file opens,
+   the cursor landing at the start of the Wicket identifier. Notice that
+    a Wicket label has already been defined for us:
+   
+<p><pre class="examplecode">package com.myapp.wicket;
+
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.html.basic.Label;
+
+public class FooterPanel extends Panel {
+
+    /** Creates a new instance of FooterPanel */
+    public FooterPanel(String id) {
+        super(id);
+        add(new Label("message", "I am a reusable component!"));
+    }
+
+}</pre>
+   
+<li>Our panel, while simple, is actually complete already. Lets add
+ it to the Homepage. Open <tt>Home.java</tt> and then create a new
+  instance of FooterPanel, by adding the following line to the end
+   of the Constructor:
+   
+<p><pre class="examplecode">add(new FooterPanel("footerPanel"));</pre>
+   
+<li>Next, we need to render the panel. Open <tt>Home.html</tt>
+ and add the placeholder tag right above the closing BODY tag,
+  making sure to use the same Wicket identifier as used in the Java file:
+  
+<p><pre class="examplecode">&lt;span wicket:id='footerPanel'/&gt;</pre>  
+
+<li>Run the project again. Notice that the panel is displayed,
+ exactly where the HTML file specified it should be rendered:
+ 
+<p align="left"><p><img src="../../../images/articles/60/web/wicket/deploy4.png" alt="new deploy">
+  
+
+<p><b>Note:</b> In Wicket terminology, a panel is a reusable component. Exactly
+ as shown in this section, you can reuse the panel as often as you like
+  and in as many web pages as you fancy.
+
+</ol>
+
+<p>This is the end of the introduction to component based web development in
+ NetBeans IDE. You are encouraged to continue your journey in the Wicket
+  framework by working through the Pizza Application Sample described
+   in <a href="http://www.ensode.net/wicket_first_look.html" target="_blank">A First Look at the Wicket Framework</a>
+    by David R. Heffelfinger.
+  
+
+<br>
+<h2>See Also:</h2>
+<ul>
+<li><a href="quickstart-webapps.html">Introduction to Developing Web Applications in NetBeans IDE 6.0</a></li>
+<li><a href="helloweb.html">Developing a Visual Web JSF Application</a></li>
+<li><a href="quickstart-webapps-struts.html">Introduction to the Struts Web Framework</a></li>
+<li><a href="quickstart-webapps-spring.html">Introduction to the Spring Web Framework</a></li>
+</ul>
+<div><br><br>
+<small>&gt;&gt; <a href="../../index.html">More NetBeans IDE Documentation</a></small></div>
+
+
+<hr class="light">
+
+<div class="date-stamp" align="right">This page was last modified:&nbsp;December 3, 2007</div>
+<table border="0" cellpadding="0" cellspacing="0" class="full-width">
+  <tr>
+    <td>
+        <div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org"> Send Us Your Feedback</a></div>
+      
+  </tr>
+</table>
+
+
+
+  <hr>
+
+</body>
+</html>

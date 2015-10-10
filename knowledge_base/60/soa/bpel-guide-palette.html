@@ -1,0 +1,1078 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+   <head>
+      <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+      <title>Developer Guide to the BPEL Designer - Using the Palette Elements</title>
+      <meta name="description" content="Using the BPEL Designer Feature">
+      <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+      <meta name="author" content="Bob May">
+   </head>
+   <body>
+   <a name="top"></a>
+      <h1>
+          Developer Guide to the BPEL Designer: Using the Palette Elements
+      </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007<br>
+</p>
+</div>
+      <h2>
+          Contents
+      </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><ul>
+            <li><a href="bpel-guide-overview.html">Overview</a></li>
+          <li> <a href="bpel-guide-project.html">The BPEL Module Project</a></li>
+          <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a></li>
+          <li><a href="bpel-guide-mapper.html">The BPEL Mapper</a></li>
+          <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> 
+            <ul>
+              <li><a href="bpel-guide-palette.html#usinginvokeelement">Using the Invoke Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingreceiveelement">Using the Receive Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingreplyelement">Using the Reply Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingpartnerlinkelement">Using the Partner Link Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingemptyelement">Using the Empty Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingwaitelement">Using the Wait Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingthrowelement">Using the Throw Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingassignelement">Using the Assign Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingflowelement">Using the Flow Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingsequenceelement">Using the Sequence Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingifelement">Using the If Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingpickelement">Using the Pick Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingscopeelement">Using the Scope Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingwhileelement">Using the While Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#usingprocesselement">Using the Process Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#repeatuntil">Using the Repeat Until Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#foreach">Using the For Each Element</a> </li>
+              <li> <a href="bpel-guide-palette.html#exit">Using the Exit Element</a></li>
+            </ul>
+          </li>
+          <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+          <li><a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+          <li> <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> </li>
+          <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+        </ul></td>
+        <td width="20"></td>
+        <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"> </td>
+      </tr>
+    </table>
+    <!-- ========================================================================================= -->
+   <!-- ======================================================================================== -->
+  <h2>
+         <a name="usinginvokeelement"></a>Using the Invoke Element
+   </h2>
+      <br>
+   <div class="indent">
+     <p>
+             The Invoke element enables the business process to invoke a one-way or request-response operation on a <tt>portType</tt> offered by a partner. It enables the business process to send messages to partners. The operation is defined in the partner's WSDL file.         </p>
+         <h3 class="tutorial">
+             Usage         </h3>
+         <ol>
+            <li>In the Design view, drag the Invoke element from the Palette to the diagram.            </li>
+            <li>
+               Perform one of the following procedures to associate the Invoke element with a Partner Link element:
+                 <ul>
+                  <li>
+                   Directly draw a message flow from the Invoke element to the target Partner Link.</li>
+                  <li>
+                     Double-click the Invoke element. A dialog opens where you can examine or change the following:
+                       <ul>
+                     <li>
+                        The name of the Invoke element.                     </li>
+                     <li>
+                        The partner link that is invoked.                     </li>
+                     <li>
+                        The operation associated with the Invoke element.                     </li>
+                     <li>
+                        The input variable associated with the Invoke element.                     </li>
+                     <li>
+                        The output variable.
+                        <br>
+                        Both input and output variables can be created or browsed through this dialog.                     </li>
+                  </ul>
+                  <p align="center">
+                     <img src="../../../images/articles/ep-bpel-guide/60/invoke_property_editor.png" alt="Main tab of the property editor for the Invoke element">                  </p>
+                  </li>
+              </ul>
+           </li>
+         </ol>
+<p>    In the Property Editor dialog box, you can either create a variable or use an existing variable to hold input and output data. Click the Create button to create a variable for the Invoke element, and click Browse to choose an existing variable. </p>
+         <p>
+             Note that when you click the Browse button, the Input Variable Chooser or the Output Variable Chooser dialog boxes opens. In these dialog boxes, a checkbox with the option to show variables with appropriate types appears. This checkbox restricts the list of available variables to those which are of the proper type for the activity you are configuring. In this way the Design view helps you develop valid BPEL code.         </p>
+         <h3 class="tutorial">
+             Correlations         </h3>
+         <p>
+             Correlation sets on invoke activities, which deal with outbound operations, are used to validate that outgoing messages contain data which is consistent with the data contained within specified correlation set instances.         </p>
+<p>
+             The Correlations tab in the Invoke Property Editor dialog box enables you to examine or specify a correlation set. </p>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/invokecorrelations.png" alt="Correlations Tab">         </p>
+         <p>
+             The tab shows:         </p>
+         <ul>
+            <li>
+            Names of correlation sets</li>
+            <li>
+                The initiation of a correlator            </li>
+            <li>
+                The pattern associated with the correlation            </li>
+         </ul>
+         <p>
+            You can add a correlation set by clicking the Add button.         </p>
+         <h3 class="tutorial"><a name="defcorset"></a>
+             Defining a Correlation Set and Adding a Correlation Set to an Element         </h3>
+         <p>
+             Correlation is the means by which the BPEL runtime tracks conversations between a particular process instance and corresponding instances of its partner services. You can think of correlation as a primary key that is used by the BPEL runtime to correlate incoming and outgoing messages and route them accordingly.         </p>
+         <p>
+             A correlation set is a collection of properties used by the BPEL runtime to identify the correct process to receive a message. Each property in the correlation set may be mapped to an element in one or more message types through property aliases.         </p>
+         <p>
+             To define a correlation set, messages from partner services must have properties and property aliases defined in the partner WSDL file. You can add properties and property aliases to a WSDL file using the <a href="../websvc/wsdl-guide.html">WSDL Editor</a> or the <a href="bpel-guide-views.html#navigator">Navigator</a>.         </p>
+<p>
+             After properties and property aliases are added to the WSDL file associated with the process, you can define correlation sets for the Process element.         </p>
+         <p>
+            <b>To define a correlation set:</b>         </p>
+<ol>
+            <li>
+                In the Design view, right-click the Process element and choose Add &gt;  Correlation Set. The Add Correlation Set dialog box appears.            </li>
+            <li>
+                Change the name for the correlation set and click Add to add properties.            </li>
+            <li>
+                In the Property Chooser dialog box, expand the WSDL file node, select a property to add to the set, and click OK.
+                  <br>
+     Note that by default, the Property Chooser   dialog box only shows those files that have   already been referenced in the process. However, the project may contain   other <tt>.wsdl</tt> and <tt>.xsd</tt> files which have not yet been imported into the   process. If you select a property that is defined in a   non-imported file, the IDE will automatically add the required import to   the BPEL process. </li>
+     </ol>
+         <p>
+             After defining the correlation set as outlined above, add the correlation set to Invoke, Receive, or Reply elements. You can also associate a correlation set with the On Message branch of a Pick activity and with an On Event element within an Event Handlers container. </p>
+         <p>
+             The following shows a correlation set as seen in the Navigator.         </p>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/nav_corr.png" alt="Correlation Set in Navigator">         </p>
+         <p>
+            <b>To add a correlation set to an element:</b>         </p>
+         <ol>
+            <li>
+                In the Design view, double-click an element (Invoke, Receive, Reply, the On Message branch of Pick or the On Event element within an Event Handlers container).            </li>
+            <li>
+                In the Property Editor dialog box, select the Correlations tab and click Add.            </li>
+            <li>
+                In the Choose a Correlation Set dialog box, select the correlation set and click OK.            </li>
+            <li>Choose the initiate attribute for this correlation set from the Initiate drop-down list. You can select one of the following options: <br>
+                <ul>
+                  <li><tt><b>Yes</b>.</tt> The activity must attempt to initiate the correlation set.</li>
+                  <li><tt><b>Join</b></tt>. The activity must attempt to initiate the correlation set if the correlation set is not yet initiated.</li>
+                  <li><tt><b>No.</b></tt> The activity must not attempt to initiate the correlation set. This is the default option. </li>
+                </ul>
+            </li>
+            <li>Specify the message pattern, which can be <tt>request</tt>, <tt>response</tt>, or <tt>request-response</tt> operations. </li>
+            <li>Click OK.            </li>
+         </ol>
+   For more information about correlation sets, properties, and property aliases, see the <a href="http://www.netbeans.org/kb/60/soa/correlation.html" title="Using Correlation Sets, Properties, and Property Aliases in BPEL" target="_blank">Using Correlation Sets, Properties, and Property Aliases in BPEL</a> tutorial. </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingreceiveelement"></a>Using the Receive Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+             The Receive element allows the business process to do a blocking wait for a particular message to arrive.
+        </p>
+         <h3 class="tutorial"><a name="receiveusage"></a>
+             Usage
+         </h3>
+         <ol>
+            <li>In the Design view, drag the Receive element from the Palette to the diagram.            </li>
+            <li>
+                Double-click the Receive element (or right-click it and choose Edit) to configure its properties. Here the example is provided for the Travel Reservation Service sample:
+                  <div>
+                     <ul>
+                        <li>
+                           The name of the Receive element (<tt>ReceiveItinerary</tt>).                        </li>
+                        <li>
+                           The partner link (<tt>Travel</tt>).</li>
+                        <li>
+                           The operation associated with the Receive element (<tt>buildItinerary</tt>).                        </li>
+                        <li>
+                           The input variable to the Receive element (<tt>ItineraryIn</tt>). <br>
+                          Select Browse for the Input Variable to open the Input Variable chooser, where you can choose other variables associated with this process. Select Create to create a new variable.                        </li>
+                        <li>
+                            Create Instance. If selected, an instance of the BPEL process starts when an associated message arrives. Note that if the Receive activity is the first activity in your business process, the Create Instance checkbox must be selected.
+                            <div>
+                             <p align="center">
+                                <img src="../../../images/articles/ep-bpel-guide/60/receivepropertyeditor.png" alt="Main tab of the property editor for the Receive element">                                 </p>
+                          </div>
+                       </li>
+                     </ul>
+              </div>
+           </li>
+            <li>Right-clicking the Receive element and choosing Properties opens a Properties window, which, in addition to the items listed in the Receive Property Editor, includes the following::
+                  <div>
+                  <ul>
+                     <li>
+                        <b>Port Type</b>. The value of the Port Type field is filled in when you specify the partner link and operation.
+                        <div>
+                            <p align="center">
+                                <img src="../../../images/articles/ep-bpel-guide/60/receiveproperties.png" alt="Receive Properties window">                            </p>
+                        </div>
+                    </li>
+                  </ul>
+               </div>
+           </li>
+         </ol>
+         <h3 class="tutorial">
+             Correlations
+         </h3>
+         <p>           The Correlations tab in the Receive Property Editor dialog box enables you to examine or specify a correlation set. </p>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/receivecorrelations.png" alt="Correlations Tab">
+         </p>
+         <p>
+             The tab shows:
+         </p>
+         <ul>
+            <li>Names of correlation sets</li>
+            <li>
+                The initiation of a correlator            </li>
+         </ul>
+         <p>
+            You can add a correlation set by clicking the Add button. For more information, refer to <a href="bpel-guide-palette.html#defcorset">Defining a Correlation Set and Adding a Correlation Set to an Element</a>.
+   </p></div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingreplyelement"></a>Using the Reply Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+         Use this activity to return a message from the process to the same partner that initiated the operation. The combination of Receive and Reply activities creates a request-response operation. </p>
+         <p>
+             This activity is used in a synchronous (request/response) operation, and specifies the same partner, port type and operation as the Receive activity that invoked the process.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>
+                In the Design view, drag the Reply element from the Palette to the diagram.            </li>
+            <li>
+                Double-click the Reply element (or right-click and choose Edit) to open a Property Editor dialog box for the Reply element. In this dialog box, you can specify the following:
+                  <ul>
+               <li>
+                   The name of the element.               </li>
+               <li>
+                   The Partner Link.               </li>
+               <li>
+                   The operation.               </li>
+               <li>
+                   Type of response: Normal Response or Fault Response.
+                     <ul>
+                      <li>
+                        Select Normal Response if the Reply element is to be used for the normal response message type. Optionally, specify the output variable: either create a new output variable or browse for an existing variable.                      </li>
+                      <li>
+                         Select Fault Response if the Reply element is to be used to send a fault message. Choose a fault name and, optionally, specify the fault variable: either create a new fault variable or browse for an existing variable.                      </li>
+                   </ul>
+                   <div>
+                       <p align="center">
+                           <img src="../../../images/articles/ep-bpel-guide/60/reply_propertyeditor.png" alt="Reply Property Editor">                       </p>
+                   </div>
+               </li>
+            </ul>
+           </li>
+            <li>
+               Right-clicking the Reply element and choosing Properties opens a Properties window, which, in addition to the items listed in the Property Editor dialog box, includes the following:
+                 <div>
+                  <ul>
+                     <li>
+                        <b>Port Type.</b> The value of the Port Type field is filled in when you specify the Partner Link and operation.
+                        <div>
+                            <p align="center">
+                              <img src="../../../images/articles/ep-bpel-guide/60/replyproperties.png" alt="Reply Properties Window">                            </p>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </li>
+         </ol>
+         <h3 class="tutorial">
+             Correlations
+         </h3>
+         <p>
+             The Correlations tab in the Reply Property Editor dialog box enables you to examine or specify a correlation set. </p>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/replycorrelations.png" alt="Correlations Tab">
+         </p>
+         <p>
+             The tab shows:
+         </p>
+         <ul>
+            <li>Names of correlation sets</li>
+            <li>
+                The initiation of a correlator            </li>
+         </ul>
+         <p>
+            You can add a correlation set by clicking the Add button. For more information, refer to <a href="bpel-guide-palette.html#defcorset">Defining a Correlation Set and Adding a Correlation Set to an Element</a>.
+         </p>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      
+      <h2>
+         <a name="usingpartnerlinkelement"></a>Using the Partner Link Element
+      </h2>
+      <div class="indent">
+        <p>
+             Partner Link elements identify the parties that interact with your business process. Each link is defined by a partner link type and a role name.
+        </p>
+         <h3 class="tutorial">
+             Partner Link Types and Roles
+         </h3>
+         <p>
+             The type determines the relationship between a process and its partners by defining the roles played by each service in a conversation. The relationship is further determined by specifying the port type provided by each service to receive messages. Each role specifies one port type in the WSDL file.
+        </p>
+         <p>
+             Roles determine the conversational aspect of this process or its partner. You use a single role for a synchronous operation as the results are returned using the same operation. You use two roles in an asynchronous operation as the partner role switches during a callback.
+         </p>
+         <p>
+            It is easy to confuse partner links and partner link types, however:
+         </p>
+         <ul>
+            <li>
+               Partner link types and roles are special WSDL extensions defined by the BPEL specification. As such, they are defined in WSDL files, not in the process BPEL file.
+            </li>
+            <li>
+               Partner Link is a BPEL 2.0 element. It is defined in the process BPEL file.
+            </li>
+         </ul>
+         <p>
+             Partner link types are prerequisites to the Partner Link element definition. A Partner Link element can only be defined by referring to a particular partner link type and role which, as mentioned, must be defined in a WSDL file.         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>
+            To add the Partner Link element to the BPEL process, do one of the following:
+         </p>
+         <ul>
+            <li>
+               Drag the Partner Link element from the Palette to the diagram.            </li>
+            <li>
+               Drag a WSDL file node from the same project in the Projects window to the diagram.            </li>
+            <li>
+               Drag a WSDL file node from a different project in the Projects window to the diagram.            </li>
+            <li>
+               Drag a web service node from an EJB project or a Web Application project in the Projects window to the diagram.            </li>
+         </ul>
+         <p>
+            <strong>Note:</strong> When you drag the web service node, the BPEL Designer retrieves the WSDL file from the Application Server. To successfully retrieve the WSDL file, the Application Server has to be running and the web service project must be deployed.         </p>
+         <p>
+            When you drag the Partner Link element, a WSDL file node, or a web service node to the diagram, the Partner Link Property Editor appears.         </p>
+         <h3 class="tutorial">
+             The Partner Link Property Editor
+         </h3>
+         <p>
+             The Partner Link Property Editor dialog box enables you to establish partner links for your BPEL processes. </p>
+         <p>
+             The Partner Link Property Editor is invoked by double-clicking a Partner Link element on the diagram, or right-clicking the Partner Link element and choosing Edit. The Partner Link Property Editor also appears when you drag the Partner Link element, a WSDL file node, or a web service node to the diagram.
+         </p>
+         <p>
+             With the Partner Link Property Editor, you can specify:
+         </p>
+         <ul>
+            <li>
+               The Partner Link name
+        </li>
+            <li>
+               The WSDL file associated with the Partner Link
+            </li>
+	</ul>
+	<p>
+            Further on you can choose whether to use the existing partner link type or create a new partner link type.
+        </p>
+        <p>
+            If the WSDL file you selected contains partner link types, the Use Existing Partner Link Type option is selected and the Partner Link Type drop-down list is populated with the partner link types found in the WSDL file. You can use one of the existing partner link types or select the Use a Newly Created Partner Link Type option to create a new partner link type.
+        </p>
+        <p>
+            If the WSDL file does not contain partner link types, the Use a Newly Created Partner Link Type option is selected.
+        </p>
+        <ul>
+            <li>
+               <strong>Use Existing Partner Link Type</strong>
+               <div>
+                 <ol>
+                   <li> Choose the partner link type from the drop-down list. The My Role and/or Partner Role fields are filled in automatically. </li>
+                   <li> To swap the roles of the business process itself (My Role) and the partner (Partner Role), click the Swap Roles button. </li>
+                 </ol>
+               </div>
+            </li>
+       <li> <strong>Use a Newly Created Partner Link Type</strong>
+         <div>
+             <ol>
+                 <li>Specify the WSDL file in which to add a partner link type. You can do one of the following: <br>
+                 <ul>
+                     <li> Add the partner link type to the wrapper WSDL file, as suggested by   the IDE in the Create in File field by default. If you choose this   option, the IDE will automatically create the wrapper WSDL file in   your project structure. You can use wrapper WSDL files when the   original WSDL file is read-only or when you do not want to modify the   original WSDL file. The original WSDL file will be imported to the   newly created wrapper WSDL file. </li>
+                          
+              
+                     <li>Add the partner link type to a WSDL file within your project. Click Browse and locate the WSDL file in which to add the partner link type. </li>
+                   </ul></li>
+<li>Specify the partner link type name.</li>
+                  <li>Specify the role of the business process itself (My Role) and/or the role of the partner (Partner Role) as follows:<br>
+                 <div>
+                     <ul>
+                        <li>
+                         Select the appropriate checkbox.                        </li>
+                        <li>
+                         Specify the role name.                        </li>
+                        <li>Choose the port type from the drop-down list.</li>
+                     </ul>
+                    </div>
+               </li>
+           </ol>
+         </div>
+          </li>
+	</ul>
+        <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/plpropedit.png" alt="PartnerLink property editor">
+        </p>
+         <p>
+            You can also review and modify the Partner Link's properties in the Properties window invoked by right-clicking the element and choosing Properties.
+         </p>
+   </div>
+      
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingemptyelement"></a>Using the Empty Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+             The Empty element has no operation associated with it. It is usually used as a placeholder within a process, to catch and suppress faults, or to help synchronize actions within a flow activity that are executed concurrently.
+        </p>
+         <p>
+             The Empty element can be used when someone else will be implementing a business process, or when the activities within a flow activity need to be synchronized.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>
+             Drag the Empty element from the Palette to the diagram. </p>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingwaitelement"></a>Using the Wait Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+             Use a Wait element to specify a wait condition based on a unit of time or a duration.
+        </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>
+             Drag the Wait element from the Palette to the diagram. Like other elements, it must be placed in the correct position in the process flow; otherwise you will not see the element in the diagram.         </p>
+         <p>
+             Right-click the element in the diagram and choose Properties to invoke a Properties window. Using the Properties window, you can specify:
+         </p>
+         <ul>
+            <li>
+               The name of the element.            </li>
+            <li>
+               The alarm type. The available options are:
+                 <div>
+                  <ul>
+                     <li>
+                        <tt>For</tt> &#8211; specifies a duration for the process to wait                     </li>
+                     <li>
+                        <tt>Until</tt> &#8211; specifies the time until which the process is delayed. </li>
+                  </ul>
+              </div>
+           </li>
+            <li>
+                For/Until. Clicking the ellipsis button (...) invokes a dialog box where you  specify  the time in accordance with the selected expiration type.
+                  <div>
+                  <p align="center">
+                     <img src="../../../images/articles/ep-bpel-guide/60/waitproperties.png" alt="Wait Properties Window">                  </p>
+                </div>
+           </li>
+         </ul>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingthrowelement"></a>Using the Throw Element
+      </h2>
+      <br>
+      <br>
+      <div class="indent">
+        <p>
+             Use this activity to signal an internal fault.
+        </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>
+             In defining the properties of this element, you can specify a fault name and a fault variable. These details can then be passed onto a fault handler that is configured to deal with this kind of exception.
+         </p>
+         <h3 class="tutorial">
+             Throw Element Properties
+         </h3>
+         <p>
+             The properties of the Throw element can be configured via the Properties window invoked by right-clicking the element and choosing Properties. The options are:
+         </p>
+         <ul>
+            <li>
+                Name            </li>
+           <li>
+               Fault Name. Clicking the ellipsis button (...) invokes the Fault Name dialog box where you can choose the fault from the list that includes faults defined in WSDL files.            <br>
+             You can use the WSDL Editor to  add fault definitions to the WSDL file. For more information, see the 
+            Configuring Port Types Using the WSDL View section of the <a href="../websvc/wsdl-guide.html" title="Developer Guide to the WSDL Editor">Developer Guide to the WSDL Editor</a>.</li>
+            <li>
+                Fault Variable. Click the ellipsis button (...) to specify the name of the variable, already declared in the BPEL file, that will contain the fault message.
+                <div>
+                  <p align="center">
+                     <img src="../../../images/articles/ep-bpel-guide/60/throwproperties.png" alt="Throw Properties Window">                  </p>
+                </div>
+            </li>
+         </ul>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingassignelement"></a>Using the Assign Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+             The Assign activity assigns values to variables. You use the Assign element to copy data from one variable to another, construct and calculate the values of expressions, and store new data in variables. Expressions are required to perform simple computation or operate message selections, properties, and literal constants to produce a new value for variables. The Assign activity can contain one or more elementary assignments.
+        </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>
+            Use the BPEL Mapper to define the copy rules for the Assign activity or add expressions. For more information, refer to the <a href="bpel-guide-mapper.html#assignact">Assign Activity Scenario</a> section of the guide.         </p>
+         <p>The BPEL Mapper windows opens when you select the Assign activity on the diagram. If this window is not  visible, you can invoke it manually, by choosing Window &gt; Other &gt; BPEL Mapper from the main menu. </p>
+         <h3 class="tutorial">Assign Element Properties</h3>
+         <p>
+            The Properties window of the Assign element, invoked by right-clicking the element and choosing Properties, contains two properties:
+         </p>
+         <ul>
+            <li>
+               Name. This is the name of the element
+            </li>
+            <li>
+               Assignments Count. This is the number of assignment rules specified for the element.
+               <div>
+                  <p align="center">
+                     <img src="../../../images/articles/ep-bpel-guide/60/assignproperties.png" alt="Assign Properties Window">
+                  </p>
+               </div>
+            </li>
+         </ul>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingflowelement"></a>Using the Flow Element
+      </h2>
+      <br>
+      <br>
+   <div class="indent">
+     <p>
+             Use the Flow element to define a set of activities that will execute concurrently (in parallel).
+     </p>
+         <p>
+             The Flow activity is a structured activity, containing other activities separated into individual control paths or branches. You can embed as many paths in the activity as you want, and they will all be executed simultaneously.
+         </p>
+         <p>
+             During execution, each path is executed concurrently, and the activities on each are executed in the order in which they appear, unless they are the source of a link. When the activities are the source of a link, the condition of the link and the join condition of the activity must be evaluated. If the link conditions that lead to an activity conflict with those of its join condition, then a fault is thrown on that activity.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>
+            In the Design view, drag the Flow Element from the Palette to the diagram.         </p>
+         <p>
+            Drag an element to the placeholder inside the Flow element. If you add another element into the same branch of the Flow element, the elements within a branch are automatically wrapped in the Sequence element.         </p>
+         <h3 class="tutorial">
+             Adding Branches to the Flow Element
+         </h3>
+<p>
+             You can add one or more branches to the Flow element. The Flow element has a special user interaction style. It always shows a placeholder for the next branch that you might wish to add. To add a new branch, drag an element from the Palette to the immediately available &quot;next branch&quot; placeholder.         </p>
+         <h3>Changing the Order of Elements inside Flow </h3>
+         <p><b>To change the order of activities inside the Flow element:</b></p>
+      <ol>
+        <li>In the Design view, right-click the Flow element and select Change Order.</li>
+        <li>Select an element and   use the Move up or Move down buttons to change the position of the element inside the container.</li>
+      </ol>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingsequenceelement"></a>Using the Sequence Element
+      </h2>
+      <br>
+      <br>
+      <div class="indent">
+        <p>
+             Use the Sequence element to nest a series of activities into your process. The activities within a sequence will execute in strict sequential order. Process execution returns to the business process when the last activity within the nest has completed.
+        </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <p>Drag the Sequence element from the Palette to the diagram.         </p>
+         <h3 class="tutorial">
+             Adding Child Activities to the Sequence
+         </h3>
+         <p>
+         You can add one or more child activities to the Sequence. The Sequence element has a special user interaction style. It always shows one or more valid placeholders for the next activity that you might wish to add. To add a new child activity, drag and drop an element from the Palette onto the immediately available next or previous activity placeholder.</p>
+         <h3>Changing the Order of Elements inside Sequence </h3>
+         <p><b>To change the order of activities inside the Sequence element:</b></p>
+         <ol>
+           <li>In the Design view, right-click the Sequence element and select Change Order.</li>
+           <li>Select an element and   use the Move up or Move down buttons to change the position of the element inside the container.  </li>
+        </ol>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingifelement"></a>Using the If Element
+      </h2>
+      <br>
+      <br>
+      <div class="indent">
+        <p>
+             The If activity supports conditional behavior of a business process instance. The If activity consists of conditional branches defined by the If and Else If elements, followed by an optional Else branch. The conditions on If and Else If branches are evaluated in the order they appear. During execution, the first branch whose condition holds true is taken and provides the activity specified for the If activity. In other words, if there are several Else If branches whose conditions hold true, only the first of them will be executed.
+        </p>
+         <p>
+            If none of the branches evaluates to true, then the Else path is chosen. If the Else branch is not explicitly specified, this branch is considered to contain an Empty activity. The If activity is complete when the activity of the selected branch completes.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+            <ol>
+               <li>
+                  In the Design view, drag the If element from the Palette to the diagram.
+               </li>
+               <li>
+                  Select the If element on the diagram. The BPEL Mapper window appears at the bottom of the IDE. If the BPEL Mapper window does not appear, right-click the If element and select Show BPEL Mapper.               </li>
+               <li>
+                  Specify the condition for the If element using the BPEL Mapper. For more information, refer to the <a href="bpel-guide-mapper.html#ifact">If Activity Scenario</a> section of the guide. You can also specify the condition manually in the Properties window, invoked by right-clicking the element and choosing Properties.
+               </li>
+               <li>
+                  (Optional) In the Properties window, enter the name for the If element.
+                  <div>
+                     <p align="center">
+                        <img src="../../../images/articles/ep-bpel-guide/60/ifproperties.png" alt="If Properties Window">
+                     </p>
+                  </div>
+               </li>
+               <li>
+                  Add the element that will be executed if the condition is true into the If element. Configure the nested element. If you add another element into the If element, the nested elements are automatically wrapped in the Sequence element.
+               </li>
+               <li>
+                  Add other branches (Else If and Else) as described below.
+               </li>
+            </ol>
+            <h3 class="tutorial">
+               Adding an Else If Branch to the If Element
+            </h3>
+            <ol>
+               <li>
+                  Right-click the If element and choose Add Else If.
+               </li>
+               <li>
+                  Add an activity to the Else If that will be executed if the condition defined for this Else If element is true. To define a condition, use the BPEL Mapper.
+               </li>
+               <li>
+                  (Optional) Add more Else If activities by choosing Add Else If and add activities to them.
+               </li>
+            </ol>
+         <h3 class="tutorial">
+             Adding an Else Branch to the If Element
+         </h3>
+         <p>
+            Drag the activity you want to be executed on the Else branch onto the connector path marked with a slash mark. Configure the nested activity.
+         </p>
+         <h3 class="tutorial">
+             Reordering Else If Branches
+         </h3>
+         <p>
+             In the Design view, drag the Else If branch that you want reordered and drop it onto the placeholder that appears next to another Else If branch.
+         </p>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingpickelement"></a>Using the Pick Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+             The Pick element blocks the process and waits until one of the specified events occurs. After the specific event occurs, the activity associated with this event is performed. The possible events are the arrival of a message or a timer-based alarm. The occurrence of the events is mutually exclusive. If more than one of the events occurs, then the selection of the activity to perform depends on which event occurred first.
+        </p>
+         <p>
+             The Pick activity provides two branches, On Message and On Alarm. The branch whose condition is satisfied first (i.e. a message is received or the specified timer expires) is executed. When you add a Pick element to your diagram, it automatically includes one On Message statement in which you specify the properties of the message that the process awaits from a partner service. Each Pick element must include at least one On Message statement. The On Alarm branch contains a timer you can use to specify how long the process is to wait.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>
+               In the Design view, drag the Pick element from the Palette to the diagram.            </li>
+            <li>
+               For the On Message branch, configure the properties of the message for which the process is waiting. The configuration is similar to that of the <a href="bpel-guide-palette.html#receiveusage">Receive</a> element.            </li>
+            <li>
+               From the Palette, drag the activity that will be  executed and place it inside the  On Message branch. Configure the activity's properties.            </li>
+            <li>
+               (Optional) Add more On Message branches by choosing Add &gt; On Message from the pop-up menu and configure them as described above.            </li>
+            <li>
+               (Optional) Add one or more On Alarm branches following the procedure below.            </li>
+         </ol>
+         <h3 class="tutorial">
+             Adding an On Alarm branch
+         </h3>
+         <ol>
+            <li>
+               Right-click the Pick element and choose Add &gt; On Alarm from the pop-up menu.
+            </li>
+            <li>
+               Configure the timer via the Properties window, invoked by right-clicking the element and choosing Properties. The available options are:
+               <div>
+                  <ul>
+                     <li>
+                        Alarm Type &#8211; used to choose the type of alarm. The type can be one of the following:
+                        <div>
+                           <ul>
+                              <li>
+                                 For &#8211; specifies a duration for the process to wait.
+                              </li>
+                              <li>
+                                 Until &#8211; specifies a deadline for the process.
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                     <li>
+                        For/Until &#8211; used to configure the deadline or the duration for the chosen alarm type. Click the ellipsis button (...) to specify the time. You can also use the <a href="bpel-guide-mapper.html">BPEL Mapper</a>.
+                     </li>
+                  </ul>
+               </div>
+            </li>
+            <li>
+              Find the activity you want executed after the time expires, and drag it from the Palette to the placeholder inside the On Alarm element.
+            </li>
+            <li>
+               (Optional) Add one or more On Alarm branches as described above.
+            </li>
+         </ol>
+         <h3 class="tutorial">
+             Pick Element Properties
+         </h3>
+         <p>
+            The Properties window for the Pick element, invoked by right-clicking the element and choosing Properties, includes the following fields:
+         </p>
+         <ul>
+            <li>
+               Create Instance. If set to <tt>yes</tt>, a new process instance will be created when the specified event occurs. If you do not plan to start a new process instance, keep the default <tt>N/A</tt> value.
+            </li>
+            <li>
+               Name. This is used to specify the name for the element.
+            </li>
+         </ul>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/pickproperties.png" alt="Pick Properties Window">
+         </p>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingscopeelement"></a>Using the Scope Element
+      </h2>
+      <br>
+   <div class="indent">
+     <p>
+             The Scope activity is essentially a collection of child activities that can have their own Variables, Fault and Event Handlers, and correlation sets. The Scope activity provides the behavior context for the child elements. The attributes defined for a parent Scope have local visibility inside this Scope. For example, the variables declared for a Scope are visible only inside that Scope and all nested Scopes. These variables can then be used for the child activities of this Scope. </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+   <ol>
+            <li>
+               In the Design view, drag the Scope element from the Palette to the diagram.            </li>
+            <li>
+               Right-click the element and choose Add from the pop-up menu to add the following:
+               <div>
+                  <ul>
+                     <li>
+                        <a href="bpel-guide-palette.html#variable">Variables</a>                     </li>
+                     <li>
+                        <a href="bpel-guide-handlers.html#usingeventhandler">Event Handlers</a>                     </li>
+                     <li>
+                        <a href="bpel-guide-handlers.html#usingfaulthandler">Fault Handlers</a>                     </li>
+                  </ul>
+               </div>
+            </li>
+            <li> In the Design view, drag elements from the Palette and place them inside the Scope element.            </li>
+            <li>
+               Configure the elements.            </li>
+            <li>
+               (Optional) Specify the name of the Scope element in the Properties window, invoked by right-clicking the element and choosing Properties.            </li>
+     </ol>
+         <h3 class="tutorial"><a name="variable"></a>
+             Variables
+         </h3>
+      <p>
+               Variables in BPEL programming function just as they do in other programming languages: they hold temporary values, form parts of expressions, or are passed 
+as parameters to external partners. Normally, you need a variable for every message sent to or received from a partner service. The BPEL Designer supports the following types of variables:            </p>
+            <ul>
+               <li><b>WSDL Message type</b>.     These variables correspond to web service message types that are defined  in WSDL files imported by the process. In a BPEL file (<tt>.bpel</tt>), these variables  must specify a value for the <tt>messageType</tt> attribute. Message  type variables are used to hold data in interactions between the  process and its partner services. </li>
+               <li> <b>XML Schema type</b>. These variables correspond to <i>simple</i> or <i>complex</i> XML Schema data types.   The XML schema types themselves are defined in  XML Schema files (<tt>.xsd</tt>) or in WSDL files that are imported into the process. In a BPEL file, variables of this type must specify a value for the <tt>type</tt> attribute. </li>
+               <li><b>XML Schema element</b>.     These variables correspond to XML Schema elements.The XML schema  elements themselves are defined in  XML Schema files (<tt>.xsd</tt>) or in WSDL files that are imported into the process. In a BPEL file, variables of this type must specify a value for the <tt>element</tt> attribute.</li>
+               <li><b>Built-in type</b>. Variables of this type are standard simple types defined in the XML Schema specification. </li>
+     </ul>
+            <p>
+               <b>Global and Local Variables</b>
+            </p>
+            <p>
+               The variables defined at the Process root are global variables, which  have a global visibility throughout the entire process. The variables  defined within a particular Scope are visible only  inside that Scope and all nested Scopes. These variables are called  local variables. A variable defined for an inner Scope element can hide  an upper defined variable of the same name.
+            </p>
+            <p>
+               The name of a variable must be unique among the names of all variables defined within the same Scope.
+            </p>
+            <p><strong>To define a  variable:</strong></p>
+         <ol>
+                  <li>Right-click the Process or Scope element and select Add &gt; Variable.</li>
+                  <li>In the Create New Variable dialog box, name the variable. The name should be unique within this Scope element.</li>
+                  <li>Expand the node corresponding to the type of the new variable and select its type. You have the following options:
+                     <ul>
+                        <li><b>Built-in Types</b>. Expand the Built-in Types node, select the type's name, and click OK. </li>
+                        <li><b>Message Type</b>. Expand a <tt>.wsdl</tt> file node, select a message type and click OK. </li>
+                        <li><b>XML Schema</b>. Expand an <tt>.xsd</tt> file node or a <tt>.wsdl</tt> file that contains an embedded schema. Expand the Global Complex Type, Global Simple Type, or Global Elements Simple nodes, select the appropriate type, and click OK. <br>
+                        For your convenience,  global types of variables are displayed in bold. </li>
+                    </ul>
+                  </li>
+                  <li>(Optional) Clear the Show Imported Files Only checkbox to view the contents of non-imported WSDL and XML schema files.                  </li>
+                  <li>Click OK.</li>
+     </ol>
+                  <p>By default, the Create New Variable dialog box only shows those files that have   already been referenced in the process. However, the project may contain   other WSDL and XSD files which have not yet been imported into the   process. If you select a type for the new variable that is defined in a   non-imported file, the IDE will automatically add the required import to   the BPEL process.                   </p>
+                  <p>
+                     You can also add variables from the <a href="bpel-guide-views.html#navigator">Navigator</a> window. To add a variable, select BPEL Logical View in the Navigator, expand your BPEL Module project's node, right-click the Variables node and choose Add Variable.
+                  </p>
+            <p><strong>To edit a variable:</strong></p>
+         <ol>
+            <li>In the Navigator window, select BPEL Logical View.</li>
+            <li>Expand  BPEL Module project's node &gt; Variables and double-click the variable you want to edit. </li>
+            <li>In the Property Editor dialog box for the variable, change the variable type and name. </li>
+            <li>Click OK.  </li>
+     </ol>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+      <a name="usingwhileelement"></a>Using the While Element</h2>
+      <div class="indent">Use the While element to repeatedly execute one or more activities as long as specific conditions are in place at the beginning of each iteration. This element contains other elements that are repeated while success criteria you specify are met. If the condition you specify leads to false, none of the activities listed will be executed.
+         <p>
+            <strong>Note:</strong> the While element first checks the validity of the condition and then executes the iterative activity. Conversely, the <a href="bpel-guide-palette.html#repeatuntil">Repeat Until</a> element first executes the activity and then checks the validity of the condition.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>In the Design view, drag the While element from the Palette to the diagram.            </li>
+            <li>Drag an activity that will be repeatedly executed and place it inside the While element. If needed, configure the activity's properties.            </li>
+            <li>
+                Use the Properties window to specify the name and condition of the While element. You can enter the condition manually or use the <a href="bpel-guide-mapper.html">BPEL Mapper</a> to generate the condition for you. To open the BPEL Mapper window, choose Window &gt; BPEL Mapper or right-click the While element on the diagram and choose Show BPEL Mapper.            </li>
+         </ol>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingprocesselement"></a>Using the Process Element
+      </h2>
+      <div class="indent">
+        <p>The Process element is already present in your diagram. The New Project wizards always create a skeletal BPEL file that contains at least a process element. Therefore, the Process element is not part of the Palette. The Process element is assumed to be present, as it is the minimum requirement for a BPEL file.
+        </p>
+         <p>
+             The following screenshot shows the representation of a process in the <a href="understand-trs.html">Travel Reservation Service</a> sample.
+         </p>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/process.png" alt="Process">
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>
+               Right-click the Process element and choose Add from the pop-up menu to add the following:
+<div>
+                  <ul>
+                     <li>
+                        <a href="bpel-guide-palette.html#variable">Variable</a>                     </li>
+                     <li>
+                        <a href="bpel-guide-palette.html#defcorset">Correlation Set</a>                     </li>
+                     <li>
+                        <a href="bpel-guide-handlers.html#usingeventhandler">Event Handlers</a>                     </li>
+                     <li>
+                        <a href="bpel-guide-handlers.html#usingfaulthandler">Fault Handlers</a>                     </li>
+                     <li><a href="bpel-guide-views.html#addimport">WSDL Import </a></li>
+                     <li><a href="bpel-guide-views.html#addimport">Schema Import</a></li>
+                  </ul>
+              </div>
+           </li>
+            <li>
+               Specify the name and the target namespace of the Process element in the Properties window, invoked by right-clicking the element and choosing Properties.
+            </li>
+         </ol>
+         <h3 class="tutorial">
+             Processes
+         </h3>
+         <p>
+             A BPEL process can be synchronous or asynchronous. A synchronous BPEL process blocks the client (the one which is using the process) until the process finishes and returns a result to the client. An asynchronous process does not block the client. Rather it uses a callback to return the result (if any). Usually we use asynchronous processes for longer-lasting processes and synchronous for processes that return a result in a relatively short time. If a BPEL process uses asynchronous web services, the process itself is usually also asynchronous.
+         </p>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="repeatuntil"></a>Using the Repeat Until Element
+      </h2>
+      <br>
+      <div class="indent">
+        <p>
+             Use the Repeat Until element to repeatedly execute one or more activities as long as specific conditions are in place after the execution of each iteration. This element contains other elements that are repeated until the success criteria you specify are met. If the condition you specify leads to true, the activities listed will be executed once.
+        </p>
+         <p>
+            <strong>Note:</strong> the Repeat Until element first executes the iterative activity and then checks the validity of the condition. Conversely, the <a href="bpel-guide-palette.html#usingwhileelement">While</a> element first checks the validity of the condition and then executes the activity.
+         </p>
+
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>In the Design view, drag the Repeat Until element from the Palette to the diagram. </li>
+            <li>Drag activities that will be repeatedly executed and place them inside the Repeat Until element. If needed, configure the activity's properties.</li>
+            <li>
+            Use the Properties window to specify the name and condition of the Repeat Until element. You can enter the condition manually or use the <a href="bpel-guide-mapper.html">BPEL Mapper</a> to generate the condition for you. To open the BPEL Mapper window, choose Window &gt; Other &gt; BPEL Mapper or right-click the Repeat Until element on the diagram and choose Show BPEL Mapper. </li>
+         </ol>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+      <a name="foreach"></a>Using the For Each Element</h2>
+      <div class="indent"> Use the For Each element to repeatedly execute its contained scope activity exactly N+1 times where N equals the Final Counter Value minus the Start Counter Value.
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>
+                In the Design view, drag the For Each element from the Palette to the diagram.            </li>
+            <li>
+                Add elements that will be repeatedly executed from the Palette into the For Each element. The elements that you add are automatically wrapped into the Scope element.            </li>
+            <li>
+                Right-click the For Each element and choose Properties to open its Properties window.            </li>
+         </ol>
+         <p>
+             The Properties window for the For Each element includes the properties listed below.
+         </p>
+         <ul>
+            <li>
+                <b>Name</b>. Specifies the name of the For Each element.            </li>
+            <li>
+                <b>Counter Variable Name</b>. Declares the counter variable name.            </li>
+            <li>
+                <b>Start Counter Value</b>. Sets the start counter value. Use the <a href="bpel-guide-mapper.html">BPEL Mapper</a> to generate an integer value expression.            </li>
+            <li>
+                <b>Final Counter Value</b>. Sets the final counter value. Use the <a href="bpel-guide-mapper.html">BPEL Mapper</a> to generate an integer value expression.
+               <br>
+                When the For Each activity is started, the expressions in Start Counter Value and Final Counter Value are evaluated for the first and only time. That is, once the two values are returned they remain constant for the lifespan of the activity. If the Start Counter Value is greater than the Final Counter Value, then no iteration will be performed.
+           </li>
+            <li>
+                <b>Completion Condition</b> (Optional). Specifies an integer value expression. After execution of each directly enclosed activity, the number of completed activities is checked against this value. When the number of completed activities equals the value of the specified expression, no further activities are started. When the expression value is greater than the available number of iterations, then no iteration will be started.            </li>
+            <li>
+                <b>Count Completed Branches Only</b> (Optional). If this checkbox is selected, it tells the runtime to only count the branches that have completed successfully. If this checkbox is cleared, all branches, completed successfully or unsuccessfully, will be counted. </li>
+         </ul>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-palette.html#top">top</a>
+      </p>
+      <br>
+      <!-- ================================================ -->
+      <h2>
+        <a name="exit"></a>Using the Exit Element
+      </h2>
+
+      <br>
+        <div class="indent">
+          <p>
+                Use this activity to halt the execution of an activity or a process: either within the process, within a structured activity, or within a handler.
+            </p>
+            <h3 class="tutorial">
+                Usage
+            </h3>
+            <p>
+                In the Design view, drag the Exit element from the Palette to the diagram.
+            </p>
+            <p>
+                <strong>Note:</strong> The BPEL runtime does not support Exit within the Flow and On Alarm elements, or within the On Event child of the Event Handler element.
+            </p>
+        </div>
+                <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+      <p align="center"><a href="bpel-guide-palette.html#top">top</a></p>
+   </body>
+</html>

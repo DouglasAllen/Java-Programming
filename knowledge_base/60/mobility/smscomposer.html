@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+<html>
+<head>
+<title>NetBeans 6.0 Visual Mobile Designer Custom Components: SMS Composer</title>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="author" content="Karol Harelzak">
+</head>
+<BODY>
+<H1>Visual Mobile Designer Custom Components: SMS Composer</H1>
+<P>Contributed by Karol Harezlak</P>
+<p><img src="../../../images/articles/60/netbeans-stamp.gif" align="right"
+   alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+   IDE 6.0" border="0" height="45" width="206">The Visual Mobile Designer (VMD) is a graphical interface within
+the NetBeans Mobility pack that enables you to design mobile applications using drag and drop components. The 
+VMD allows you to define the application flow and design your GUI using the components supplied by the Mobility 
+pack, or components you design yourself. The VMD contains many standard User Interface (UI) components that you can use to
+create applications such as Lists, Alerts, Forms and Images. It also includes custom components that simplify the creation of more
+complex features, such as Wait Screens, Splash Screens, Table Items and more.</p>
+<P>The SMS Composer is a custom component that provides a mechanism and user interface to send short message using Short Message Service (SMS).
+This component utilizes the <a href="http://jcp.org/en/jsr/detail?id=120" target="_blank">JSR-120</a>  Wireless Messaging API. This API is
+not a part of the MIDP 2.0 specification so this custom component can only be deployed to  devices that have built-in support for JSR-120.</P>
+<H2 CLASS="western">Application Overview</H2>
+<P>This example shows you how to use the SMS Composer component in a
+mobile application for Wireless Messaging API (WMA) enabled devices.
+You'll learn the basic features of this component, and how to
+send message using Short Message Service. 
+</P>
+<P>Besides the SMS Composer custom component we'll use two other MIDP
+components: Splash Screen and Alert. 
+</P>
+<H3 CLASS="western">Requirements</H3>
+<P>Before you begin, you need to install the following software on
+your computer:</P>
+<UL>
+	<LI>NetBeans IDE 6.0 with Mobility Pack 
+  </LI>
+	<LI>Java Standard Development Kit (JDK) version 6.0 
+</UL>
+<P>If you are new to the NetBeans Mobility Pack, you should start
+with the <A HREF="quickstart.html">  NetBeans
+6.0 Mobility CLDC/MIDP Quick Start Guide</A> before continuing.</P>
+<H2 CLASS="western">Installing and Running the Sample Application</H2>
+<P>Before we begin, you might want to see final result of the
+tutorial. 
+</P>
+<P>Take the following steps to install the SMSComposerExample
+application:</P>
+<OL>
+	<LI>Download <A HREF="../../../files/documents/4/1533/SMSComposerExample.zip">SMSComposerExample.zip</A>.
+	</LI>
+	<LI>Unzip the file. 
+	</LI>
+	<LI>In the IDE, choose File &gt; Open
+	Project and browse to the folder that contains the unzipped file. 
+	</LI>
+	<LI>Open the Project and Inspector
+	windows. It should look like the following: <BR>
+	
+	<img src="../../../images/mobility/customcomponents/sms-navigator_project.png" width="275" height="473" border="0" alt="Navigator and Project window with SMS Composer example opened">
+
+  </LI>
+	<LI>In the Projects window,
+	right-click the project node and choose Run Project (or press F6
+	key). As the application runs, an emulator window opens and displays
+	the application running in the default device emulator. 
+	</LI>
+	<LI><P>In the Emulator window, click the button underneath
+	&quot;Launch.&quot;<BR>The emulator displays a Splash Screen
+	component then SMS Composer, as shown: <BR><BR>
+	
+	<img src="../../../images/mobility/customcomponents/sms-emulator.png" width="246" height="329" border="0" alt="WTK 2.5 emulator displaying the sampel SMS Composer application">
+		
+		
+  </LI>
+</OL>
+<UL>
+	<LI>Move the cursor up and down to navigate through available options like Phone Number or Message. 
+	</LI>
+	<LI>Click the button change phone number, message text or press &quot;Send&quot; to send message. 
+	</LI>
+	<LI>Click the button underneath &quot;Exit&quot; to close the application. 
+	</LI>
+</UL>
+<H2 CLASS="western">Creating an application with the SMS Composer
+Custom Component 
+</H2>
+<P>Now that you have seen the SMS Composer component in action, let's
+go back to the beginning and create this application. To create the
+application, do the following: 
+</P>
+<OL>
+	<LI><A HREF="smscomposer.html#create">Create the
+	SMSComposerExample project</A> 
+	</LI>
+	<LI><A HREF="smscomposer.html#add">Add packages and a
+	visual MIDlet to the SMSComposerExample project</A> 
+	</LI>
+	<LI><A HREF="smscomposer.html#addcomponent">Add
+	components to the SMSComposerExample</A> 
+	</LI>
+	<LI><A HREF="smscomposer.html#addcommands">Add
+	Commands to the SMS Composer</A> 
+	</LI>
+	<LI><A HREF="smscomposer.html#connect">Connect the
+	Components to create an application flow</A> 
+	</LI>
+	<LI><A HREF="smscomposer.html#insert">Modify Task for Wait Screen</A> 
+	</LI>
+
+	<LI><P><A HREF="smscomposer.html#run">Run the Project</A> 
+	</LI>
+</OL>
+<H3 CLASS="western"><A NAME="create"></A>Creating the
+SMSComposerExample Project</H3>
+<OL>
+	<LI>Choose File &gt; New Project
+	(Ctrl-Shift-N). Under Categories, select Mobile. Under Projects,
+	select MIDP Application and click Next. 
+	</LI>
+	<LI>Enter <CODE>SMSComposerExample</CODE>
+	in the Project Name field. Change the Project Location to a
+	directory on your system. From now on let's refer to this
+	directory as <code>$PROJECTHOME</code>. 
+	</LI>
+	<LI>Uncheck the Create Hello MIDlet
+	checkbox. Click Next. 
+	</LI>
+	<LI>Leave the Java ME Wireless Toolkit
+	as the selected Target Platform. Click Next. 
+	</LI>
+	<LI><P>Click Finish. <BR>The project folder contains all of your
+	sources and project metadata, such as the project Ant script. The
+	application itself is displayed in the Flow Design window of the
+	Visual Mobile Designer. 
+	</LI>
+</OL>
+<H3 CLASS="western"><A NAME="add"></A>Adding Packages and a Visual
+MIDlet to the SMSComposerExample Project</H3>
+<OL>
+	<LI>Choose the <CODE>SMSComposerExample</CODE>
+	project in the Project Window, then choose File &gt; New File
+	(Ctrl-N) . Under Categories, select Java Classes. Under File Types,
+	select Java Package. Click Next. 
+	</LI>
+	<LI>Enter <CODE>smscomposerexample</CODE>
+	in the Package Name field. Click Finish. 
+	</LI>
+	<LI>Choose the <CODE>smscomposerexample</CODE>
+	package in the Project window, then choose File &gt; New File
+	(Ctrl-N) . Under Categories, select MIDP. Under File Types, select
+	Visual MIDlet. Click Next. 
+	</LI>
+	<LI><P>Enter <CODE>SMSComposerExample</CODE> into MIDlet Name and MIDP
+	Class Name fields. Click Finish. 
+	</LI>
+</OL>
+<H3><A NAME="addcomponent"></A>Adding Components to
+the SMSComposerExample</H3>
+<OL>
+	<LI>Switch your Visual MIDlet to the
+	Flow Designer window. Drag the following components from the
+	Component Palette and drop them in the Flow Designer: 
+	</LI>
+	<UL>
+		<LI>Splash Screen</LI>
+		<LI>SMS Composer</LI>
+		<LI>Wait Screen</LI>
+      <LI>Alert (two times)</LI>
+	</UL> 
+	<LI>Click on splash Screen and, in the Properties Window, change
+	value of property Text from &quot;null&quot; to the &quot;SMS Composer Example&quot; 
+	</LI>
+	<LI>
+	Click on alert1 and, in the Properties Window, change
+	value of property Instance Name from &quot;alert1&quot; to the &quot;alertSent&quot;, the
+	same way change alert2 Instance Name property from &quot;alert2&quot; to the &quot;alertError&quot;.
+	</LI>
+	<LI>
+	Click on alertSent and, in the Properties Window, change
+	value of property String to the &quot;Message Sent&quot;, the same way change property String in 
+	the component alertError to the "Error" 
+	</LI>
+	<LI>Click on smsComposer and, in the Properties Window, uncheck
+	property Automatically Send (SMS Properties category).
+	</LI>
+	
+</OL>
+<H3><A NAME="addcommands"></A>Adding Commands to the
+SMSComposerExample</H3>
+<OL>
+	<LI>Open the Flow Designer Window.</LI>
+	<LI>Choose Exit Command from the Commands section of the Component Palette. 
+	Drag and drop it into Flow Designer Window (smsComposer component). 
+	</LI>
+</OL>
+<H3><A NAME="connect"></A>Connecting Components</H3>
+<OL>
+	<LI>In the Flow design window, click on the Start Point on the Mobile Device and drag it to the spalshScreen component. 
+	In the same	manner, connect the components together as shown in the following graphic.</LI>
+	<center>
+<p> <img src="../../../images/mobility/customcomponents/sms-flow.png" width="578" height="601" border="0" alt="Shows the Flow Designer with components connected by command lines"></p>
+	</center>
+</OL>
+<H3><A NAME="insert"></A>Modify Task for Wait Screen</H3>
+<OL> 
+	<LI>In the Navigator Window find task component (Resources category), right-click on task component in the Navigator Window
+	and chose Go To Source option. In the Source Window find section <code>// write task-execution user code here"</code> and replace it 
+	with <code>smsComposer.sendSMS();</code>
+	</LI>
+</OL>
+<H3><A NAME="run"></A>Running the Project</H3>
+<OL>
+	<LI>Press &lt;F6&gt; to Run the main project. Alternatively you
+	could select Run &gt; Run Main Project.</LI>
+</OL>
+<H2 CLASS="western">To Learn More about the SMS Composer Component</H2>
+<P>The NetBeans IDE provides API Javadocs for the File Browser
+component, as well as other components you can use in the VMD. To
+read the Javadocs for the File Browser component: 
+</P>
+<OL>
+	<LI>Choose Help Javadoc References
+	org.netbeans.microediton.lcdui.wma 
+	</LI>
+	<LI>Click<CODE> org.netbeans.microedition.lcdui.wma </CODE>to  see the links for the component information. 
+	</LI>
+</OL>
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send 
+  Us Your Feedback</a></div>
+<br><br>
+ <H2>Related Tutorials</H2>
+ <UL>
+ <li><a href="loginscreen.html">Visual Mobile Designer Custom Components: Login Screen</a></li>
+ <li><a href="filebrowser.html">Visual Mobile Designer Custom Components: File Browser</a></li>
+ <li><a href="pimbrowser.html">Visual Mobile Designer Custom Components: PIM Browser</a></li>
+</UL>
+</BODY>
+</HTML>

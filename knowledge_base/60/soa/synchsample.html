@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Developing a Simple Synchronous BPEL Process</title>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="keywords" content="NetBeans, IDE, Platform, free, open source, developer">
+<meta name="description" content="Developing a Simple Synchronous BPEL Process">
+<meta name="author" content="Sherry Barkodar">
+</head>
+<body>
+<a name="top"></a>
+<h1>Developing a Simple Synchronous BPEL Process</h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Sherry.Barkodar@Sun.COM">Sherry Barkodar</a>,
+  maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br> 
+December 2007<br>
+<br>
+</p>
+</div>
+<p>This tutorial provides an overview of the sample project, <tt>SynchronousSample</tt>, and illustrates deploying, executing, and testing a synchronous BPEL process using NetBeans IDE 6.0 with all the necessary runtimes. </p>
+<p>The synchronous BPEL process represents a simple synchronous flow. The process takes an input message and sends that message back synchronously. A client starts the synchronous process by invoking a request-response operation. After invoking a synchronous process, the client is blocked until the process finishes and returns the result.</p>
+<p>In this tutorial you will use a simple BPEL project called <tt>SynchronousSample</tt> and a Composite Application project called <tt>SynchronousSampleApplication</tt>. The project includes WSDL and XML schema files, a deployment descriptor, and input files for testing. The web service interface for this process is a single synchronous operation. </p>
+ <p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+
+ <!-- ======================================================================================== -->
+<h3>Contents</h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="synchsample.html#tut_req" title="Tutorial Requirements">Tutorial Requirements</a></li>
+             <li><a href="synchsample.html#ConfiguringtheTutorialEnvironment">Configuring and Starting the GlassFish Application Server</a><a href="synchsample.html#overview" title="Overview"></a></li>
+		<li><a href="synchsample.html#Openingthesampleproject">Opening the SynchronousSample Project</a><a href="synchsample.html#createSampleApp" title="Create the Sample Application Project"></a></li>
+		<li><a href="synchsample.html#exploringbpelprj">Exploring the BPEL Project in the Projects Window</a><a href="synchsample.html#openCASA" title="Open the CASA Editor and Build the Application"></a></li>
+		<li><a href="synchsample.html#exploringthewsdl">Exploring the WSDL Editor in the Source Editor</a><a href="synchsample.html#editConfig" title="Modify the WSDL Bindngs of the Composite Application"></a></li>
+		<li><a href="synchsample.html#addingif">Adding If Activity to the Design View</a></li>
+         <li><a href="synchsample.html#addingassign">Adding Assign Activity to the Design View</a></li>
+           <li><a href="synchsample.html#deploying">Deploying the Project to the Application Server</a></li>
+           <li><a href="synchsample.html#creatingtestdriver">Creating a Test Drive</a></li>
+           <li><a href="synchsample.html#testing">Testing the SynchronousSampleApplication</a></li>
+           </ul>
+         </td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top"> 
+	  <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right">
+   </td>
+       </tr>
+</table>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<h2><a name="tut_req"></a>Tutorial Requirements </h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+<div class="indent">
+<h3>Prerequisites</h3>
+<p>This tutorial assumes that you have some basic knowledge of, or programming experience with, the Java language and platform and the NetBeans IDE.</p> 
+<!-- ======================================================================================== -->
+<h3>System Requirements</h3>
+<p>This tutorial assumes that your system meets the requirements specified in the <i>System Requirements</i> topic of the <a href="../../../community/releases/60/relnotes.html" title="NetBeans IDE 6.0 Release Notes">NetBeans IDE 6.0 Release Notes</a>.</p> 
+<!-- ======================================================================================== -->
+<h3>Software Needed for the Tutorial</h3>
+<p>Before you begin, you need to install the following software on your computer: NetBeans IDE 6.0 with SOA and the GlassFish application server.</p> 
+</div>
+<p align="center"> <a href="synchsample.html#top">top</a> </p>
+<h2><a name="ConfiguringtheTutorialEnvironment"></a>Configuring and Starting the GlassFish Application Server</h2>
+<p>When you install full NetBeans 6.0 download, it includes the GlassFish application server.  The NetBeans IDE will automatically start the application server when needed. </p>
+<p><strong>To start the GlassFish application server: </strong></p>
+  <ol>
+    <li>If the Services window is not visible, choose Window &gt; Services. </li>
+    <li>In the Services window, expand the Servers node. <br>
+      The Servers node should contain the GlassFish application server subnode. If the GlassFish application server node does not appear, go to <a href="synchsample.html#configure-sjas">To configure the GlassFish Application Server</a>. </li>
+  </ol>
+  <blockquote>
+    <p><img src="../../../images/articles/ep-asynchsample/60/glassfish.png"></p>
+    <p>&nbsp;</p>
+</blockquote>
+  <ol>
+    <li value="3"> Right-click the GlassFish application server node and select Start. <br>
+       The Output window displays logging information about the application startup. If the Output window is not visible, choose Window &gt; Output &gt; Output. <br>
+      <br>
+      When the message <tt>Application server startup complete</tt> appears in the Output window, the application server is running.<br>      
+      <b>Note:</b> If a green arrow badge appears on the GlassFish application server node, the server is running. <br>
+    </li>
+  </ol>
+  <p><span class="bold"><b>Note</b></span><b>:</b> Deploying an application to the GlassFish application server will automatically start the server. Thus, you do not have to manually start the application server. </p>
+  <p><b>Note:</b> The following procedure shows how to configure the IDE to use an alternate version of the GlassFish V2 application server.</p>
+  <p><a name="configure-sjas"></a><span class="bold"><b>To configure the GlassFish V2 application server: </b></span></p>
+  <p>You might want to use a different version of the application server than the one provided with NetBeans 6.0. For example, you might want to download and install a more current version of the GlassFish V2 application server from the <a href="https://glassfish.dev.java.net/" target="_blank">GlassFish Community </a> site. </p>
+  <p> The following procedure shows how to configure the NetBeans 6.0 IDE to use an alternate version of the GlassFish V2 application server. It assumes that you have downloaded and installed the alternate version of the application server. </p>
+  <ol>
+
+      <li>In the Services window, right-click the Servers node and choose Add Server from the pop-up menu. <br>
+        The Add Server Instance dialog box opens. </li>
+      <li>In the Choose Server page, select GlassFish V2 from the  list. </li>
+      <li>Click Next. <br>
+          The Platform Folder Location page opens. </li>
+      <li>In the Platform Location field, use the Browse button to navigate to and select the installation location of the application server. <br>
+          <br>
+        If you installed the GlassFish application server in the default location,  use <a href="synchsample.html#table-1">Table 1 </a> as a guide for locating the installation. Otherwise, navigate to the location where you installed the GlassFish V2 application server. <br>
+        <br>
+        <p><a name="table-1"></a><strong>Table 1: Default Application Server Installation Directory </strong></p>
+        <table>
+          <tbody>
+            <tr>
+              <td class="tblheader">Platform </td>
+              <td class="tblheader">Installing As... </td>
+              <td class="tblheader">SOA Installation </td>
+              <td class="tblheader">Tools Bundle Installation </td>
+            </tr>
+            <tr>
+              <td class="tbltd0">Solaris OS <br>
+                Linux </td>
+              <td class="tbltd0">root </td>
+              <td class="tbltd0"><tt>/opt/glassfish-v2</tt> </td>
+              <td class="tbltd0"><tt>/opt/SUNWappserver</tt> </td>
+            </tr>
+            <tr>
+              <td class="tbltd1">Solaris OS <br>
+                Linux </td>
+              <td class="tbltd1">user </td>
+              <td class="tbltd1"><tt>~/glassfish-v2</tt> </td>
+              <td class="tbltd1"><tt>~/SUNWappserver</tt> </td>
+            </tr>
+            <tr>
+                  
+              <td class="tbltd0">Mac OS X </td>
+              <td class="tbltd0">N/A </td>
+              <td class="tbltd0"><tt>/Applications/NetBeans/glassfish-v2b58g</tt></td>
+              <td class="tbltd0"><tt>/Applications/NetBeans/NetBeans 6.0</tt> </td>
+            </tr>
+            <tr>
+              <td class="tbltd1">Windows </td>
+              <td class="tbltd1">N/A </td>
+              <td class="tbltd1"><tt>C:\Sun\AppServer</tt> </td>
+              <td class="tbltd1"><tt>C:\Sun\AppServer</tt> </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>Select the Register Local Default Domain radio button and click Next. </li>
+      <li>Enter the user name and password for the domain's administrator. <br>
+        If you accepted the default values during the installation, the user name is <tt>admin</tt> and the password is <tt>adminadmin</tt>. </li>
+      <li>Click Finish. </li>
+</ol>
+
+  <p align="center"> <a href="synchsample.html#top">top</a> </p>
+<!-- ======================================================================================== -->
+<h2><a name="Openingthesampleproject"></a>Opening the SynchronousSample Project</h2>
+<ol>
+<li >From the IDE's main menu, choose File &gt;New Project. <br>
+The New Project wizard opens. </li>
+<li>In the Categories list, select <tt>Samples &gt; SOA</tt>. </li>
+<li>In the Projects list, select <tt>Synchronous BPEL Process</tt>.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/newproject.png" alt="Sample BPEL Module project selected"> </p>
+</li>
+<li>Click Next. </li>
+<li>In the Project Name field, type <tt>SynchronousSample</tt>.<br><br>
+<p align="center"><img src="../../../images/articles/ep-synchsample/60/prjnameandlocation.png" alt="Typing project name"> </p>
+</li>
+<li>(Optional) In the Project Location field, use the Browse button to navigate to and select a different folder where the IDE will store the project files.</li>
+<li>Click Finish. <br>
+The Projects window now contains two project nodes: one for a BPEL project called <tt>SynchronousSample</tt>, and one for a Composite application project called <tt>SynchronousSampleApplication</tt>.</li>
+</ol>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="exploringbpelprj"></a>Exploring the BPEL Project in the Projects Window</h2>
+<ol>
+<li>In the Projects window, expand the <tt>SynchronousSample</tt> node, then expand the <tt>Process Files</tt> node. <br>
+The <tt>Process Files</tt> node contains these items:<br><br>
+<ul>
+<li><tt>SynchronousSample.bpel</tt>, the BPEL process </li>
+<li><tt>SynchronousSample.wsdl</tt>, the process web service interface. </li>
+<li><tt>SynchronousSample.xsd</tt>, the schema file.</li>
+</ul>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/projectview.png" alt="SynchronousSample Project view"> </p>
+</li>
+<li>Double-click the <tt>SynchronousSample.bpel</tt> node.<br>
+Notice the following:<br><br>
+<ul>
+<li>The BPEL Designer contains a tab for <tt>SynchronousSample.bpel</tt>. </li>
+<li>The <tt>SynchronousSample</tt> diagram is shown in the Design view. <br>
+The Design view is the business processes visual designer. In this view, you can visually model a business process. The BPEL Designer automatically generates BPEL code that corresponds to the visual design. </li>
+<li>The Design view Palette of BPEL elements opens on the right.</li>
+<li>The Navigator window shows the BPEL Logical View of the BPEL process. </li>
+</ul><br><br>
+<p align="center"><a href="../../../images/articles/ep-synchsample/60/designview.png"><img src="../../../images/articles/ep-synchsample/60/designview-tn.png" alt="SynchronousSample BPEL Design view" border="0"><br>
+Click to enlarge</a> </p>
+</li>
+</ol>
+<p align="center"><a href="synchsample.html#top">top </a></p>
+<!-- ======================================================================================== -->
+<h2><a name="exploringthewsdl"></a>Exploring the WSDL Editor in the Source Editor </h2>
+<p>In the WSDL Editor, you can create and edit Web Services Description Language (WSDL) files. The WSDL Editor includes the Design view, Source view, and the Partner view.</p>
+<p><b>To see the WSDL view:</b></p>
+<ol>
+<li>In the Projects window, double-click the <tt>SynchronousSample.wsdl</tt> file. <br>
+This WSDL file opens in the WSDL view.</li>
+<li>In the WSDL view, the WSDL file appears as a tree component where you can configure the file's elements and attributes.<br>
+  <br>
+<p align="center"> <a href="../../../images/articles/ep-synchsample/60/wsdlview.png"><img src="../../../images/articles/ep-synchsample/60/wsdlview-tn.png" alt="SynchronousSample WSDL" border="0"><br>
+Click to enlarge</a> </p>
+</li>
+</ol>
+<p><b>To see the Source view:</b></p>
+<ul>
+<li>Click the Source button. <br>
+The underlying XML source code appears in the Source view.<br><br>
+<p align="center"> <a href="../../../images/articles/ep-synchsample/60/wsdlsourceview.png"><img src="../../../images/articles/ep-synchsample/60/wsdlsourceview-tn.png" alt="SynchronousSample WSDL Source view" border="0"><br>
+Click to enlarge</a> </p>
+</li>
+</ul>
+<p><b>To see the Partner view:</b></p>
+<ul>
+<li>Click the Partner button. <br>
+The abstract elements of a WSDL file represented as interactions between partners appear in the Partner view.<br><br>
+<p align="center"> <a href="../../../images/articles/ep-synchsample/60/wsdlpartnerview.png"><img src="../../../images/articles/ep-synchsample/60/wsdlpartnerview-tn.png" alt="SynchronousSample WSDL Source view" border="0"><br>
+Click to enlarge</a> </p>
+</li>
+</ul>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="addingif"></a>Adding If Activity to the Design View </h2>
+<ol>
+<li>In the Projects window, expand the <tt>SynchronousSample</tt> node, the <tt>Process Files</tt> node and double-click the <tt>SynchronousSample.bpel</tt> node. <br>
+The IDE displays the <tt>SynchronousSample.bpel</tt> diagram in the Design view. </li>
+<li>In the Structured Activities section of the Palette, select the If icon and drag your selection to the design area between the  Start and Assign activities. <br>
+The IDE provides you with visual clues that show where you can drop the selection. <br>
+This action places an If activity called <code>If1</code> in the Design view.<br>
+<br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/ifadded.png" alt="If activity added"> </p>
+</li>
+<li>In the Design view, click the <tt>If1</tt> activity.<br>
+The BPEL Mapper window appears at the bottom of the IDE.<br>
+If the BPEL Mapper is not visible, choose Window &gt; BPEL Mapper. You use the BPEL Mapper to define the Boolean condition. Notice the sections at the top of the BPEL Mapper make up the menu bar.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/mapper.png" alt="BPEL Mapper"> </p>
+</li>
+<li>On the menu bar, click  Operator and select ==EQUAL method <img src="../../../images/articles/ep-synchsample/60/equal.png" alt="Equal">. <br>
+The == Equal method appears in the middle portion of the BPEL Mapper, which is called the mapping pane. </li>
+<li>On the menu bar, click the String method and select String Literal <img src="../../../images/articles/ep-synchsample/60/string.png" alt="String Literal"> from the String drop-down list.<br>
+The String Literal box appears in the mapping pane of the Mapper. </li>
+<li>Type <tt>Hello World</tt> in the string literal method and press the Enter key. </li>
+<li>Move the string literal box and the == Equal box to the middle of the mapping pane.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/stringinserted.png" alt="Equal and String Literal inserted"> </p>
+</li>
+<li>In the Source tree pane of the BPEL Mapper, under <tt>Variables</tt>, expand <tt>inputVar</tt> &gt; <tt>inputType</tt>.<br>
+<tt>paramA</tt> appears under <tt>inputType</tt>. </li>
+<li>Drag the <tt>paramA</tt> onto the any1 part of the == Equal method. </li>
+<li> Select the small square on the right side of the string literal box. When the hand cursor is visible, drag a connecting line to the any2 part of the == Equal method.</li>
+<li>From the == Equal method, drag the return boolean onto the Result.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/mapping.png" alt="Mapping"> </p>
+</li>
+</ol>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="addingassign"></a>Adding Assign Activity to the Design View </h2>
+<ol>
+<li>In the Design view, drag the existing <tt>Assign1</tt> activity to the <tt>If1</tt> activity. Place this Assign activity between the two large X icons in the <tt>If1</tt> activity area.<br>
+  <br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/assigninif.png" alt="Assign activity added"> </p>
+</li>
+<li>From the Basic Activities section of the Palette, drag the Assign activity to the Design view and place it to the right of the existing Assign element.<br>
+  <br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/assign2inif.png" alt="Second Assign activity added"> </p>
+</li>
+<li>Select the new <tt>Assign2</tt> activity. </li>
+<li>From the Mapper's menu bar, click the String method and select the concat <img src="../../../images/articles/ep-synchsample/60/concat.png" alt="Concat"> from the String drop-down list.<br>
+The concat method appears in the mapping pane of the BPEL Mapper. </li>
+<li>Right-click the first field in the concat box and choose Add Literal from the pop-up menu.</li>
+<li>Type <tt>Hello</tt> followed by space in the first string and press Enter. </li>
+<li>From the Source tree pane of the BPEL Mapper, expand <tt>inputVar</tt> &gt; <tt>inputType</tt>.</li>
+<li>Drag <tt>paramA</tt> onto the string2 part of the concat method, the second field.</li>
+<li>From the Destination tree pane of the BPEL Mapper, expand <tt>outputVar</tt> &gt; <tt>resultType</tt>. </li>
+<li>Drag the return string from the concat method onto the <tt>paramA</tt> under <tt>outputVar</tt> &gt; <tt>resultType</tt>.<br>
+This concatenates the string Hello to the input and copies the statement into the output.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/concathello.png" alt="String Hello concatenated"> </p>
+</li>
+<li>Press Ctrl-S to save your edits.</li>
+</ol>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="deploying"></a>Deploying the Project to the Application Server</h2>
+<p>Deploying the project makes the service assembly available to the application server, thus allowing its service units to be run.</p>
+<p><b>To deploy the Composite Application: </b></p>
+<ol>
+<li>If the Output window is not visible, choose Window &gt; Output.</li>
+<li>Right-click the <tt>SynchronousSampleApplication</tt> project node and choose Deploy Project. </li>
+<li>In the Warning dialog box, make sure that the GlassFish V2 server is selected and click OK.<br>
+Notice a message similar to the following message appears in the Output window:<br>
+<tt>BUILD SUCCESSFUL</tt>.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/buildnew.png" alt="Output window"> </p>
+</li>
+</ol>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="creatingtestdriver"></a>Creating a Test Drive </h2>
+<p>You can enhance the Composite Application project by adding test cases, binding to the operation, supplying input, and then using the Tester. </p>
+<ol>
+<li>In the Projects window, expand the <tt>SynchronousSampleApplication</tt> project node, right-click the <tt>Test</tt> node, and choose New Test Case from the pop-up menu. <br>
+The New Test Case wizard opens. </li>
+<li>For Name, enter: <tt>MyTestCase</tt> and click Next.</li>
+<li>Expand <tt>SynchronousSample - Process Files</tt>, select <tt>SynchronousSample.wsdl</tt> and click Next</li>
+<li>Select <tt>operation1</tt> and click Finish.<br>
+Notice in the project tree, under <tt>Test</tt>, new folder <tt>MyTestCase</tt> is created, containing two files: <tt>Input</tt> and <tt>Output</tt>.<br>
+<br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/mytestcase.png" alt="MyTestcase"> </p>
+</li>
+<li>Double-click the <tt>Input </tt>and modify its content as follows:<br><br>
+<ol type="a">
+<li> Locate the following line in the Body contents: <br>
+<tt>&lt;syn:paramA&gt;?string?&lt;syn:paramA&gt; </tt>. </li>
+<li>Replace <tt> ?string?</tt> with <tt>Sherry</tt>.<br>
+The line should look like this: <br>
+<tt>&lt;syn:paramA&gt;Sherry&lt;syn:paramA&gt; </tt>.</li>
+<li>To save your changes, from the IDE's main menu, choose File &gt; Save.</li>
+</ol>
+</li>
+<li>Double-click <tt>Output.xml</tt> to examine its contents.<br>
+Notice that before the test is run this file is empty. <br>
+Each time the test is run, the current output is compared to the contents of <tt>Output</tt>. The <tt>Input</tt> is copied to <tt>Output</tt> when <tt>Output</tt> is empty. </li>
+</ol>
+<p align="center"><a href="synchsample.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="testing"></a>Testing the SynchronousSampleApplication</h2>
+<ol>
+<li> In the Projects window, navigate to the <tt>SynchronousSampleApplication</tt>&nbsp;&gt;&nbsp;<tt>Test</tt>&nbsp;&gt;&nbsp;<tt>TestCase0</tt> directory. <br>
+The <tt>TestCase0 </tt>node contains two XML files: <tt>Input </tt>for input and <tt>Output</tt> for output. <br>
+Each time the test is run, the current output is compared to the content of <tt>Output</tt>.</li>
+<li>Right-click the <tt>TestCase0</tt> project node, and choose Run from the context menu.<br>
+Notice this message in the JUnit Test Results window:<br>
+<br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/testpassed.png" alt="Test passed"> </p>
+</li>
+<li>Right-click the <tt>MyTestCase</tt> node, and choose Run from the pop-up menu. <br>
+This is a special case where the<tt> Output</tt> file is empty and the output is written to <tt>Output</tt>.<br>
+The Overwrite Empty Output dialog box opens so you can confirm that you want to overwrite <tt>Output.xml</tt>. <br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/overwritenew.png" alt="Overwrite Emplty Output?"> </p>
+</li>
+<li>Click Yes.<br>
+Notice the failed message:<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/mytestfailednew.png" alt="MyTestcase failed"> </p>
+</li>
+<li>Repeat step 3.<br>
+After the first run, the <tt>Output.xml</tt> file is no longer empty; its contents are preserved and are not overwritten by the new result.<br><br>
+<p align="center"> <img src="../../../images/articles/ep-synchsample/60/mytestpassednew.png" alt="MyTestcase passed"> </p>
+</li>
+</ol>
+<!-- -------------------------------------------------------------------------->
+<h2><a name="see_also"></a>See Also</h2>
+<ul>
+<li><a href="asynchsample.html">Developing a Simple Asynchronous BPEL Process</a></li>
+
+<li><a href="helloworldca.html">Creating a Hello World Composite Application</a></li>
+</ul>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+<p align="center"><a href="synchsample.html#top">top</a></p>
+</body>
+</html>

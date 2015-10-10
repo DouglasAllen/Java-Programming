@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+<HTML>
+<HEAD>
+<TITLE>NetBeans 6.0 Visual Mobile Designer Custom Components: Login Screen</TITLE>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="author" content="Karol Harelzak">
+</HEAD>
+<BODY>
+<H1>Visual Mobile Designer Custom Components: Login Screen</H1>
+<P>Contributed by Karol Harezlak</P>
+<P>The Visual Mobile Designer (VMD) is a graphical interface within the NetBeans Mobility pack that enables you to design mobile applications using drag and drop components. The VMD allows you to define the application flow and design your GUI using the components supplied by the Mobility pack, or components you design yourself. The VMD contains many standard User Interface (UI) components that you can use to create applications such as Lists, Alerts, Forms and Images. It also includes custom components that simplify the creation of more complex features, such as Wait Screens, Splash Screens, Table Items and more. </P>
+<p>
+<img src="../../../images/articles/60/netbeans-stamp.gif" align="right"
+   alt="Content on this page applies to NetBeans IDE 6.0" 
+   title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206">
+The Login Screen custom component provides a useful user interface 
+with standard elements such as Username Field, Password Field and Login 
+Button. You can use this custom component to create the login interface 
+for accessing protected features such as GSM banking.</p>
+<H2>Application Overview</H2>
+<P>This example shows how to use the Login Screen custom component within a
+client application and how to connect it to server resources using authenticated access. In addition to the NetBeans Mobility Project we also need to use a NetBeans Web
+Project. To complete this tutorial it is necessary to know how to work
+with NetBeans Web Projects and to have local or remote access to a web application server like
+GlassFish or Tomcat.
+If you are new to NetBeans Mobility or J2EE, you
+should start with the <A HREF="quickstart.html">NetBeans 6.0 Mobility CLDC/MIDP Quick Start Guide</A> 
+and <A HREF="../web/intro.html">Introduction to Developing Web Applications</A> before continuing.</P>
+<H2>Installing and Running the Sample Application</H2>
+<P>Before we begin you might want to see final result of the
+tutorial. 
+</P>
+<H3>Requirements</H3>
+<P>The following software must be installed on your  computer to begin:</P>
+<UL>
+	<LI>NetBeans IDE 6.0 with Mobility
+	Pack and J2EE and Web support 
+  </LI>
+    <LI>Java Standard Development Kit (JDK) version 6.0  </LI>
+  <LI>Remote or local access to a Web Application server</LI>
+</UL>
+<P>Take the following steps to install the LoginScreenExample
+application:</P>
+<OL>
+	<LI>Download <A HREF="../../../files/documents/4/1531/LoginScreenExample.zip">LoginScreenExample.zip
+	</A>. This download contains project for NetBeans Mobility project. 
+	</LI>
+	<LI>Download
+	<A HREF="../../../files/documents/4/1532/LoginScreenServletExample.zip">LoginScreenServletExample.zip
+	</A>. This download contains NetBeans Web project. 
+	</LI>
+	<LI>Unzip the file. 
+	</LI>
+	<LI>In the IDE, open both project by
+	chooseing File &gt; Open Project and browse to the folder that
+	contains the unzipped files with projects. 
+	</LI>
+	<LI>The Project Window should look
+	like the following: <BR><IMG SRC="../../../images/mobility/customcomponents/login-project.png" NAME="graphics1" ALT="Project window with Login Screen and Login Screen Servlet example opened" ALIGN=BOTTOM WIDTH=302 HEIGHT=312 BORDER=0>
+  </LI>
+	<LI>The Navigator Window for Mobility
+	Project LoginScreenExample should look like the following: <BR>
+	<IMG SRC="../../../images/mobility/customcomponents/login-navigator.png" NAME="graphics2" ALT="Project window with Login Screen example opened" ALIGN=BOTTOM WIDTH=302 HEIGHT=262 BORDER=0>
+  </LI>
+	<LI>In the Projects window,
+	right-click the project LoginScreenServletExample node and choose
+	Run Project (or press F6 key). Make sure that your application
+	server works on the port 8080. Second step is to right-click the
+	project LoginScreenExample node and choose Run Project. As the
+	application runs, an emulator window opens and displays the
+	application running in the default device emulator. 
+	</LI>
+	<LI>In the Emulator window, click the button underneath
+	&quot;Launch.&quot;<BR>The emulator displays a Splash Screen
+	component then Login Screen, as shown: <BR><BR><IMG SRC="../../../images/mobility/customcomponents/login-emulator.png" NAME="graphics3" ALT="WTK 2.5 emulator displaying the sampel Login Screen application" ALIGN=BOTTOM WIDTH=246 HEIGHT=327 BORDER=0>
+  </LI>
+</OL>
+<UL>
+	<LI>Moving the cursor up and down allows you to
+	navigate between the Login and Password fields. 
+	</LI>
+	<LI>Click on the Username field and type &quot;john&quot;, then press the &quot;OK&quot; button in the emulator. 
+	</LI>
+	<LI>Click on the Password field and type &quot;peanuts&quot;, then press the &quot;OK&quot; button in the emulator. 
+	</LI>
+	<LI>Click the button underneath &quot;Login&quot; to finish. 
+	</LI>
+	<LI>If the application  connects to the server, you'll
+	see the <code>alertSuccess</code> component displayed on the screen  with a &quot;Login
+	Successful&quot; message. 
+	</LI>
+</UL>
+<H2>Creating an application with the Login Screen
+Custom Component</H2>
+<P>Now that you have seen the Login Screen component in action, let's
+go back to the beginning and create this application from scratch. In this
+tutorial we are only going to create a Java ME client using NetBeans
+Mobility pack. If you'd like to learn more about server side of this
+application look at the <code>LoginScreenServletExample</code> project sources. To
+create a Java ME client application do the following: 
+</P>
+<OL>
+	<LI><A HREF="loginscreen.html#create">Creating the
+	LoginScreenExample project</A> 
+	</LI>
+	<LI><A HREF="loginscreen.html#add">Adding packages and a
+	visual MIDlet to the LoginScreenExample project</A> 
+	</LI>
+	<LI><A HREF="loginscreen.html#addcomponent">Adding
+	components to the LoginScreenExample</A> 
+	</LI>
+	<LI><A HREF="loginscreen.html#addcommands">Adding
+	Commands to the Login Screen component</A> 
+	</LI>
+	<LI><A HREF="loginscreen.html#connect">Connecting the
+	Components to create an application flow</A> 
+	</LI>
+	<LI><A HREF="loginscreen.html#storage">Adding
+	additional source code</A> 
+	</LI>
+	<LI><A HREF="loginscreen.html#run">Run the Project</A> 
+	</LI>
+</OL>
+<H3><A NAME="create"></A>Creating the
+LoginScreenExample Project</H3>
+<OL>
+	<LI>Choose File &gt; New Project
+	(Ctrl-Shift-N). Under Categories, select Mobile. Under Projects,
+	select MIDP Application and click Next. 
+	</LI>
+	<LI>Enter <CODE>LoginScreenExample</CODE>
+	in the Project Name field. Change the Project Location to a
+	directory on your system. Let's refer to this
+	directory as <code>$PROJECTHOME</code>. 
+	</LI>
+	<LI>Uncheck the Create Hello MIDlet
+	checkbox. Click Next. 
+	</LI>
+	<LI>Leave the Sun Java Wireless Toolkit
+	as the selected Target Platform. Click Next, the Finish.</LI>
+	
+    Note: The project folder contains all of your
+	    sources and project metadata, such as the project Ant script. The
+	    application is displayed in the Flow Design window of the
+    Visual Mobile Designer. 
+</OL>
+<H3><A NAME="add"></A>Adding Packages and a Visual
+MIDlet to the LoginScreenExample Project</H3>
+<OL>
+	<LI>Choose the <CODE>LoginScreenExample</CODE>
+	project in the Project Window, then choose File &gt; New File
+	(Ctrl-N) . Under Categories, select Java Classes. Under File Types,
+	select Java Package. Click Next. 
+	</LI>
+	<LI>Enter <CODE>loginscreenexample</CODE>
+	in the Package Name field. Click Finish. 
+	</LI>
+	<LI>Choose the <CODE>loginscreenexample</CODE>
+	package in the Project window, then choose File &gt; New File
+	(Ctrl-N) . Under Categories, select MIDP. Under File Types, select
+	Visual MIDlet. Click Next. 
+	</LI>
+	<LI>Enter <CODE>LoginScreenExample</CODE> into MIDlet Name and
+	MIDP Class Name fields. Click Finish. 
+	</LI>
+</OL>
+<H3><A NAME="addcomponent"></A>Adding Components to
+the LoginScreenExample</H3>
+<OL>
+	<LI>Switch your Visual MIDlet to the
+	Flow Designer window. Drag the following components from the
+	Component Palette and drop them in the Flow Designer: 
+	</LI>
+	<UL>
+		<LI>Splash Screen</LI>
+		<LI>Wait Screen</LI>
+		<LI>Login Screen</LI>
+		<LI>Alert (two times)</LI>
+	</UL>
+	<LI>Click on splashScreen and, in the Properties Window, change
+	value of property Text from &quot;null&quot; to the &quot;Login
+	Screen Example&quot; 
+	</LI>
+	<LI>Click on alert component and, in the Properties Window,
+	change value of the property Instance Name to the &quot;alertError&quot;.
+	In similar way change property Instance Name of alert1 to the
+	&quot;alertSuccess&quot; 
+	</LI>
+	<LI>Go back to the alertError component and, in the Properties
+	Window, change value of the property String to the &quot;Error&quot;.
+  </LI>
+	<LI>Click on to the waitScreen component and, in the Properties
+	Window, change value of the property Text to the &quot;Please
+	Wait...&quot;. 
+	</LI>
+</OL>
+<H3><A NAME="addcommands"></A>Adding Commands to the
+LoginScreenExample</H3>
+<OL>
+	<LI>Open the Flow Designer Window.</LI> 
+	<LI>Choose Exit Command from the
+	Commands section of the Component Palette. Drag and drop it into
+	Flow Designer Window (loginScreen component). 
+	</LI>
+</OL>
+<H3><A NAME="connect"></A>Connecting Components</H3>
+<OL>
+	<LI>In the Flow design window, click on the Started text on the
+	Mobile Device and drag it to the splashScreen component. In the same
+	manner, connect the components together as shown in the following
+	graphic.<BR>
+	<BR><IMG SRC="../../../images/mobility/customcomponents/login-flow.png" NAME="graphics4" ALT="Shows the Flow Designer with components conneted by command lines" ALIGN=BOTTOM WIDTH=578 HEIGHT=576 BORDER=0>
+  </LI>
+</OL>
+<H3><A NAME="storage"></A>Adding additional source
+code</H3>
+<OL>
+	<LI>In the declaration section of the LoginScreenExample.java
+	source code add the following code: <CODE>private boolean login =
+	false;</CODE>.</LI>
+	<LI>At the end of the source code paste following code: 
+	</LI>
+	<PRE> private void login() throws IOException {
+   //URL
+   String url = &quot;http://localhost:8080/LoginScreenExample/&quot;
+                + &quot;?username=&quot; + getLoginScreen().getUsername()
+                + &quot;&amp;password=&quot; + getLoginScreen().getPassword();
+   //Clean up alertSuccess 
+   getAlertSuccess().setString(&quot;&quot;);
+   //Connect to the server
+   HttpConnection hc = (HttpConnection) Connector.open(url);
+   //Authentication
+   if (hc.getResponseCode() == HttpConnection.HTTP_OK) {
+        login = true;
+   }
+   //Closing time...
+   hc.close();
+   //Take action based on login value
+   if (login) {
+        getAlertSuccess().setString(&quot;Login Succesfull&quot;);
+   } else {
+        getAlertSuccess().setString(&quot;Wrong Username or Password&quot;);
+   }
+   login = false;
+ }</PRE>
+ <P>
+	This code is responsible for sending a request with information about
+	the username and password to the server and receiving an answer if the login
+	process was successful. You can correct source code imports by pressing Ctrl+Shift+I.</P>
+</OL>
+<H3><A NAME="run"></A>Running the Project</H3>
+Before running the client application make sure that the server side application is deployed and is running.
+<OL>
+	<LI> To run the mobile
+	client application select Run &gt; Run Main Project or press &lt;F6&gt; to Run the main project.</LI>
+</OL>
+<H2>To Learn More about the Login Screen Component</H2>
+<P>The NetBeans IDE provides API Javadocs for the Login Screen
+component, as well as other components you can use in the VMD. To
+read the Javadocs for the Login Screen component:</P>
+<OL>
+	<LI>Choose Help &gt; Javadocs References
+	&gt; org.netbeans.microediton.lcdui The file is opened in a web browser. 
+	</LI>
+	<LI>Click<CODE> org.netbeans.microedition.lcdui to  see
+	links for the component information.</CODE></LI>
+</OL>
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br>
+<br>
+<H2>Related Tutorials</H2>
+<UL>
+ <li><a href="smscomposer.html">Visual Mobile Designer Custom Components: SMS Composer</a></li>
+ <li><a href="filebrowser.html">Visual Mobile Designer Custom Components: File Browser</a></li>
+ <li><a href="pimbrowser.html">Visual Mobile Designer Custom Components: PIM Browser</a></li>
+</UL>
+</BODY>
+</HTML>

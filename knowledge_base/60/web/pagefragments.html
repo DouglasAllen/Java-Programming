@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html lang='en'>
+<head>
+<title>NetBeans IDE 6.0 - Tutorials - Using Page Fragments</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="Create a web application with two page fragments: the application's header information, and links for navigating between two pages.">
+<meta name="date" content="2006-01-12">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<!--stopindex-->
+<body>
+  <!-- BEGIN WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+  <a name="top"></a>
+ 
+  <!-- END GENERIC MASTHEAD -->
+  <!-- BEGIN VNV3 PAGETITLE, two-level variation -->
+  <h1>Using Page Fragments</h1>
+
+  <a name="skip2content"></a>
+  <!--  BEGIN VCD4 BYLINE AND TOOLS  -->
+  <div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team</div>
+  <table border="0" cellpadding="0" cellspacing="0" >
+    <tr>
+      <td class="smaller" valign="top"><em>December, 2007</em>&nbsp;[Revision number: V6.0]</td>
+      <td width="10">&nbsp;</td>
+      <td align="right" valign="bottom">&nbsp;</td>
+    </tr>
+  </table>
+ 
+  <table border="0" cellpadding="4" cellspacing="0"  class="grey3">
+    <tr>
+      <td><p>In this tutorial, you use NetBeans IDE 6.0 to create an application that includes two page fragments. One fragment holds the application's logo. The second fragment holds links for navigating between the pages in the application.</p></td>
+    </tr>
+  </table>
+ 
+  <p align="center"><b>Expected duration: <i>20</i> minutes</b></p>
+  <!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  -->
+  <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+	  <ul>
+	  <li><a href="pagefragments.html#00">About Page Fragments</a></li>
+	  <li><a href="pagefragments.html#01">Designing a Page That Includes Page Fragments</a></li>
+	  <li><a href="pagefragments.html#02">Creating a Header Fragment</a></li>
+	  	  <li><a href="pagefragments.html#03">Creating a Navigation Fragment</a></li>
+	  <li><a href="pagefragments.html#04">Adding Fragments to a Second Page</a></li>
+	  <li><a href="pagefragments.html#05">Disabling the Link for the Current Page</a></li>
+	  <li><a href="pagefragments.html#06">Doing More: Adding a Footer Fragment</a></li>
+	  <li><a href="pagefragments.html#07">Tips for Using Page Fragments </a></li>	 
+	  </ul>
+      </td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+  <br>
+
+  <table border="0" cellpadding="2" cellspacing="0">
+    <tr class="grey3">
+      <td><div class="headerpadding2"><b>Sample company logo used in this tutorial</b></div></td>
+    </tr>
+    <tr valign="top" class="grey5">
+      <td><div class="headerpadding2"> &raquo;&nbsp;<a href="../../../images/articles/60/web/pagefragments/sky.jpg">sky.jpg</a> </div></td>
+    </tr>
+  </table>
+
+  <br>
+<p><b>This tutorial works with the following technologies and resources:</b></p>
+
+<table border="1" cellpadding="1">
+  <tbody>
+  <tr>
+    <td valign="top">JavaServer Faces Components/<br>
+      Java EE Platform</td>
+    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br>
+      <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 
+  </td></tr>
+  <tr>
+    <td valign="top">Travel Database</td>
+    <td colspan="4" valign="top"><img src="../../../images/articles/60/web/spacer.png" alt="not required" height="15" hspace="3" width="14">Not required</td>
+  </tr>
+  
+</tbody></table>
+<p>* To take advantage of NetBeans IDE 6.0's Java EE 5 capabilities, use an application server that is fully compliant with the Java EE 5 specification, such as GlassFish.</p>
+<p>This tutorial has been tailored for use with the GlassFish v2 Application Server. 
+If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. 
+For detailed information about the supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p>
+<!-- END RESOURCE MATRIX -->
+  
+  <h2><a name="00"></a>About Page Fragments</h2>
+  <p>A page fragment is a portion of a page, such as a header, footer, or navigation bar, that can be reused in other pages. For example, you might put a common element such as a graphic or a Search field in a page fragment and then include that fragment as a header in all pages in the application. You might also include your company name and copyright information in a page fragment and use that fragment as your application's footer. Like a main page, a page fragment is a JSP page with its own associated page bean; however, the file extension of a page fragment is <code>jspf</code> instead of <code>jsp</code>.</p>
+
+  
+  <h2><a name="01"></a>Designing a Page That Includes Page Fragments</h2>
+  <div>You begin this tutorial by creating the home page for the application. You then create a header fragment and a navigation fragment and include these fragments in the home page.</div>
+  <ol>
+    <li>
+      <p>Create a new  web application project and call it <code>FragmentExample</code>. Enable the Visual Web JavaServer Faces framework. </p>
+      <p>Figure 1 shows the page that you will create in the steps that follow: </p>
+      <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="552">
+        <tr>
+          <td align="center" class="grey3"><img src="../../../images/articles/60/web/pagefragments/pagedesign.png" width="542" height="563" border="0" alt="Figure 1: Application Home Page" title="Figure 1: Application Home Page" />
+            <b>Figure 1</b>: Application Home Page</td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+    </li>
+    <li>
+      <p>From the Layout section of the Components Palette, drag a Page Fragment Box component onto the upper left corner of the page.</p>
+      The Select Page Fragment dialog box opens.</li>
+    <li>
+      <p>Click Create New Page Fragment. Type <code>CompanyLogo</code> in the Name field and click OK.</p>
+      The page fragment appears on the page. In addition, the page fragment is added to the Projects window and to a <code>&lt;div&gt;</code> block in the Navigator window.</li>
+    <li>
+      <p>Click Close to close the Select Page Fragment dialog box.</p>
+      The dotted line in the Visual Designer shows the size of the page fragment. The default size is 400 pixels wide by 200 pixels high.</li>
+    <li>Place a second Page Fragment Box component on the left side of the page under the CompanyLogo page fragment. Name this page fragment <code>Navigation</code>.</li>
+    <li>From the Basic section of the Palette, drag a Static Text component onto the page and drop it to the right of the Navigation page fragment. Be sure to drop the component on the page and not on the page fragment. Change the text of this component to <code>Welcome to Sky Company</code>.</li>
+    <li>Click the Visual Designer in a place that does not have a component. In the Properties window, change the <code>Title</code> property to <code>Sky Company Home</code>. </li>
+  </ol>
+
+  
+  <h2><a name="02"></a>Creating the Header Fragment</h2>
+  <p>Now you define the content of the CompanyLogo fragment, as shown in Figure 2. Any changes you make to a fragment must be made in the fragment itself, and not in the page.</p>
+  <!-- BEGIN FIGURE COMPONENT -->
+  <table border="0" cellpadding="2" cellspacing="0" width="516">
+    <tr>
+      <td align="center" class="grey3"><img src="../../../images/articles/60/web/pagefragments/companylogo.png" width="506" height="384" border="0" alt="Figure 2: CompanyLogo Fragment" title="Figure 2: CompanyLogo Page Fragment" />
+        <b>Figure 2</b>: CompanyLogo Page Fragment</td>
+    </tr>
+  </table>
+  <!-- END FIGURE COMPONENT -->
+  <ol>
+    <li>If you haven't done so already, save the <a href="../../../images/articles/60/web/pagefragments/sky.jpg">sample company logo</a> JPEG file to your filesystem.</li>
+    <li>
+      <p>Open the CompanyLogo fragment by double-clicking the component in the Visual Designer.</p>
+      The white background shows the size of the page fragment.</li>
+    <li>In the Properties window, set the <code>Width</code> property to <code>720px</code> and the <code>Height</code> property to <code>120px</code>.</li>
+    <li>From the Basic section of the Palette, drag an Image component into the upper left corner page fragment.</li>
+    <li>
+      <p>In the Properties window, click the ellipsis  button <img src="../../../images/articles/60/web/ellipsis.png" alt="ellipsis button" width="14" height="16" align="absmiddle"> for the Image's <code>url</code> property. Add the company logo to the page fragment as follows:</p>
+      <ol type="a">
+        <li>In the dialog box, click Add File.</li>
+        <li>Navigate to the folder where you stored the company logo, <code>sky.jpg</code>, and select the image.</li>
+        <li>Click Add File. The IDE copies the image to the resources directory of the project and displays the image's relative URL.</li>
+        <li>Click OK.</li>
+      </ol>
+    </li>
+    <li>If necessary, click and drag <code>sky.jpg</code> to position it within the page fragment's borders. </li>
+    <li>Click the Page1 tab to view the updates to the CompanyLogo fragment. Adjust the layout of the components on the page as necessary.</li>
+  </ol>
+
+  
+  <h2><a name="03"></a>Creating the Navigation Fragment</h2>
+  <p>Next you define the content of the navigation fragment as shown in Figure 3.</p>
+  <!-- BEGIN FIGURE COMPONENT -->
+  <table border="0" cellpadding="2" cellspacing="0" width="551">
+    <tr>
+      <td align="center" class="grey3"><img src="../../../images/articles/60/web/pagefragments/skynavfragment.png" width="541" height="338" border="0" alt="Figure 3: Navigation Fragment" title="Figure 3: Navigation Fragment" />
+        <b>Figure 3</b>: Navigation Fragment</td>
+    </tr>
+  </table>
+  <!-- END FIGURE COMPONENT -->
+  <ol>
+    <li>Open the Navigation fragment by double-clicking the component in the Visual Designer.</li>
+    <li>In the Properties window, set the <code>Width</code> property to <code>150px</code> and the <code>Height</code> property to <code>100px</code>.</li>
+    <li>From the Basic section of the Palette, drag a Hyperlink component and drop it in the page fragment. Set the text of the Hyperlink to <code>Home</code>.</li>
+    <li>In the Properties window, set the Hyperlink's <code>id</code> property to <code>homeLink</code> and the <code>url</code> property to <code>/faces/Page1.jsp</code>.</li>
+    <li>Drag a second Hyperlink component into the page fragment. Set the text of this component to <code>Company News</code>.</li>
+    <li>
+      <p>Set the Hyperlink's <code>id</code> property to <code>newsLink</code> and the <code>url</code> property to <code>/faces/News.jsp</code>.</p>
+      You will create the News page in the next section.</li>
+
+  </ol>
+  
+  <h2><a name="04"></a>Adding Fragments to a Second Page</h2>
+  <div>In this section, you create a second page that includes the header and navigation fragments. You set a background color for this page to demonstrate how the page's style settings are inherited by a page fragment.</div>
+  <ol>
+    <li>
+      <p>In the Projects window, right-click the FragmentExample &gt; Web Pages node and choose New &gt; Visual Web JSF Page. Name the new page <code>News</code> and click Finish.</p>
+      <p>The News page opens in the Visual Designer. You will design the page shown in the figure below.</p>
+      <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="551">
+        <tr>
+          <td align="center" class="grey3"><img src="../../../images/articles/60/web/pagefragments/newspage.png" width="541" height="451" border="0" alt="Figure 4: News Page" title="Figure 4: News Page" />
+            <b>Figure 4</b>: News Page</td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+    </li>
+    <li>Click the Page1 tab. You will copy the Page Fragment and Static Text components from this page to the News page.</li>
+    <li>From the Page 1 - Navigator window,  hold down the Control key and select both <code>div</code> elements and the Static Text component. Be sure you select the <code>div</code> elements themselves and not just their <code>jsp:directive.include</code> child elements.</li>
+    <li>Right-click the selection and choose Copy from the pop-up menu.</li>
+    <li>Click the News tab.</li>
+    <li>In the Navigator window, expand the News &gt; page1 &gt; html1 &gt; body1 node. Right-click <code>form1</code> and select Paste. The components you copied from <code>Page1.jsp</code> appear in the Visual Designer. </li>
+    <li>Change the text of the Static Text component to <code>We have a new CEO</code>.</li>
+    <li>Click an empty space in the News page. In the Properties window, change the <code>Title</code> property to <code>Sky Company News</code>. </li>
+    <li>
+      <p>Click the ellipsis  button <img src="../../../images/articles/60/web/ellipsis.png" alt="ellipsis button" width="14" height="16" align="absmiddle"> for the <code>Background</code> property and use the color chooser to set the color to light yellow. At runtime you will be able to see a clear distinction between the Sky Company News page and the Sky Company Home page. </p>
+      The Company Logo and Navigation fragments inherit the background color of the News page.</li>
+  </ol>
+
+  
+  <h2><a name="05"></a>Disabling the Link for the Current Page</h2>
+  <div>In this section you add code to  disable the Home link on the Page1 page and the Company News link on the News page.</div>
+  <ol>
+    <li>Click the Page1 tab and then open the Java source code for the page.</li>
+    <li>
+      <p>Add the following code to the <code>prerender</code> method: </p>
+      <!-- BEGIN CODE SAMPLE COMPONENT  -->
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode" >
+        <tr class="bg-white">
+          <td><b>Code Sample 1: Code to Disable the Link for the Current Page</b></td>
+        </tr>
+        <tr>
+          <td><pre>public void prerender() { 
+    <span style="font-weight:bold">Navigation navigationFragmentBean = (Navigation)getBean("Navigation");
+    Hyperlink homeLink = navigationFragmentBean.getHomeLink();
+    homeLink.setDisabled(true);</span>
+ }</pre></td>
+        </tr>
+      </table>
+      <!-- END CODE SAMPLE COMPONENT  -->
+    <li>
+      <p>Right-click in the Java Editor and choose Fix Imports. The IDE adds the following import statement:</p>
+      <code>import com.sun.webui.jsf.component.Hyperlink;</code></li>
+    <li>Click the News tab and open the Java source code for the page.</li>
+    <li>
+      <p>Add the following code to the <code>prerender</code> method.</p>
+      <!-- BEGIN CODE SAMPLE COMPONENT  -->
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode" >
+        <tr class="bg-white">
+          <td><b>Code Sample 2: Code to Disable the Link for the Current Page</b></td>
+        </tr>
+        <tr>
+          <td><pre>public void prerender() { 
+    <span style="font-weight:bold">Navigation navigationFragmentBean = (Navigation)getBean("Navigation");
+    Hyperlink newsLink = navigationFragmentBean.getNewsLink();
+    newsLink.setDisabled(true);</span>
+ }</pre></td>
+        </tr>
+      </table>
+      <!-- END CODE SAMPLE COMPONENT  -->
+    </li>
+    <li>
+      <p>Right-click in the Java Editor and choose Fix Imports. The IDE adds the following import statement:</p>
+      <code>import com.sun.webui.jsf.component.Hyperlink;</code></li>
+    <li>
+      <p>Click the Run Main Project button 
+<img src="../../../images/articles/60/web/runprojectbtn.png" alt = "Run Project toolbar icon" align = "absmiddle" height = "19" width = "11"> to run the application.</p>
+      Verify that the Home and Company News links work correctly.</li>
+  </ol>
+  
+  <h2><a name="06"></a>Doing More: Adding a Footer Fragment</h2>
+  <p>This tutorial demonstrates how to use page fragments in a simple two-page application. A real application typically has more pages.</p>
+  <p><b>Try It.</b>&nbsp;&nbsp;Add a third page to the FragmentExample application. Be sure to add another Hyperlink component in the Navigation page fragment and set the Hyperlink's <code>url</code> property.</p>
+  <p><b>Try It.</b>&nbsp;&nbsp;Another common use for a page fragment is to include a company's copyright information. Add a page fragment at the bottom of each page with width of <code>720px</code> and height of <code>100px</code>. Include copyright information such as <code>Copyright 1994-2007 Sky Company</code>.</p>
+
+  
+  <h2><a name="07"></a>Tips for Using Page Fragments</h2>
+  <p>Here are some things to consider when using page fragments:</p>
+  <ul>
+    <li>
+      <p>The example in this tutorial uses Hyperlink components with their <code>url</code> property set. This approach is recommended for its simplicity, because it does not require you to set the <code>immediate</code> property or set up page navigation. An alternative is to create a page fragment containing a Button or Hyperlink component with its <code>action</code> property set. In this case, you must set the <code>immediate</code> property and also set up the page navigation for each page that uses the fragment. </p>
+      If you have a large number of pages, and the navigation outcomes for the Button or Hyperlink are the same for each page, you may optionally edit the page navigation source file instead of using the Page Navigation Editor. To do this, click the XML button in the Page Navigation toolbar. In the source editor, replace the specific page name after the <code>&lt;from-view-id&gt;</code> tag (for example <code>/Page1.jsp</code>) with a wildcard value such as <code>/*</code>.</li>
+
+    <li>As shown in this tutorial, it is best to use pixels (for example 100px) to set the height and width of a page fragment. Percentages (for example, 100%) work fine in the Firefox web browser, but fail in Internet Explorer 6.0.</li>
+  </ul>
+<br>
+<p><b>See Also</b>:</p>
+<ul>
+<!--<li><a href="vwp-stylesheets_comps.html">Adding Styles to Components</a></li>-->
+<li><a href="http://www.netbeans.org/kb/55/virtual-forms.html" target="_blank">Using Virtual Forms</a></li>
+<li><a href="pagenav.html">Navigating Pages in a Web Application</a></li>
+</ul>
+  <hr class="light">
+</div>
+  <br>
+  <div class="date-stamp" align="right">This page was last modified:&nbsp; December, 2007</div>
+ 
+  <table border="0" cellpadding="10" cellspacing="0" class="full-width">
+    <tr>
+      <td><br>
+        <div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org"> Send Us Your Feedback</a></div>
+        <br style="clear:both;" />
+      </td>
+    </tr>
+    <!-- END SPACER ROW -->
+  </table>
+  <!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+
+</body>
+</html>

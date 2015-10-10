@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>UML: Creating Sequence Diagrams </title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- Replace this CSS URL with the appropriate relative URL -->
+<meta name="description" content="your-tutorial-title-and-description-up-to-260-characters">
+<meta name="author" content="Cindy Castillo"> <!--Optional tag-->
+<meta name="keywords" content=""> 
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>UML: Creating Sequence Diagrams </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:bob.may@sun.com"><i>Cindy Castillo, Bob May </i></a><br>
+November 2007</em> [Revision number: V1-4]<br>
+This publication is applicable to NetBeans IDE  6.0 release<br>
+<!-- This paragraph should contain an overview or an intro to your-tutorial ----------------------------* -->
+</p>
+</div>
+<p>In this tutorial, you learn how to use the UML features of the IDE to create a UML Sequence diagram. A Sequence diagram is a visual representation of the interaction between collaborating groups of objects in a system. Sequence diagrams consist of vertical lines called lifelines. Each Lifeline element represents the life of a given object. Lifelines are connected by horizontal lines denoting messages that pass from one object in the scenario to the next object in the scenario. .</p>
+
+<!-- Replace with the appropriate relative URL -->
+<!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+
+<!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+<!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+<!-- Update the image reference below so it references the file in your images directory ---------------* -->
+<p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+
+ <h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li class="tut"><a href="sequence-diagram.html#using">Using Sequence Diagrams</a></li>
+             <li class="tut"><a href="sequence-diagram.html#create">Creating Sequence Diagrams</a></li>
+             <li class="tut"><a href="sequence-diagram.html#addMsgToSelf">Adding a Message to Self Element</a></li>
+             <li class="tut"><a href="sequence-diagram.html#callmsg">Using the Call Message Element</a></li>
+             <li class="tut"><a href="sequence-diagram.html#auto-expand">Using the Auto-Expand Messages Option</a></li>
+             <li class="tut"><a href="sequence-diagram.html#msgNotation">Using the Create Message Notation</a></li>
+             <li class="tut"><a href="sequence-diagram.html#async">Adding Asynchronous Links</a></li>
+             <li class="tut"><a href="sequence-diagram.html#CF">Using the Combined Fragment Element</a></li>
+             <li class="tut"><a href="sequence-diagram.html#save">Saving Your Diagram</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top">   <a href="../../index.html"> <img src="../../../images/articles/60/netbeans-stamp.gif" 
+	  alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206"></a>
+
+   </td>
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<!-- tutorial. Examples: Java programming, XML, BPEL, and so on ----------------------------------------* -->
+<p>This tutorial requires that you complete the companion tutorials that create a Class diagram and a Collaboration diagram using the <tt>UMLTutorialProject</tt>. Complete <a href="class-diagram.html" title="UML: Creating Class Diagrams">UML: Creating Class Diagrams</a> and <a href="collab-diagram.html" title="UML: Creating Collaboration Diagrams">UML: Creating Collaboration Diagrams</a> before starting this Sequence diagram tutorial.</p>
+  <p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a></p>
+  <!-- ======================================================================================== -->
+  <!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+
+<!-- Replace existing text with info applicable to your tutorial ---------------------------------------* -->
+<p>Before you begin, download and install the following software:</p>
+ 
+<ul>
+	<li>NetBeans IDE 6.0 <br>
+	<br>
+	Select the All Download option.	</li>
+</ul>
+<!-- ======================================================================================== --><!-- ======================================================================================== -->
+<!--<h3>Contents</h3> -->
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+<!-- <ul>
+	<li><a href="#first_h2_head" title="First H2 Heading">First H2 Heading</a></li>
+	<li><a href="#second_h2_head" title="Second H2 Heading">Second H2 Heading</a></li>
+	<li><a href="#third_h2_head" title="Third H2 Heading">Third H2 Heading</a></li>
+	<li><a href="#summary" title="Summary">Summary</a></li>
+	<li><a href="#next_steps_h2_head" title="Next Steps">Next Steps</a></li>
+</ul>-->
+</div>
+
+<div class="indent">
+  <ul>
+    
+  </ul>
+</div>
+<p align="center"><a href="sequence-diagram.html#top">top</a><!-- ===================================================================================== -->
+</p>
+<h2><a name="using"></a>Using Sequence Diagrams</h2>
+<p>A Sequence diagram is a model that describes how groups of objects collaborate in some behavior over time. The Sequence diagram captures the behavior of a single use case and shows the objects and the messages that are passed between these objects in the timeframe of the specific use case. The Sequence diagram does not show relationships between objects. </p>
+<p>The Sequence diagram may be used to:</p>
+<ul>
+  <li class="tut">Describe the overall sequence of the flow of control when there are many short methods in different classes</li>
+  <li class="tut">Show concurrent processes and activations</li>
+  <li class="tut">Show time sequences that are not easily depicted in a Collaboration diagram</li>
+  <li class="tut">Show general forms that do not deal with objects but with class interaction</li>
+</ul>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="create"></a>Creating Sequence Diagrams</h2>
+<p>This tutorial uses the Class diagram that is created in the tutorial <a href="class-diagram.html" title="UML: Creating Class Diagrams">UML: Creating Class Diagrams</a> and the Collaboration diagram that is created in the tutorial <a href="collab-diagram.html" title="UML: Creating Collaboration Diagrams">UML: Creating Collaboration Diagrams</a>. You should complete these tutorials before proceeding with these steps.</p>
+<p>This section contains the following procedures:</p>
+<ul>
+  <li class="tut"><a href="sequence-diagram.html#auto">To Generate a Sequence Diagram</a></li>
+  <li class="tut"><a href="sequence-diagram.html#rearrange">To Refine the Generated Diagram</a></li>
+</ul>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<div class="indent">
+  <h3 class="tutorial"><a name="auto"></a>To Generate a Sequence Diagram</h3>
+  <ol>
+    <li class="tut">If necessary, start the IDE.</li>
+    <li class="tut">In the Projects window, right-click the <tt>UMLTutorialProject &gt; Model &gt; CollaborationDiagram</tt> node and choose Create Diagram From Selected Elements from the pop-up menu.<br>
+      The New Wizard opens and displays the Create New Diagram page.<br>
+      <br>
+      <b>Note: </b>You are scoping one of the two types of interaction diagrams available from the pop-up menu: Collaboration Diagram and Sequence Diagram. These diagrams emphasize object interactions.</li>
+    <li class="tut">In the Diagram Type list, select Sequence Diagram.</li>
+    <li class="tut">In the Diagram Name field, type <tt>SequenceDiagram</tt>.</li>
+    <li class="tut">Leave the default setting in the Namespace field and click Finish. <br>
+      The IDE does the following:<br>
+      <ul>
+        <li class="tut">Creates the <tt>SequenceDiagram</tt> node under the <tt>CollaborationDiagram</tt> node in the Projects window </li>
+        <li class="tut">Displays the new diagram in the Diagram editor (the diagram consists of Lifeline elements and messages from the Collaboration diagram)</li>
+        <li class="tut">Opens the Modeling Palette and displays icons used in creating Sequence diagrams</li>
+      </ul>
+      Your diagram should resemble the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-sequence-diagram/seq-diag-1.gif" alt="Screen capture showing generated Sequence diagram" border="0"></p>
+    </li>
+  </ol>
+  <p align="center"><a href="sequence-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="rearrange"></a>To Refine the Generated Diagram</h3>
+  <p>Objects in a transaction are drawn as dotted vertical lines with the names showing at the top. Because the order of the Lifeline elements can not be predefined when the Sequence diagram is created, you need to reorder them at this time.</p>
+  <ol>
+    <li class="tut">Select the Lifeline labeled User and move it to the left of the diagram.</li>
+    <li class="tut">Reorder the remaining Lifeline elements by placing them evenly across the Diagram editor. Put the Lifelines in the following order from left to right:
+        <ul>
+          <li class="tut">User</li>
+          <li class="tut">ATM</li>
+          <li class="tut">Consortium</li>
+          <li class="tut">Branch</li>
+        </ul>
+        <br>
+      Your diagram should now resemble the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-sequence-diagram/reordered-Lifelines.gif" alt="Screen capture showing Sequence diagram with reordered Lifeline elements" border="0"></p>
+    </li>
+  </ol>
+</div>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="addMsgToSelf"></a>Adding a Message to Self Element</h2>
+<p>A Message to Self diagram element represents a message intended for the calling object. The internal operation represented in this diagram is the validation of the cash on hand in the ATM object. </p>
+<ol>
+  <li class="tut">You may need to lengthen the Lifeline elements to ease the placement of the Message elements.<br>
+    To lengthen the Lifelines, follow these steps:<br>
+    <ol type="a">
+      <li class="tut">Select the User Lifeline element.</li>
+      <li class="tut">Click the blue box at the bottom center and drag the box downward to lengthen the Lifeline.</li>
+      <li class="tut">Repeat steps a and b to lengthen the remaining Lifelines until your diagram resembles the following figure.<br>
+          <p align="center"><img src="../../../images/articles/uml-sequence-diagram/seq-diag-2.gif" alt="Screen capture showing Sequence Diagram with lengthened Lifelines" border="0"></p>
+      </li>
+    </ol>
+  </li>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Message to Self icon <img src="../../../images/articles/uml-sequence-diagram/message-to-self-icon.png" alt="Message to Self icon">.</li>
+  <li class="tut">Click the lower section of the extended ATM Lifeline element.<br>
+    The IDE places a Message to Self element on the Lifeline.</li>
+  <li class="tut">Right-click anywhere in the Diagram editor to deselect the Message to Self icon.</li>
+  <li class="tut">On the Message to Self element, click the lower message arrow.<br>
+    The properties for the message appear in the Properties window.</li>
+  <li class="tut">In the Properties window, in the Name field, type <tt>validateCashOnHandOperation</tt> and press Enter.</li>
+  <li class="tut">Right-click the upper message arrow on the Message to Self element and select Operations from the pop-up menu. The following figure indicates where to position the cursor. Note the double bar just above the top arrow.<br>
+      <p align="center"><img src="../../../images/articles/uml-sequence-diagram/RC-upper-msg-arrow.gif" alt="screen capture showing Message to Self cursor positioning" border="0"></p>
+  </li>
+  <li class="tut">Choose Operations &gt; Add Operation from the pop-up menu.<br>
+    A one-line editor opens and displays the following information:<br>
+    <pre class="examplecode">visibility returnType <b>name</b>(parameter) {properties...}</pre>
+  </li>
+  <li class="tut">Define your operations to be as follows<br>
+      <pre class="examplecode">public boolean getIsOperating()</pre>
+    The upper portion of the message is labeled as shown in the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/labeled-upper-msg-arrow.gif" alt="Screen capture showing Labeled Message to Self"></p>
+  </li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="callmsg"></a>Using the Call Message Element</h2>
+<p>Because the <tt>validateCashOnHand</tt> operation is part of the ATM class, you need to place a message flow on the Lifeline to call that operation.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Synchronous Message icon 
+  <img src="../../../images/articles/uml-sequence-diagram/synchronous-message.png" alt="Synchronous Message icon.">
+  <li class="tut">Click on the User Lifeline element, just below the <code>getCashOnHand()</code> message.</li>
+  <li class="tut">Click again on the ATM Lifeline element directly to the right of your first click. <br>
+    A message and a return message appear on the diagram as shown in the following figure.<br>
+    <br>
+    <img src="../../../images/articles/uml-sequence-diagram/new-synchronous-msg.png" alt="image of new synchronous message." width="168" height="300"><br>
+    <br>
+    <b>Note: </b>If you do not want the return message to appear on the diagram, right-click in the white space of the Diagram editor. Deselect Show All Return Messages from the pop-up menu.</li>
+  <li class="tut">Right-click anywhere in the Diagram editor to deselect the Synchronous Message icon.</li>
+  <li class="tut">Right-click the message you just created and choose Operations &gt; Add Operation from the pop-up menu. </li>
+  <li class="tut">Type <tt>validateCashOnHand</tt> and press Enter.<br>
+    The IDE labels the message on the diagram and adds the message as an operation in the ATM class in the Class diagram. In the Projects window, expand the ATM class node to verify that the list of operations resembles the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/ATM-in-Proj-window.gif" alt="Screen capture showing ATM class expanded in Projects window" border="0"></p>
+  </li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="auto-expand"></a>Using the Auto-Expand Messages Option</h2>
+<p>To help in the design process, the IDE has an option to auto-expand messages. With auto-expand selected, when a new message is placed on the diagram, the space expands to the width of the message.</p>
+<ol>
+  <li class="tut">In the gray header area above the lifelines elements, right-click in the area between the User and ATM element names to set the auto-expand option.<br>
+    A pop-up menu opens. </li>
+  <li class="tut">Select Set Width to Message Width.<br>
+    An indicator bar appears in the track between the two element names as shown in the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/auto-expand.gif" alt="Screen capture showing Sequence Diagram with Set Width to Message Width option selected" border="0"></p>
+  </li>
+  <li class="tut">Repeat the steps to set the message width option between the ATM and Consortium elements and between the Consortium and Branch elements.</li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="msgNotation"></a>Using the Create Message Notation</h2>
+<p>The Create Message notation enables the creation of a Lifeline element or instance. </p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Create Message icon <img src="../../../images/articles/uml-sequence-diagram/create-message.png" alt="Create Message icon">.</li>
+  <li class="tut">Click the lower portion of the Branch Lifeline.<br>
+      </li>
+  <li class="tut">Draw the link to the right of the Branch Lifeline and click again.<br>
+    A message and a lifeline are placed on the diagram as shown in the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/msg-on-Branch.gif" alt="Screen capture shwoing Branch Lifeline with added message" border="0"></p>
+  </li>
+  <li class="tut">Press the ESC key to deselect the icon. </li>
+  <li class="tut">Select the new Lifeline.<br>
+    The Properties window displays the properties for this Lifeline element. </li>
+  <li class="tut">In the Properties window, on the row labeled Representing Classifier, click the down arrow.<br>
+    A drop-down list appears. </li>
+  <li class="tut">Select CashierStation from the drop-down list and press Enter.</li>
+  <li class="tut">Click in the Diagram editor to see the labeled Lifeline element.<br>
+      <br>
+    Your diagram should resemble the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/seq-diag-3.gif" alt="Screen capture showing Sequence Diagram with new Lifeline" border="0"></p>
+  </li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<!-- ======================================================================================= -->
+<h2><a name="async"></a>Adding Asynchronous Links</h2>
+<p>An asynchronous message element represents a message that does not block the calling object. This kind of message is capable of creating a new object, creating a new thread and communicating with an existing thread.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Asynchronous Message icon <img src="../../../images/articles/uml-sequence-diagram/asynchronous-message.png" alt="Asynchronous Message icon">. </li>
+  <li class="tut">Draw a link between the Branch and CashierStation Lifelines by clicking the Branch Lifeline element, then click the CashierStation Lifeline element.</li>
+  <li class="tut">Press the ESC key to deselect the icon. </li>
+  <li class="tut">Right-click the new link and choose Operation &gt; <tt>public int getStationID</tt> from the pop-up menu.<br>
+    This action adds the operation to this message as shown in the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/add-op-async-msg.gif" alt="Screen capture showing diagram with Asynchronous Message."></p>
+  </li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<!-- ======================================================================================= -->
+<h2><a name="CF"></a>Using the Combined Fragment Element</h2>
+<p>The combined fragment lets you express logical components, such as alternatives, options, exceptions, parallel merges, loops, negations, critical regions and assertions directly on your Sequence diagram. Combined fragments provide a means to define special conditions and subprocesses for any sections of any lifelines by specifying an area where the condition or subprocess applies.</p>
+<ol>
+  <li class="tut">From the Control section of the Modeling Palette, select the Combined Fragment icon <img src="../../../images/articles/uml-sequence-diagram/combined-fragment.png" alt="Combined Fragment icon">.</li>
+  <li class="tut">To draw the Combined Fragment element so that it encapsulates the message, <tt>public void validateCashOnHand</tt>, click outside the blue dotted rectangle representing the message and click and drag the rectangle to surround the message.<br>
+    Be careful that you do not select any of the Lifeline elements when you click. Your Combined Fragment should look like the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/CF-msg.gif" alt="Screen capture showing Combined Fragment placed around message"></p>
+  </li>
+  <li class="tut">Press the ESC key to deselect the icon.</li>
+  <li class="tut">Right-click the <tt>assert</tt> label in the Combined Fragment element and choose Interaction Operator &gt; loop.<br>
+      <br>
+      <b>Note: </b>A loop Interaction Operator designates that the Combined Fragment represents a loop. Each time the loop repeats, the guard expression is evaluated. The guard expression can include a specific number of iterations of the loop.</li>
+  <li class="tut">Right-click the Combined Fragment label <tt>loop</tt> and choose Interaction Operand &gt; Edit Interaction Constraint from the pop-up menu.<br>
+    The IDE displays an expression box in the target Combined Fragment element.</li>
+  <li class="tut">Double-click the word expression to make the expression box editable as shown in the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-sequence-diagram/edit-expression.gif" alt="Screen capture showing Editable expression box on message"></p>
+  </li>
+  <li class="tut">Type <tt>x &lt; 10 </tt> and press Enter.</li>
+  <li class="tut">Click in the Diagram editor.<br>
+    Your expression is accepted and displayed in the box. Your diagram should resemble the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-sequence-diagram/finished-seq-diag.gif" alt="Screen capture showing completed Sequence diagram."></p>
+  </li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="save"></a>Saving Your Diagram</h2>
+<p>After you have completed your Sequence diagram, you can save it.</p>
+<ol>
+  <li class="tut">In the Diagram editor, right-click on the <tt>SequenceDiagram</tt> tab.</li>
+  <li class="tut">Select Save Document from the pop-up menu.<br>
+    The menu closes and the diagram is saved.<br>
+    <br>
+    <b>Note: </b>You are also prompted to save or discard your diagrams when you exit from the IDE.</li>
+</ol>
+<p align="center"><a href="sequence-diagram.html#top">top</a><br>
+  <!-- ======================================================================================= -->
+</p>
+<h2>Summary</h2>
+<p>In this tutorial, you learned to create a Sequence diagram using an existing Collaboration diagram. You learned how to perform the following tasks:</p>
+<ul>
+  <li class="tut">Generate a Sequence diagram from an existing Collaboration diagram</li>
+  <li class="tut">Add Messages to the diagram using icons from the Modeling Palette</li>
+  <li class="tut">Add Links to the diagram</li>
+  <li class="tut">Add a Combined Fragment element</li>
+  <li class="tut">Save the diagram</li>
+</ul>
+<br style="clear: both;">
+<!-- ======================================================================================== -->
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul><li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p></li>
+</ul>
+
+<!-- ======================================================================================== -->
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="sequence-diagram.html#top">top</a></p>
+<p><small>&gt;&gt; <a href="../../index.html">More NetBeans IDE Documentation</a></small></p>
+
+</body>
+</html>

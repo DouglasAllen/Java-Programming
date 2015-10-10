@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+<HTML>
+<HEAD>
+<TITLE>NetBeans 6.0 Visual Mobile Designer Custom Components: File Browser</TITLE>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="author" content="Karol Harelzak">
+</HEAD>
+
+<BODY>
+<H1>Visual Mobile Designer Custom Components: File Browser</H1>
+<P>Contributed by Karol Harezlak</P>
+<p><img src="../../../images/articles/60/netbeans-stamp.gif" align="right"
+   alt="Content on this page applies to NetBeans IDE 6.0" 
+   title="Content on this page applies to the NetBeans 
+   IDE 6.0" border="0" height="45" width="206">The Visual Mobile Designer (VMD) is a graphical interface 
+   within the NetBeans Mobility pack that enables you to design mobile applications using drag and drop 
+   components. The VMD allows you to define the application flow and design your GUI using the components 
+   supplied by the Mobility pack, or components you design yourself. The VMD contains many standard User 
+   Interface (UI) components that you can use to create applications such as Lists, Alerts, Forms and 
+   Images. It also includes custom components that simplify the creation of more complex features, such 
+   as Wait Screens, Splash Screens, Table Items and more.</P>
+<P>File browser is a custom component that provides a user interface to work with device file system. 
+It provides basic functionality to browse content of devices storage memory. This component utilizes The
+FileConnection API which is  part of the <a href="http://jcp.org/en/jsr/detail?id=75" target="_blank">JSR-75 specification</a> 
+for PDA Optional Packages for the Java ME Platform. JSR-75 is not a part of the MIDP 2.0 specification which 
+is why this custom component can be used only with JSR-75 enabled devices.</p>
+<H2>Application Overview</H2>
+<P>This example shows you how to use the File Browser component in a
+mobile application for JSR-75 enabled devices. You'll learn the basic
+features of the the components, and how to browse content of device
+memory storage and display content of chosen text files. 
+</P>
+<P>Besides the File Browser custom component we'll use two other MIDP
+components: Splash Screen and TextBox. 
+</P>
+<H3>Requirements</H3>
+<P>Before you begin, you need to install the following software on
+your computer:</P>
+<UL>
+ <LI>
+    NetBeans IDE 6.0 with Mobility pack installed 
+  </LI>
+	<LI>
+	Java Standard Development Kit (JDK) version 6.0 
+  </LI>
+    <p>&nbsp;</p>
+    <p>If you are new to the NetBeans Mobility Pack, you should start
+  with the <A HREF="quickstart.html"> NetBeans 6.0
+  Mobility CLDC/MIDP Quick Start Guide</A> before continuing.</p>
+</UL>
+<H2>Installing and Running the Sample Application</H2>
+<P>Before we begin, you might want to see final result of the
+tutorial. 
+</P>
+<P>Take the following steps to install the FileBrowserExample
+application:</P>
+<OL>
+	<LI>Download <A HREF="../../../files/documents/4/1534/FilebrowserExample.zip">filebrowserexample.zip.
+	</A>
+	</LI>
+	<LI>Unzip the file. 
+	</LI>
+	<LI>In the IDE, choose File  Open
+	Project and browse to the folder that contains the unzipped file. 
+	</LI>
+	<LI>Open the Project and Inspector
+	windows. It should look like the following: <BR>
+	<IMG SRC="../../../images/mobility/customcomponents/file-navigator_filemanager.png" NAME="graphics1" ALT="Navigator and Project window with File Browser example opened" ALIGN=BOTTOM WIDTH=249 HEIGHT=381 BORDER=0>
+  </LI>
+	<LI>In the Projects window,
+	right-click the project node and choose Run Project (or press F6
+	key). As the application runs, an emulator window opens and displays
+	the application running in the default device emulator. 
+	</LI>
+	<LI><P>In the Emulator window, click the button underneath
+	&quot;Launch.&quot;<BR>The emulator displays a Splash Screen
+	component then File Browser, as shown: <BR><BR><IMG SRC="../../../images/mobility/customcomponents/file-browser_wtk.png" NAME="graphics2" ALT="WTK 2.5 emulator displaying the sampel File Browser application" ALIGN=BOTTOM WIDTH=246 HEIGHT=326 BORDER=0>
+  </LI>
+</OL>
+<UL>
+	<LI>Move the cursor up and down to
+	navigate through available files and folders. 
+	</LI>
+	<LI>Click the button underneath
+	&quot;Select&quot; to open folder or file. 
+	</LI>
+	<LI>Click the button underneath &quot;Exit&quot; to close the
+	application. 
+	</LI>
+</UL>
+<H2>Creating an application with the File Browser
+Custom Component 
+</H2>
+<P>Now that you have seen the File Browser component in action, let's
+go back to the beginning and create this application. To create the
+application, do the following: 
+</P>
+<OL>
+	<LI><A HREF="filebrowser.html#create">Create the
+	FileBrowserExample project</A> 
+	</LI>
+	<LI><A HREF="filebrowser.html#add">Add packages and a
+	visual MIDlet to the FileBrowserExample project</A> 
+	</LI>
+	<LI><A HREF="filebrowser.html#addcomponent">Add
+	components to the FileBrowserExample</A> 
+	</LI>
+	<LI><A HREF="filebrowser.html#addcommands">Add
+	Commands to the TextBox and File Browser Components</A> 
+	</LI>
+	<LI><A HREF="filebrowser.html#connect">Connect the
+	Components to create an application flow</A> 
+	</LI>
+	<LI><A HREF="filebrowser.html#insert">Insert method
+	loadTextFile into the source code</A> 
+	</LI>
+	<LI><A HREF="filebrowser.html#storage">Adding files to
+	the Wireless Toolkit storage </A>
+	</LI>
+	<LI><P><A HREF="filebrowser.html#run">Run the Project</A> 
+	</LI>
+</OL>
+<H3><A NAME="create"></A>Creating the
+FileBrowserExample Project</H3>
+<OL>
+	<LI>Choose File  New Project
+	(Ctrl-Shift-N). Under Categories, select Mobile. Under Projects,
+	select MIDP Application and click Next. 
+	</LI>
+	<LI>Enter <CODE>FileBrowserExample</CODE>
+	in the Project Name field. Change the Project Location to a
+	directory on your system. From now on, let's refer to this
+	directory as $PROJECTHOME. 
+	</LI>
+	<LI>Uncheck the Create Hello MIDlet
+	checkbox. Click Next. 
+	</LI>
+	<LI>Leave the Java ME Wireless Toolkit
+	as the selected Target Platform. Click Next. 
+	</LI>
+	<LI><P>Click Finish. <BR>The project folder contains all of your
+	sources and project metadata, such as the project Ant script. The
+	application itself is displayed in the Flow Design window of the
+	Visual Mobile Designer. 
+	</LI>
+</OL>
+<H3><A NAME="add"></A>Adding Packages and a Visual
+MIDlet to the FileBrowserExample Project</H3>
+<OL>
+	<LI>Choose the <CODE>FileBrowserExample</CODE>
+	project in the Project Window, then choose File  New File
+	(Ctrl-N) . Under Categories, select Java Classes. Under File Types,
+	select Java Package. Click Next. 
+	</LI>
+	<LI>Enter <CODE>filebrowserexample</CODE>
+	in the Package Name field. Click Finish. 
+	</LI>
+	<LI>Choose the <CODE>filebrowserexample</CODE>
+	package in the Project window, then choose File  New File
+	(Ctrl-N) . Under Categories, select MIDP. Under File Types, select
+	Visual MIDlet. Click Next. 
+	</LI>
+	<LI><P>Enter <CODE>FileBrowserExample</CODE> into MIDlet Name and MIDP
+	Class Name fields. Click Finish. 
+	</LI>
+
+
+</OL>
+<H3><A NAME="addcomponent"></A>Adding Components to
+the FileBrowserExample</H3>
+<OL>
+	<LI>Switch your Visual MIDlet to the
+	Flow Designer window. Drag the following components from the
+	Component Palette and drop them in the Flow Designer: 
+	</LI>
+	<UL>
+		<LI>Splash Screen</LI>
+		<LI>TextBox</LI>
+		<LI>File Browser</LI>
+	</UL>
+	<LI><P>Click on slashScreen and, in the Properties Window, change
+	value of property Text from &quot;null&quot; to the &quot;File
+	Browser Example&quot; 
+	</LI>
+</OL>
+<H3><A NAME="addcommands"></A>Adding Commands to the
+FileBrowserExample</H3>
+<OL>
+	<LI>Open the Flow Designer Window. 
+	</LI>
+	<LI>Choose Exit Command from the
+	Commands section of the Component Palette. Drag and drop it into
+	Flow Designer Window (fileBrowser component). 
+	</LI>
+	<LI><P>Choose the Back Command from the Commands section of the
+	Component Palette and drag and drop it into the textBox component. 
+	</LI>
+</OL>
+<H3><A NAME="connect"></A>Connecting Components</H3>
+<OL>
+	<LI><P>In the Flow design window, click on the Start Point on the
+	Mobile Device and drag it to the spalshScreen component. In the same
+	manner, connect the components together as shown in the following
+	graphic.<BR><BR><IMG SRC="../../../images/mobility/customcomponents/file-flow.png" NAME="graphics3" ALT="Shows the Flow Designer with components conneted by command lines" ALIGN=BOTTOM WIDTH=435 HEIGHT=508 BORDER=0>
+  </LI>
+</OL>
+<H3><A NAME="insert"></A>Inserting a Pre-action into
+the Source Code</H3>
+<OL>
+	<LI>Switch to the Source Window. 
+	</LI>
+	<LI>
+	  <P>Insert the following code at the end of the source code. This
+	method is responsible for reading the selected files: 
+	</LI>
+	<PRE>    /** 
+    * Read file
+    */ 
+    private void readFile() {
+        try {
+            FileConnection textFile = fileBrowser.getSelectedFile();
+            getTextBox().setString(&quot;&quot;);
+            InputStream fis = textFile.openInputStream();
+            byte[] b = new byte[1024];
+            int length = fis.read(b, 0, 1024);
+            fis.close();
+            if (length > 0) {
+                textBox.setString(new String(b, 0, length));
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    </PRE>
+	<LI><P>Find commandAction method in the source code:<BR>Insert
+	<CODE>readFile();</CODE> into pre-action section of the
+	<CODE>FileBrowser.SELECT_FILE_COMMAND</CODE> (right after: <CODE>if
+	(command == FileBrowser.SELECT_FILE_COMMAND)</CODE>, where it says
+	<CODE>//insert pre-action code here)</CODE>: 
+	</LI>
+</OL>
+<H3><A NAME="storage"></A>Adding files to the
+Wireless Toolkit storage memory</H3>
+<H3>&nbsp;</H3>
+<P>To add additional files to the WTK storage memory read the Sun Java
+Wireless Toolkit for CLDC User's Guide (section: 4.3.2.1 Persistent
+Storage) <A HREF="http://java.sun.com/products/sjwtoolkit/wtk2.5.2/docs/UserGuide-html/emulator.html" target="_blank">Using
+the Emulator</A> Added files and folders are be visible using our
+File Browser application. 
+</P>
+<H3><A NAME="run"></A>Running the Project</H3>
+<OL>
+	<LI>
+	  <P>Press &lt;F6&gt; to Run the main project or select Run &gt; Run Main Project.
+	</LI>
+</OL>
+<H2>To Learn More about the File Browser Component</H2>
+<P>The NetBeans IDE provides API Javadocs for the File Browser
+component, as well as other components you can use in the VMD. To
+read the Javadocs for the File Browser component: 
+</P>
+<OL>
+	<LI>Choose Help Javadoc References
+	org.netbeans.microediton.lcdui.pda 
+	</LI>
+	<LI>
+	  <P>Click<CODE> org.netbeans.microedition.lcdui.pda </CODE>to  see links for the component information. 
+	</LI>
+</OL>
+<br>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send 
+  Us Your Feedback</a></div>
+<br><br>
+<H2>Related Tutorials</H2>
+<UL>
+ <li><a href="smscomposer.html">Visual Mobile Designer Custom Components: SMS Composer</a></li>
+ <li><a href="loginscreen.html">Visual Mobile Designer Custom Components: Login Screen</a></li>
+ <li><a href="pimbrowser.html">Visual Mobile Designer Custom Components: PIM Browser</a></li>
+</UL>
+</BODY>
+</HTML>

@@ -1,0 +1,580 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>UML: Creating Class Diagrams </title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<meta name="description" content="">
+<meta name="author" content="your-name"> <!--Optional tag-->
+<meta name="keywords" content=""> <!--Useful for including potential alternate search terms (shouldn't
+overlap with words that are prominently listed in the  tutorial) -->
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>UML: Creating Class Diagrams</h1>
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+  <p><em>Contributed and maintained by <a href="mailto:bob.may@sun.com"><i>Cindy Castillo, Bob May </i></a><br>
+    November 2007</em> [Revision number: V1-4]<br>
+    This publication is applicable to NetBeans IDE 6.0  release<br>
+    <!-- This paragraph should contain an overview or an intro to your-tutorial ----------------------------* -->
+  </p>
+</div>
+</div>
+
+<p>In this tutorial, you learn how to use the UML features of the IDE to create Class diagrams. This tutorial shows you various techniques for creating elements of a Class diagram and how to generate the Java source code for the diagram, The purpose of this tutorial is to introduce some of the IDE's UML Modeling Class diagram functionality and to show you various techniques for creating elements of a Class diagram. </p>
+<p>A Class diagram is a visual representation of an application showing its classes and the relationships between those classes. When you open a Class diagram, the IDE displays a specific selection of UML element icons in the Modeling Palette. Using the Class diagram model, you describe the static structure of the elements in your application. The IDE lets you graphically create diagrams that contain classes. The classes are arranged in hierarchies that share common structure and behavior and are associated with other classes.
+  <!-- START Link to Support and Docs paragraph ----------------------------------------------------------* -->
+  <!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+  <!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+  <!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+  <!-- Update the image reference below so it references the file in your images directory ---------------* -->
+</p>
+<p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+<h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li class="tut"><a href="class-diagram.html#intro">Using Class Diagrams</a></li>
+             <li class="tut"><a href="class-diagram.html#classdiag">Creating Class Diagrams and Adding Elements </a></li>
+             <li class="tut"><a href="class-diagram.html#gen-code-edit">Generating and Editing Java Source Code</a> </li>
+             <li class="tut"><a href="class-diagram.html#find">Finding Diagram Elements</a></li>
+             <li class="tut"><a href="class-diagram.html#enterdoc">Documenting Classes and Diagrams</a></li>
+             <li class="tut"><a href="class-diagram.html#links">Depicting Links and Associations</a></li>
+             <li class="tut"><a href="class-diagram.html#depend">Creating Dependency Diagrams</a></li>
+             <li class="tut"><a href="class-diagram.html#save">Saving Diagrams and Updating Java Source Files </a></li>
+             <li></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top">   <a href="../../index.html"> <img src="../../../images/articles/60/netbeans-stamp.gif" 
+	  alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206"></a>
+
+   </td>
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<!-- tutorial. Examples: Java programming, XML, BPEL, and so on ----------------------------------------* -->
+<p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a>.</p>
+  <!-- ======================================================================================== -->
+  <!-- ======================================================================================== -->
+  <div class="articledate" style="margin-left: 0px;"></div>
+  <div class="indent">
+    <h3 class="tutorial">System Requirements</h3>
+    <p>This tutorial assumes that your system meets the requirements specified in the Systems Requirements section of the <a href="../../../community/releases/60/relnotes.html">NetBeans 6.0 Release Notes</a>.</p>
+    <!-- ======================================================================================== -->
+  </div>
+  <h3>Software Needed for This Tutorial</h3>
+<p>Before you begin, download and install the following software:</p>
+ 
+<ul>
+	<li>NetBeans IDE 6.0 <br>
+		<br>
+	Select the All Download option.	</li>
+</ul>
+<!-- ======================================================================================== -->
+<!-- ======================================================================================== -->
+<!--<h3>Contents</h3> -->
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+<!-- <ul>
+	<li><a href="#first_h2_head" title="First H2 Heading">First H2 Heading</a></li>
+	<li><a href="#second_h2_head" title="Second H2 Heading">Second H2 Heading</a></li>
+	<li><a href="#third_h2_head" title="Third H2 Heading">Third H2 Heading</a></li>
+	<li><a href="#summary" title="Summary">Summary</a></li>
+	<li><a href="#next_steps_h2_head" title="Next Steps">Next Steps</a></li>
+</ul>-->
+</div>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="intro"></a>Using Class Diagrams</h2>
+<p>Classes define the attributes that are carried by each element instance and the operations that each element performs or undergoes. When representing a class in a UML model, you can do the following tasks: </p>
+<ul>
+  <li class="tut">Create the element representing the class</li>
+  <li class="tut">Name the class</li>
+  <li class="tut">Define class attributes</li>
+  <li class="tut">Define class operations</li>
+  <li class="tut">Depict links and associations</li>
+  <li class="tut">Add documentation</li>
+</ul>
+<p>The following sections describe how to create a simple Class diagram for a hypothetical banking application. After you have completed the step-by-step procedures outlined in the tutorial, your Class diagram should look similar to Figure 1. The diagram is shown for reference only. Use the instructions beginning in the next section to draw your Class diagram.</p>
+<p>If a procedure is labeled as optional, it is included to illustrate an additional task or alternate way of doing a task. You do not need to do the optional procedures to complete this tutorial successfully.</p>
+<p align="center"><img src="../../../images/articles/uml-class-diagram/Completed-Class-Diagram.gif" alt="image of Screen capture of a sample completed Class Diagram" border="0"><br>
+    <br>
+    <b>Figure 1</b>: Sample Class Diagram</p>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="classdiag"></a>Creating Class Diagrams and Adding Elements </h2>
+<p>This tutorial uses the UML project that is created in the <a href="use-case.html" title="UML: Creating Use Case Diagrams">UML: Creating Use Case Diagrams</a> tutorial. If you have not completed the use case tutorial, you can create a directory on your local system named <tt>UMLTutorial</tt> and create a Java-Platform Model UML project called <tt>UMLTutorialProject</tt> in that directory and proceed with this tutorial. </p>
+<p>This section illustrates some basic UML tasks provided by UML to model a simple application using a Class diagram. This section contains the following procedures: </p>
+<ul>
+  <li class="tut"><a href="class-diagram.html#class">To Create the Class Diagram</a></li>
+  <li class="tut"><a href="class-diagram.html#label">To Add and Label Class Elements</a></li>
+  <li class="tut"><a href="class-diagram.html#add1">To Add Attributes Using the Pop-Up Menu</a></li>
+  <li class="tut"><a href="class-diagram.html#add3">To Add Operations</a></li>
+  <li class="tut"><a href="class-diagram.html#change">(Optional) To Edit Attributes or Operations</a></li>
+  <li class="tut"><a href="class-diagram.html#complete">To Add and Define the Remaining Classes</a></li>
+</ul>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<div class="indent">
+  <h3 class="tutorial"><a name="class"></a>To Create the Class Diagram</h3>
+  <ol>
+    <li class="tut">If necessary, start the IDE and open the previously created <tt>UMLTutorialProject</tt> project.</li>
+    <li class="tut">In the Projects window, expand the <tt>UMLTutorialProject</tt> node and right-click the <tt>Model</tt> node.</li>
+    <li class="tut">Choose Add &gt; Diagram from the pop-up menu.<br>
+        <br>
+      The New Wizard opens and displays the Create New Diagram page.</li>
+    <li class="tut">In the Diagram Type list, select Class Diagram.</li>
+    <li class="tut">In the Diagram Name field, type <tt>ClassDiagram</tt>.</li>
+    <li class="tut">Leave the default setting in the Namespace field and click Finish.<br>
+      The IDE does the following:<br>
+      <ul>
+        <li class="tut">Creates the <tt>ClassDiagram</tt> node under the <tt>Model</tt> node</li>
+        <li class="tut">Displays the new diagram in the Diagram editor (the diagram is empty at this point)</li>
+        <li class="tut">Opens the Modeling Palette</li>
+      </ul>
+    </li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+</div>
+<br>
+<div class="indent">
+  <h3 class="tutorial"><a name="label"></a>To Add and Label Class Elements</h3>
+  <ol>
+    <li class="tut">From the Basic section of the Modeling Palette, select the Class icon <img src="../../../images/articles/uml-class-diagram/Class.png" alt="image of Class icon."> and click once in the Diagram editor.<br>
+      This action places a Class element on the diagram.</li>
+    <li class="tut">Deselect the icon by right-clicking anywhere in the Diagram Editor. <br>
+        <br>
+        <b>Note: </b>Each time that you select an icon, you can place multiple instances of that element in the Diagram editor by clicking more than once.</li>
+    <li class="tut">If not already selected, select the newly added Class element by clicking it once.</li>
+    <li class="tut">Type <tt>EntryStation</tt> and press Enter.<br>
+      The IDE does the following: <br>
+      <ul>
+        <li class="tut">Labels the Class element with the name EntryStation</li>
+        <li class="tut">Creates a public operation named <tt>EntryStation()</tt></li>
+        <li class="tut">Displays the Class properties in the Properties window</li>
+        <li class="tut">Adds a Class element with the name EntryStation under the Model node in the Projects window</li>
+      </ul>
+    </li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="add1"></a>To Add Attributes Using the Pop-Up Menu</h3>
+  <p>Now that you have drawn and labeled the EntryStation element, you need to describe its attributes. </p>
+  <ol>
+    <li class="tut">If it is not already selected, select the EntryStation element in the Diagram editor.</li>
+    <li class="tut">Right-click the word Attributes and choose Insert Attribute from the pop-up menu.<br>
+      A one-line editor opens and displays the following information:<br>
+      <pre class="examplecode">
+visibility type <b>name</b>[ranges]=initialValue{name=value}
+</pre>
+    </li>
+    <li class="tut">Type <tt>stationID</tt> and press Enter.<br>
+      An attribute named <tt>stationID</tt> of type <tt>int</tt> appears on the EntryStation class, and the following operations are created on the class:<br>
+      <pre class="examplecode">
+public int getStationID()
+public void setStationID(int val)
+</pre>
+      Note that the <tt>get</tt> and <tt>set</tt> operations are created because you kept the default setting. </li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a><br>
+  </p>
+  <h3 class="tutorial"><a name="add3"></a>To Add Operations</h3>
+  <ol>
+    <li class="tut">In the Diagram editor, Select the EntryStation Class element.</li>
+    <li class="tut">Right-click the word <tt>Operations</tt> and choose Insert Operation from the pop-up menu.<br>
+      A one-line editor opens and displays the following information:<br>
+      <pre class="examplecode">
+visibility returnType <b>name</b>(parameter) {properties, ...}
+</pre>
+    </li>
+    <li class="tut">Type <tt>validateEntryStation</tt> and press Enter.<br>
+      The IDE creates a new operation.</li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="change"></a>(Optional) To Edit Attributes or Operations</h3>
+  <p>When you double-click an attribute or an operation in a class, a combo box editor opens as shown in the following figure.</p>
+  <p align="center"><img src="../../../images/articles/uml-class-diagram/combo-box.gif" alt="image of Screen capture showing Combo Box Editor for Attribute" border="0"></p>
+  <p>As you click each part of the attribute or operation, the label for that part appears in bold type in the combo box. If applicable, the selected part of the operation or attribute has a drop-down list of values.</p>
+  <p>For example:</p>
+  <ol>
+    <li class="tut">Double-click the <tt>stationID</tt> attribute in the EntryStation class.</li>
+    <li class="tut">Click the word <tt>private</tt>.<br>
+      Notice that the word <b>visibility</b> appears in bold type.</li>
+    <li class="tut">Press CTRL + down arrow.<br>
+      A drop-down list opens that displays values that you can select for the visibility attribute.</li>
+    <li class="tut">Select a new value from the drop-down list and press Enter.<br>
+      The attribute is updated with the new value.<br>
+      <br>
+      <b>Note:</b> You can also type a new value directly in the editor. If you do not see what you need in the drop-down list, use the right and left arrow keys to position your cursor and type the appropriate value.</li>
+    <li class="tut">For this tutorial, use the value <tt>private</tt> and press Enter to close the editor.</li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="complete"></a>To Add and Define the Remaining Classes</h3>
+  <p>Now you need to add more classes to complete a simple banking application Class diagram. After you add the classes, label them and add attributes and operations as described below using the techniques that you have learned so far in this tutorial. </p>
+  <ol>
+    <li class="tut">From the Basic section of the Modeling Palette, select the Class icon <img src="../../../images/articles/uml-class-diagram/Class.png" alt="image of Class icon"> and click five times in the Diagram editor to place the additional class elements as shown in the following figure.<br>
+        <p align="center"><img src="../../../images/articles/uml-class-diagram/unnamed-classes.gif" alt="image of Screen capture of Class Diagram showing several unnamed elements" width="430" height="464" border="0"></p>
+    </li>
+    <li class="tut">Deselect the Class icon by right-clicking anywhere in Diagram editor. <br>
+        <br>
+        <b>Note: </b>You can select and drag the new class elements to arrange them as shown in the preceding diagram, so that you can see each one clearly in the diagram.</li>
+    <li class="tut">Select the first unnamed Class element below the EntryStation element and name it <tt>ATM</tt>. </li>
+    <li class="tut">With the ATM Class element still selected, add an attribute as follows:<br>
+        <pre class="examplecode">
+private float cashOnHand</pre>
+    </li>
+    <li class="tut">Add a second attribute to the ATM class and define it as follows:<br>
+        <pre class="examplecode">
+private float dispensed
+  </pre>
+      The attributes appear in the Class diagram.<br>
+      <br>
+      <b>Note: </b>As you add attributes and operations to the classes, the size of the Class elements increases. To improve the appearance of the diagram, move the Class elements as needed so that you can see each element clearly. When doing this, be careful to select the Class element and not an individual attribute or operation.</li>
+    <li class="tut">Select the first Class element located below the ATM class and name it <tt>Consortium</tt>.</li>
+    <li class="tut">Add an operation to the Consortium class. Adding operations is similar to adding attributes. Right-click on the word Operations and select Insert Operations.</li>
+    <li class="tut">Type <tt>validateAccountInfo</tt> and press Enter. <br>
+      The IDE creates the new operation as follows:<br>
+      <pre class="examplecode">
+public void validateAccountInfo()
+</pre>
+    </li>
+    <li class="tut">Select the Class element to the right of the ATM class and label it <tt>CashierStation</tt>.</li>
+    <li class="tut">Add two operations for this class as follows:<br>
+        <pre class="examplecode">
+public int verifyCard()
+
+public float verifyAmountAvailable()
+  </pre>
+    </li>
+    <li class="tut">Label the two remaining Class elements <tt>Branch</tt> and <tt>User</tt>.<br>
+      For the User class there are no attributes or operations. </li>
+    <li class="tut">For the Branch class, add an attribute as follows:<br>
+        <pre class="examplecode">
+private char connected
+  </pre>
+    </li>
+  </ol>
+</div>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<h2 class="tutorial"><a name="gen-code-edit"></a>Generating and Editing Java Source Code</h2>
+<p>This section shows how you can generate Java source code for the Class diagram you just created in the previous section. Once you create your UML model, you can generate the corresponding Java source code for it. If you modify your model, you can re-generate the Java source code using the UML's Generate Code feature. <br>
+    <br>
+  This section contains the following procedures:</p>
+<ul>
+  <li><a href="class-diagram.html#gencode">To Generate Java Source Code</a></li>
+  <li><a href="class-diagram.html#add2">To Add Attributes Using the Source Editor</a></li>
+</ul>
+<h3 class="tutorial"><a name="gencode"></a>To Generate Java Source Code</h3>
+<p>You can model your Java application and then generate the corresponding Java source code for your model. To generate the source code you need to create a Java project and use it to store the generated code for your UML project. </p>
+<ol>
+  <li class="tut">From the main menu, choose File &gt; New Project and then do the following:<br>
+      <ol type="a">
+        <li class="tut">Under Categories, select General.</li>
+        <li class="tut">Under Projects, select Java Application.</li>
+        <li class="tut">Click Next.</li>
+      </ol>
+  </li>
+  <li class="tut">In the Project Name field, type <tt>JavaPrj1</tt>.</li>
+  <li class="tut">For the Project Location, click Browse and select the directory <tt>UMLTutorial</tt>.</li>
+  <li class="tut">Clear the Set as Main Project and Create Main Class checkboxes.</li>
+  <li class="tut">Click Finish.<br>
+    A progress dialog box appears. When your <tt>JavaPrj1</tt> project is created, it appears in the Projects window.</li>
+  <li class="tut">In the Projects window, right-click <tt>the UMLTutorialProject</tt> node and choose Generate Code from the pop-up menu.</li>
+  <li class="tut">In the Generate Code dialog box, click Browse.</li>
+  <li class="tut">In the Choose the Target Source Folder dialog box, locate the source folder for the JavaPrj1 project you just created.<br>
+    For example: <code>C:\Temp\UMLTutorial\JavPrj1\src</code></li>
+  <li class="tut"> Click Open.</li>
+  <li class="tut">Back in the Generate Code dialog box, unselect the Backup Existing Source Files checkbox and click OK.</li>
+  <li class="tut">In the Authorize UML Project Save dialog box, click Yes.<br>
+    The IDE generates the Java source code and the Output window displays the progress of the code generation process.</li>
+  <li class="tut">In the Projects window, expand the <tt>JavaPrj1 &gt; Source Package</tt> node and double-click on the <tt>&lt;default package&gt;</tt> node.<br>
+    Notice the folder contains the Java source files that are similarly named as the class elements you created in the ClassDiagram model.</li>
+</ol>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<h3 class="tutorial"><a name="add2"></a>To Add Attributes Using the Java Source Editor</h3>
+<p>Now, add another attribute to the EntryStation using the Source Editor. After modifying the Java source file, you will use the Reverse Engineer feature to reflect the change in the corresponding UML model element. </p>
+<ol>
+  <li class="tut">In the Projects window, expand the <tt>UMLTutorialProject</tt> node and the <tt>Model</tt> node if necessary. </li>
+  <li class="tut">Right-click the <tt>EntryStation</tt> node and choose Navigate To Source from the pop-up menu.<br>
+    A Source Editor tab labeled <tt>EntryStation.java</tt> appears and displays the source code for the class.</li>
+  <li class="tut">In the Source Editor, type the following code below the first attribute:<br>
+      <pre class="examplecode">
+private boolean isOperating
+  </pre>
+  </li>
+  <li class="tut">Press Ctrl-S to save your change.</li>
+  <li class="tut">Right-click in the Source Editor and choose Reverse Engineer from the pop-up menu.<br>
+    The Reverse Engineer dialog box appears.</li>
+  <li class="tut">Select Use Existing UML Project in the Reverse Engineer dialog box and choose <tt>UMLTutorialProject</tt> as the target project.</li>
+  <li class="tut">Click OK to invoke the reverse engineering process.</li>
+  <li class="tut">In the Model Element Overwrite Authorization dialog box, click Yes to overwrite the existing model for the <tt>EntryStation</tt> class. </li>
+  <li class="tut">Click the ClassDiagram tab to return focus to the Diagram editor.<br>
+    The <tt>isOperating</tt> attribute appears in the EntryStation class element.<br>
+    <br>
+    <b>Note:</b> Click the Fit to Window button <img src="../../../images/articles/uml-class-diagram/fit-to-window.png" alt="image of Fit To Window icon."> on the Diagram toolbar to center the diagram in the window. This button allows you to adjust the Zoom level if necessary to read labels or to make room to place more elements on the diagram.</li>
+</ol>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="find"></a>Finding Diagram Elements </h2>
+<p>You can use several methods to quickly locate objects in a diagram or in the Projects window. All attributes and operations that you add to the Class elements in the Diagram editor appear in the Projects window. The attributes are represented by the attribute icon <img src="../../../images/articles/uml-class-diagram/attribute.gif" alt="image of Attribute icon">. The operations are represented by the operation icon <img src="../../../images/articles/uml-class-diagram/operation.gif" alt="image of Operation icon">.</p>
+<div class="indent">
+  <h3 class="tutorial">To Locate Objects in the Diagram Editor From the Projects Window</h3>
+  <ul>
+    <li class="tut">In the Projects window, double-click the EntryStation node.<br>
+      In the Diagram editor, the EntryStation Class element is selected and centered. </li>
+  </ul>
+  <h3 class="tutorial">To Locate Objects in the Projects Window From the Diagram Editor</h3>
+  <ol>
+    <li class="tut">In the Diagram editor, select the Consortium class and right-click it.</li>
+    <li class="tut">Choose Select in Model from the pop-up menu.<br>
+      In the Projects window, the name of the target object is highlighted.</li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <br>
+</div>
+<!-- ======================================================================================= -->
+<h2><a name="enterdoc"></a>Documenting Classes and Diagrams</h2>
+<p>There are three different ways to choose from when you want to enter descriptive documentation for classes, attributes, operations, and diagrams. This section contains the following procedures that describe these three methods:</p>
+<ul>
+  <li class="tut"><a href="class-diagram.html#usedocwindow">To Use the UML Documentation Window</a></li>
+  <li class="tut"><a href="class-diagram.html#docattribswithpropswindow">To Document Attributes Using the Properties Window</a></li>
+  <li class="tut"><a href="class-diagram.html#docdiagramswithcomments">To Document Diagrams Using the Comment Icon</a></li>
+</ul>
+<br>
+<div class="indent">
+  <h3 class="tutorial"><a name="usedocwindow"></a>To Use the UML Documentation Window</h3>
+  <ol>
+    <li class="tut">(Optional) If the UML Documentation window is not visible, choose Windows &gt; Other &gt; UML Documentation.</li>
+    <li class="tut">In the Diagram editor, select the EntryStation class element.</li>
+    <li class="tut">Click inside the UML Documentation window text box.</li>
+    <li class="tut">Type <tt>Describes the actions of the EntryStation class</tt>.</li>
+    <li class="tut">Right-click the EntryStation class element and select Generate Code from the pop-up menu.</li>
+    <li class="tut">In the Generate Code dialog box, click OK.</li>
+    <li class="tut">In the Authorize UML Project Save dialog box, click Yes.<br>
+      The new Java code is generated. </li>
+    <li class="tut">Click the <tt>EntryStation.java</tt> Source Editor tab.<br>
+      You see that the text you typed in Documentation window has been added to the <tt>EntryStation.java</tt> source file.</li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="docattribswithpropswindow"></a>To Document Attributes Using the Properties Window</h3>
+  <ol>
+    <li class="tut">Click the ClassDiagram tab to return the focus to the Diagram editor.</li>
+    <li class="tut">In the Projects window, expand the <tt>EntryStation</tt> node.</li>
+    <li class="tut">Select the attribute node labeled <tt>private boolean isOperating</tt>.<br>
+      The properties for the attribute appear in the UML Properties window. </li>
+    <li class="tut">In the Properties window, click the ellipsis button (...) on the Documentation row.<br>
+      A custom editor opens as shown in the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-class-diagram/prop-doc-editor.png" alt="image of Screen capture showing custom editor with OK and Cancel buttons" width="462" height="241" border="0"> </p>
+    </li>
+    <li class="tut">Type the text <tt>Maintains if EntryStation is operating</tt> and click OK.</li>
+    <li class="tut">In the Diagram editor, right-click the EntryStation class element and select Generate Code from the pop-up menu.</li>
+    <li class="tut">In the Generate Code dialog box, click OK.</li>
+    <li class="tut">In the Authorize UML Project Save dialog box, click Yes.<br>
+      The new Java code is generated. </li>
+    <li class="tut">Click the Source Editor tab for <tt>EntryStation.java</tt>.<br>
+      You see the typed text in the source code right above the <tt>isOperating</tt> attribute.</li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <br>
+  <h3 class="tutorial"><a name="docdiagramswithcomments"></a>To Document Diagrams Using the Comment Icon</h3>
+  <p>You can add notes that describe specific information for a selected element in the diagram by using the Comment icon located on the Modeling Palette. </p>
+  <ol>
+    <li class="tut">Click the ClassDiagram tab to return to the Diagram editor.</li>
+    <li class="tut">From the Comments section of the Modeling Palette, select the Comment icon <img src="../../../images/articles/uml-class-diagram/Notepad.png" alt="image of Comment icon">.</li>
+    <li class="tut">Click once to the right and just above the CashierStation element.<br>
+      A Comment element is placed on the diagram.</li>
+    <li class="tut">Deselect the icon by right-clicking anywhere in the Diagram editor. </li>
+    <li class="tut">While the comment element is selected, type <tt>Cashier stations have limited funds</tt> and press Enter.<br>
+      The text appears in the Comment element.</li>
+    <li class="tut">From the Comments section of the Modeling Palette, select the Link Comment icon <img src="../../../images/articles/uml-class-diagram/note-link.png" alt="image of Link Comment icon">.</li>
+    <li class="tut">Click once inside CashierStation and click again inside the Comment element.<br>
+      A link snaps into place between the Comment element and the Class element.</li>
+    <li class="tut">Deselect the icon by right-clicking anywhere in the Diagram editor. </li>
+    <li class="tut">Repeat steps 2-8 to place and link a second Comment element on the diagram for the Branch Class element.<br>
+      Use the following text: <tt>A branch belongs to a Member Institution.</tt></li>
+  </ol>
+</div>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="links"></a>Depicting Links and Associations</h2>
+<p>An association describes a group of links that share common structure and common semantics. The UML functionality supports not only associations, but also multiplicity of associations. Multiplicity specifies how many instances of one class can relate to a single instance of an associated class. Multiplicity constrains the numbers of related components. This section contains the following procedures:</p>
+<ul>
+  <li class="tut"><a href="class-diagram.html#association">To Depict a Class Association</a></li>
+  <li class="tut"><a href="class-diagram.html#qual">To Depict a Qualified Association</a></li>
+  <li class="tut"><a href="class-diagram.html#multiplicity">To Set Multiplicity for the Association</a></li>
+  <li class="tut"><a href="class-diagram.html#inherit">To Depict Generalization and Inheritance</a></li>
+</ul>
+<br>
+<div class="indent">
+  <h3 class="tutorial"><a name="association"></a>To Depict a Class Association</h3>
+  <ol>
+    <li class="tut">From the Association section of the Modeling Palette, select the Aggregation icon <img src="../../../images/articles/uml-class-diagram/Aggregation.png" alt="image of Aggregation icon">.</li>
+    <li class="tut">Click inside the ATM element, and then click the Consortium element.<br>
+      A link is drawn between the two classes.</li>
+    <li class="tut">Right-click anywhere in the Diagram editor to deselect the icon.<br>
+      This relationship is represented in the Projects window as shown in the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-class-diagram/aggregation-ATM-Cons.gif" alt="image of Screen capture showing Aggregation node in the Projects window" border="0"></p>
+    </li>
+    <li class="tut">Select the Aggregation link between ATM and Consortium.<br>
+      When the link is selected, the color changes to blue.</li>
+    <li class="tut">Point the cursor near the middle of the selected line and right-click.</li>
+    <li class="tut">Choose Labels &gt; Link Name from the pop-up menu.</li>
+    <li class="tut">Type <tt>AccountVerification</tt> in the Name field and press Enter.<br>
+      The link is labeled as shown in the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-class-diagram/label-a-link.gif" alt="image of Screen capture showing the labeled Aggregation link" border="0"></p>
+    </li>
+    <li class="tut">From the Association section of the Modeling Palette, select the Association icon <img src="../../../images/articles/uml-class-diagram/Association.png" alt="image of Association icon"> and draw a link from CashierStation to Branch.</li>
+    <li class="tut">Right-click anywhere in the Diagram editor to deselect the icon.</li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <h3 class="tutorial"><a name="qual"></a>To Depict a Qualified Association</h3>
+  <p>A qualified association relates two classes and a qualifier. The qualifier is a special attribute that reduces the effective multiplicity of an association. You depict a qualified association as a small box on the end of the association line near the class it qualifies.</p>
+  <p>The next step shows you how to create a qualified association between the ATM class and the Consortium class.</p>
+  <ul>
+    <li class="tut">Right-click the Aggregation link where it joins the Consortium class and choose Show Qualifier. A qualifier attaches to the Consortium class element as shown in the following figure.<br>
+        <p align="center"><img src="../../../images/articles/uml-class-diagram/show-qualifier.gif" alt="image of Screen capture showing qualified associaton between ATM and Consortium classes" border="0"></p>
+    </li>
+  </ul>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <h3 class="tutorial"><a name="multiplicity"></a>To Set Multiplicity for the Association</h3>
+  <p>You want to set the multiplicity for this association. However, by default, these labels are hidden. Use the following steps to display the labels on the association link. </p>
+  <ol>
+    <li class="tut">Right-click the link between Consortium and ATM and choose Labels &gt; Both End Multiplicities.<br>
+      The pop-up menu closes and the labels for the link appear.</li>
+    <li class="tut">Right-click the small diamond at the upper portion of the aggregation link (near the ATM element) and choose Set Multiplicity.<br>
+        <br>
+        <b>Note: </b>If you have difficulty making the correct pop-up menu appear, lengthen the aggregate arrow by moving the Consortium element farther away from the ATM element.</li>
+    <li class="tut">Select <tt>1..*</tt>.<br>
+      Notice that the lower portion of the link is labeled 1 as shown in the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-class-diagram/aggregation-link-multi.gif" alt="image of Screen capture showing labeled Aggregation Link with Multiplicities" border="0"></p>
+    </li>
+    <li class="tut">Follow a similar procedure and set the multiplicity for the Association link between CashierStation and Branch as shown in the following figure.
+        <p align="center"><img src="../../../images/articles/uml-class-diagram/association-link-multi.gif" alt="image of Screen capture showing Association Link with Multiplicities" border="0"></p>
+    </li>
+  </ol>
+  <p align="center"><a href="class-diagram.html#top">top</a></p>
+  <h3 class="tutorial"><a name="inherit"></a>To Depict Generalization and Inheritance</h3>
+  <p>Generalization is the relationship between a class and one or more refined versions of this class. The class being refined is named the superclass and each refined version is named the subclass. The attributes and operations of the superclass can be exhibited in its subclasses, as a result, each subclass is said to inherit the features of the superclass. You can organize classes by using inheritance to share common structure. A generalization link means that a class can inherit an array of attributes and operations from the parent class.</p>
+  <ol>
+    <li class="tut">From the Basic section of the Modeling Palette, select the Generalization icon <img src="../../../images/articles/uml-class-diagram/GeneraLink.png" alt="image of Generalization icon">.</li>
+    <li class="tut">Click inside the ATM class element, and then click the EntryStation class element.<br>
+      The Select Methods to Redefine dialog box appears.</li>
+    <li class="tut">Select the checkbox next to the <tt>ATM</tt> node to select all the methods and click OK. <br>
+      The selected methods are added to the ATM class element and a generalization link snaps in place between the two class elements. </li>
+    <li class="tut">Draw another generalization link by first clicking CashierStation, and then clicking EntryStation.</li>
+    <li class="tut">In the Select methods to Redefine dialog box, select the checkbox next to the <tt>CashierStation</tt> node to select all methods and click OK.</li>
+    <li class="tut">Right-click anywhere in the Diagram editor to deselect the Generalization icon.</li>
+    <li class="tut">Your finished diagram should look similar to the following figure.<br>
+        <p align="center"><img src="../../../images/articles/uml-class-diagram/Completed-Class-Diagram.gif" alt="image of Screen capture showing the completed Class Diagram" border="0"></p>
+    </li>
+  </ol>
+</div>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="depend"></a>Creating Dependency Diagrams</h2>
+<p>Using UML, you can create a diagram that shows all the dependencies for a classifier. The following types of relationships are depicted in the Dependency diagram:</p>
+<ul>
+  <li class="tut">Generalizations</li>
+  <li class="tut">Associations</li>
+  <li class="tut">Implementations</li>
+  <li class="tut">Operations with parameters of a given class type</li>
+</ul>
+<p>Now, create a dependency diagram for the ATM class diagram.</p>
+<ol>
+  <li class="tut">In the Projects window, right-click the <tt>ATM</tt> node.</li>
+  <li class="tut">Select Generate Dependency Diagram from the pop-up menu.<br>
+    A dependency diagram named ATM Dependencies is created and opened in the Diagram editor as shown in the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-class-diagram/dependency-diagram.gif" alt="image of Screen capture showing the Dependency Diagram " width="378" height="549" border="0"></p>
+  </li>
+</ol>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="save"></a>Saving Diagrams and Updating Java Source Files </h2>
+<p> Do the following steps to save your completed diagrams and regenerate the Java source files for your diagrams. Do the following:</p>
+<ol>
+  <li class="tut">After you complete your diagram, right-click the ClassDiagram tab and choose Save Document from the pop-up menu.<br>
+    The menu closes and the Class diagram is saved.</li>
+  <li class="tut">In the Projects window, right-click <tt>the UMLTutorialProject</tt> node and choose Generate Code from the pop-up menu.</li>
+  <li class="tut">In the Generate Code dialog box, accept the default <tt>JavaPrj1</tt> source folder location and backup the existing source files.<br>
+    Optionally, you can click Browse to locate and use another source folder.</li>
+  <li class="tut">Click OK.<br>
+    The IDE generates the code and the Output window displays the progress of the code generation process. The Java source folder for the <tt>JavaPrj1</tt> project should have been updated with the changes you made to your diagrams. <br>
+    <br>
+    <b>Note:</b> The source folder for the <tt>JavaPrj1</tt> project may also include the backup files that were created if you selected the Backup Existing Source Files checkbox in the Generate Code dialog box and you chose to use the same source folder. The backup files are similarly named as the original files, but the file extensions contain numbers. For example, the <tt>ATM.java</tt> has a backup file named <tt>ATM.java1</tt>.</li>
+</ol>
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2>Summary</h2>
+<p>In this tutorial, you learned how to create a class diagram for a simple banking application. You learned how to perform the following tasks:</p>
+<ul>
+  <li class="tut">Create a Class diagram</li>
+  <li class="tut">Use the icons from the Modeling Palette to add elements to the diagram</li>
+  <li class="tut">Add and define attributes and operations on the class elements</li>
+  <li class="tut">Document the diagrams and the diagram elements</li>
+  <li class="tut">Depict links and associations between the class elements</li>
+  <li class="tut">Create a Dependency diagram</li>
+  <li class="tut">Generate the Java source code files for the diagrams</li>
+  <li class="tut">Save your diagram</li>
+</ul>
+<!-- Feedback Link -->
+<br style="clear: both;">
+<!-- ======================================================================================== -->
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul><li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p>
+    </li>
+</ul>
+<p>
+  <!-- Update your-tutorial-title below to reflect your tutorial title -----------------------------------* -->
+  <br>
+</p>
+
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="class-diagram.html#top">top</a></p>
+<p><small>&gt;&gt; <a href="../../index.html">More NetBeans IDE Documentation</a></small></p>
+
+</body>
+</html>

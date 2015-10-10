@@ -1,0 +1,647 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>NetBeans IDE 6.0 - XSLT Designer Quick Start Guide</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta name="keywords" content="NetBeans, IDE, Platform, XSLT, Enterprise Pack, free, open source, developer" >
+        <meta name="description" content="XSLT Designer Quick Start Guide">
+        <link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+        <meta name="author" content="Vince Genovese">
+		<style>
+		.comment {color:blue; font-weight:bold}
+		.change-bar {border-left: thin; border-left-style: solid; border-color:black; padding-left: 6px}
+		.deleted {text-decoration: line-through}
+		</style>
+    </head>
+    <body>
+	<!--
+	*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+	*     Use is subject to license terms.
+	-->
+	<div style="padding-left:20px; margin-left:20px">
+        <a name="top"></a>
+
+        <h1>
+             Quick Start Guide to the XSLT Designer
+        </h1>
+      <div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Dmitry.Markovski@Sun.com">Dmitry Markovski,</a>
+             updated by Vince Genovese<br> 
+December 2007<br>
+
+      </div>
+        <div class="indent">
+        <h3>
+             Contents 
+        </h3>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody> <tr>
+         <td align="left" valign="top">
+		
+	        <ul>
+	            <li><a href="xslt-quickstart.html#overview">Overview</a></li>
+	            <li><a href="xslt-quickstart.html#configure">Configuring the Tutorial Environment</a></li>
+	            <li><a href="xslt-quickstart.html#newproject">Creating the XSLT Module Project</a></li>
+	            <li><a href="xslt-quickstart.html#schema">Creating XML Schemas</a></li>
+	            <li><a href="xslt-quickstart.html#wsdl">Creating a WSDL File</a></li>
+	            <li><a href="xslt-quickstart.html#xsl">Creating an XSL Stylesheet</a></li>
+	            <li><a href="xslt-quickstart.html#deploy">Creating and Deploying the Composite Application</a></li>
+	            <li><a href="xslt-quickstart.html#test">Performing a Test Run of the XSL Transformation Service</a></li>
+	            <li><a href="xslt-quickstart.html#next">Next Step</a></li>
+	        </ul></td>
+
+
+       </tr>
+
+     </tbody></table>
+		</div> <!-- indent -->
+        <!--=====================Overview=====================-->
+        <h2>
+            <a name="overview"></a> Overview 
+        </h2>
+        <p>
+             In this tutorial you become acquainted with the XSLT Designer included in NetBeans IDE 6.0. The XSLT Designer is used to develop, deploy and test XSL Transformation Services.
+        </p>
+        <p>
+             An XSL Transformation Service acts as a web service. It receives messages from an external client, transforms the messages in accordance with an XSL stylesheet, and either sends the messages back to the originator or forwards them to another web service. 
+        </p>
+        <p>
+             In this tutorial you create a simple XSL Transformation Service that receives a message, transforms it, and sends it back to the calling web service. 
+        </p>
+		<div class="indent">
+        <h3>
+             Prerequisites 
+        </h3>
+        <p>
+             This tutorial assumes that you have some basic knowledge of, or programming experience with, the NetBeans IDE. 
+        </p>
+        <h3>
+             System Requirements 
+        </h3>
+        <p>
+             This tutorial assumes that your system meets the requirements specified in the <i>System Requirements</i> section of the <a href="../../../community/releases/60/relnotes.html">NetBeans IDE 6.0 Release Notes</a>.
+        </p>
+        <h3>
+             Software Needed for the Tutorial 
+        </h3>
+        <p>
+        Before you begin, install the following software on your computer: NetBeans IDE 6.0, with the SOA Pack and GlassFish V2 Application Server, which are required for this tutorial.
+		</p>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+		</div> <!-- indent -->
+        <!-- =========================Configuring the Tutorial Environment========================-->
+        <h2>
+            <a name="configure"></a> Configuring the Tutorial Environment 
+        </h2>
+        <p>
+        This tutorial requires that the GlassFish V2 Application Server, which includes the JBI runtime, has been installed with NetBeans IDE 6.0. Perform the following steps to confirm that GlassFish V2 Application Server is installed with NetBeans IDE 6.0 and that the JBI runtime contains the XSLT Service Engine and Transform Shared Library required for this tutorial: 
+        </p>
+        <ol>
+            <li>
+                 Open the Services window. 
+            </li>
+            <li>
+                 Expand the <tt>Servers</tt> node. 
+            </li>
+            <li>
+            Right-click the <tt>GlassFish V2</tt> node and choose Start form the pop-up menu.
+			<br><br>If the Start option is not available and there is a green &ldquo;badge&rdquo; next to the <tt>GlassFish V2</tt> node, the server is already running.
+            <br>
+            <br>
+            <p align="center">
+                <img src="../../../images/articles/ep-xslt-quickstart/60/appserverbadge.png" alt="Application Server Running">
+            </p>
+            </li>
+            <li>
+             After the server is started, expand the <tt>GlassFish V2&nbsp;&gt;&nbsp;JBI</tt> node.  Then expand both the <tt>Service Engines</tt> node and the <tt>Shared Libraries</tt> node to verify that the XSLT Service Engine and Transform Shared Library are installed.
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/appserverrunning.png" alt="Application Server Running">
+                </p>
+            </li>
+        </ol>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <!-- ==========================Creating the XSLT Module Project================================ -->
+        <h2>
+            <a name="newproject"></a> Creating the XSLT Module Project 
+        </h2>
+        <p>
+             An XSL Transformation Service is created within an XSLT Module project. 
+        </p>
+        <p>
+            <strong>To create a new XSLT Module Project:</strong>
+        </p>
+        <ol>
+            <li>
+                 From the IDE's main menu, choose File &gt; New Project. 
+            </li>
+            <li>
+                 Under Categories select <tt>SOA</tt>. 
+            </li>
+            <li>
+                 Under Projects, select <tt>XSLT Module</tt>.
+            </li>
+            <li>
+                 Click Next. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/newproject.png" alt="New XSLT Module Project">
+                </p>
+            </li>
+            <li>
+                 In the Project Name field, type <tt>HelloXSLTransformation</tt>. 
+            </li>
+            <li>
+                 Modify the project location, or accept the default. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/nameandlocation.png" alt="New Project Name and Location">
+                </p>
+            </li>
+            <li>
+                 Click Finish. 
+            </li>
+            <li>
+                 The Projects window now contains the <tt>HelloXSLTransformation</tt> project node. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/projectcreated.png" alt="HelloXSLTransformation in the Projects Window">
+                </p>
+            </li>
+        </ol>
+        <p>
+             Next you create two XML Schema (<tt>.xsd</tt>) files, a web service description (<tt>.wsdl</tt>) file and an XSL stylesheet (<tt>.xsl</tt>) file. To run an XSL Transformation Service, you need at least one XML Schema, one WSDL file and one XSL stylesheet. For the purpose of this tutorial, you create two XML Schemas. 
+        </p>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <!--========================Creating XML Schemas========================-->
+        <h2>
+            <a name="schema"></a> Creating XML Schemas 
+        </h2>
+        <p>
+             You will create two XML Schemas: <tt>HelloXSLTIncoming.xsd</tt> and <tt>HelloXSLTOutgoing.xsd</tt>. You use the former as the basis for the incoming message and the latter as the basis for the outgoing message. 
+        </p>
+        <p>
+            <strong>To create the XML Schema for the incoming message:</strong>
+        </p>
+        <ol>
+            <li>
+                 In the Projects window, right-click the <tt>HelloXSLTransformation &gt; Transformation Files</tt> node and choose New &gt; XML Schema. 
+            </li>
+            <li>
+                 In the File Name field, type <tt>HelloXSLTIncoming</tt>. 
+            </li>
+            <li>
+                 Click Finish. A new node&mdash;<tt>HelloXSLTIncoming.xsd</tt>&mdash;appears under the <tt>Transformation Files</tt> node in your <tt>HelloXSLTransformation</tt> project and the new Schema opens in the XML Schema Editor. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/schemaview.png" alt="XML Schema Added to the Project">
+                </p>
+            </li>
+            <li>
+                 In the first column of the Schema view, right-click Elements and choose Add Element from the pop-up menu. The Add Element dialog box opens. 
+            </li>
+            <li>
+                 In the Name field, type <tt>name</tt>. 
+            </li>
+            <li>
+                 Under Type, select the Use Existing Type radio button.
+            </li>
+            <li>
+                Expand the <tt>Built-in Types</tt> node and select <tt>string</tt>.
+            </li>
+            <li>
+                 Click OK. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/newschemaelement.png" alt="New Schema Element Dialog">
+                </p>
+            </li>
+            <li>
+                 To view the source of the Schema you created, click the Source button on the XML Schema Editor toolbar. You should see the following code: 
+                 <pre class="examplecode">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsd:schema xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+            targetNamespace=&quot;http://xml.netbeans.org/schema/HelloXSLTIncoming&quot;
+            xmlns:tns=&quot;http://xml.netbeans.org/schema/HelloXSLTIncoming&quot;
+            elementFormDefault=&quot;qualified&quot;&gt;
+    &lt;xsd:element name=&quot;name&quot; type=&quot;xsd:string&quot;&gt;&lt;/xsd:element&gt;
+&lt;/xsd:schema&gt;</pre>
+            </li>
+        </ol>
+        <p>
+            <strong>To create the XML Schema for the outgoing message:</strong>
+        </p>
+        <ol>
+            <li>
+                In the Projects window, right-click the <tt>HelloXSLTransformation &gt; Transformation Files</tt> node and choose New &gt; XML Schema.
+            </li>
+            <li>
+                 In the File Name field, type <tt>HelloXSLTOutgoing</tt>. 
+            </li>
+            <li>
+                 Click Finish. A new node&mdash;<tt>HelloXSLTOutgoing.xsd</tt>&mdash;appears under the <tt>Transformation Files</tt> node in your <tt>HelloXSLTransformation</tt> project and the new Schema opens in the XML Schema Editor. 
+            </li>
+            <li>
+                 In the first column of the Schema view, right-click Elements and choose Add Element from the pop-up menu. The Element dialog box opens. 
+            </li>
+            <li>
+                 In the Name field, type <tt>greeting</tt>. 
+            </li>
+            <li>
+                 Under Type, select the Use Existing Type radio button.
+            </li>
+            <li>
+                 Expand the <tt>Built-in Types</tt> node and select <tt>string</tt>.
+            </li>
+            <li>
+                 Click OK. 
+            </li>
+            <li>
+                 To view the source of the Schema you created, click the Source button on the XML Schema Editor toolbar. You should see the following code: 
+                <pre class="examplecode">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsd:schema xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+            targetNamespace=&quot;http://xml.netbeans.org/schema/HelloXSLTOutgoing&quot;
+            xmlns:tns=&quot;http://xml.netbeans.org/schema/HelloXSLTOutgoing&quot;
+            elementFormDefault=&quot;qualified&quot;&gt;
+    &lt;xsd:element name=&quot;greeting&quot; type=&quot;xsd:string&quot;&gt;&lt;/xsd:element&gt;
+&lt;/xsd:schema&gt;</pre>
+            </li>
+            <li>
+                 Click the Save All button on the toolbar. 
+            </li>
+        </ol>
+        <p>
+             You should see two Schema files listed under the <tt>Transformation Files</tt> node in your <tt>HelloXSLTransformation</tt> project. 
+        </p>
+        <p align="center">
+            <img src="../../../images/articles/ep-xslt-quickstart/60/twoschemas.png" alt="Two Schema Files in the Project">
+        </p>
+        <p>
+            <strong>Note:</strong> The XML Schema Editor is not the subject of this tutorial. For detailed information on the XML Schema Editor, see <a href="xmltools-start.html">Getting Started With XML Schema Tools</a>.
+        </p>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <!--========================Creating a WSDL File========================-->
+        <h2>
+            <a name="wsdl"></a> Creating a WSDL File 
+        </h2>
+        <p>
+             Next you create a web service description file defining the web interface of our XSL Transformation Service. 
+        </p>
+        <p>
+            <strong>To create a WSDL file:</strong>
+        </p>
+        <ol>
+            <li>
+                 In the Projects window, right-click the <tt>HelloXSLTransformation &gt; Transformation Files</tt> node and choose New &gt; WSDL Document. 
+            </li>
+            <li>
+                 In the File Name field, type <tt>HelloXSLTWSDL</tt>, then click Next. 
+            </li>
+            <li>
+                 Under Input, in the Element Or Type column, click the ellipsis (...) button. The Select Element Or Type dialog box opens. 
+            </li>
+            <li>
+                 Select <tt>By File &gt; HelloXSLTransformation &gt; src/HelloXSLTIncoming.xsd &gt; Elements &gt; name</tt> and click OK. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/selectname.png" alt="Select the Name Element">
+                </p>
+            </li>
+            <li>
+                 Under Output, in the Element Or Type column, click the ellipsis (...) button. The Select Element Or Type dialog box opens. 
+            </li>
+            <li>
+                 Select <tt>By File &gt; HelloXSLTransformation &gt; src/HelloXSLTOutgoing.xsd &gt; Elements &gt; greeting</tt> and click OK. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/selectgreeting.png" alt="Select the Greeting Element">
+                </p>
+            </li>
+            <li>
+                 Click Next. 
+            </li>
+            <li>
+                 In the Binding Type Field, select SOAP. 
+            </li>
+            <li>
+                 Under Binding Subtype, select Document Literal, then click Finish. 
+            </li>
+        </ol>
+        <p>
+             You should see the <tt>HelloXSLTWSDL.wsdl</tt> file listed under the <tt>Transformation Files</tt> node in your <tt>HelloXSLTransformation</tt> project. 
+        </p>
+        <p align="center">
+            <img src="../../../images/articles/ep-xslt-quickstart/60/wsdl.png" alt="A WSDL File in the Projects Window">
+        </p>
+        <p>
+            <strong>Note:</strong> Creating and Editing WSDL files is not the subject of this tutorial. For detailed information, see <a href="../websvc/wsdl-guide.html">Developer Guide to the WSDL Editor</a>. 
+        </p>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <!--================================Creating an XSL Stylesheet==================-->
+        <h2>
+            <a name="xsl"></a> Creating an XSL Stylesheet 
+        </h2>
+        <p>
+             An XSL stylesheet is an XML file that contains instructions about transforming the incoming message into the outgoing message. 
+        </p>
+        <p>
+            <strong>To create an XSL stylesheet:</strong>
+        </p>
+        <ol>
+            <li>
+                 In the Projects window, right-click the <tt>HelloXSLTransformation &gt; Transformation Files</tt> node and choose New &gt; XSLT Service. 
+            </li>
+            <li>
+                 Under Service Type, select Request-Reply Service. Click Next. 
+            </li>
+            <li>
+                 Notice that <tt>HelloXSLTWSDL.wsdl</tt> is selected in the Web Service drop-down list. Click Next. 
+            </li>
+            <li>
+                 In the XSL File field, type <tt>HelloXSLTService</tt>. Click Finish.
+                <p>
+                     The <tt>HelloXSLTService.xsl</tt> node appears under the <tt>Transformation Files</tt> node in your <tt>HelloXSLTransformation</tt> project. The <tt>HelloXSLTService.xsl</tt> file opens in the Design view of the XSL Transformation Editor. The Design view Palette opens on the right. 
+                </p>
+                <p align="center">
+                    <a href="../../../images/articles/ep-xslt-quickstart/60/mapper.png">
+                        <img src="../../../images/articles/ep-xslt-quickstart/60/mapper-small.png" alt="XSL Transformation editor" border="0"><br>Click to enlarge </a>
+                </p>
+            </li>
+            <li>
+                 In the Palette, expand the String section and drag the concat function onto the Transformations pane of the XSLT Design view. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/concat.png" alt="The Concat Function">
+                </p>
+            </li>
+            <li>
+                 In the Palette, under the String section, select the string-literal function and drag it to the Transformations pane. Double-click the return string field to make it editable and type <tt>Hello </tt> (with a space at the end). 
+            </li>
+            <li>
+                 Drag the handle on the right side of the Hello field to the handle on the left side of the string1 row in the Concat function. An arrow snaps in place to indicate the flow. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/stringtoconcat.png" alt="Connecting String-Literal and Concat">
+                </p>
+            </li>
+            <li>
+                 Select the name element in the Source tree pane on the left, and drag the handle to the string2 row in the Concat function. 
+            </li>
+            <li>
+                 Drag the return string handle to the greeting element in the Destination tree pane on the right. The Design view should now resemble the following: 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/finalmapping.png" alt="Final Mapping">
+                </p>
+            </li>
+            <li>
+                 Click the Source button on the Design view toolbar. You should see the following code: 
+                <pre class="examplecode">&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; version=&quot;1.0&quot; xmlns:ns1=&quot;http://xml.netbeans.org/schema/HelloXSLTIncoming&quot; xmlns:ns=&quot;http://xml.netbeans.org/schema/HelloXSLTOutgoing&quot;&gt;
+        &lt;xsl:template match=&quot;/&quot;&gt;
+                &lt;xsl:element name=&quot;ns:greeting&quot;&gt;
+                        &lt;xsl:value-of select=&quot;concat(&amp;apos;Hello &amp;apos;, /ns1:name)&quot;/&gt;
+                &lt;/xsl:element&gt;
+        &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</pre>
+            </li>
+            <li>
+                 Click the Save All button on the toolbar. 
+            </li>
+        </ol>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <!-- =====================Creating and Deploying the Composite Application============================ -->
+        <h2>
+            <a name="deploy"></a>Creating and Deploying the Composite Application 
+        </h2>
+        <p>
+             An XSLT project is not directly deployable. You must first add an XSLT project as a JBI module to a Composite Application project before you can deploy the Composite Application project. Deploying the project makes the service assembly available to the application server, thus allowing its service units to be run. 
+        </p>
+        <p>
+            <strong>To create a Composite Application:</strong>
+        </p>
+        <ol>
+            <li>
+                 Choose File &gt; New Project from the main menu. 
+            </li>
+            <li>
+                 Under Categories, select <tt>SOA</tt>. 
+            </li>
+            <li>
+                 Under Projects, select <tt>Composite Application</tt>. Click Next.
+            </li>
+            <li>
+                 In the Project Name field, type <tt>HelloXSLTCAP</tt>. 
+            </li>
+            <li>
+                 Specify a project location or accept the default. 
+            </li>
+            <li>
+                 Click Finish. 
+            </li>
+            <li>
+                 The Projects window now contains the <tt>HelloXSLTCAP</tt> project node. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/capadded.png" alt="Composite Application Project Added to the Projects Window">
+                </p>
+            </li>
+        </ol>
+        <p>
+            <strong>To add a JBI module:</strong>
+        </p>
+        <ol>
+            <li>
+                 Right-click the <tt>HelloXSLTCAP</tt> node and choose Add JBI Module from the pop-up menu. 
+            </li>
+            <li>
+                 Select the HelloXSLTransformation project and click Add Project Jar Files. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/addjbi.png" alt="Add a JBI Module">
+                </p>
+            </li>
+            <li>
+                 To verify that the JBI module has been added, expand <tt>HelloXSLTCAP &gt; JBI Modules</tt>. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/jbiadded.png" alt="JBI Module Added">
+                </p>
+            </li>
+        </ol>
+        <p>
+            <strong>To deploy the HelloXSLTCAP Composite Application:</strong>
+        </p>
+        <ol>
+            <li>
+                 In the Projects window, right-click the <tt>HelloXSLTCAP</tt> node and choose Deploy Project from the pop-up menu. 
+                <br>
+                <strong>Note:</strong> If the Warning - Select Server dialog box appears, select Sun Java System Application Server 9 and click OK. 
+            </li>
+            <li>
+                 In the Output window that opens in the lower part of the IDE, watch for the <tt>BUILD SUCCESSFUL</tt> message. 
+            </li>
+            <li>
+                 To verify that the project has been deployed, expand <tt>Sun Java System Application Server 9 &gt; JBI &gt; Service Assemblies</tt> in the Runtime window. You should see the <tt>HelloXSLTCAP</tt> node. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/serviceassembly.png" alt="Service Assembly">
+                </p>
+            </li>
+        </ol>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <br>
+        <!-- =======================Performing a Test Run of the XSL Transformation Service============================== -->
+        <h2>
+            <a name="test"></a>Performing a Test Run of the XSL Transformation Service 
+        </h2>
+        <p>
+             Testing an XSL Transformation Service means sending a message that the Service is expecting and receiving, in this case, a reply message. 
+        </p>
+        <p>
+             Before we can perform the testing, we must create a test case. 
+        </p>
+        <p>
+            <strong>To create a test case:</strong>
+        </p>
+        <ol>
+            <li>
+                 In the Projects window, expand the <tt>HelloXSLTCAP</tt> node and right-click the <tt>Test</tt> node. 
+            </li>
+            <li>
+                 From the pop-up menu, select New Test Case. 
+            </li>
+            <li>
+                 In the Test Case Name field, type <tt>JohnSmith</tt>. Click Next. 
+            </li>
+            <li>
+                 Under Select the WSDL Document, expand <tt>HelloXSLTransformation - XSLT Process Files</tt> and select <tt>HelloXSLTWSDL.wsdl</tt>. Click Next. 
+            </li>
+            <li>
+                 Under Select the Operation to Test, expand <tt>HelloXSLTWSDLBinding</tt> and select <tt>HelloXSLTWSDLOperation</tt>. Click Finish. 
+            </li>
+            <li>
+                 The <tt>JohnSmith</tt> node appears under <tt>HelloXSLTCAP &gt; Test</tt> and the input message file&mdash;<tt>Input.xml</tt>&mdash;opens in the editor. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/input.png" alt="Input Message">
+                </p>
+            </li>
+            <li>
+                 In the <tt>Input.xml</tt>, modify the 
+                <pre class="examplecode"> &lt;hel:name&gt;?string?&lt;/hel:name&gt; 
+                </pre>
+                 line to 
+                <pre class="examplecode"> &lt;hel:name&gt;John Smith&lt;/hel:name&gt; 
+                </pre>
+                 The <tt>Input.xml</tt> file should be: 
+                <pre class="examplecode"> &lt;soapenv:Envelope xsi:schemaLocation=&quot;http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:hel=&quot;http://xml.netbeans.org/schema/HelloXSLTIncoming&quot;&gt;
+        &lt;soapenv:Body&gt;
+                &lt;hel:name&gt;John Smith&lt;/hel:name&gt;
+        &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt; 
+                </pre>
+            </li>
+            <li>
+                 Click the Save All button on the toolbar. 
+            </li>
+        </ol>
+        <p>
+             The <tt>Output</tt> node under the test case node refers to the expected reply message that is used for comparison with the actual reply messages. Before we run the test for the first time, the <tt>Output.xml</tt> file is empty. We will populate it with the content of the reply message (provided that it is what we expect). 
+        </p>
+        <p>
+            <strong>To run the test:</strong>
+        </p>
+        <ol>
+            <li>
+                 Right-click the <tt>JohnSmith</tt> node and select Run. Notice that the test fails and the following dialog box appears:
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/overwrite.png" alt="Overwrite Dialog">
+                </p>
+            </li>
+            <li>
+                 Click Yes. Notice that the failed test node appears below the <tt>Output</tt> node. 
+                <br>
+                <br>
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/failednode.png" alt="Failed Test Node">
+                </p>
+            </li>
+            <li>
+                 Double-click the failed test node to see the message that the XSL Transformation Service sent back: 
+                <pre class="examplecode">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://schemas.xmlsoap.org/soap/envelope/ http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ns=&quot;http://xml.netbeans.org/schema/HelloXSLTOutgoing&quot;&gt;
+        &lt;SOAP-ENV:Header/&gt;
+        &lt;SOAP-ENV:Body&gt;
+                &lt;ns:greeting xmlns:ns=&quot;http://xml.netbeans.org/schema/HelloXSLTOutgoing&quot;&gt;Hello John Smith&lt;/ns:greeting&gt;
+        &lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre>
+                 Notice the line 
+                <pre class="examplecode"> &lt;ns:greeting xmlns:ns=&quot;http://xml.netbeans.org/schema/HelloXSLTOutgoing&quot;&gt;Hello John Smith&lt;/ns:greeting&gt; 
+                </pre>
+                 The XSL Transformation Service received the name, concatenated it with the string 'Hello' and sent the reply message. 
+            </li>
+            <li>
+                 Run the test again. The test is marked as passed. 
+                <br>
+                <br>
+
+                <p align="center">
+                    <img src="../../../images/articles/ep-xslt-quickstart/60/pass.png" alt="Test Passed">
+                </p>				
+            </li>
+        </ol>
+        <p>
+             Congratulations! You have successfully created, deployed and tested an XSL Transformation Service. 
+        </p>
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+        <h2>
+            <a name="next"></a> Next Step 
+        </h2>
+        <p>
+             Now that you have successfully created the Request-Reply XSL Transformation Service, continue with the <a href="http://www.netbeans.org/kb/60/soa/xslt-bridge.html" target="_blank">Service Bridge</a> type.
+        </p>
+        <br>
+        <div class="feedback-box">
+            <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a>
+        </div>
+        <br style="clear:both;">
+        <p align="center">
+            <a href="xslt-quickstart.html#top">top</a>
+        </p>
+      
+	</div>
+    </body>
+</html>

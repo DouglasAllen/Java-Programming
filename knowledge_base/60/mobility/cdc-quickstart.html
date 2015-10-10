@@ -1,0 +1,431 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+  <title>NetBeans 6.0 CDC Development Quick Start Guide</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="SourceCastVersion" content="2.6.2.4.10">
+   <meta name="keywords" content="NetBeans, IDE, Platform, open source, developer, Java ME, CDC">
+  <meta name="author" content="psunb@netbeans.org">
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. --><!--     Use is subject to license terms.-->
+ </head>
+<!-- Begin Content Area -->
+<body>
+<h1>NetBeans Mobility 6.0  CDC Development Quick Start Guide</h1>
+<h2>Introduction</h2>
+<p> CDC application are designed to run on mobile and embedded devices with  at least 2MB of memory. This configuration supports 
+  a more feature-rich JVM than MIDP-based mobile phones, which typically have 128 to 512KB 
+  of memory and use the Connected Limited Device Configuration (CLDC). </p>
+<p>This document takes you through the basics of using NetBeans IDE to create 
+  a Java Platform, Micro Edition (Java ME platform), Connected Device Configuration 
+  (CDC) application. We show you four different ways to create a Java ME CDC project 
+  that displays a simple form in a device emulator, one  for each available profile. We also show an additional  way using the NSICom CrEme VM for Windows CE. This document is 
+  designed to get you creating applications as quickly as possible. </p>
+  
+  <h3>Contents</h3>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+  <li><a href="cdc-quickstart.html#requirements">Requirements</a></li>
+  <li><a href="cdc-quickstart.html#platforms">Adding Emulator Platforms</a></li>
+  <li><a href="cdc-quickstart.html#creating">Creating a CDC Application </a> </li>
+  <li><a href="cdc-quickstart.html#foundation">Foundation Profile</a></li>
+  <li><a href="cdc-quickstart.html#personal">Personal Profile</a></li>
+  <li><a href="cdc-quickstart.html#agui">AGUI Profile</a></li>
+  <li><a href="cdc-quickstart.html#nsi">Using NSIcom CrEme VM for Windows CE</a></li>
+  <li><a href="cdc-quickstart.html#configurations">Using Configurations</a></li>
+  <li><a href="cdc-quickstart.html#next">Next Steps</a></li>
+         </ul>
+		 </td>
+         <td width="20"> </td>
+         <td align="right" valign="top"> 
+   <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0" height="45" width="206" align="right">
+   </td>
+     </tr>
+     </tbody></table>
+<h2>Requirements</h2>
+<p>You must have the NetBeans 6.0 Mobility or Full edition (<a href="http://download.netbeans.org/netbeans/6.0/rc1/">download</a>) 
+  installed before you can start Java ME CDC development. The Client/Server sections 
+  require the Full Edition for Web Services support. If you installed only the 
+  Mobility Edition, you need to download the following plugins from the Update 
+  center (Tools &gt; Plugins):</p>
+<ul>
+  <li>Web Applications</li>
+  <li>Web Services</li>
+  <li>Sun Java System Application Server</li>
+<li>Sun Java Toolkit for CDC or other CDC emulator platform installed. See Adding Emulator 
+  Platforms, below for more information. </li>
+</ul>
+<h2> Adding Emulator Platforms<a name="platforms"></a></h2>
+<p>The NetBeans Mobility Pack supports the following emulator platforms:</p>
+<ul>
+  <li>Sun Java Toolkit for CDC 1.0</li>
+  <li>Ricoh Embedded Software Architecture Emulator 1.14c</li>
+  <li>UIQ SDK 3</li>
+  <li>Sony Ericsson M600 and P990 devices</li>
+  <li>Nokia Series 80 Platform SDK for Symbian OS, for Java, Personal Profile</li>
+</ul>
+<p>Instructions for adding emulator platforms are listed in the <a href="http://www.netbeans.org/community/releases/55/1/mobilitycdc-install.html" target="_blank">NetBeans 
+  Mobility Pack for CDC 5.5.1 Installation Guide</a> and  work for the 6.0 IDE as well.</p>
+<h2>Creating a CDC Application<a name="creating"></a></h2>
+<p>In this section we create a CDC application project for each available 
+  profile and, for the Personal and AGUI platforms, create a GUI for the application 
+  using the IDE's GUI Builder. </p>
+<p>The Profiles described are: </p>
+<ul>
+  <li><a href="cdc-quickstart.html#foundation">Foundation Profile (Ricoh)</a></li>
+  <li><a href="cdc-quickstart.html#personal">Personal Profile (Nokia, Sony Ericsson)</a></li>
+  <li><a href="cdc-quickstart.html#agui">AGUI (Sun Java Toolkit for CDC)</a></li>
+</ul>
+<div class="indent"> 
+  <h3 class="tutorial">Creating a New CDC Application - Foundation Profile<a name="foundation"></a></h3>
+  <p class="tutorial">Here we create a CDC Application, or <em>Xlet</em>, 
+    for the Foundation Profile using the Ricoh Embedded Software Architecture 
+    Emulator 1.14c.</p> 
+  <ol>
+    <li>Choose File &gt; New Project (Ctrl+Shift+N). Under Categories, select 
+      Mobility. Under Projects, select the CDC Application template. Click Next.</li>
+    <li>In the Name and Location panel, name the project <tt>MyRicohApplication</tt> 
+      and specify a location for the project on your computer. Leave the Create 
+      Main Class check box selected. Click Next.<br>
+      <br>
+      <img src="../../../images/mobility/cdcqs-ricohsp.png" alt="New Project Wizard Name and Location Panel, with values entered as described in the text. " width="600" height="318"> 
+    </li>
+    <li>In the Select Platform Page, choose Ricoh 1.14c.<br>
+      <br>
+      <img src="../../../images/mobility/60/cdcqs/ricohselp.png" width="506" height="318"> 
+      <br>
+    </li>
+    <li>Click Finish. The IDE creates the new application and opens the main class 
+      in the Source Editor. The project structure is shown in the following figure. 
+      Note that the generated code is based on the profile. In this case, the 
+      main class is derived from <code>jp.co.ricoh.dsdk.xlet.Xlet</code>. This 
+      profile does not support the Netbeans GUI Designer. <br>
+      <br>
+      <img src="../../../images/mobility/60/cdcqs/ricohapp.png" width="600" height="502"> 
+    </li>
+    <p>&nbsp; </p>
+    <li>To run the project, choose Run &gt; Run Main Project. The emulator displays 
+      the text, &quot;TODO implement makeUIControls.&quot;<br>
+      <br>
+      <img src="../../../images/mobility/cdcqs-ricohemulatorsmall.png" alt="Screenshot of the Ricoh emulator. " width="600" height="299"> 
+    </li>
+    <li>You can also debug the project, and create and debug tests using the JUnit 
+      framework. </li>
+  </ol>
+</div>
+ 
+<h3>Creating a New CDC Application - Personal Profile<a name="personal"></a></h3>
+  
+<p>Here we  create an<em> applet</em> for the Personal Profile using the Nokia 
+  Series 80 Platform SDK for Symbian OS, for Java, Personal Profile. The Sony 
+  Ericsson platform also supports the Personal Profile. </p>
+  
+<div class="indent"> 
+  <ol>
+    <li>Choose File &gt; New Project (Ctrl+Shift+N). Under Categories, select 
+      Mobility. Under Projects, select the CDC Application template. Click Next.</li>
+    <li>Name the project <tt>S80CdcApplication</tt> and specify a location for 
+      the project on your computer. Leave the Create Main Class check box selected. 
+      Click Next. <br>
+      <br>
+      <img src="../../../images/mobility/60/cdcqs/nokiapl.png" width="600" height="409"> 
+    </li>
+    <li> In the Select Platform Page, choose the Nokia S80 Platform.<br>
+      <br>
+      <img src="../../../images/mobility/60/cdcqs/nokiasp.png" width="600" height="272"> 
+      <p> </li>
+    <li>Click Finish. The IDE creates the new application and opens the main class 
+      form in the GUI Builder, as shown in the following figure. Click on Source 
+      to see the source code for the applet. Note that the generated code is based 
+      on the profile. In this case, the main class is derived from <code>java.awt.Frame</code>. 
+      <br>
+      <br>
+      <p><img src="../../../images/mobility/60/cdcqs/nokia-screen.png" width="600" height="369"> 
+    </li>
+  </ol>
+    <h4 class="tutorial">Creating the Application Interface Using the Project 
+      Matisse GUI Builder</h4>
+    
+  <p>You can use the Project Matisse GUI Builder in the same way you use it for 
+    regular J2SE development. In the GUI Builder, right-click the Main.java form 
+    and choose Set Layout &gt; Free Design. Then drag and drop components from 
+    the Palette window into the Design Area of the GUI Builder. <b>Make sure you 
+    only use AWT components in your form</b>. Because all the Nokia Series 80 
+    devices support the Personal Profile, only AWT widgets are available.</p>
+    <p>For more information on using the IDE's GUI Builder, see the <a href="../../trails/matisse.html">Java 
+      GUIs and Project Matisse Learning Trail</a>.</p>
+    <p> When you are done, right-click the project in the Projects window and 
+      choose Run Project. Your application should be displayed in the Applications 
+      menu in the device emulator. You can now run the device in the emulator.</p>
+    
+  <img src="../../../images/mobility/60/cdcqs/nokia-finished.png" width="600" height="416">
+  <br>
+    
+  <p><br>
+    You can also debug the project, and create and debug tests using the JUnit 
+    framework.</p>
+</div>
+  <h3>Creating a New CDC Application - AGUI Profile<a name="agui"></a></h3>
+  
+<p>Here we create a CDC Application, or <em>Xlet</em>, for the AGUI Profile 
+  using the Sun Java Toolkit for CDC 1.0. </p>
+<ol>
+  <li>Choose File &gt; New Project (Ctrl+Shift+N) from the main window.</li>
+  <li>From Categories, select Mobility. From Projects, select CDC Application. 
+    Click Next.</li>
+  <li>In the Name and Location page:</li>
+</ol>
+<ul>
+  <li> Name the project <code>newcdc.</code> </li>
+  <li> Change the Main Class name to <code>newcdc.Mainxlet</code>. </li>
+  <li>Leave the Set as Main Project and Create Main Class check boxes checked. 
+  </li>
+</ul>
+<ol>
+  <li>In the Select Platform page, use the drop-down menus to choose <code>Sun 
+    Java Toolkit for Connected Device Configuration for the Java Platform and 
+    DefaultColorPhone</code> as the Device. Leave the Profile settings as it is. 
+    <br>
+    <br>
+    <img src="../../../images/mobility/60/cdcqs/agui-np.png" alt="New Project Wizard Select Platform Page. The page shows the following drop-down menu choices: Platform: Sun Java Toolkit 1.0 for Connected Device Configuration; Device: DefaultColorPhone; Profile: AGUI-1.0." width="600" height="352"> 
+    <br></li>
+    
+  <li>Click Finish. The IDE creates the new application and opens the main class 
+    form in the GUI Builder, as shown in the following figure. <br>
+    <img src="../../../images/mobility/cdcqs-agui.png" alt="NetBeans IDE with several windows open. The Projects window shows the structure of the newcdc. The Navigator window shows the structure of the main class. The Main window shows the Main.java file in the GUI Designer window.  The palette window shows the components available to the AGUI platform." width="600" height="544"> 
+    <br></li>
+</ol>
+      <h4 class="tutorial">Creating the Application Interface Using the Project 
+        Matisse GUI Builder</h4>
+      <p>You can use the Project Matisse GUI Builder in the same way you use it 
+        for regular J2SE development. In the GUI Builder, right-click the Main.java 
+        form and choose Set Layout &gt; Free Layout. Then drag and drop components 
+        from the Palette window into the Design Area of the GUI Builder. <b>Make 
+        sure you only use Swing components in your form</b>. Because the AGUI 
+        platform supports Swing, only Swing widgets are available.</p>
+      <p>For more information on using the IDE's GUI Builder, see the <a href="../../trails/matisse.html">Java 
+        GUIs and Project Matisse Learning Trail</a>.</p>
+      
+<p> When you are done, right-click the project in the Projects window and choose 
+  Run Project. Your application should be displayed in the device emulator. <br>
+  <br>
+  <img src="../../../images/mobility/60/cdcqs/agui-emulator.png" alt="Shows the Default Color Phone Device Emulator running over the NetBeans IDE." width="600" height="524">
+</p>
+    
+<p>You can also debug the project, and create and debug tests using the JUnit 
+  framework. </p>
+<h2><a name="nsi"></a>Creating a New CDC Application for Windows CE (Using the 
+  CrEme VM)</h2>
+<p>The NSIcom CrEme VM enables you to create and run Java Swing applications for 
+  devices running Windows CE. </p>
+<h4>Creating an Application</h4>
+<ol>
+  <li>Choose File &gt; New Project (Ctrl+Shift+N) from the main window.</li>
+  <li>Under Categories, select CDC. Under Projects, select the CDC Application 
+    template. Click Next.</li>
+  <li>In the Name and Location Page, name the project <code>cremeapp</code>. Click 
+    Next. </li>
+  <li>In the Select Platform Page, choose pJSCP V4.10. Click Finish. <br>
+    <br>
+    <img src="../../../images/mobility/60/cdcqs/creme-np.png" width="534" height="339"> 
+    <br>
+  </li>
+  <li>In the Explorer window, right-click on the Source Packages node of your 
+    project and choose New &gt; JFrame form. Click Finish. The NetBeans GUI Builder 
+    (Matisse) displays the new form. <br>
+    <br>
+    <img src="../../../images/mobility/60/cdcqs/creme-gui.png" width="600" height="472"> 
+    <br>
+    <br>
+    <p>Note: Make sure that the first fragment of code in the <code>main()</code> 
+      method is as is shown below when you are going to run the application in 
+      CrEme default emulator. This  make sure that Swing is loaded. 
+    <pre class="examplecode">try {
+    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());<br>} catch(Exception exception) {
+    System.out.println(&quot;Error loading L&amp;F: &quot; + exception);
+} </pre>
+  <li> 
+    <p>Use the Project Matisse GUI builder to create your application. You can 
+      use the Project Matisse GUI Builder in the same way you use it for regular 
+      J2SE development. </p>
+    <p>Note that if there is an exception that crashes the emulator, the emulator 
+      prints it to the standard output window and waits for a key press. You cannot, 
+      however, send the keypress from the IDE. You must instead kill the VM from 
+      the Process Explorer. </P>
+  </li>
+</ol>
+<h4>Compiling and Running the Application on a Device or Emulator</h4>
+<ol>
+  <li>Connect your mobile device using cable or Bluetooth. <br>
+    If you have a device, skip to Step 12. <br>
+    If you do not have a device, install the Microsoft Device Emulator and the 
+    Virtual Machine Network Driver for the Microsoft Device Emulator as described 
+    in the <a href="http://www.netbeans.org/community/releases/55/1/mobilitycdc-install.html" target="_blank">NetBeans 
+    Mobility Pack for CDC 5.5.1 Installation Guide</a>. Then follow steps 2 through 
+    4. <br>
+    If you do have a device, skip to Step 5. </li>
+  <li>Start the Microsoft Device Emulator by choosing Start &gt; Programs &gt; 
+    Microsoft Windows Mobile 5.0 MSFP Emulator Images &gt; Pocket PC Coldboot. 
+    This opens the Pocket PC emulator. <br>
+    <br>
+    <img src="../../../images/mobility/cdcqs-cremeemulator.png" width="358" height="554"> 
+  </li>
+  <li>Choose Start &gt; Programs &gt; Microsoft Windows Mobile 5.0 MSFP Emulator 
+    Images &gt; Device Emulator Manager. This opens the Device Emulator Manager. 
+    <br>
+    <br>
+    <img src="../../../images/mobility/cdcqs-cremedem.png" width="420" height="300"> 
+  </li>
+  <li>In the Device Emulator Manager, choose Actions &gt; Cradle. </li>
+  <li>Open ActiveSync by clicking on the icon in the Application tray.<br>
+    If you do not have ActiveSync installed, download and install it as described 
+    in the <a href="http://www.netbeans.org/community/releases/55/1/mobilitycdc-install.html" target="_blank">NetBeans 
+    Mobility Pack for CDC 5.5.1 Installation Guide</a>.<br>
+    <br>
+    When you open ActiveSync, it should, ActiveSync should detect and connect 
+    to the device or the device emulator. <br>
+    If it does not: 
+    <ol>
+      <li>Click on the ActiveSync icon in the Application Tray. </li>
+      <li>Choose File &gt; Connection settings. </li>
+      <li>Do one or both of the following: </li>
+    </ol>
+    <ul>
+      <li>Check the Allow connections to one of the following check box and select 
+        DMA for the emulator, or USB or port number for a real device. </li>
+      <li>Choose Run Connect which should detect the device automatically. </li>
+    </ul>
+  </li>
+  <li>Download and install the CrEme VM on your device (<a href="http://nsicom.com/Default.aspx?tabid=220&p=4">download</a>). 
+    Double-click on the downloaded file. <br>
+    It install both on your PC and your device. </li>
+  <li>Download and install Swing extensions (<code>CrE-ME410_swing.CAB</code>) 
+    for your device from NSIcom (<a href="http://nsicom.com/shared/CrE-ME410_swing.CAB">download</a>). 
+    <br>
+    To install the Swing extensions on your device or device emulator: 
+    <ol>
+      <li>In the ActiveSync dialog, choose Tools &gt; Explore Device. <br>
+        The Mobile Device opens in an Explorer window. </li>
+      <li>Copy <code>CrE-ME410_swing.CAB</code> into the Explorer window.</li>
+      <li>In the device or device emulator, choose Start &gt; Programs &gt; File 
+        Explorer.</li>
+      <li>Start CrE-ME410_swing.CAB. </li>
+    </ol>
+</ol>
+<h4>Running the Application</h4>
+<ol>
+  <li>Right-click the project and choose Properties. <br>
+    The Properties page opens. </li>
+  <li>Under Categories, choose Running. </li>
+  <li>Choose the NSIcom tab and check Run in remote VM. Click OK to close the 
+    Properties page. <br>
+    <br>
+    <img src="../../../images/mobility/60/cdcqs/cremeproperties.png" width="600" height="469"> 
+  </li>
+  <li>Choose Run &gt; Run Main Application. </li>
+</ol>
+<h2 class="tutorial"><a name="configurations"></a>Using Configurations</h2>
+<p>You can use configurations to create more than one set of distribution JAR 
+  and Java Application Descriptor (JAD) files for your project. This enables you 
+  to create one set of source code and customize it for each mobile device you're 
+  programming for.</p>
+<p>The instructions below are generalized, but work for each of the platforms 
+  previously described. </p>
+<div class="indent"> 
+  <h3 class="tutorial"><strong>Adding a Configuration</strong></h3>
+  <ol>
+    <li>Right-click the Project node and choose Properties. In the Properties 
+      dialog, Choose Add Configuration from the Project Configuration drop-down 
+      list. This opens the Add Configuration dialog.</li>
+    <li>Enter a name for your configuration in the Configuration Name field. The 
+      name should identify the target platform on which you deploy the JAR/JAD 
+      created for this configuration. For this example, enter <code>BlackWhiteDisplay</code> 
+      and click OK. You have just created a new configuration.</li>
+    <li>Configurations can also be added by clicking the Manage Configurations 
+      button in the Properties dialog. This brings up the Project Configuration 
+      Manager dialog which contains options for adding, removing, or duplicating 
+      configurations.</li>
+  </ol>
+  <h3 class="tutorial"><strong>Customizing a Configuration</strong></h3>
+  <p>You can add as many configurations as you would like to your project. You 
+    can then modify settings in the Project Properties dialog for each configuration 
+    that you've added.</p>
+  <ol>
+    <li>Right-click the Project node and choose Properties. In the Properties 
+      dialog, choose the Platform node. </li>
+    <li>Choose the <code>BlackWhiteDisplay</code> configuration from the configuration 
+      combo box at the top of the Properties dialog. </li>
+    <li>The components in the Platform dialog are all disabled. This is because 
+      this configuration is currently taking the values used by the default configuration 
+      for this panel. Uncheck the Use Values from &quot;DefaultConfiguration&quot; 
+      option at the top of the panel. All components on this panel can now be 
+      edited. </li>
+    <li>Change the Device option to DefaultGrayPhone.</li>
+    <li>Toggle the Project Configuration dialog at the top of the Properties dialog 
+      and observe that the Device option changes based on which configuration 
+      is currently selected. This method of configuration customization works 
+      for each panel (other than the general panel) in the dialog. Click OK to 
+      save your configuration changes and exit the Properties dialog.</li>
+  </ol>
+  <h3 class="tutorial"><strong>Creating an Ability</strong></h3>
+  <p>An <em>Ability</em> is a specific attribute of a project configuration. It 
+    can be a physical attribute such as screen size, or an API or JSR supported 
+    by the configuration. You can create a new ability and associate it with one 
+    or more project configurations. You can then use preprocessior code blocks 
+    to associate certain code with that ability. If you later need to add or remove 
+    configurations, you won't have to go through all your code and associate the 
+    configuration with each code block. Instead, you need only to add that ability 
+    to the configuration. The configuration is then automatically associated with 
+    any code block that is associated with the ability.</p>
+  <ol>
+    <li>Right-click on the project node and choose Properties.</li>
+    <li>Choose the Abilities page from the Category menu tree.</li>
+    <li>Choose a configuration from the Project Configuration dropdown menu. This 
+      is the configuration with which the ability is associated.</li>
+    <li>If necessary, uncheck the Use Values from "DefaultConfiguration" checkbox.</li>
+    <li>Click the Add button. <br />
+      This opens the Add Ability dialog.</li>
+    <li>In the New Ability dialog, enter a name for the ability, or choose an 
+      ability from the drop-down menu. Optionally, enter a value for the ability.<br />
+      Click Ok to close the New Ability dialog. The ability is now associated 
+      with the selected project configuration.</li>
+  </ol>
+  <p>You can associate the ability with other configurations by choosing a different 
+    configuration from the Project Configuration menu and clicking the Add button.</p>
+  <h3 class="tutorial">Running Configurations</h3>
+  <p>Configurations can be built and run individually or multiple configurations.</p>
+  <ol>
+    <li>Right-click the Project node and choose Run. </li>
+    <li>Use the configuration combo box in the Toolbar to change the configuration. 
+      Choose Run again. </li>
+    <li>Two emulators appear, one for each configuration. </li>
+  </ol>
+<ul>
+  <li> 
+    <div class="indent">To build multiple configurations simultaneously, right-click 
+      on a project and choose Batch Build. In the dialog that opens, check the 
+      box next to each configuration you want to build. </div>
+  </li>
+  <li> 
+    <div class="indent">To test a device on the fly, right-click on the project 
+      and choose Run With. In the dialog that opens, choose the emulator platform 
+      and device you want to run. </div>
+  </li>
+</ul>
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send 
+  Us Your Feedback</a></div><br style="clear:both;" />
+<h2>Next Steps<a name="next"></a></h2>
+  <blockquote>
+<p>In addition to the IDE's built-in help documentation about Java ME CDC development, tutorials 
+and articles about the technologies supported by the Mobility pack can be found at the following location: </p> 
+  <ul>
+    <li><a href="../../trails/mobility.html">NetBeans Mobility Pack Learning Trail</a></li>
+  </ul>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<title>XPath Functions and Operations in the BPEL Mapper</title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css" media="screen">
+<meta name="description" content="BPEL Mapper">
+<meta name="keywords" content="XPath, operation, function, expression"></head>
+<body>
+<a name="top"></a>
+<h1>XPath Functions and Operations in the BPEL Mapper</h1>
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed and maintained by VictoriaZhukovskaya and Alyona Stashkova<br> 
+December 2007<br>
+</p>
+</div>
+ 
+The BPEL Mapper is a tool for visual work with XPath expressions. The BPEL Mapper allows you to work with expressions, copying variables, XSD elements, and XSD attributes. This tool enables you to work with predicates and use XPath functions.<br>
+The XPath expressions editor is used for work with some business process elements. The following allowed expressions are defined for each element: either copy expressions, condition expressions, or time functions usage.
+<br>
+<h3>Contents</h3>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="left" valign="top"><ul>
+      <li><a href="bpel-mapper.html#UI" title="User Interface">User Interface</a></li>
+      <li><a href="bpel-mapper.html#Functions" title="Functions and Operators Used in BPEL Mapper">Functions and Operators Used in BPEL Mapper</a><br>
+          <ul>
+            <li><a href="bpel-mapper.html#NumExpOps" title="Numerical Expressions and Operations">Numerical Expressions and Operations</a></li>
+            <li><a href="bpel-mapper.html#BooleanExpFuncs" title="Boolean Expressions and Functions">Boolean Expressions and Functions</a></li>
+            <li><a href="bpel-mapper.html#NumericalFunc" title="Numerical Functions">Numerical Functions</a></li>
+            <li><a href="bpel-mapper.html#StringFunc" title="String Functions">String Functions</a></li>
+            <li><a href="bpel-mapper.html#NodesFunc" title="Node-Sets Functions">Node-Sets Functions</a></li>
+            <li><a href="bpel-mapper.html#DateFunc" title="Functions for Working with Date and Time">Functions for Working with Date and Time</a></li>
+          </ul>
+      </li>
+      <li><a href="bpel-mapper.html#summary" title="Summary">Summary</a></li>
+      <li><a href="bpel-mapper.html#see_also" title="See Also">See Also</a></li>
+      </ul></td>
+    <td width="20"></td>
+    <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"> </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>
+  <!-- ======================================================================================== -->
+  <a name="UI"></a>
+  User Interface
+</h2>
+<p>The BPEL Mapper features an easy-to-use intuitive user interface.  The BPEL Mapper window appears when you select a BPEL diagram element that can contain XPath expressions. The BPEL Mapper is used for the following business process elements:  Assign, If, ElseIf element of If, ForEach, RepeatUntil, While, and Wait. Every element has  allowable expressions, which include copy expressions, condition expressions, time function usage. Condition expressions are defined for the If,  ElseIf element of If, While, and RepeatUntil elements. Copy expressions are defined  for the Assign element. Duration expressions are defined for the Wait element. And condition expressions with parameters are defined for the ForEach element. Using the BPEL Mapper interface you can make calculations by assigning XPath operations and functions listed above to local and global variables, XSD elements and attributes, and parts.</p>
+<p>Every business process element listed above has the Show BPEL Mapper item in the context menu in the Design view of the BPEL Designer. The context menu is available when you closed the BPEL Mapper window. You can also open the XPath expressions editor window by choosing Window &gt; BPEL Mapper from the main menu. </p>
+  <p>You can edit XPath expressions 
+  in the source text of a BPEL file as shown in Figure 1. The BPEL Mapper displays the  correct modifications  as shown in Figure 2.</p>
+  <div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 1: Source View of the BPEL file</b></p>
+<a href="../../../images/articles/ep-bpel-mapper/60/source.png"><img src="../../../images/articles/ep-bpel-mapper/60/source-tn.png" alt="Source View of the BPEL file" border="0"><br>
+Click to enlarge</a>
+
+</div>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 2: Addition Operation for Assign1</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/mapper.png" alt="Addition Operation for Assign1">
+</div>
+
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+<a name="Functions"></a>
+<h2>Functions and Operators Used in the BPEL Mapper</h2>
+
+The BPEL Mapper supports version 1.0 of the XML Path language (XPath 1.0). The XPath language is a key part of the XML platform.  The XPath language developed by the W3C consortium is a language that addresses the structural parts of an XML document. The language has functions for manipulating strings, numbers, and boolean values. The main syntactic construct of XPath is an expression. As a result of processing an expression,  an object that falls into one of the following four fundamental types will appear:
+<ul>
+  <li>node-set - unordered set of nodes without duplicates</li>
+  <li>boolean - true or false</li>
+  <li>number - number with a floating dot </li>
+  <li>string - sequence of UCS symbols </li>
+</ul>
+The XPath language supports number expressions, equality and comparison operations, and boolean expressions. The BPEL Mapper supports part of XPath operations and functions. <br>
+<br>
+<a name="NumExpOps"></a><h3>Numerical Expressions and Operations</h3>
+<p>The Operator menu of the BPEL Mapper appears as shown below.</p>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 3: The BPEL Mapper Operator Menu</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/operators.png" alt="The BPEL Mapper Operator Menu">
+</div>
+
+<a name="NumExp"></a><h4>Numerical Expressions</h4>
+<p>Numerical expressions are used  for performing arithmetic operations over numbers. Equality operations are used to check the equality of two values. Any number in the XPath language has a representation with a floating point. A number can take on any value in the 64 bit format of IEEE 754 DP. This includes a special &quot;Not-a-Number&quot; (NaN) value, positive and negative infinities, and positive and negative nulls.</p>
+<p><a name="table-1"></a><b>Table 1: Operators Used in Numerical Expressions</b></p>
+<table class="tablebg">
+  
+    <tr>
+      <td class="tblheader"><b>Operator</b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">+</td>
+      <td class="tbltd0">Addition of two numbers</td>
+      <td class="tbltd0">2 + 3</td>
+      <td class="tbltd0">5</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">-</td>
+      <td class="tbltd1">Subtraction of a number from another one<br>
+      </td>
+      <td class="tbltd1">5 - 2</td>
+      <td class="tbltd1">3</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">*</td>
+      <td class="tbltd0">Multiplication of a number by another number<br>
+      </td>
+      <td class="tbltd0">2 * 5</td>
+      <td class="tbltd0">10</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">div</td>
+      <td class="tbltd1">Division of a number by another number<br>
+      </td>
+      <td class="tbltd1">10 div 2</td>
+      <td class="tbltd1">5</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">mod</td>
+      <td class="tbltd0">Remainder from division of a number by another number<br>
+      </td>
+      <td class="tbltd0">11 mod 3</td>
+      <td class="tbltd0">2</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">-
+      </td>
+      <td class="tbltd1">Unary minus
+      </td>
+      <td class="tbltd1">-2
+      </td>
+      <td class="tbltd1">-2
+      </td>
+    </tr>
+  
+</table>
+<br>
+
+<a name="Equality"></a><h4>Equality Operations</h4>
+<p>Notice that length  equal to 5.50 is initial data for the table below.</p>
+<p><a name="table-2"></a><b>Table 2: Operators Used in Equality Operations </b></p>
+<table class="tablebg">
+  
+    <tr>
+      <td class="tblheader"><b>Operator</b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">=</td>
+      <td class="tbltd0">Equality operation 
+      </td>
+      <td class="tbltd0">length=5.50</td>
+      <td class="tbltd0"><tt>true</tt>
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">!=</td>
+      <td class="tbltd1">Inequality operation </td>
+      <td class="tbltd1">length!=5.50</td>
+      <td class="tbltd1"><tt>false</tt></td>
+    </tr>
+  
+</table>
+<br>
+
+<a name="Comparison"></a><h4>Comparison Operations</h4>
+<p>Notice that length  equal to 5.50 is initial data for the table below.</p>
+<p><a name="table-3"></a><b>Table 3: Operators Used in Comparison Operations </b></p>
+<table class="tablebg">
+ 
+    <tr>
+      <td class="tblheader"><b>Operator</b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">&lt;</td>
+      <td class="tbltd0">Less</td>
+      <td class="tbltd0">length&lt;5.50</td>
+      <td class="tbltd0"><tt>false</tt> <br>
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">&lt;=</td>
+      <td class="tbltd1">Less or equal</td>
+      <td class="tbltd1">length&lt;=5.50</td>
+      <td class="tbltd1"><tt>true</tt></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">&gt;</td>
+      <td class="tbltd0">Greater</td>
+      <td class="tbltd0">length&gt;5.50</td>
+      <td class="tbltd0"><tt>false</tt> </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">&gt;=</td>
+      <td class="tbltd1">Greater or equal</td>
+      <td class="tbltd1">length&gt;=5.50</td>
+      <td class="tbltd1"><tt>true</tt></td>
+    </tr>
+ 
+</table>
+<p>
+<b>Note:</b> If none of the objects subject to comparison is a node-set, and if the operator is either <tt>&lt;=</tt>, <tt>&lt;</tt>, <tt>=&gt;</tt>, or  <tt>&gt;</tt>, the compared objects are first converted into numbers and then compared.</p>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+
+<a name="BooleanExpFuncs"></a>
+<h3>Boolean Expressions and Functions</h3>
+<p>The Boolean menu of the BPEL Mapper is shown below.</p>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 4: The BPEL Mapper Boolean Menu</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/boolean.png" alt="The BPEL Mapper Boolean Menu">
+</div>
+
+<a name="BooleanExp"></a><h4>Boolean Expressions</h4>
+answer = true<br>
+<br>
+<p><a name="table-4"></a><b>Table 4: Operators Used in Boolean Expressions</b></p>
+<table class="tablebg">
+    <tr>
+      <td class="tblheader"><b>Operator</b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">or</td>
+      <td class="tbltd0">Returns <tt>true</tt> if at least one of the Boolean operands is equal to <tt>true</tt></td>
+      <td class="tbltd0">false() or answer
+      </td>
+      <td class="tbltd0"><tt>true</tt>
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">and</td>
+      <td class="tbltd1">Returns <tt>true</tt> if both the Boolean operands are equal to <tt>true</tt>
+      </td>
+      <td class="tbltd1">true() and answer</td>
+      <td class="tbltd1"><tt>true</tt></td>
+    </tr>
+  
+</table>
+<br>
+<a name="BooleanFunc"></a>
+<h4>Boolean Functions</h4>
+<p>Notice that answer equal to true and the language of the xml:lang=&quot;en&quot; context node are initial data for the table below.</p>
+
+<br>
+<p><a name="table-5"></a><b>Table 5: Boolean Functions Usage</b></p>
+<table class="tablebg">
+    <tr>
+      <td class="tblheader"><b>Name</b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">boolean</td>
+      <td class="tbltd0">Converts a argument to a boolean type</td>
+      <td class="tbltd0">boolean(2)</td>
+      <td class="tbltd0"><tt>true</tt></td>
+    </tr>
+    <tr>
+      <td class="tbltd1">false</td>
+      <td class="tbltd1">Returns  <tt>false</tt></td>
+      <td class="tbltd1">false() or answer
+      </td>
+      <td class="tbltd1"><tt>true</tt>
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd0">true</td>
+      <td class="tbltd0">Returns  <tt>false</tt></td>
+      <td class="tbltd0">true() or answer
+      </td>
+      <td class="tbltd0"><tt>true</tt>
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">not</td>
+      <td class="tbltd1">Returns negation</td>
+      <td class="tbltd1">not(false())</td>
+      <td class="tbltd1"><tt>true</tt></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">lang<br>
+      </td>
+      <td class="tbltd0"> Returns <tt>true</tt> or <tt>false</tt> depending on whether the context node language defined in xml:lang attributes is the same language (or sublanguage) as the one defined in the attribute string</td>
+      <td class="tbltd0">lang('en')
+      </td>
+      <td class="tbltd0"><tt>true</tt></td>
+    </tr>
+  
+</table>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+<a name="NumericalFunc"></a>
+<h3>Numerical Functions</h3>
+<p>The Number menu of the BPEL Mapper is shown below.</p>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 5: The BPEL Mapper Number Menu</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/number.png" alt="The BPEL Mapper Number Menu">
+</div>
+
+
+
+<p><a name="table-6"></a><b>Table 6: Numerical Functions Usage</b></p>
+<table class="tablebg">
+    <tr>
+      <td class="tblheader"><b>Name  </b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">round</td>
+      <td class="tbltd0">Rounds off to the nearest integer</td>
+      <td class="tbltd0">round (3.14)</td>
+      <td class="tbltd0">3</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">ceiling</td>
+      <td class="tbltd1">Function returns the smallest integer that is greater or equal to the argument</td>
+      <td class="tbltd1">ceiling (3.14)</td>
+      <td class="tbltd1">4</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">floor</td>
+      <td class="tbltd0">Function returns the biggest integer that is less than or equal to the argument</td>
+      <td class="tbltd0">floor (3.14)</td>
+      <td class="tbltd0">3</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">number</td>
+      <td class="tbltd1">Converts an argument to a number</td>
+      <td class="tbltd1">number(length)</td>
+      <td class="tbltd1">Numerical value of the <tt>length</tt> element</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">sum</td>
+      <td class="tbltd0">Function converts every node from a node-set to a number and  sums them up
+      </td>
+      <td class="tbltd0">sum(/apple/count)</td>
+      <td class="tbltd0">Sum of all <tt>count</tt> nodes
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">Number Literal</td>
+      <td class="tbltd1">Number ( in XPath a number has a representation with a floating point)</td>
+      <td class="tbltd1">1.2</td>
+      <td class="tbltd1">1.2
+      </td>
+    </tr>
+  
+</table>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+<a name="StringFunc"></a><h3>String Functions</h3>
+<p>The String menu of the BPEL Mapper is shown below.</p>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 6: The BPEL Mapper String Menu</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/string.png" alt="The BPEL Mapper String Menu">
+</div>
+
+
+<p><a name="table-7"></a><b>Table 7: String Functions Usage</b></p>
+<table class="tablebg">
+    <tr>
+      <td class="tblheader"><b>Name</b></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">string</td>
+      <td class="tbltd0">Converts an argument into a string</td>
+      <td class="tbltd0">string(3.14)</td>
+      <td class="tbltd0">'3.14'</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">string-length</td>
+      <td class="tbltd1">Returns the string length</td>
+      <td class="tbltd1">string-lenght('MyString')</td>
+      <td class="tbltd1">8</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">substring</td>
+      <td class="tbltd0">Returns the part of the first argument string that starts with the position set by the second argument and has the length set in the third argument</td>
+      <td class="tbltd0">substring('1234',2,3)</td>
+      <td class="tbltd0">'234'</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">substring-after</td>
+      <td class="tbltd1">Returns the part of the first argument string that follows the first occurrence of the second argument string</td>
+      <td class="tbltd1">substring-after('20-30','-')</td>
+      <td class="tbltd1">'30'</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">substring-before</td>
+      <td class="tbltd0">Returns the part of the first argument string that precedes the first occurrence of the second argument string</td>
+      <td class="tbltd0">substring-before('14-30','-')</td>
+      <td class="tbltd0">'14'</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">contains</td>
+      <td class="tbltd1">Returns <tt>true</tt> if the first string contains the second one</td>
+      <td class="tbltd1">
+      <p>contains('XPath','X')</p>
+      </td>
+      <td class="tbltd1"><tt>true</tt></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">starts-with</td>
+      <td class="tbltd0">Returns <tt>true</tt> if the first string starts with the second one</td>
+      <td class="tbltd0">starts-with('XPath','X')</td>
+      <td class="tbltd0"><tt>true</tt></td>
+    </tr>
+    <tr>
+      <td class="tbltd1">concat</td>
+      <td class="tbltd1">Returns concatenation of two strings</td>
+      <td class="tbltd1">concat('String1 ','String2')</td>
+      <td class="tbltd1">'String1 String2'</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">normalize-space</td>
+      <td class="tbltd0">Returns the argument string with normalization of space symbols</td>
+      <td class="tbltd0">normalize-space('&nbsp;
+1&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp; ')</td>
+      <td class="tbltd0">'1 2'</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">translate</td>
+      <td class="tbltd1">Returns the first argument string where symbols set in the second argument string are replaced by the symbols of the third argument string in a corresponding position</td>
+      <td class="tbltd1">translate('black','kcalb','etihw')</td>
+      <td class="tbltd1">'white'</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">String Literal</td>
+      <td class="tbltd0">String constant; strings are formed by a sequence of null and more symbols defined in XML reference</td>
+      <td class="tbltd0">'String'</td>
+      <td class="tbltd0">'String'</td>
+    </tr>
+ 
+</table>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+
+<a name="NodesFunc"></a><h3>Node-Sets Functions</h3>
+<p>The Nodes menu of the BPEL Mapper is shown below.</p>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 7: The BPEL Mapper Nodes Menu</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/nodes.png" alt="The BPEL Mapper Nodes Menu">
+</div>
+
+<p>The following code is a sample of a SOAP message.</p>
+
+<table border="1" cellpadding="2" cellspacing="0" class="examplecode">
+                <tr class="bg-white">
+                    <td><b>Code Example 1: SOAP Message Sample </b></td>
+
+                </tr><tr>
+                    <td>
+<pre class="examplecode">  
+&lt;soapenv:Envelope
+xsi:schemaLocation=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:syn=&quot;http://xml.netbeans.org/schema/SynchronousSample&quot;&gt;
+
+&nbsp; &lt;soapenv:Body&gt;
+&nbsp;&nbsp;&nbsp; &lt;syn:typeA&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;syn:paramA&gt;String1&lt;/syn:paramA&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;syn:paramA&gt;String2&lt;/syn:paramA&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;syn:paramA&gt;String3&lt;/syn:paramA&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/syn:typeA&gt;
+&nbsp; &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;
+
+</pre></td></tr>
+</table>
+
+
+<br>
+<p><a name="table-8"></a><b>Table 8: Node-Set Functions Usage</b></p>
+<table class="tablebg">
+    <tr>
+      <td class="tblheader"><strong>Name</strong></td>
+      <td class="tblheader"><b>Description</b></td>
+      <td class="tblheader"><b>Sample</b></td>
+      <td class="tblheader"><b>Result</b></td>
+    </tr>
+    <tr>
+      <td class="tbltd0">count </td>
+      <td class="tbltd0">Returns the number of nodes set in the argument</td>
+      <td class="tbltd0">count($inputVar.inputType/xs:paramA)</td>
+      <td class="tbltd0">3</td>
+    </tr>
+    <tr>
+      <td class="tbltd1">last</td>
+      <td class="tbltd1">Returns the number of the last element in a multitude</td>
+      <td class="tbltd1">$inputVar.inputType/paramA[last()]
+      </td>
+      <td class="tbltd1">String3</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">position</td>
+      <td class="tbltd0">Returns the position of an element in a multitude</td>
+      <td class="tbltd0">
+      </td>
+      <td class="tbltd0">
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">local-name<br>
+      </td>
+      <td class="tbltd1">Returns the name of the first tag in a multitude without namespace</td>
+      <td class="tbltd1">local-name($inputVar.inputType/xs:paramA)
+      </td>
+      <td class="tbltd1">paramA
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd0">name
+      </td>
+      <td class="tbltd0">Returns the full name of the first tag in a multitude
+      </td>
+      <td class="tbltd0">&nbsp;name($inputVar.inputType/xs:paramA)
+      </td>
+      <td class="tbltd0">syn:paramA
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">namespace-uri
+      </td>
+      <td class="tbltd1">Returns a reference to the url that defines the namespace
+      </td>
+      <td class="tbltd1">namespace-uri($inputVar.inputType/xs:paramA)
+      </td>
+      <td class="tbltd1">http://xml.netbeans.org/schema/SynchronousSample
+      </td>
+    </tr>
+  
+</table>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+
+<a name="DateFunc"></a><h3>Functions for Working with Date and Time</h3>
+<p>The BPEL Mapper allows you to set constants and use time functions with the help of a graphical interface.</p>
+<p>The Datetime menu of the BPEL Mapper is shown below.</p>
+<div class="imgcap" style="margin:10px auto;">
+<p><b>Figure 8: The BPEL Mapper Datetime Menu</b></p>
+<img src="../../../images/articles/ep-bpel-mapper/60/datetime.png" alt="The BPEL Mapper Datetime Menu">
+</div>
+<p><a name="table-9"></a><b>Table 9: Functions for Working with Date and Time Usage</b></p>
+<table class="tablebg">
+  
+    <tr>
+      <td class="tblheader">Name</td>
+      <td class="tblheader">Description</td>
+    </tr>
+    <tr>
+      <td class="tbltd0">current-time
+      </td>
+      <td class="tbltd0">Returns current time 
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">current-date
+      </td>
+      <td class="tbltd1">Returns current date
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd0">current-dateTime
+      </td>
+      <td class="tbltd0">Returns current date and time
+      </td>
+    </tr>
+    <tr>
+      <td class="tbltd1">Duration Literal</td>
+      <td class="tbltd1">String; allows for setting the time interval in the 'P1Y2M3DT4H5M6S' format.</td>
+    </tr>
+  
+</table>
+
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="summary"></a>Summary</h2>
+<p>Graphical representation offers easy  analysis and seeing of XPath expressions. The BPEL Mapper is a tool that allows you to create and edit XPath expressions in a visual mode. The BPEL Mapper graphical interface allows you to set constants,  use time functions, and work with predicates. The BPEL Mapper interface enables you to perform calculations using XPath operations and functions that are listed in this article over local and global variables, XSD elements and attributes, and parts. </p>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="see_also"></a>See Also</h2>
+
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<br>
+<ul>
+<li><a href="http://www.w3.org/TR/xpath" target="_blank">XML Path Language (XPath) Specification</a></li>
+</ul>
+<br>
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+<!-- -------------------------------------------------------------------------->
+<hr class="light">
+<div class="date-stamp" align="right">This page was last modified:&nbsp;<!-- #BeginDate format:Am1 -->November 23, 2007<!-- #EndDate --></div>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="bpel-mapper.html#top">top</a></p>
+</body>
+</html>

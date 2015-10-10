@@ -1,0 +1,1057 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html lang='en'>
+<head>
+<title>NetBeans IDE 6.0 - Tutorials - Getting Started With Visual Web JSF Application Development</title>
+<!-- BEGIN METADATA -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="This tutorial gives you a whirlwind tour of the Netbeans Visual Web Pack integrated development environment (IDE). The tutorial shows you how to use the IDE to perform the typical phases of web application development.">
+<meta name="date" content="2006-11-29">
+<meta name="collection" content="learning">
+<meta name="content_type" content="Tutorial">
+<meta name="archive" content="false">
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- END METADATA -->
+</head>
+<!--stopindex-->
+<body>
+<a name="top"></a>
+<!-- END GENERIC MASTHEAD -->
+<!-- BEGIN VNV3 PAGETITLE, two-level variation -->
+
+<h1>Getting Started With NetBeans Visual Web JSF Application Development </h1>
+<!-- END VNV3 PAGETITLE, two-level variation -->
+<!-- BEGIN WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+      <!--startindex-->
+      <!-- ============ -->
+      <!-- MAIN CONTENT -->
+      <!-- ============ -->
+      <a name="skip2content"></a>
+      <!--  BEGIN VCD4 BYLINE AND TOOLS  -->
+     <div class="articledate" style="margin-left: 0px;">Contributed by the NetBeans Tutorials Team and the Support Team </div> 
+	  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td class="smaller" valign="top"><em>December, 2007</em>&nbsp;[Revision number: V6.0]</td>
+          <td width="10">&nbsp;</td>
+          <td align="right" valign="bottom">&nbsp;</td>
+        </tr>
+      </table>
+     
+      <!--  END VCD4 BYLINE AND TOOLS  -->
+      <!-- BEGIN VCD1 OVERVIEW COMPONENT  -->
+      
+        <table border="0" cellpadding="4" cellspacing="0" width="100%" >
+          <tr>
+            <td><p>This tutorial gives you a whirlwind tour of the visual veb application development in NetBeans IDE 6.0. The tutorial shows you how to use the IDE's Visual Web JSF Application functionality to perform the typical phases of web application development.</p>
+              <p> The tutorial is designed so that you do not need to go through it in any particular order. You might want to skim over it quickly and then return to each section as time allows. If you prefer a step by step tutorial, you might want to first try <a href="helloweb.html">Developing a JSF Web Application</a>.</p></td>
+          </tr>
+        </table>
+
+      <!-- END VCD1 OVERVIEW COMPONENT  -->
+ 
+      <!-- BEGIN VCD5 ANCHOR LINKS COMPONENT  -->
+      <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="left" valign="top"><p><b>Contents</b></p>
+            <table border="0" cellpadding="0" cellspacing="0" class="vatop">
+              
+              <tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#01">Starting a Project</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#02">Creating Web Pages</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#03">Adding Components to a Web Page</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#03a">Getting Help</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#04">Building and Testing a Web Application</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#05">Connecting Web Pages and Handling User Actions</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#06">Editing Java Code</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#07">Handling User Input</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#08">Storing and Passing Data</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#09">Connecting to Databases</a></td>
+              </tr>
+              <tr>
+                <td class="hyphen">-&nbsp;</td>
+                <td><a href="intro.html#10">Debugging a Web Application</a></td>
+              </tr>
+            </table></td>
+          <td width="20">&nbsp;</td>
+          <td align="right" valign="top">            <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206"> </td> 
+        </tr>
+      </table>
+      <br>
+      <!-- END VCD5 ANCHOR LINKS COMPONENT  -->
+      
+      <p><a name="software"></a><b>This tutorial works with the following technologies and resources</b></p>
+
+<table border="1" cellpadding="1">
+  <tbody>
+  <tr>
+    <td valign="top">JavaServer Faces Components/<br>
+      Java EE Platform</td>
+    <td valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.2 with Java EE 5*<br>
+      <img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">1.1 with J2EE 1.4 
+  </td>
+  </tr>
+  <tr>
+    <td valign="top">Travel Database</td>
+    <td colspan="4" valign="top"><img src="../../../images/articles/60/web/check.png" alt="works with" height="15" hspace="3" width="14">Required for some sections</td>
+  </tr>
+ 
+</tbody></table>
+<p>* In order to take advantage of NetBeans IDE 6.0's Java EE 5 capabilities, use an application server that is fully compliant with the Java EE 5 specification such as the Sun Java Application Server 9/GlassFish.</p>
+<p>This tutorial has been tailored for use with the GlassFish v2 Application Server. If you are using a different server, consult the <a href="../../../community/releases/60/relnotes.html">Release Notes</a> and <a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ" target="_blank">FAQs</a> for known problems and workarounds. For detailed information about the supported servers and Java EE platform, see the <a href="../../../community/releases/60/relnotes.html">Release Notes</a>.</p>
+<!-- END RESOURCE MATRIX -->
+      <h2><a name="01"></a>Starting a Project</h2>
+      <p>A project is the equivalent of your working environment for a web application. When you create a Visual Web JSF Application project and you have specified GlassFish V2 or later as an application server in the NetBeans IDE, the  IDE can create a  web application based on Java EE 5 that uses JavaServer Faces 1.2 components. By default, the web application is created in a directory structure that conforms to the Java BluePrints project conventions for web applications.</p>
+      
+      <br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>
+          <p>Start the IDE by using the appropriate step from the following list:</p>
+          <ul>
+            <li><b>Windows, Solaris and Linux.</b> Double-click the NetBeans desktop icon.</li>
+            <li><b>Mac.</b> Double-click the NetBeans icon in the installation folder.</li>
+            <!-- <li><b>Solaris Operating System (SPARC and x86 Platform Editions) and Linux.</b> Navigate to the <code>bin</code> directory of your NetBeans installation, type <code>./netbeans</code>, and press Enter.</li> -->
+          </ul>
+        </li>
+        <li>
+          <p>Create a Visual Web JSF Application project: </p>
+          <ol type="a">
+        <li>Choose File &gt; New Project from the main menu.</li>
+        <li>In the New Project wizard, select the Web category and the Web Application project type, and click Next.</li>
+      <li>Name the project <tt>GettingStarted</tt>. Note the default project location. Browse and select a different location if you like. </li>
+        <li> 
+          <p>Choose a server and Java EE version and click Next.</p> 
+          For example, the default server is GlassFish V2, and Java EE 5 is the default Java EE Version.</li>
+        <li>Select the Visual Web JavaServer Faces framework and click Finish to create the new project in the default location or the location chosen in step c.</li>
+      </ol>
+        </li>
+        <li>The IDE creates the project directory in the selected (or default) project folder and gives it the same name as your project.</li>
+        <li>
+          <p>Explore the Projects window. As shown in the following figure, the Projects window groups items by category. Expand each of the nodes to see what type goes in each category. </p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="338">
+            <tr>
+              <td align="center" >
+              <div class="pad3">  <b>Figure 1:</b> Projects Window</div></td>
+            </tr>
+          </table>
+          <img src="../../../images/articles/60/web/intro/projects-window.png" width="328" height="304" border="0" alt="Figure 1: Projects Window" title="Figure 1: Projects Window" />
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>Under the Web Pages node is the Page1.jsp node. The IDE creates this page by default and makes it the start page. The arrow badge <img src="../../../images/articles/60/web/intro/startpage-badge.png" alt="start page badge" width="6" height="13" align="absmiddle">&nbsp;next to the node identifies the page as the start page. If you want to use a different page for the start page, right-click that page's node and choose Set as Start Page from the pop-up menu.</li>
+        <li>
+          <p>Click the Files tab, or choose Window &gt; Files from the main menu, to bring the Files window to the front. This window organizes the items by their physical storage. Expand the nodes to see the structure. Notice the badge <img src="../../../images/articles/60/web/intro/compilebadge.png" height="8" width="8" alt="Not compiled badge">&nbsp;that appears next to the ApplicationBean1.java node and several other nodes below it, such as Page1.java. This badge indicates that the file needs to be compiled. The IDE compiles the files automatically when you build the project. </p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="337">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/files-window.png" 
+width="327" height="373" border="0" alt="Figure 2: Files Window" title="Figure 2: Files Window" />
+              <div class="pad3">  <b>Figure 2</b>: Files Window</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>In Figure 2, notice the GettingStarted &gt; src &gt; java &gt; gettingstarted &gt; Page1.java node. This Java class is the <i>backing bean</i> for the Page1.jsp file. Whenever you add a page to the project, the IDE creates both a <code>.jsp</code> file and a <code>.java</code> file for the page. You learn more about <code>.jsp</code> and <code>.java</code> files in the next section. </li>
+      </ol>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li>From the main menu, choose Help &gt; Help Contents to open the help file. In the Contents pane on the left, 
+		select Web Applications &gt; About Web Applications &gt; Working with Web Applications.</li>
+      </ul>
+      <h2><a name="02"></a>Creating Web Pages</h2>
+      <p>With Visual Web JSF applications, you use JavaServer Pages (JSP) technology and <i>page</i> <i>beans</i> (also known as backing beans) instead of HTML pages. The JSP page is a template from which the server generates the HTML response to be displayed in the browser (the client). The page bean contains the logic that the server executes both when it generates the HTML response and after a user submits the page.</p>
+      <p> When you add a web page in a Visual Web JSF application, the IDE creates both a JSP file and a Java source file for you. You mostly use the Visual Designer and the Properties window to develop the web page. The IDE modifies the JSP code and Java code to implement what you design. Most of your work can be done from the Visual Designer and the Properties window. </p>
+      <p><b>Note:</b> The JSP pages that the IDE generates are JSP documents. A JSP document is an XML document and, therefore, must be <i>well-formed</i>. While most JSP elements comply with XML syntax, there are some elements that are not XML compliant, such as comments, declarations, directives, expressions, and scriptlets. See the <a href="http://java.sun.com/products/jsp/syntax/1.2/syntaxref12.html" target="_blank">JavaServer Pages Syntax Reference</a> for JSP document syntax. </p>
+<br>
+
+      <div><a name="section2TryIt"></a><b>Try It</b></div>
+      <ol>
+        <li>
+          <p>In the Projects window, right-click the Web Pages node and choose New &gt; Visual Web JSF Page, as shown in the following figure. </p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="504">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/web-page-node.png" 
+width="494" height="374" border="0"
+alt="Figure 3: Right-Clicking the Web Pages Node" title="Figure 3: Right-Clicking the Web Pages Node" />
+                <div class="pad3">  <b>Figure 3</b>: Right-Clicking the Web Pages Node</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>Accept the default name of Page2 and click Finish. The IDE opens Page2 in the Visual Designer, which is in the editing area, as shown in the following figure.</p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="490">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/visual-editor.png" 
+width="480" height="457" border="0"
+alt="Figure 4: Visual Designer" title="Figure 4: Visual Designer" />
+                <div class="pad3">  <b>Figure 4</b>: Visual Designer</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>Click the Java button in the editing toolbar to see the source code for the page bean, as shown in the following figure. When the editing area shows the Java source, the Navigator window lists all the member fields and methods. Notice that the page's source code has methods to access the Application Bean, Session Bean, and Request Bean. See the <a href="intro.html#08">Storing and Passing Data</a> section in this tutorial for an explanation of these three types of beans.</p>
+         <table border="0" cellpadding="2" cellspacing="0" width="489">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/java-editor.png" 
+width="479" height="457" border="0"
+alt="Figure 5: Java Source for Page Bean" title="Figure 5: Java Source for Page Bean" />
+                <div class="pad3">  <b>Figure 5</b>: Java Source for Page Bean</div></td>
+            </tr>
+          </table> 
+            <!-- BEGIN FIGURE COMPONENT -->
+          
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>The source also has methods that get invoked during certain lifecycle events between the time the page is requested and the time the page rendering is complete.</p>
+          <p> <b>Tip:</b> Double-clicking a member in the Navigator window opens the source code editor and positions the cursor at that member's declaration. You can also click in the Navigator window and start typing the first few characters of a member's name to open a Quick Search dialog box. Continue typing until the IDE highlights the desired entry in the list, as shown in the following figure. You can then  press Enter to open the source code editor and position it at the matching member's declaration.</p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="449">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/navigator.png" 
+width="439" height="402" border="0"
+alt="Figure 6: Quick Search in the Navigator Window" title="Figure 6: Quick Search in the Navigator Window" />
+              <div class="pad3">  <b>Figure 6</b>: Quick Search in the Navigator Window</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>Click the JSP button in the editing toolbar to see the JSP code for the page, as shown in the following figure. Notice how the JSP page uses JSP document syntax.</p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="590">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/jsp.png" 
+width="580" height="572" border="0" alt="Figure 7: JSP View" title="Figure 7: JSP View" />
+              <div class="pad3">  <b>Figure 7</b>: JSP View</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>Clicking the Design button in the editing toolbar  switches to the Visual Designer and  displays the representation of the page in the Navigator window. If you open the nodes under the Page2 node, you can see  the nodes shown in the following figure. Note how the tags in the JSP file are represented as nodes in the Navigator window.</p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="329">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/outline-window.png" 
+width="319" height="319" border="0" alt="Figure 8: Navigator Window" title="Figure 8: Navigator Window" />
+              <div class="pad3">  <b>Figure 8</b>: Navigator Window</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+      </ol>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li>From the main menu, choose Help &gt; Help Contents to open the help file. In the Contents pane on the left, select 
+
+
+ Web Applications &gt; Creating and Editing Web Components &gt; About Creating Web Components.</li>
+        <li><a href="http://java.sun.com/products/jsp/docs.html" target="_blank">JavaServer Pages Technology - Documentation</a></li>
+      </ul>
+      <h2><a name="03"></a>Adding Components to a Web Page</h2>
+      <p>You design a web page by dragging components from the Palette window and dropping them on the web page in the Visual Designer. The following figure shows Page2 with the Button, Text Field, Message, Drop Down List, and Radio Button Group components. All these components are available from the Basic section of the Palette. These components have been customized by changing their properties. You learn about properties later in this section. </p>
+      <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="493">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/visual-designer.png" 
+width="483" height="427" border="0" alt="Figure 9: Components in the Visual Designer" title="Figure 9: Components in the Visual Designer" />
+            <div class="pad3">  <b>Figure 9</b>: Components in the Visual Designer</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+<br>
+      <p><b>Note: </b>The components that are available from the Palette are JavaServer Faces (JSF) components that have been enhanced according to the <a href="http://developers.sun.com/prodtech/javatools/jscreator/reference/fi/2/design-api.html" target="_blank">Design Time API</a>  to make their properties  available for the Visual Designer and the Properties window. You can use other components in the web applications that you build by using the IDE, but you will not be able to use the interactive design-time features of the IDE on these components unless they have been customized according to requirements of the Design Time API. If the Java EE version is set to Java EE 5, the Palette offers JSF 1.2 components. If, when you create the project, you set the Java EE version to 1.3 or 1.4, the Palette offers JSF 1.1 components.</p>
+      <p>Most of the components that you use are in the Basic, Layout, and Composite sections of the Palette window. The following tables show some of the most commonly used components grouped according to functionality. </p>
+      <p><b>Table 1: Input Components</b></p>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr  align="left" valign="top">
+          <th width="117">Component</th>
+          <th width="316">Description</th>
+          <th>Palette Section</th>
+        </tr><tr valign="top">
+          <td>Text Field</td>
+          <td>An input field for a single line of text.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Text Area</td>
+          <td>An input field for multiple lines of text.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Drop Down List</td>
+          <td>A drop-down menu, also referred to as a combo box.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Listbox</td>
+          <td>A list from which the user can select either one item or multiple items, depending on how the component is configured.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Checkbox</td>
+          <td>A single-character box that the user can either select (check) or clear.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Radio Button</td>
+          <td>A single radio button that the user can select (check).</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Password Field</td>
+          <td>An input field that echoes the input characters with a replacement character to mask the input.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>File Upload</td>
+          <td> A component with a text input field and a Browse button that displays a file chooser for specifying a file to upload. The application uploads the specified file when the user submits the page.
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Add Remove</td>
+          <td> Two lists (one for available options, one for selected options) with buttons to move the options between the lists, and to order the selected options.
+          <td>Composite</td>
+        </tr>
+        <tr valign="top">
+          <td>Calendar</td>
+          <td>An input field and calendar for chooseing dates.         
+          <td>Basic</td>
+        </tr>
+      </table>
+      <span class="sp10">&nbsp;</span>
+      <p><b>Table 2: Display Components</b></p>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr  align="left" valign="top">
+          <th width="117">Component</th>
+          <th width="316">Description</th>
+          <th>Palette Section</th>
+        </tr>
+        <tr valign="top">
+          <td>Label</td>
+          <td>Text field that can be associated with an input field and for which you can specify a weak, medium, or strong font style.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Static Text</td>
+          <td>Field for displaying text.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Image</td>
+          <td>Inline image.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Message</td>
+          <td>Text field that is linked to a specific component for displaying validation errors and other messages about that component.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Message Group</td>
+          <td>Text field for displaying runtime error messages, program generated error messages, and, optionally, validation errors and other messages about components that are on the page.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Page Alert</td>
+          <td>Similar to an Alert component (below), but  intended to display the icon and information on a separate page. </td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Alert</td>
+          <td>Displays an icon and informational text such as a warning, an error, or the successful completion of some event. </td>
+          <td>Composite</td>
+        </tr>
+        <tr valign="top">
+          <td>Hidden Field </td>
+          <td>An invisible field that can be used to hold data or pass information to the server.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Page Separator </td>
+          <td>A horizontal line that resizes to any page width selected by the user </td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Form</td>
+          <td>Used to add a form </td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Inline Help </td>
+          <td>Provides short help information that appears inline on your pages. </td>
+          <td>Composite</td>
+        </tr>
+      </table>
+      <span class="sp10">&nbsp;</span>
+      <p><b>Table 3: Grouping Components</b></p>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr  align="left" valign="top">
+          <th width="117">Component</th>
+          <th width="316">Description</th>
+          <th>Palette Section</th>
+        </tr>
+        <tr valign="top">
+          <td>Checkbox Group</td>
+          <td>Displays two or more checkboxes in a grid layout.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Radio Button Group</td>
+          <td>Displays two or more radio buttons in a grid layout and ensures that only one button can be selected at a time.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Table, Table Row Group, and Table Column</td>
+          <td>Displays data from a composite data type such as a database table or an array.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Grid Panel</td>
+          <td>Organizes the components within a layout of rows and columns.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Group Panel</td>
+          <td>Groups a set of components in flow layout mode.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Layout Panel</td>
+          <td>Use to group a set of components in flow layout mode or grid layout mode.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Tab Set and Tab</td>
+          <td>Displays different layouts on the same page. Also can be used as a navigational tool.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Page Fragment Box</td>
+          <td>Groups components that you want to consistently display on two or more pages.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Property Sheet, Property Sheet Section, and Property</td>
+          <td>Lays out a single column of labeled components quickly, and divides the components into sections.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Breadcrumbs</td>
+          <td>Lays out a series of link components separated by right angle brackets (&gt;).</td>
+          <td>Composite</td>
+        </tr>
+        <tr valign="top">
+          <td>Common Tasks Section, Common Tasks Group </td>
+          <td>A set of common tasks that users can perform </td>
+          <td>Composite</td>
+        </tr>
+      </table>
+      <span class="sp10">&nbsp;</span>
+      <p> <b>Table 4: Action Components</b></p>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr  align="left" valign="top">
+          <th width="117">Component</th>
+          <th width="316">Description</th>
+          <th>Palette Section</th>
+        </tr>
+        <tr valign="top">
+          <td>Button</td>
+          <td>Button that submits the associated form.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Hyperlink</td>
+          <td>Text field that submits a URL or submits a form.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Image Hyperlink</td>
+          <td>Image that submits a URL or submits a form.</td>
+          <td>Basic</td>
+        </tr>
+        <tr valign="top">
+          <td>Tab</td>
+          <td>Subcomponent of a Tab Set or a Tab. A tab can optionally submit a URL or submit a form.</td>
+          <td>Layout</td>
+        </tr>
+        <tr valign="top">
+          <td>Common Task </td>
+          <td>A link to a Visual web JSF page where a user can perform a task. </td>
+          <td>Composite</td>
+        </tr>
+      </table>
+      <span class="sp10">&nbsp;</span>
+      <p>You use the component's property sheet in the Properties window to change the appearance and behavior of the component, to bind the component to data, and to associate the component with event handlers.</p>
+      <p>The following figure shows the properties for a Listbox component.</p>
+      <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="504">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/property-sheet.png" 
+width="494" height="606" border="0" alt="Figure 10: Listbox Property Sheet in the Properties Window" title="Figure 10: Listbox Property Sheet in the Properties Window" />
+          <div class="pad3">  <b>Figure 10</b>: Listbox Properties in the Properties Window</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+      <span class="sp10">&nbsp;</span>
+      <p><b>Try It</b></p>
+      <p>Open Page2 that you created by following the <a href="intro.html#section2TryIt">Try It</a> suggestions in the Creating Web Pages section, or create it if necessary.</p>
+      <div>Drag various components from the Basic section and the Layout section of the Palette window and play around with their properties. For example, try the following steps:</div>
+      <ol>
+        <li>Drag a Button Component onto the page, type <code>Click Me!</code> and press Enter. In the Properties window, notice how the <code>text</code> property has the value <code>Click Me!</code>. In the Properties window, select the <code>primary</code> property's checkbox and notice how the button's appearance changes.<ul class="note">
+          <li><b>Important Note:</b> There is a known issue that affects the width of the JSF 1.2 Button component in IE7. The workaround is to place the Button component in a layout component (Grid Panel, Group Panel, or Layout Panel). Resizing the layout component automatically resizes the Button component.   </li>
+        </uL></li>
+        <li>Drag a Text Field component onto the page. Next, drag a Label component onto the page, type <code>Name:</code> and press Enter. Ctrl-Shift-Click inside the Label component and drag to the Text Field component, and then release the mouse button. Select the Label component and notice how its <code>for</code> property is now set to the <code>id</code> for the Text Field Component. Set the <code>labelLevel</code> to Strong (1).</li>
+        <li>Drag a Message component to the right of the Text Field. Control-Shift-Drag from the Message Component to the Text Field component. As with the Label component, notice how the <code>for</code> property for the Message component is now set to the <code>id</code> for the Text Field Component.</li>
+        <li>Drag a Drop Down List component onto the page and set its <code>label</code> property to <code>Color</code>. Right-click the Drop Down List component and choose Configure Default Options to open the Options Customizer.</li>
+        <li>Press Tab to enter edit mode for Item 1 in the Display column, and type <code>Blue</code>. Press tab twice and change Item 2 to <code>White</code>. Press tab twice more and change Item 3 to <code>Green</code>. Click OK and notice how your changes affect the component in the Visual Designer.</li>
+        <li>
+          <p>Use  similar steps to create a Radio Button Group component with the choices Blue, White, and Red, but do not close the Options Customizer quite yet.</p>
+          In the Options Customizer, select the Select Items checkbox, and then select one of the radio buttons in the Selected column to set the default selection to that item. Click OK to apply the changes and to dismiss the Options Customizer. In the Properties window, set the columns property to 3 to align the radio buttons horizontally instead of vertically.</li>
+        <li>Right-click  the page background, any empty spot in the page, and choose Preview in Browser to see how your browser renders the components.</li>
+      </ol>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li><a href="helloweb.html">Developing a Web Application</a></li>
+        <!-- <li><a href="about_components.html">Delving Into Components</a></li> -->
+      </ul>
+      <h2><a name="03a"></a>Getting Help</h2>
+      <p> The IDE provides a Help Viewer, which contains help topics about the IDE. Also, when you press F1 on a window, dialog box, or Palette component, the Help viewer appears and displays information about that item. To access the Visual Web JSF Pack help topics, including help about the components, you can also choose Help &gt; Help Contents from the main menu and scroll to Web Applications. </p>
+      <br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>Click inside the Properties window for the Checkbox Group. Press F1 to view the topic about the Checkbox Group component properties. </li>
+        <li>Select the node for the Text Field component in the Basic section of the Palette. Press F1 to view the help topic about the Text Field component.</li>
+      </ol>
+
+            
+      <h2><a name="04"></a>Building and Testing a Web Application</h2>
+      <p>When you are ready to test a project, press F6 or choose Run > Run Main Project from the main menu. The IDE takes the following actions:</p>
+      <ul>
+        <li>Saves any files that need saving.</li>
+        <li>
+          <p>Compiles any files that need to be compiled. </p>
+          If there are complications, the IDE displays the related error messages in the Output window (shown below) and does not continue with the build-and-run process. Click the link in the error message to go to the source code that caused the compilation error.</li>
+        <li>Starts the application server if it is not already started.</li>
+        <li>
+          <p>Deploys the application to the application server. </p>
+          If there are any complications, the IDE displays the related error messages in the Output window and does not continue with the build-and-run process.</li>
+        <li>
+          <p>Opens a browser and sends the URL for the deployed application to the browser which, in turn, displays the start page.</p>
+<p><b>Note:</b> If you added components to a page other than the start page, at this point in the tutorial you will not see them in the web browser. See the Try It section below for a way to set up navigation from the start page to another page in your application. </p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="686">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/output-window.png" 
+width="676" height="246" border="0" alt="Figure 11: Output Window" title="Figure 11: Output Window" />
+                <div class="pad3">  <b>Figure 11</b>: Output Window</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+      </ul>
+      <p>If you have made a lot of changes or deleted several items, or if you are seeing some unexpected behavior, you can choose Build &gt; Clean and Build Main Project from the main menu. The IDE cleans out the project's <code>build</code> directory and <code>dist</code> directory, undeploys the web application, and then builds and deploys the application.</p>
+      <br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>If your project has less than two pages, create a new one by right-clicking the Web Pages node in the Projects window and choosing 
+
+
+ New &gt; Visual Web JSF Page. </li>
+        <li>Open the start page (the page with the  arrow badge <img src="../../../images/articles/60/web/intro/startpage-badge.png" alt="start page badge" width="6" height="13" align="absmiddle">) in the Visual Designer.</li>
+        <li>Drag a Hyperlink component onto the page, type <code>Next</code> <code>Page</code>, and press Enter.</li>
+        <li>In the Properties window for the Hyperlink component, click the ellipsis button <img src="../../../images/articles/60/web/ellipsis.png" width="14" height="16" align="absmiddle"> for the <code>url</code> property, select a different page in the project, and click OK. Notice how the IDE sets the <code>url</code> property to <code>/faces/<i>page-name</i>.jsp</code>.</li>
+        <li>Press F6 to build and run the web application.</li>
+        <li>Watch the messages that appear in the Output window during the build process. Also notice that output from the server's log appears in the server's tab. </li>
+        <li>Note the URL that the IDE sends to the browser.</li>
+        <li>When the start page appears in the browser, click the Next Page link.</li>
+        <li>
+          <p>Return to the IDE, and, in the Services window, expand Servers and expand the server's node, and then expand Applications &gt; Web Applications and note that there is a node for your project, as shown in the following figure.
+            <!-- BEGIN FIGURE COMPONENT -->
+          </p>          
+          <table border="0" cellpadding="2" cellspacing="0" width="308">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/services-window.png" 
+width="298" height="430" border="0" alt="Figure 12: Deployed Web Applications" title="Figure 12: Deployed Web Applications" />
+                <div class="pad3">  <b>Figure 12</b>: Deployed Web Applications</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+      </ol>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li>From the main menu, choose Help &gt; Help Contents to open the Help viewer. Then, in the Contents pane, choose Web Applications &gt; Creating Web Applications &gt; About Creating Web Applications.</li>
+      </ul>
+      <h2><a name="05"></a>Connecting Web Pages and Handling User Actions</h2>
+      <p>When a user types a URL, clicks a link, or clicks a button, the browser sends a request to the server. The server maps the request to a JSP page and uses that JSP page and its associated page bean to render a response.</p>
+      <p>You can specify page navigation in one of two ways:</p>
+      <ul>
+        <li>          You add a link component, such as the Hyperlink component, to the page, or add a Tree Node component to a Tree component or a Tab component to a Tab Set component. Then you set the component's <code>url</code> property to <code>/faces/</code><i>page-name</i><code>.jsp</code>. When you use the <code>url</code> property for navigation, the form data is not submitted. The web application simply navigates to the destination.</li>
+        <li>You use the Page Flow editor to map actions to pages, and the Visual Designer and the Java Source editor to create action handling methods. When you use action handling methods for page navigation, the form data is submitted and processed before the web application navigates to the specified destination.</li>
+      </ul>
+      <p>To access the Page Flow editor, right-click the page background in the Visual Designer and choose Page Navigation. </p>
+      <p>The Page Flow editor shows page icons <img src="../../../images/articles/60/web/intro/page1-icon.png" width="171" height="25" align="absmiddle"> for all the pages in the project. When you click the + element of a page icon in the Page Flow editor, the icon expands and shows all its action components, components that have an action property, such as a Button, a Hyperlink, or a Tab. Next to each component is a connector port. In the image below the hyperlink's connector port resembles a chain and the button's shows an arrow. You drag from the connector port to a page icon to create the mapping between that action's request and the page to be rendered as a response to the request. When you release the mouse, the IDE adds a visual representation of that connection, as shown in the connection labeled nextPage in the following figure.</p>
+      <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="478">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/page-navigation.png" 
+width="468" height="350" border="0" alt="Figure 13: Page Flow Editor" title="Figure 13: Page Flow Editor" />
+          <div class="pad3">  <b>Figure 13</b>: Page Flow Editor</div></td>
+        </tr>
+      </table>
+      <span class="sp10">&nbsp;</span>
+      <p> <b>Note: </b> When a page is submitted, the web application performs conversions and validations before it executes action methods. If a conversion or validation fails, the action methods do not get called. You should put Message Group components on a page during development so that you can catch any unexpected conversion or validation error that might prevent an action method from being invoked. </p>
+<br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>Create two pages named LinkPage1 and LinkPage2. Right-click LinkPage1 and choose Set As Start Page to make it the start page.</li>
+        <li> Drag a Hyperlink component onto LinkPage1, type <code>Next</code> <code>Page</code>, and press Enter.</li>
+        <li>Drag a Button component onto LinkPage2, type <code>Go</code>, and press Enter.</li>
+        <li>
+          <p>Double-click the Button component to access the button's action method.</p>
+          Notice that the action method returns null. When an action method returns null, the application redisplays the page.</li>
+        <li>Click Design in the toolbar to switch to the Visual Designer.</li>
+        <li>In the Visual Designer, right-click  LinkPage2's page background and choose Page Navigation. </li>
+        <li>In the Page Flow editor, click the icon for LinkPage1.jsp to expand the page's icon, and then drag a link from the hyperlink1 component's connector port to the icon for LinkPage2.jsp.</li>
+        <li>Double-click the case1 connector label to change to edit mode, type <code>nextPage</code> and press Enter.</li>
+        <li>Use similar steps to create a connector from the button on LinkPage2.jsp back to LinkPage1.jsp, and name the connector <code>go</code>. </li>
+        <li>Click XML in the editing toolbar to view the actual mapping XML that is deployed to the server, and then close the Page Flow editor and click Save when asked whether to save the changes.</li>
+        <li>
+          <p>In LinkPage2, double-click the Button component to access the button's action method.</p>
+          Notice that the action method now returns the string "go". The mapping that you created in the Page Flow editor instructs the server to display LinkPage1.jsp whenever LinkPage2.jsp returns "go." </li>
+        <li>Press F6 to run the application and try out the new page navigation.</li>
+      </ol>
+<br>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li><a href="pagenav.html">Navigating Pages in a Web Application </a></li>
+        <li>Either open the Navigation Editor and press F1, or from the main menu, choose Help &gt; Help Contents to open the Help viewer, and then in the Contents pane choose Web Applications > Creating and Editing Web Applications > Pages > About the Page Flow Editor.</li>
+      </ul>
+
+      
+      <h2><a name="06"></a>Editing Java Code</h2>
+      <p> The IDE's Java editor is packed full of features to facilitate the programming process, many more than can be discussed in this introductory tutorial. If you click inside a Java editor window and press F1, you can get help on most of the features of this editor.</p>
+      <p>The following descriptions cover a few of the more useful editing features.</p>
+      <ul>
+        <li>
+          <p><b>Code Completion.</b> Code completion enables you to type a few characters and then choose from a list of possible classes, methods, variables, and so on to automatically complete the expression. To display the code completion box, press Ctrl-Space. The code completion box also appears when you pause after typing a period that follows a package name, a variable, or a method call, as shown in the following figure.</p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="610">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/code-completion.png" 
+width="600" height="476" border="0" alt="Figure 14: Code Completion Box" title="Figure 14: Code Completion Box" />
+              <div class="pad3">  <b>Figure 14</b>: Code Completion Box</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li><b>Javadoc.</b> The code completion feature also displays any related Javadoc. In addition, you can right-click  a type, a field, or a method and choose Show Javadoc to see the Javadoc for that item, if the Javadoc is available. To see the available Javadoc, choose Help &gt; Javadoc References. You can also press Shift-F1 to display a Javadoc Index Search tool.</li>
+        <li><b>Fix Imports.</b> Press Ctrl-Shift-I to add necessary import statements automatically.</li>
+        <li>
+          <p><b>Error detection.</b> Red error boxes appear in the left margin of all statements that will not compile. Hover the mouse over the box to see the description of the error, as shown in the following figure. The IDE also displays an error strip on the right margin. This strip represents the whole file, not just the lines of code that are visible. Red lines in the error strip identify errors in the code. Double-click a red line to jump to the erroneous statement. When you compile files, all compilation errors appear in the Output window. Click an error message to display the erroneous code in the Java Editor. </p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="498">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/errorIcon.png" width="488" height="100" border="0" alt="Figure 15: Error Detection" title="Figure 15: Error Detection" />
+                <div class="pad3">  <b>Figure 15</b>: Error Detection</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p><b>Java Editor Keyboard Shortcuts.</b> You can invoke many common editing tasks with a simple key combination as shown in the following examples. To learn more about the shortcuts, choose Help &gt; Help Contents from the main menu to open the Help viewer, and then in the Contents pane choose IDE Basics &gt; Keyboard Shortcuts &gt; Editor Shortcuts.</p>
+          <!-- BEGIN VCD8 DATA TABLE COMPONENT  -->
+          <table border="1" cellpadding="2" cellspacing="0" class="vatop" summary="Shortcut Examples">
+            <tr valign="top">
+              <th align="left">Action</th>
+              <th align="left">Shortcut</th>
+            </tr>
+            <tr valign="top">
+              <td>Format code</td>
+              <td>Alt-Shift-F</td>
+            </tr>
+            <tr valign="top">
+              <td>Remove current line</td>
+              <td>Ctrl-E</td>
+            </tr>
+            <tr valign="top">
+              <td>Move insertion point to highlighted matching bracket</td>
+              <td>Ctrl-[</td>
+            </tr>
+            <tr valign="top">
+              <td>Select the block between a pair of brackets </td>
+              <td>Ctrl-Shift-[</td>
+            </tr>
+            
+          </table>
+          
+        </li>
+        <li>
+          <p><b>Code Templates .</b> Code Templates are short groups of characters that expand into a full word or phrase when you press the spacebar, as shown in the following examples. To see the full list of code templates, choose Tools &gt; Options on a Microsoft Windows system or NetBeans &gt; Preferences on a Macintosh system, and then choose Basic Options &gt; Editor &gt; Code Templates and click the ellipsis <img src="../../../images/articles/60/web/ellipsis.png" width="14" height="16" align="absmiddle"> button for the Code Templates property. Some examples:</p>
+          <!-- BEGIN VCD8 DATA TABLE COMPONENT  -->
+          <table border="1" cellpadding="2" cellspacing="0" class="vatop" summary="Shortcut Examples">
+            <tr valign="top">
+              <th align="left">Code</th>
+              <th align="left">Abbreviation</th>
+            </tr>
+            <tr valign="top">
+              <td><code>for (Iterator it = collection.iterator(); it.hasNext();) <br>
+                {Object elem = (Object) it.next();}</code></td>
+              <td><code>forc</code></td>
+            </tr>
+            <tr valign="top">
+              <td><code>for (int i = 0; i < arr.length; i++) {}</code></td>
+              <td><code>fori</code></td>
+            </tr>
+            <tr valign="top">
+              <td><code>try {|} catch (Exception ex) <br>
+                {log("Error Description", ex); } finally {}</code></td>
+              <td><code>trycatch</code></td>
+            </tr>
+          </table>
+        </li>
+        <li><p><b>Code Clips.</b> When you have the Java editor open, the Palette window provides many useful code clips that you can drag and drop onto your source file. The code clips do not appear for managed bean source files, such as the source file for an application bean or a request bean.</p>
+
+<b>Note:</b> If you click JSP in the toolbar to open the JSP editor, you see JavaScript tooltips in the Palette window that you can use in the JSP file.</li>
+        <!-- <li><b>Auto Comment Tool.</b> Choose Tools &gt; Auto Comment to open a dialog box for adding Javadoc comments.</li> -->
+        <li><b>Quick Search.</b> If you click in the Navigator window and start typing the name of a method or a field, a Quick Search dialog box appears and the IDE highlights the first matching entry in the list. Press Enter to position the Java editor in the source code at that entry's declaration.</li>
+      </ul>
+<br>
+      <p><b>Try It</b></p>
+      <p><b>Note:</b> The following exercises have you type code in the <code>destroy</code> method. The code that you type is meant to illustrate the editing features. You would not normally put code like this in this method. After you complete the steps, you should remove the code. </p>
+      <ol>
+        <li>Create a page or open an existing page. Drop a Hyperlink component onto the page. Click Java in the editing toolbar to display the Java source code.</li>
+        <li>Right-click in the left margin and choose Show Line Numbers. Press Ctrl-G in the Java source, type 100 in the Go To Line dialog box, and press Enter. </li>
+        <li>Click the  Navigator window's tab and then double-click <code>destroy()</code> to position the source code on that method. In the <code>destroy()</code> method, type <code>getSessionBean1().</code> and pause. The Code Completion box appears. Type <code>d</code> to see the box narrow the list down to <code>destroy()</code>. Press Enter to use that selection. Press Ctrl-Space. Now type <code>this.getH</code>, and pause for the Code Completion box to appear. Move the cursor down to <code>getHyperlink1()</code> and press Enter. Type the period, pause for the Code Completion box, and type <code>set</code>. After the Code Completion box narrows the list to all methods that start with <code>set</code>, type <code>te</code> to narrow the list to <code>setText(Object text)</code> and press Enter. The IDE inserts <code>setText()</code> after the period and positions the cursor inside the parentheses. Type <code>"hello"</code>, press End, and type <code>;</code>.</li>
+        <li>Start a new line, type <code>serr</code> and press Tab to expand the abbreviation to <code>System.err.println("")</code>. Remove the semi-colon from the end of the line. Press F9 to compile the file. The Output window displays several links to errors. Click the first link that appears in the window. The IDE displays the statement that caused the error. Replace the semi-colon that you just removed.</li>
+        <li>Start a new line, type <code>getSes</code> and press Ctrl-K. The IDE replaces the string with the first matching word from the source code above the current line.</li>
+        <li>To clean up the code, place the cursor on the first line in the <code>destroy</code> method body and press Ctrl-E to remove that line. Use Ctrl-E to remove the remaining lines in the method body.</li>
+        <li>Hover over the icons in the editing toolbar and try each one out.</li>
+        <li>Right-click in the Java source and choose Code Folds from the pop-up menu. Try the various actions in the submenu.</li>
+        <li>Try dragging code clips from the Palette to see what they offer.</li>
+      </ol>
+<br>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li>From the main menu, choose Help &gt; Help Contents to open the Help viewer, and then in the Contents pane choose Java Applications &gt; Editing Source Files &gt; About Editing Source Files.</li>
+        <li>From the main menu, choose Help &gt; Help Contents to open the Help viewer, and then in the Contents pane choose IDE Basics &gt; Keyboard Shortcuts &gt; General Editor Shortcuts.</li>
+      <li><a href="http://wiki.netbeans.org/wiki/view/Java_EditorUsersGuide" target="_blank">The Java Editor Users Guide FAQ </a></li>
+      </ul>
+      <h2><a name="07"></a>Handling User Input</h2>
+      <p>The IDE provides validator and converter objects to facilitate input checking and formatting. These objects can be found in their respective sections in the Palette. </p>
+      <p> You bind a validator to an input component, such as a Text Field component, by dropping the validator onto the input component. For example, after you add a Text Field component to a page in the Visual Designer, you can drag a Length Validator from the Validators section in the Palette and drop it on the Text Field. </p>
+      <p> Alternatively, you can drop the validator onto the page and set the input component's <code>validator</code> property to that validator object. For example, you can drop a Long Range Validator on a blank spot on the page, which adds <tt>longRangeValidator1</tt> to the Navigator window. You can then select an input component in the Visual Designer, such as the Text Field component, and choose <tt>longRangeValidator1</tt> from its <code>validatorExpression</code> property's drop-down list. You can use the same validator for more than one component. </p>
+      <p> The mechanisms are similar for converters. You can also associate converters with output components, such as the Static Text component. Note that when you bind a component to a data provider field, the conversions are done automatically. You learn about binding to data providers in the <a href="intro.html#09">Connecting to Databases</a> section.</p>
+      <p>You use the validator's Properties window to set the validation rules, such as the minimum and maximum value or the minimum and maximum length. Similarly, you use the converter's Properties window to set the conversion rules, such as the pattern that the value should match or the method to call to do the validation. The Number converter has a special wizard that appears when you first drop the Number Converter onto the page or onto a visual component. </p>
+      <p>The Basic section of the Palette provides the Message component and the Message Group component for automatically displaying conversion errors, validation errors, and required-field messages. The Message Group component displays global error messages, runtime errors and, optionally, all the component error messages. A Message component displays only the messages for the component to which it is bound. You bind a Message component to another component by setting the Message component's <code>for</code> property or by pressing Ctrl-Shift on the Message component and dragging the mouse to the component to which you want to bind the Message component. </p>
+      <p>You can programmatically send custom error messages to the Message Group component using the <code>error</code>, <code>warn</code>, <code>fatal</code>, and <code>info</code> methods in any Page Bean. To learn more about these methods, choose Tools &gt; Javadoc Index Search, type <code>FacesBean</code> in the text field for the drop-down list, and click Find.</p>
+<br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>Create a page and drag a button onto the page. Set the button's text to <code>Go</code>.</li>
+        <li>Drag a Text Field component onto the page. In the Properties window for the Text Field component, select the <code>required</code> property's checkbox.</li>
+        <li>Drop a Label component above the Text Field component, type <code>Price:</code> and press Enter.</li>
+        <li>In the Properties window for the Label component, select textField1 from the drop-down list for the <code>for</code> property. Note how the label in the Visual Designer shows an asterisk to indicate that input is required for its associated Text Field component. </li>
+        <li>
+          <p>In the Palette, expand the Validators section. Drag a Double Range Validator and drop it on the Text Field component. In the Navigator window, select the newly created doubleRangeValidator1 node. In the Properties window for the validator, set the maximum to <code>10.0</code> and set the minimum to <code>1.0</code>, as shown in the following figure. </p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="390">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/doublerangevalidator.png" 
+width="380" height="227" border="0" alt="Figure 16: Double Range Validator Properties" title="Figure 16: Double Range Validator Properties" />
+              <div class="pad3">  <b>Figure 16</b>: Double Range Validator Properties</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>In the Palette, expand the Converters section. Drag a Number Converter and drop it on the Text Field component. A Number Format dialog box appears, as shown in the following figure. Select currency from the Type drop-down list, select English (United States) from the Locale drop-down list, and click OK.</p>
+          <!-- BEGIN FIGURE COMPONENT -->
+          <table border="0" cellpadding="2" cellspacing="0" width="428">
+            <tr>
+              <td align="center" ><img src="../../../images/articles/60/web/intro/numberFormat.png" 
+			  width="418" height="466" border="0" alt="Figure 17: Number Format" title="Figure 17: Number Format" />
+                <div class="pad3">  <b>Figure 17</b>: Number Format</div></td>
+            </tr>
+          </table>
+          <!-- END FIGURE COMPONENT -->
+        </li>
+        <li>
+          <p>Add a Message component to the page. Press Ctrl-Shift on the component and drag to the Text Field component.</p>
+          Notice that the IDE sets the Message component's <code>for</code> property to the Text Field component's <code>id</code>.</li>
+        <li>Add a Message Group component to the page.</li>
+        <li>
+          <p>Make the page the start page and run the application. Try clicking 
+          the button with no price entered, with <code>1.5</code> entered, 
+          with a non-numeric value, and with a price greater than $10.00. 
+          Finally, type <code>$1.50</code> in the text field and click the button.</p>
+          Notice how the application rejects all values that do not conform to the number format and that do not fall within the specified range. Notice the different messages that appear in the Message and Message Group components.</li>
+        <li>Experiment with setting the <code>showGlobalOnly</code> checkbox for the Message Group component.</li>
+      </ol>
+<br>
+ <p><b>For More Information</b></p>
+      <ul>
+        <li><a href="convert-validate.html">Converting and Validating Data in Visual Web JSF Applications</a></li>
+      </ul>
+      
+      <h2><a name="08"></a>Storing and Passing Data</h2>
+      <p>You use the Application Bean, the Session Bean, and the Request Bean to store information for use by other pages.</p>
+      <ul>
+        <li>Use the Application Bean for information that applies to all user sessions, such as a static option list for a Drop Down component.</li>
+        <li>Use the Session Bean to store information for use by other pages throughout the user's session, such as the user's login name.</li>
+        <li>
+          <p>If you need the information only for use by the next page, use the Request Bean.</p>
+          <p>Any value that you store in the Request Bean disappears as soon as the request ends. A request is a single transmission of an HTTP request from the client to the server plus the corresponding response, which can be another page. In most cases, the request begins with the clicking of a button or a link, and ends with the response of an HTML page to be displayed. </p>
+          <p><b>Note:</b> The Request Bean gets instantiated only if the page that initiates the request stores values in Request Bean properties, such as when an input component is bound to a Request Bean property as described below.</p>
+          <b>Warning:</b> You cannot use the Request Bean if you have included the <code>&lt;redirect&gt;</code> element inside the <code>&lt;navigation-case&gt;</code> element of a navigation rule. (You see these rules when you click the Source button in the Page Flow editor.) When the page is submitted, the <code>&lt;redirect&gt;</code> element redirects the page and ends the request before a subsequent page can use any of the values stored in the Request Bean.</li>
+      </ul>
+      <p>To add a property to the Session Bean: <ol><li><p>Double-click the SessionBean1 node in the Navigator window.</p>This opens SessionBean1.java in the Java Editor.</li>
+	  <li>Add the <code>answer</code> property to the constructor <tt>public class SessionBean1 extends AbstractSessionBean</tt>.</li>
+	  <li>Fix the imports if necessary.</li>
+	  <li>
+	    <p>Right-click in the editor and choose Refactor &gt; Encapsulate Fields. In the resulting dialog, create the getter method if the property is Read Only and both the getter and setter methods if the property is Read/Write.</p>The property appears as a subnode under SessionBean1 in the Navigator window, but usually not right away.	  </li>
+      </ol> </p>  
+	  <p> Use similar steps to add a property to the Request Bean or the Application Bean. For more information see the FAQ <a href="http://wiki.netbeans.org/wiki/view/VwpFAQManagedBeans" target="_blank">How do I add properties to managed beans in NetBeans IDE 6.0?</a></p>
+      <p><b>Note: </b> You can also add properties to a page bean (the backing bean that the IDE creates for each page). To add a property to a page bean, open the page's java code and add the propery declaration to the constructor  <tt>public class Page1 extends AbstractPageBean</tt>, and encapsulate the fields as above. Page bean property values last only as long as the page bean is instantiated. For example, when the user clicks a Button component that rerenders the page (that is, the action method returns null), a new instance of that page bean is created, and the page bean's property values are reinitialized. If you want to pass a value to the postback, you can use Hidden Field components.</p>
+      <p>To associate a component with a bean's property, right-click the component and choose Bind to Data. In the Bind to Data dialog box, select the Bind to Object tab and choose the bean's property, as shown in the following figure.</p>
+   
+        <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="439">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/bindToData.png" 
+width="429" height="393" border="0" alt="Figure 18: Bind to Data Dialog Box" title="Figure 18: Bind to Data Dialog Box"  />
+            <div class="pad3">  <b>Figure 18</b>: Bind to Data Dialog Box</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+      <span class="sp10">&nbsp;</span>
+      <p> <b>Note:</b> For most components, the pop-up menu provides two binding actions - Property Bindings and Bind to Data. The Property Bindings dialog box enables you to bind any of the component's properties to a managed bean property or a data provider field. The Bind to Data dialog box is a shortcut for binding the component's value-holding property to a managed bean property or a data provider field. Use the Bind to Data Provider tab to bind to any data provider that you have added to the page or a managed bean. Use the Bind to an Object tab to bind to a page property or a managed bean property.</p>
+<br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>
+          <p>Add a property to RequestBean1.java: Name the property <code>parm</code>, make it a <code>String</code> and allow users read/write access.</p>
+          Note that the newly added property might not appear in the Navigator window. To make the property appear, right-click in the Visual Designer and choose Refresh from the pop-up menu. You can also open and save the RequestBean1 source file to make the property appear, as you do in the following steps.</li>
+        <li>Close and save the file.</li>
+        <li>Create a page named First with a Button component and a Text Field component.</li>
+        <li>Right-click the Text Field component and choose Bind to Data from the pop-up menu. Click the Bind to an Object tab, select RequestBean1 &gt; parm, and click OK.</li>
+        <li>Create a page named Next. Add a Button component and add a Static Text component.</li>
+        <li>Bind the Static Text component on the Next page to RequestBean1 &gt; parm using the same steps that you used for the Text Field component on the First page.</li>
+        <li>Right-click  the page background and choose Page Navigation from the pop-up menu.</li>
+        <li>In the Page Flow editor, create a connector from the Button component on the First page to the Next page. Leave the Button component on the Next page alone, because you want this button to cause the Next page to simply rerender itself.</li>
+        <li>Set <tt>First.jsp</tt> as the start page and run the application. Enter a value and click the button. Note that the Next page displays the value that you entered on the First page. Behind the scenes, an instance of RequestBean1 was instantiated to store the Text Field component's value in the parm property. The value of that parm property was subsequently retrieved for the response (the HTML for the Next page). Once the response was rendered, the RequestBean1 instance was destroyed.</li>
+        <li>Click the button that is on the Next page to cause the Next page to rerender itself. Notice how the Static Text component no longer shows a value. This is because the RequestBean1 instance that held the value only lived as long as the request that began when the First page was submitted and that ended when the HTML for the Next page was sent back to the client.</li>
+      </ol>
+ <p><b>For More Information</b></p>
+      <ul>
+        <li>See <a href="scopes.html">Understanding Scope and Managed Beans</a></li>
+      </ul>
+      
+      <h2><a name="09"></a>Connecting to Databases</h2>
+      <p> The Services window includes a Databases node, which shows all the databases that are registered with the IDE, as shown in the following figure. NetBeans IDE 6.0 provides a sample TRAVEL database which you use in the remainder of this tutorial. </p>
+
+        <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="380">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/data-sources.png" 
+width="370" height="313" border="0" alt="Figure 19: Data Sources" title="Figure 19: Data Sources" />
+            <div class="pad3">  <b>Figure 19</b>: Data Sources</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+      <span class="sp10">&nbsp;</span>
+      <p>Before you can access a database from a project, you must first connect the IDE to the database. You must do this every time you start the IDE and open a project that is connected to the database.</p>
+      <p> If a database's badge appears broken <img src="../../../images/articles/60/web/brokendbicon.png" width="16" height="16" align="absmiddle">&nbsp;and you cannot expand the database's node, the IDE is not connected to the database. To connect to the TRAVEL database, right-click the database's node in the Services window and choose Connect from the pop-up menu. If the Connect dialog box appears, enter <code>travel</code> for the Password and select Remember Password During This Session. </p>
+      <p>When you open an existing project, the Visual Designer might show an error screen. Typically, this is because the Visual Designer needs to get information from the database, but the IDE is not connected to the database. Try connecting to the database server and clicking the Continue button in the error screen to resolve the problem. </p>
+      <p>You can connect a page to a database table by dragging the table from the data sources section and either dropping it on a component or dropping it on the page. When you do this, the IDE adds a data provider to the page and a rowset to the SessionBean1 class, as shown in the following figure.</p>
+
+        <!-- BEGIN FIGURE COMPONENT -->
+
+      <table border="0" cellpadding="2" cellspacing="0" width="380">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/dp-and-rowset.png" 
+width="370" height="367" border="0"
+alt="Figure 20: Data Provider and Row Set" title="Figure 20: Data Provider and Row Set" />
+            <div class="pad3">  <b>Figure 20</b>: Data Provider and Row Set</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+      <span class="sp10">&nbsp;</span>
+      <p>The rowset object makes the connection to the database, executes the queries, and manages the result set. The data provider object provides a common interface for accessing many types of composite data, from database tables, to <code>ArrayList</code> objects, to Enterprise JavaBeans objects. Typically, the only time that you work with the rowset object is when you need to set query parameters. In most cases, you use the data provider object to access and manipulate the data.</p>
+      <p>Once you have added a data provider to a project, you can bind a component to the data provider by right-clicking the component and choosing Bind to Data. In the Bind to Data dialog box, click the Bind to Data Provider tab to bring it to the front. The Choose a Data Provider drop-down list shows all the project's data providers from which you can select the data provider to bind to the component. After you select the data provider, choose the appropriate data column to be bound to the component. For some components, such as the Drop Down List component, you must choose both a Value field and a Display field.</p>
+      <p>To define the SQL query to use to retrieve the data, you use the Query Editor, as shown in the following figure. You access this editor through a rowset object.</p>
+
+        <table border="0" cellpadding="2" cellspacing="0" width="596">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/query-editor.png" 
+width="586" height="586" border="0" alt="Figure 21: Query Editor" title="Figure 21: Query Editor" />
+            <div class="pad3">  <b>Figure 21:</b> Query Editor</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+      <span class="sp10">&nbsp;</span>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>Create a page, make it the start page, and drop a Listbox component onto the page.</li>
+        <li>In the Services window, expand Databases, expand the jdbc node for the TRAVEL database, and expand the Tables node.</li>
+        <li>
+          <p>Drag the TRIPTYPE node onto the page.</p>
+          <b>Note:</b> If the TRAVEL database's badge is broken and you cannot expand the database's node, the IDE is not connected to the database. To connect to the TRAVEL database, right-click the databases node in the Services window and choose Connect from the pop-up menu. When the Connect dialog box appears, enter <code>travel</code> for the Password, select Remember Password During This Session, and click OK.</li>
+        <li>Right-click the Listbox component and choose Bind to Data from the pop-up menu.</li>
+        <li>In the Bind to Data dialog, click the Bind to Data Provider tab, and make sure that tripTypeDataProvider is selected in the Choose a Data Provider drop-down list.</li>
+        <li>Set the Value Field to TRIPTYPE.TRIPTYPEID (the default selection) and set the Display Field to TRIPTYPE.DESCRIPTION. Click OK. </li>
+        <li>Run the application to see how the listbox is filled with data from the table.</li>
+        <li>Expand SessionBean1 in the Navigator window and double-click the triptypeRowSet node to open its Query Editor. In the DESCRIPTION row of the grid panel, click the field in the Sort Type column and then choose Ascending from the drop-down list.</li>
+<li>Click the X in the Query Editor's tab, labeled something like <tt>jdbc:derby://localhost:1527/travel</tt> to close the Query Editor, and run the program again. Note how the items now appear in alphabetical order.</li>
+        <li>
+          <p>(Optional) Look in the <code>_init</code> method in the page's Java source code to see the code for associating the data provider with the rowset. This method is folded by default. To unfold the code, click the code fold box that appears next to the left margin. </p>
+          Double-click the Source Packages &gt; gettingstarted &gt; SessionBean1 node in the Projects window to open the Java source code for the session bean. Look in the session bean's <code>_init</code> method to see how the rowset code implements the query. </li>
+        <!-- <li>Choose Help &gt; Javadoc References &gt; RowSet to see the  API for rowsets.</li> -->
+      </ol>
+<br>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li><a href="helloweb.html">Developing a Web Application</a>.</li>
+        <li><a href="databoundcomponents.html">Using Databound Components to Access Databases</a>.</li>
+        <li>From the main menu, choose Help &gt; Help Contents to open the Help viewer, and then in the Contents pane expand Web Applications &gt; Creating Web Applications &gt; Binding Components to Data and read the topics under this section.</li>
+      </ul>
+
+      <a name="10"></a>
+      <h2>Debugging a Web Application</h2>
+      <p>The IDE has a built-in debugger to help you troubleshoot your programs, as shown in the following figure. You can use it to set breaks and watches, to step through code, and to run until it reaches the code statement that the cursor is on.</p>
+      <p>You set a breakpoint by clicking in the left margin of the Java Editor. You set a watch by right-clicking a variable or expression choosing New Watch. To run the debugger, choose either Run &gt; Debug Main Project or Run &gt; Run to Cursor from the main menu.</p>
+      <!-- BEGIN FIGURE COMPONENT -->
+      <table border="0" cellpadding="2" cellspacing="0" width="583">
+        <tr>
+          <td align="center" ><img src="../../../images/articles/60/web/intro/debuggerWindow.png" 
+width="573" height="284" border="0" alt="Figure 22: Debugger Window" title="Figure 22: Debugger Window" />
+            <div class="pad3">  <b>Figure 22</b>: Debugger Window</div></td>
+        </tr>
+      </table>
+      <!-- END FIGURE COMPONENT -->
+      <span class="sp10">&nbsp;</span>
+      <p><b>Tip:</b> Here are some other features that you can use to diagnose and resolve problems:</p>
+      <ul>
+        <li>Use the HTTP Monitor to monitor the client-server communication and to replay HTTP requests. The ability to replay requests can be helpful when your page has several input fields and you want to re-create the HTTP request without having to fill in all the fields.</li>
+        <li>Add a Message Group component to the page and use the <code>error</code>, <code>warn</code>, <code>fatal</code>, and <code>info</code> methods to display diagnostic messages in the component.</li>
+        <li>Use the <code>log</code> method to send diagnostic messages to the server log.</li>
+      </ul>
+<br>
+      <div><b>Try It</b></div>
+      <ol>
+        <li>Create, or reuse, a start page. Add a Static Text component, set its <code>text</code> property to <code>Hello</code>, and set its <code>id</code> property to <code>helloText</code>. </li>
+        <li>
+          <p>Add a Button component. Double-click the Button component to access its action method (<code>button1_action</code>) and replace the method's body with the following code.</p>
+          <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+            <tr class="bg-white">
+              <td><b>Code Sample 1: button1_action Method</b></td>
+            </tr>
+            <tr>
+              <td><pre>String oldString = (String) this.helloText.getText();
+this.helloText.setText("Good Bye");
+String newString = (String) this.helloText.getText();
+return null;
+</pre></td>
+            </tr>
+          </table>
+          <!-- END CODE SAMPLE COMPONENT  --><br>
+You can press Alt-Shift-F to reformat the code you just added.
+        </li>
+        <li><p>Right-click <code>oldString</code>, choose New Watch, and click OK. Do the same for <code>newString</code>.</p>
+You see a Watches tab window open at the bottom of the IDE, and each expression to be watched is listed in the window. </li>
+        <li><p>Click in the left margin to set a breakpoint for the first statement in the method's body.</p>
+You see a pink box appear where you clicked, and the entire line of code gets a pink background.
+ </li>
+        <li>Choose Run &gt; Debug Main Project from the main menu.</li>
+        <li>When the page displays in the Web Browser, click the button. When the debugger breaks in the <code>button1_action</code> method, click the Watches tab in the Debugger window to see the current value of <code>newString</code> and <code>oldString</code>. </li>
+        <li>Choose Run &gt; Step Over from the main menu or click the Step Over button <img src="../../../images/articles/60/web/intro/debugstepovericon.png" alt="Step Over Button" width="21" height="20" align="absmiddle"> in the toolbar. Look in the Watches tab. Step over the code two more times and observe the Value column in the Watches tab. </li>
+        <li>Explore the Local Variables and Call Stack tabs.</li>
+        <li>Choose Run &gt; Finish Debugger Session to close the debugger session. </li>
+      </ol>
+<br>
+      <p><b>For More Information</b></p>
+      <ul>
+        <li>From the main menu, choose Help &gt; Help Contents to open the help viewer, and then in the Contents pane expand Java Applications &gt; Debugging Applications and read the topics on debugging.</li>
+        <li>From the main menu, choose Help &gt; Help Contents to open the help viewer, and then in the Contents pane choose IDE Basics &gt; Servers and Databases &gt; HTTP Monitor &gt; About the HTTP Monitor.</li>
+        <li>The <a href="tutorial-webapps.html#execute" target="_blank">Running and Monitoring the Application</a> section in the NetBeans IDE Tutorial for Web Applications.
+      </li>
+</ul>
+
+      <a name="summary"></a>
+      <h2>Summary</h2>
+      <ul>
+        <li>You start building a web application by creating a Visual Web JSF Application project.</li>
+        <li>You add pages by right-clicking the Web Pages node in the Projects window and choosing New&gt; Visual Web JSF Page.</li>
+        <li>To design a page, drag components from the Palette onto the page in the Visual Designer.</li>
+        <li>Click the Run Main Project button <img src="../../../images/articles/60/web/runprojectbtn.png" alt = "Run Project toolbar icon" align = "absmiddle" height = "19" width = "11"> in the main toolbar to save, build, deploy, and run the application.</li>
+        <li>Use the Page Flow editor to specify page navigation. You can also add link components to a page and set their <code>url</code> property values.</li>
+        <li>Drop Validator and Converter objects onto a component to specify formatting and validation rules.</li>
+        <li>Use Message components and the Message Group component to display runtime error messages.</li>
+        <li>Use properties in the RequestBean1, SessionBean1, and ApplicationBean1 classes to store and pass values from page to page.</li>
+        <li>To create a data provider object and its associated rowset for a database table, drag a table from the Databases section of the Services window onto the page or onto one of its components.</li>
+        <li>Use the Bind to Data menu action to bind components to data provider fields, and to bind components to bean properties.</li>
+        <li>Open a Query Editor on a rowset to modify the SQL query that is used to fill the rowset object.</li>
+        <li>Use the debugger, the HTTP Monitor, the server log, and the Message Group component to diagnose runtime problems.</li>
+      </ul>
+      <hr class="light">
+      <br>
+      <div class="date-stamp" align="right">This page was last modified: December, 2007</div>
+      <!-- =================== -->
+      <!-- =================== -->
+      <!-- END OF MAIN CONTENT -->
+      <!-- =================== -->
+      <!--stopindex-->
+      <!-- END CENTRAL COLUMN COMPONENTS -->
+
+  <!-- BEGIN SPACER ROW -->
+<table border="0" cellpadding="10" cellspacing="0" class="full-width">
+  <tr>
+    <td><br>
+      <div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org"> Send Us Your Feedback</a></div>
+      <br style="clear:both;" /></td>
+  </tr>
+  <!-- END SPACER ROW -->
+</table> 
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+
+</body>
+</html>

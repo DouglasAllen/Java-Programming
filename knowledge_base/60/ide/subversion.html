@@ -1,0 +1,969 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <title>Guided Tour of Subversion for NetBeans IDE 6.0</title>
+        <meta name="description" content="A preview of Subversion Features in NetBeans IDE 6.0">
+        <meta name="author" content="troy.giunipero@sun.com">
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+
+        <style type="text/css">
+        <!--        
+        table.ct {
+        width: 550px;
+        border: solid 1px;
+        }
+        
+        th.ct {
+        padding: 10px;
+        background-color: #ccc;       
+        }
+            
+        td.ct {
+        padding: 10px;
+        background-color: #eee;       
+        }
+        
+        td.ctr {
+        padding: 10px;
+        text-align: center;
+        background-color: #eee;       
+        }        
+        -->
+        </style>
+    </head>
+    
+    <body>
+        
+        <a name="top"></a>
+        <h1>Guided Tour of Subversion for NetBeans IDE 6.0</h1>
+        
+        <p>NetBeans IDE 6.0 now provides tight integration with Subversion client versions 
+            1.3.x and higher. The IDE's Subversion support is designed to help streamline 
+            the development process for groups working from a shared repository, enabling 
+            you to perform versioning tasks directly from your project system within the IDE.</p>
+        
+        <p>This document demonstrates how to perform basic versioning tasks in the IDE by 
+            guiding you through the standard workflow when using versioning software. It also 
+            introduces you to some of the new Subversion features included in NetBeans IDE 
+            6.0.</p>
+        
+        <p><a href="http://subversion.tigris.org/" target="_blank">Subversion</a> is a popular open source 
+            version control system that is becoming the next-generation replacement for CVS. 
+            It provides various improved features, for example:</p>
+            
+        <ul>
+            <li>Full version history is provided for renamed, moved or removed files.</li>
+            <li>Commit operations are atomic, meaning that a collection of modifications 
+                either enter the repository completely or, in the event of connection failure, 
+                not at all.</li>
+            <li>Versioning of project metadata is provided.</li>
+        </ul>
+         
+        
+        <p style="text-align:center"><strong>Expected duration: 40 minutes</strong></p>
+        
+        <img src="../../../images/articles/60/netbeans-stamp.gif" style="float:right;margin:4em 4em"
+            alt="Content on this page applies to NetBeans IDE 6.0" 
+            title="Content on this page applies to the NetBeans IDE 6.0">        
+        
+        
+        <p>The following topics are covered below:</p>
+        
+        <ul>
+            <li><a href="#settingUp">Setting up Subversion</a>
+                <ul>
+                    <li><a href="#getting">Getting the Software</a></li>
+                    <li><a href="#specifying">Specifying the Path to the Subversion Executable</a></li>
+                </ul></li>
+            <li><a href="#synchronizing">Synchronizing Local Files with a Repository</a>
+                <ul>
+                    <li><a href="#opening">Opening a Subversion Project in the IDE</a></li>
+                    <li><a href="#checking">Checking out Files from a Repository</a></li>
+                    <li><a href="#importing">Importing Files into a Repository</a></li>
+                </ul></li>
+            <li><a href="#editing">Editing Sources</a>
+                <ul>
+                    <li><a href="#viewingChanges">Viewing Changes in the Source Editor</a></li>
+                    <li><a href="#viewingFileStatus">Viewing File Status Information</a></li>
+                    <li><a href="#comparing">Comparing File Revisions</a></li>
+                </ul></li>
+            <li><a href="#committing">Committing Sources to a Repository</a>
+                <ul>
+                    <li><a href="#updating">Updating Local Copies</a></li>
+                    <li><a href="#resolving">Resolving Conflicts</a></li>
+                    <li><a href="#performing">Performing the Commit</a></li>
+                </ul></li>
+        </ul>
+        
+        
+        <h2><a name="settingUp">Setting up Subversion</a></h2>
+        
+        <p>Before you can take advantage of the IDE's Subversion support, you need to 
+            have Subversion client software installed on your computer. The IDE's Subversion 
+            support works by interacting with the Subversion client to carry out versioning 
+            commands. Depending on your system, and whether you install the Subversion 
+            client to a non-default location, you may also need to register the path to the 
+            Subversion executable in the IDE.</p>
+            
+        <div class="indent">
+            <h3><a name="getting"></a>Getting the Software</h3>
+        
+            <p>Make sure you have the following software installed on your computer:</p>
+
+            <ul>
+                <li>NetBeans IDE 6.0 </li>
+                <li>Subversion client software (<a href="http://netbeans.open.collab.net/" target="_blank">download</a>)</li>
+            </ul>
+
+            <p><strong>Note: </strong>In order to install and run NetBeans IDE 6.0, you also 
+                require the Java SE Development Kit (JDK) version 5.0 or higher. </p>
+        
+            <h3><a name="specifying"></a>Specifying the Path to the Subversion Executable</h3>
+            
+            <p>By default, the Subversion executable file is installed in the <tt>/usr/local/bin/</tt>
+                folder on UNIX and Mac OS X machines and in <tt>C:\Program Files\Subversion\bin\</tt>
+                for Windows XP.</p>
+                
+            <p>NetBeans IDE automatically tries to identify the location of the Subversion
+                executable file by using the <tt>$PATH</tt> system variable on your computer. 
+                Depending on your platform however, or whether you installed the Subversion 
+                client to a different location, it may be necessary to specify the path to 
+                the executable file explicitly. To set the path to the Subversion executable 
+                file in the IDE:</p>
+
+            <ol>
+                <li>Choose Tools &gt; Options from the main menu. The Options dialog opens.</li>
+                <li>Select the Miscellaneous icon along the top of the dialog, then click the 
+                    Versioning tab. In the left pane under Versioning Systems, select Subversion.
+                    User-defined options for Subversion display in the main window of the dialog:
+                    
+                    <br><br>
+                    <a onclick="return openwin('../../../images/articles/60/ide/vcs/options-dialog.png',765,516)" 
+                       href="../../../images/articles/60/ide/vcs/options-dialog.png" title="Click to ENLARGE">
+                        <img src="../../../images/articles/60/ide/vcs/options-dialog-small.png" style="border:0"
+                        alt="Subversion Options dialog featuring user-defined options"></a></li>                    
+                    
+                <li>In the Specify the SVN Home Folder text field, either type in the path to the 
+                    executable file or click Browse to navigate to it on your system. Note that 
+                    you need not <em>include</em> the Subversion executable file in the path.</li>
+                <li>Click OK, then restart the IDE to allow changes to take effect.</li>
+            </ol>
+        </div>
+        
+             
+        <h2><a name="synchronizing"></a>Synchronizing Local Files with a Repository</h2>
+        
+        <p>When using a version control system, you work by synchronizing local files
+            with a repository, making changes to your local copy, then committing them to 
+            the repository. The following list describes various ways you can synchronize 
+            a project in NetBeans IDE, depending on your specific situation:
+            
+        <ul>
+            <li><a href="#opening">Opening a Subversion Project in the IDE</a><li>
+            <li><a href="#checking">Checking out Files from a Repository</a></li>
+            <li><a href="#importing">Importing Files into a Repository</a></li>
+        </ul>
+        
+        <div class="indent">
+            <a name="opening"></a>
+            <h3>Opening a Subversion Project in the IDE</h3>
+
+            <p>If you already have a Subversion versioned project which you have been working 
+                with outside of the IDE, you can open it in the IDE and versioning features 
+                will automatically become available to you. The IDE scans your open projects 
+                and if they contain <tt>.svn</tt> directories, file status and context-sensitive 
+                support automatically becomes active for Subversion versioned projects.</p> 
+
+            <a name="checking"></a>
+            <h3>Checking out Files from a Repository</h3>
+
+            <p>If you want to connect to a remote repository from the IDE, then check out 
+                files and immediately begin working with them, do the following:</p>
+            
+            <ol>
+                <li>In NetBeans IDE, choose Versioning &gt; Subversion &gt; Checkout from
+                    the main menu. The Checkout wizard opens.
+                    
+                    <br><br>
+                    <strong>Note: </strong>The IDE's drop-down menus are context-sensitive, 
+                    i.e. the available options depend on the item currently selected. 
+                    Therefore, if you are already working within a Subversion project, you 
+                    can choose Versioning &gt; Checkout from the main menu.</li>
+                <li>In the first panel of the wizard, enter a URL that contains the connection 
+                    protocol and location of the repository you want to connect to. 
+                    
+                    <br><br>
+                    <a name="protocolTypes"></a>
+                    The IDE supports the following protocol types:
+                    
+                    <br><br>
+                    <table class="ct">
+                        <tr>
+                            <th class="ct">Protocol</th>
+                            <th class="ct">Access Method</th>
+                            <th class="ct">Example</th>
+                        </tr>
+                        <tr>
+                            <td class="ctr"><strong>file</strong></td>
+                            <td class="ct">Direct repository access (on local disk)</td>
+                            <td class="ct"><tt>file:///repository_path</tt></td>
+                        </tr>
+                        <tr>
+                            <td class="ctr"><strong>http</strong></td>
+                            <td class="ct">Access via WebDAV protocol to a Subversion-aware server</td>
+                            <td class="ct"><tt>http://hostname/repository_path</tt></td>
+                        </tr>
+                        <tr>
+                            <td class="ctr"><strong>https</strong></td>
+                            <td class="ct">Access via HTTP protocol with SSL encryption</td>
+                            <td class="ct"><tt>https://hostname/repository_path</tt></td>
+                        </tr>
+                        <tr>
+                            <td class="ctr"><strong>svn</strong></td>
+                            <td class="ct">Access via custom protocol to an <tt>svnserve</tt> server</td>
+                            <td class="ct"><tt>svn://hostname/repository_path</tt></td>
+                        </tr>
+                        <tr>
+                            <td class="ctr"><strong>svn+ssh</strong></td>
+                            <td class="ct">Access via SVN protocol through an external SSH tunnel</td>
+                            <td class="ct"><tt>svn+ssh://hostname/repository_path</tt></td>
+                        </tr>
+                    </table>
+                    
+                    <br>
+                    Depending on the protocol you are using, you may need to enter other 
+                    information, such as username and password (e.g. for <tt>http://</tt>, 
+                    <tt>https://</tt>, or <tt>svn://</tt>), or in the case of <tt>svn+ssh://</tt>, 
+                    you must supply the command to establish the external tunnel.
+                
+                    <br><br>
+                    <strong>Note: </strong>If you are trying to implement certificated authentication
+                    with <tt>https</tt>, see: <a href="http://wiki.netbeans.org/wiki/view/FaqSslUserCert" target="_blank">How 
+                    to connect to a Subversion repository using user-certified authentication</a>.
+                    
+                    <br><br>
+                    For more help with <tt>svn+ssh</tt>, see: 
+                    <a href="http://wiki.netbeans.org/wiki/view/FaqSubversionSSH" target="_blank">How do I set 
+                    up SVN with SSH Subversion?</a></li>
+                    
+                <li>If you are using a proxy, be sure to click the Proxy Configuration button
+                    and enter any required information. When you are certain your connection
+                    settings to the repository are correct, click Next.</li>
+                <li>In the Folders to Checkout panel of the wizard, specify the folder that 
+                    you want to check out in the Repository Folder(s) field. If you do not 
+                    know the name of the folder you want to check out, click the Browse button 
+                    to view all folders currently maintained in the repository. From the Browse 
+                    Repository Folders dialog that appears, select any of the listed folders 
+                    and click OK. The selected folder is then added to the Repository Folder(s) 
+                    field ('MyProject' entered in screen capture below):
+                
+                    <br><br>
+                    <a onclick="return openwin('../../../images/articles/60/ide/vcs/checkout2.png',728,429)" 
+                       href="../../../images/articles/60/ide/vcs/checkout2.png" title="Click to ENLARGE">
+                        <img src="../../../images/articles/60/ide/vcs/checkout2-small.png" style="border:0"
+                        alt="Subversion Checkout Wizard: Folders to Checkout panel"></a></li>
+                        
+                <li>Enter a Revision number in the Repository Revision field, otherwise leave
+                    it empty, implying that you want to check out the folder <em>HEAD</em>, or 
+                    most recent revision.</li>
+                <li>In the Local Folder field, enter a location on your computer where you want 
+                    files to be checked out to. Leave the Scan for NetBeans Projects after 
+                    Checkout option selected, then click Finish to initiate the check out 
+                    action. The IDE checks out the specified sources and the IDE's status bar 
+                    indicates the progress of the files downloading from the repository to your 
+                    local working directory. You can also view files as they are being checked 
+                    out from the Output window (Ctrl-4).
+                    
+                    <br><br>
+                    <strong>Note: </strong>If the checked out sources contain NetBeans projects, 
+                    a dialog appears prompting you to open them in the IDE. If the sources do not
+                    contain a project, the dialog appears prompting you to create a new project
+                    from the sources and then open them in the IDE. If you create a new project
+                    for such sources, select the appropriate project category (i.e. in the New
+                    Project wizard) and then use the With Existing Sources option within that 
+                    category.</li>
+            </ol>            
+            
+            <a name="importing"></a>
+            <h3>Importing Files into a Repository.</h3>        
+
+            <p>Alternately, you can import a project you have been working on in the IDE to
+                a remote repository, then continue to work on it in the IDE after it has 
+                become synchronized.</p>
+
+            <p><strong>Note: </strong>While you are actually <em>exporting</em> files 
+                from your system, the term 'import' is used in version control systems to 
+                signify that files are being <em>imported into</em> a repository.</p>
+            
+            <p>To import a project to a repository:</p>
+            
+            <ol>
+                <li>From the Projects window (Ctrl-1), select an unversioned project and 
+                    choose Versioning &gt; Import into Subversion Repository from the 
+                    node's right-click menu. The Subversion Import wizard opens.</li>
+                <li>In the Subversion Repository panel of the Import wizard, specify the
+                    <a href="#protocolTypes">protocol</a> and location of the Subversion 
+                    repository as defined by the Subversion URL. Depending on your selection, 
+                    you may need to specify further settings, such as repository username 
+                    and password, or, in the case of <tt>svn+ssh://</tt>, you must specify 
+                    the tunnel command to establish the external tunnel. See the <a 
+                    href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ#section-NetBeansUserFAQ-VersionControlSystems" target="_blank">Subversion
+                    User FAQ</a> for further details. Click Next.</li>
+                <li>In the Repository Folder panel, specify the repository folder in which you 
+                    want to place the project in the repository. A folder containing the name
+                    of your project is suggested for you in the Repository Folder text field 
+                    by default.</li>
+                <li>In the text area beneath Specify the Message, enter a description of the 
+                    project you are importing into the repository.</li>
+                <li>Click Finish to initiate the import, or optionally, click Next to continue
+                    to a third panel that enables you to preview all files that are prepared 
+                    for import. From this panel, you can choose to exclude individual files
+                    from the import (as shown below), or identify the MIME types of files before 
+                    importing.
+                
+                    <br><br>
+                    <a onclick="return openwin('../../../images/articles/60/ide/vcs/files-to-import.png',1005,545)" 
+                       href="../../../images/articles/60/ide/vcs/files-to-import.png" title="Click to ENLARGE">
+                        <img src="../../../images/articles/60/ide/vcs/files-to-import-small.png" style="border:0"
+                        alt="Subversion Checkout Wizard: Folders to Checkout panel"></a>
+                    
+                    <br><br>
+                    Upon clicking Finish, the IDE uploads the project files to the repository 
+                    and the Output window opens to display the progress.</li>
+            </ol>            
+        </div>
+        
+        
+        <h2><a name="editing"></a>Editing Sources</h2>
+        
+        <p>Once you have a Subversion versioned project opened in the IDE, you can begin 
+            making changes to sources. As with any project opened in NetBeans IDE, you can 
+            open files in the Source Editor by double-clicking on their nodes, as they
+            appear in the IDE's windows (e.g. Projects (Ctrl-1), Files (Ctrl-2), Favorites 
+            (Ctrl-3) windows).</p>
+        
+        <p>When working with sources in the IDE, there are various UI components at your
+            disposal, which aid in both viewing and operating version control commands:</p> 
+   
+        <ul>
+            <li><a href="#viewingChanges">Viewing Changes in the Source Editor</a></li>
+            <li><a href="#viewingFileStatus">Viewing File Status Information</a></li>
+            <li><a href="#comparing">Comparing File Revisions</a></li>
+        </ul>
+            
+        <div class="indent">
+            <a name="viewingChanges"></a>
+            <h3>Viewing Changes in the Source Editor</h3>
+            
+            <p>When you open a versioned file in the IDE's Source Editor, you can view real-time
+                changes occurring to your file as you modify it against your previously checked-out
+                base version from the repository. As you work, the IDE uses color encoding in the 
+                Source Editor's margins to convey the following information:</p>
+            
+            <table cellpadding="5">
+                <tr>
+                    <td align="right"><strong>Blue</strong> 
+                        ( <span style="background-color:#b8cfe5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</td>
+                    <td>Indicates lines that have been changed since the earlier revision.</td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>Green</strong> 
+                        ( <span style="background-color:#b4ffb4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</td>
+                    <td>Indicates lines that have been added since the earlier revision.</td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>Red</strong> 
+                        ( <span style="background-color:#ffa0b4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</td>
+                    <td>Indicates lines that have been removed since the earlier revision.</td>                
+                </tr>
+            </table>                
+            
+            <br>
+            <p>The Source Editor's left margin shows changes occurring on a line-by-line basis.
+                When you modify a given line, changes are immediately shown in the left margin.</p>
+                
+            <p>You can click on a color grouping in the margin to call versioning commands. For
+                example, the screen capture below left shows widgets available to you when clicking 
+                a red icon, indicating that lines have been removed from your local copy.</p>
+                
+            <p>The Source Editor's right margin provides you with an overview that displays 
+                changes made to your file as a whole, from top to bottom. Color encoding is
+                generated immediately when you make changes to your file.</p>
+                
+            <p>Note that you can click on a specific point within the margin to bring your 
+                inline cursor immediately to that location in the file. To view the number of
+                lines affected, hover your mouse over the colored icons in the right margin:</p>                
+              
+            <table cellpadding="5" width="500px">
+                <tr>
+                    <td><a onclick="return openwin('../../../images/articles/60/ide/vcs/left-UI.png',411,246)"
+                        href="../../../images/articles/60/ide/vcs/left-UI.png" title="Click to ENLARGE">
+                        <img src="../../../images/articles/60/ide/vcs/left-UI-small.png" style="border:1px solid"
+                        alt="versioning color encoding displayed in editor's left margin"></a>
+                        <br><strong>Left margin</strong></td>
+                    <td><img src="../../../images/articles/60/ide/vcs/right-UI.png" style="border:1px solid"
+                        alt="versioning color encoding displayed in editor's right margin">
+                        <br><strong>Right margin</strong></td>
+                </tr>
+            </table>         
+             
+            <a name="viewingFileStatus"></a>
+            <h3>Viewing File Status Information</h3>            
+             
+            <p>When you are working in the Projects (Ctrl-1), Files (Ctrl-2), Favorites 
+                (Ctrl-3), or Versioning windows, the IDE provides several visual features
+                that aid in viewing status information about your files. In the example
+                below, notice how the badge (e.g. 
+                <img src="../../../images/articles/60/ide/vcs/blue-badge.png" 
+                alt="blue badge">), color of the file name, and adjacent status
+                label, all coincide with each other to provide you with a simple but
+                effective way to keep track of versioning information on your files:
+            
+                <br><br>
+                <img src="../../../images/articles/60/ide/vcs/badge-example.png" 
+                     style="border:1px solid" alt="blue badge displayed in Favorites window"></p>
+                
+            <p>Badges, color coding, file status labels, and perhaps most importantly,
+                the Versioning window all contribute to your ability to effectively 
+                view and manage and versioning information in the IDE.</p>
+                
+            <ul>
+                <li><a href="#badges">Badges and Color Coding</a></li>
+                <li><a href="#fileStatus">File Status Labels</a></li>
+                <li><a href="#versioning">The Versioning Window</a></li>
+            </ul>
+            
+            <div class="indent">
+                <a name="badges"></a>
+                <h4>Badges and Color Coding</h4>
+            
+                <p>Badges are applied to project, folder, and package nodes and 
+                    inform you of the status of files contained within that node:</p>
+
+                <p>The following table displays the color scheme used for badges:</p>
+
+                <table class="ct">
+                    <tr> 
+                        <th class="ct" style="width:110px">UI Component</th>
+                        <th class="ct">Description</th>
+                    </tr>
+                    <tr> 
+                        <td class="ctr"><strong>Blue Badge</strong>
+                            (<img src="../../../images/articles/60/ide/vcs/blue-badge.png" 
+                            alt="blue badge">)</td>
+                        <td class="ct">Indicates the presence of files that have been locally modified, added or
+                            deleted. For packages, this badge applies only to the package itself and 
+                            not its subpackages. For projects or folders, the badge indicates changes
+                            within that item, or any of the contained subfolders.</td>
+                    </tr>
+                    <tr> 
+                        <td class="ctr"><strong>Red Badge</strong>
+                            (<img src="../../../images/articles/60/ide/vcs/red-badge.png" 
+                            alt="red badge">)</td>
+                        <td class="ct">Marks projects, folders or packages that contain <em>conflicting</em> 
+                            files (i.e. local versions that conflict with versions maintained in 
+                            the repository). For packages, this badge applies only to the package 
+                            itself and not its subpackages. For projects or folders, the badge 
+                            indicates conflicts within that item, or any of the contained subfolders.</td>
+                    </tr>
+                </table>
+                
+                <br><br><a name="color-coding-table"></a>
+                <p>Color coding is applied to file names in order to indicate their current
+                    status against the repository:</p>
+                
+                <table class="ct">
+                    <tr> 
+                        <th class="ct" style="width:40px">Color</th>
+                        <th class="ct">Example</th>
+                        <th class="ct">Description</th>
+                    </tr>                    
+                    <tr> 
+                        <td class="ctr"><strong>Blue</strong></td>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/blue-text.png"
+                            alt="blue text"></td>
+                        <td class="ct">Indicates that the file has been locally modified.</td>
+                    </tr>
+                    <tr> 
+                        <td class="ctr"><strong>Green</strong></td>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/green-text.png"
+                            alt="green text"></td>
+                        <td class="ct">Indicates that the file has been locally added.</td>
+                    </tr>
+                    <tr> 
+                        <td class="ctr"><strong>Red</strong></td>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/red-text.png"
+                            alt="red text"></td>
+                        <td class="ct">Indicates that the file contains conflicts between your local 
+                            working copy and the repository's version.</td>
+                    </tr>
+                     <tr> 
+                        <td class="ctr"><strong>Gray</strong></td>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/gray-text.png"
+                            alt="gray text"></td>
+                        <td class="ct">Indicates that the file is ignored by Subversion and will not 
+                            be included in versioning commands (e.g. Update and Commit). Files 
+                            can only be made to be ignored if they have not yet been versioned.</td>
+                    </tr>
+                    <tr> 
+                        <td class="ctr"><strong>Strike-Through</strong></td>
+                        <td class="ctr"><img alt="strike-through text" 
+                            src="../../../images/articles/60/ide/vcs/strike-through-text.png"></td>
+                        <td class="ct">Indicates that the file is excluded from commit operations. Strike-through
+                            text only appears in specific locations, such as the Versioning window or 
+                            Commit dialog, when you choose to exclude individual files from a commit
+                            action. Such files are still affected by other Subversion commands, such 
+                            as Update.</td>
+                    </tr>  
+                </table>
+                
+                <br>
+                <h4><a name="fileStatus"></a>File Status Labels</h4>
+                
+                <p>File status labels provide a textual indication of the status of versioned files
+                    in the IDE's windows. By default, the IDE displays the revision number and status
+                    (new, modified, ignored, etc.) in gray text to the right of files, as they are 
+                    listed in windows:
+                
+                    <br><br>
+                    <img src="../../../images/articles/60/ide/vcs/file-labels.png" style="border:1px solid" 
+                        alt="file labels displayed next to file names"></p>
+                    
+                <p>File status labels can be toggled on and off by choosing View &gt; Show Versioning
+                    Labels from the main menu.</p>
+
+                
+                <h4><a name="versioning"></a>The Versioning Window</h4>
+                    
+                <p>The Subversion Versioning window provides you with a real-time list of all 
+                    of the changes made to files within a selected folder of your local working 
+                    copy. It opens by default in the bottom panel of the IDE, listing added, 
+                    deleted or modified files.</p>
+                
+                <p>To open the Versioning window, select a versioned file or folder (e.g. from 
+                    the Projects, Files, or Favorites window) and either choose Subversion &gt; 
+                    Show Changes from the right-click menu, or choose Versioning &gt; Show Changes 
+                    from the main menu. The following window appears in the bottom of the IDE:
+                
+                    <br><br>
+                    <a onclick="return openwin('../../../images/articles/60/ide/vcs/versioning-window.png',626,157)"
+                        href="../../../images/articles/60/ide/vcs/versioning-window.png" title="Click to ENLARGE">
+                        <img src="../../../images/articles/60/ide/vcs/versioning-window-small.png" style="border:1px solid"
+                        alt="versioning window displaying locally modified files"></a></p>
+    
+                <p>By default, the Versioning window displays a list of all modified files within 
+                    the selected package or folder. Using the buttons in the toolbar, you can 
+                    choose to display all changes or limit the list of displayed files to either 
+                    locally or remotely modified files. You can also click the column headings 
+                    above the listed files to sort the files by name, status or location.</p>
+
+                <p>The Versioning window toolbar also includes buttons that enable you to invoke 
+                    the most common Subversion tasks on all files displayed in the list. The 
+                    following table lists the Subversion commands available in the toolbar of the 
+                    Versioning window:</p>
+                
+                <table class="ct">
+                    <tr>
+                        <th class="ct">Icon</th>
+                        <th class="ct" style="width:100px">Name</th>
+                        <th class="ct">Function</th>
+                    </tr>
+                    <tr>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/refresh.png" 
+                            alt="refresh status icon"></td>
+                        <td class="ctr"><strong>Refresh Status</strong></td>
+                        <td class="ct">Refreshes the status of the selected files and 
+                            folders. Files displayed in the Versioning window can be 
+                            refreshed to reflect any changes that may have been made 
+                            externally.</td>
+                    </tr>
+                    <tr>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/diff.png" 
+                            alt="diff all icon"></td>
+                        <td class="ctr"><strong>Diff All</strong></td>
+                        <td class="ct">Opens the Diff Viewer providing you with a side-by-side 
+                            comparison of your local copies and the versions maintained in the 
+                            repository.</td>
+                    </tr>     
+                    <tr>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/update.png" 
+                            alt="update all icon"></td>
+                        <td class="ctr"><strong>Update All</strong></td>
+                        <td class="ct">Updates all selected files from the repository.</td>
+                    </tr>
+                    <tr>
+                        <td class="ctr"><img src="../../../images/articles/60/ide/vcs/commit.png" 
+                            alt="commit all icon"></td>
+                        <td class="ctr"><strong>Commit All</strong></td>
+                        <td class="ct">Enables you to commit local changes to the repository.</td>
+                    </tr>            
+                </table>
+
+                <br>
+                <p>You can access other Subversion commands in the Versioning window by selecting a table 
+                    row that corresponds to a modified file, and choosing a command from the right-click menu:
+                    
+                    <br><br>
+                    <img src="../../../images/articles/60/ide/vcs/versioning-right-click.png" style="border:1px solid" 
+                        alt="right-click menu displayed on selected file in Versioning window"></p>
+                       
+                <br>
+                <p>For example, you can perform the following actions on a file:</p>               
+                        
+                <table cellpadding="10" width="550px">
+                    <tr>
+                        <td>
+                            <ul><li><strong>Show Annotations</strong>:
+                                <br><br>Displays author and revision number information in the left 
+                                margin of files opened in the Source Editor.</li></ul></td>                        
+                        <td align="center"><img src="../../../images/articles/60/ide/vcs/annotations.png" 
+                            alt="annotations displayed in Source Editor's left margin" style="border:1px solid"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul><li><strong>Search History</strong>: 
+                                <br><br>Enables you to search for and compare multiple revisions of 
+                                the selected file in the IDE's History Viewer.</li></ul></td>                       
+                        <td align="center"><a onclick="return openwin('../../../images/articles/60/ide/vcs/history-viewer.png',639,317)"
+                            href="../../../images/articles/60/ide/vcs/history-viewer.png" title="Click to ENLARGE">
+                            <img src="../../../images/articles/60/ide/vcs/history-viewer-small.png" style="border:1px solid"
+                            alt="Subversion History Viewer displaying multiple revisions on a file"></a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul><li><strong>Exclude from Commit</strong>: 
+                                <br><br>Allows you to mark the file to be excluded when performing 
+                                a commit.</li></ul></td>                       
+                        <td align="center"><a onclick="return openwin('../../../images/articles/60/ide/vcs/exclude-from-commit.png',608,129)"
+                            href="../../../images/articles/60/ide/vcs/exclude-from-commit.png" title="Click to ENLARGE">
+                            <img src="../../../images/articles/60/ide/vcs/exclude-from-commit-small.png" style="border:1px solid"
+                            alt="files marked as excluded in the Commit dialog"></a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul><li><strong>Revert Delete</strong>: 
+                                <br><br>Opens the Revert Modifications dialog, enabling you to revert any 
+                                delete actions that you have committed to files in your local working copy. 
+                                The specified file(s) are retrieved from the IDE's local history archive 
+                                and reinstated into your local working copy.
+                                
+                                <br><br>(This action only displays when you have deleted items from the 
+                                selected folder.)</li></ul></td>                        
+                        <td align="center"><a onclick="return openwin('../../../images/articles/60/ide/vcs/revert-mods.png',330,274)"
+                            href="../../../images/articles/60/ide/vcs/revert-mods.png" title="Click to ENLARGE">
+                            <img src="../../../images/articles/60/ide/vcs/revert-mods-small.png" style="border:1px solid"
+                            alt="files marked as excluded in the Commit dialog"></a></td>
+                    </tr>                    
+                    <tr>
+                        <td>
+                            <ul><li><strong>Revert Modifications</strong>: 
+                                <br><br>Opens the Revert Modifications dialog which you can use to
+                                specify parameters for reverting any local changes to revisions
+                                maintained in the repository.
+                                
+                                <br><br>When specifying revision(s), you can click Search to open
+                                the Search Revisions dialog. This scans the repository and lists
+                                all file revisions based on the date you specify.
+                                </li></ul></td>                                               
+                        <td align="center"><a onclick="return openwin('../../../images/articles/60/ide/vcs/search-rev.png',337,278)"
+                            href="../../../images/articles/60/ide/vcs/search-rev.png" title="Click to ENLARGE">
+                            <img src="../../../images/articles/60/ide/vcs/search-rev-small.png" style="border:1px solid"
+                            alt="files marked as excluded in the Commit dialog"></a></td>
+                     </tr>
+                </table>    
+            </div>
+        
+            <a name="comparing"></a>
+            <h3>Comparing File Revisions</h3>
+            
+            <p>Comparing file revisions is a common task when working with versioned
+                projects. The IDE enables you to compare revisions by using the Diff
+                command, which is available from the right-click menu of a selected 
+                item (Subversion &gt; Diff), as well as from the Versioning window.
+                In the Versioning window, you can perform diffs by either double-clicking
+                a listed file, otherwise you can click the Diff All icon (<img alt="diff all icon" 
+                src="../../../images/articles/60/ide/vcs/diff.png">) located in 
+                the toolbar at the top.</p>
+            
+            <p>When you perform a diff, a graphical Diff Viewer opens for the selected 
+                file(s) and revisions in the IDE's main window. The Diff Viewer displays
+                two copies in side-by-side panels. The more current copy appears on the 
+                right side, so if you are comparing a repository revision against your 
+                working copy, the working copy displays in the right panel:
+
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/ide/vcs/diff-viewer.png',985,621)"
+                    href="../../../images/articles/60/ide/vcs/diff-viewer.png" title="Click to ENLARGE">
+                    <img src="../../../images/articles/60/ide/vcs/diff-viewer-small.png" style="border:1px solid"
+                    alt="Subversion Diff Viewer"></a></p>
+              
+            <p>The Diff Viewer makes use of the same <a href="#viewingChanges">color encoding</a> 
+                used elsewhere to display version control changes. In the screen capture 
+                displayed above, the green block indicates content that has been added to
+                the more current revision. The red block indicates that content from the 
+                earlier revision has been removed from the later.  Blue indicates that 
+                changes have occurred within the highlighted line(s).</p>
+              
+            <p>Also, when performing a diff on a group of files, such as on a project,
+                package, or folder, or when clicking Diff All
+                (<img src="../../../images/articles/60/ide/vcs/diff.png"
+                alt="diff all icon">), you can switch between diffs by clicking files
+                listed in the upper region of the Diff Viewer.</p>
+            
+            <p>The Diff Viewer also provides you with the following functionality:</p>
+            
+            <ul>
+                <li><a href="#makeChanges">Make Changes to your Local Working Copy</a></li>
+                <li><a href="#navigateDifferences">Navigate Among Differences</a></li>                
+                <li><a href="#changeViewCriteria">Change Viewing Criteria</a></li>
+            </ul>
+            
+            <a name="makeChanges"></a>
+            <h4>Make Changes to your Local Working Copy</h4>
+            
+            <p>If you are performing a diff on your local working copy, NetBeans IDE 6.0
+                enables you to make changes directly from within the Diff Viewer. To do
+                so, you can either place your cursor within the right pane of the Diff
+                Viewer and modify your file accordingly, otherwise make use of the inline 
+                icons that display adjacent to each highlighted change:</p>
+                
+            <table cellpadding="5">
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Replace</strong> (<img alt="replace icon"
+                        src="../../../images/articles/60/ide/vcs/insert.png">):</td>
+                    <td>Inserts the highlighted text from the previous revision into 
+                        the current revision</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Move All</strong> (<img alt="move all icon"
+                        src="../../../images/articles/60/ide/vcs/arrow.png">):</td>
+                    <td>Reverts the file's current revision to the state of the selected 
+                        previous revision</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Remove</strong> (<img alt="remove icon"
+                        src="../../../images/articles/60/ide/vcs/remove.png">):</td>
+                    <td>Removes the highlighted text from the current revision so that it 
+                        mirrors the previous revision</td>                
+                </tr>
+            </table>
+              
+            <a name="navigateDifferences"></a>
+            <h4>Navigate among Differences between Compared Files</h4>
+            
+            <p>If your diff contains multiple differences, you can navigate among them by 
+                using the arrow icons displayed in the toolbar. The arrow icons enable you 
+                to view differences as they appear from top to bottom:
+ 
+             <table cellpadding="5">
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Previous</strong> 
+                        (<img src="../../../images/articles/60/ide/vcs/diff-prev.png" 
+                            alt="previous difference button">):</td>
+                    <td>Goes to previous difference displayed in the diff</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Next</strong> 
+                        (<img src="../../../images/articles/60/ide/vcs/diff-next.png" 
+                            alt="next difference button">):</td>
+                    <td>Goes to next difference displayed in the diff</td>
+                </tr>
+            </table>
+            
+            <a name="changeViewCriteria"></a>
+            <h4>Change Viewing Criteria</h4>
+            
+            <p>You can choose whether to view files containing changes from the local 
+                working copy, the repository, as well as both simultaneously:
+         
+             <table cellpadding="5">
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Local</strong> 
+                        (<img src="../../../images/articles/60/ide/vcs/locally-mod.png" alt="locally modified icon">):</td>
+                    <td>Displays locally modified files only</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Remote</strong> 
+                        (<img src="../../../images/articles/60/ide/vcs/remotely-mod.png" alt="remotely modified icon">):</td> 
+                    <td>Displays remotely modified files only</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;width:120px"><strong>Both</strong> 
+                        (<img src="../../../images/articles/60/ide/vcs/both-mod.png" alt="locally and remotely modified icon">):</td>
+                    <td>Displays both locally and remotely modified files</td>
+                </tr>                
+            </table>
+        </div>
+
+        <h2><a name="committing">Committing Sources to a Repository</a></h2>
+         
+        <p>After making changes to sources, you commit them to the repository. It is 
+            generally a good idea to update any copies you have against the repository 
+            prior to performing a commit in order to ensure that conflicts do not arise. 
+            Conflicts can occur however, and should be thought of as a natural event 
+            when numerous developers are working on a project simultaneously. The IDE 
+            provides flexible support that enables you to perform all of these functions. 
+            It also provides a Conflict Resolver which allows you to safely deal with any 
+            conflicts as they occur.</p>
+            
+        <ul>
+            <li><a href="#updating">Updating Local Copies</a></li>
+            <li><a href="#resolving">Resolving Conflicts</a></li>
+            <li><a href="#performing">Performing the Commit</a></li>
+        </ul>
+         
+        <div class="indent">
+            <a name="updating"></a>
+            <h3>Updating Local Copies</h3>
+            
+            <p>You can perform updates by choosing Subversion &gt; Update from the 
+                right-click menu of any versioned item in the Projects, Files, or 
+                Favorites windows.  When working directly from the Versioning window, 
+                you need only right-click a listed file and choose Update.</p>
+                
+            <p>To perform an update on sources that you have modified, you can click 
+                the Update All icon (<img src="../../../images/articles/60/ide/vcs/update.png" 
+                alt="update all icon">), which displays in the toolbars located
+                at the top of both the <a href="#versioning">Versioning Window</a>, 
+                as well as the <a href="#comparing">Diff Viewer</a>. Any changes that
+                may have occurred in the repository are displayed in the Versioning
+                Output window.</p>
+    
+            <a name="resolving"></a>
+            <h3>Resolving Conflicts</h3>
+            
+            <p>When you perform an update or a commit, the IDE's Subversion support 
+                compares your files with repository sources to make sure that other 
+                changes have not already occurred in the same locations. When your 
+                previous checkout (or update) no longer matches the repository <em>HEAD</em>
+                (i.e. most current revision), <em>and</em> the changes that you applied 
+                to your local working copy coincide with areas in the HEAD that 
+                have also changed, your update or commit results in a <em>conflict</em>.</p>
+                
+            <p>As indicated in <a href="#badges">Badges and Color Coding</a>, conflicts 
+                are displayed in the IDE with red text and are accompanied by a red badge 
+                (<img src="../../../images/articles/60/ide/vcs/red-badge.png" 
+                alt="red badge">) when viewed in the Projects, Files, or Favorites windows.
+                When working in the Versioning window, conflicts are also indicated
+                by a file's status:
+                
+                <br><br>
+                <img src="../../../images/articles/60/ide/vcs/conflict-versioning-win.png" 
+                    style="border-right:1px solid" alt="file conflict displayed in Versioning window"></p>
+               
+            <p>Any conflicts that arise must be resolved before you commit files to the 
+                repository. You can resolve conflicts in the IDE using the Merge Conflicts 
+                Resolver. The Merge Conflicts Resolver provides an intuitive interface 
+                that enables you to address individual conflicts sequentially while viewing 
+                merged output as you make changes. You can access the Merge Conflicts 
+                Resolver on a file that is in conflict by right-clicking that file and
+                choosing Subversion &gt; Resolve Conflicts.</p>
+      
+            <p>The Merge Conflicts Resolver displays the two conflicting revisions 
+                side-by-side in the top pane, with the conflicting areas highlighted.
+                The lower pane depicts the file as it appears while merges for individual
+                conflicts between the two revisions occur:
+                
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/ide/vcs/conflict-resolver.png',955,544)" 
+                   href="../../../images/articles/60/ide/vcs/conflict-resolver.png" title="Click to ENLARGE">
+                    <img src="../../../images/articles/60/ide/vcs/conflict-resolver-small.png" style="border:1px solid"
+                    alt="Conflict Resolver displaying a conflicted file"></a>
+                    
+                <br><br>
+                You resolve a conflict by accepting one of the two revisions displayed
+                in the top pane. Click the Accept button of the revision you want to 
+                accept. The IDE merges the accepted revision with the source file, and 
+                you can immediately see the results of the merge in the bottom pane of 
+                the Merge Conflicts Resolver. Once all conflicts are resolved, click OK 
+                to exit the Merge Conflicts Resolver and save the modified file. The 
+                conflict badge is removed and you can now commit the modified file to 
+                the repository.</p>
+            
+            <a name="performing"></a>
+            <h3>Performing the Commit</h3>
+            
+            <p>After editing source files, performing an update and resolving any conflicts,
+                you commit files from your local working copy to the repository. The IDE
+                enables you to call the commit command in the following ways:</p>
+            
+            <ul>
+                <li>From the Projects, Files or Favorites windows, right-click new or 
+                    modified items and choose Subversion &gt; Commit.</li>
+                <li>From the Versioning window or Diff Viewer, click the Commit All 
+                    (<img src="../../../images/articles/60/ide/vcs/commit.png" 
+                    alt="commit all icon">) button located in the toolbar.</li>
+            </ul>
+                
+            <p>The Commit dialog opens, displaying files that are about to be committed 
+                to the repository:
+                
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/ide/vcs/commit-dialog.png',650,400)" 
+                   href="../../../images/articles/60/ide/vcs/commit-dialog.png" title="Click to ENLARGE">
+                    <img src="../../../images/articles/60/ide/vcs/commit-dialog-small.png" style="border:0"
+                    alt="Commit dialog displaying files about to be committed"></a></p>
+                
+            <p>The Commit dialog lists:</p>
+            
+            <ul>
+                <li>all locally modified files</li>
+                <li>all files that have been deleted locally</li>                
+                <li>all new files (i.e. files that do not yet exist in the repository)</li>
+                <li>all files that you have renamed. Subversion handles renamed files by
+                    deleting the original file, and creating a duplicate using the new 
+                    name.</li>
+            </ul>
+            
+            <p>From the Commit dialog, it is possible to specify whether to exclude 
+                individual files from the commit. To do so, click the Commit Action column
+                of a selected file and choose Exclude from Commit from the drop-down
+                list. Similarly, when new files are included, you can specify the MIME
+                type by choosing Add as Binary or Add as Text from the drop-down list.</p>
+            
+            <p>To perform the commit:</p>
+            
+            <ol>
+                <li>Type in a commit message in the Commit Message text area. Alternatively,
+                    click the Recent Messages (<img src="../../../images/articles/60/ide/vcs/recent-msgs.png" 
+                    alt="recent messages icon">) icon located in the upper right corner to 
+                    view and select from a list of messages that you have previously used.</li>
+                <li>After specifying actions for individual files, click Commit. The IDE 
+                    executes the commit and sends your local changes to the repository.
+                    The IDE's status bar, located in the bottom right of the interface, 
+                    displays as the commit action takes place. Upon a successful commit,
+                    versioning badges disappear in the Projects, Files and Favorites windows, 
+                    and the color encoding of committed files returns to black.</li>
+            </ol>
+        </div>
+
+        <div class="feedback-box">
+            <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        
+        <br style="clear:both;">
+        
+        <h2><a name="nextSteps"></a>Next Steps</h2>
+        
+        <p>This concludes the Guided Tour of Subversion for NetBeans IDE 6.0. This 
+            document demonstrated how to perform basic versioning tasks in the IDE by 
+            guiding you through the standard workflow when using the IDE's Subversion 
+            support. It has shown how to set up a versioned project and perform basic 
+            tasks on versioned files while introducing you to some of the new Subversion 
+            features included in NetBeans IDE 6.0.</p>
+          
+        <p>For related documents, see the following resources:</p>
+        
+        <ul>
+            <li><a href="cvs.html">Guided Tour of CVS for NetBeans IDE 6.0</a>. An introductory
+                guide to using CVS Version Control in NetBeans IDE 6.0.</li>
+            <li><a href="http://wiki.netbeans.org/wiki/view/NetBeansUserFAQ#section-NetBeansUserFAQ-VersionControlSystems" target="_blank">Subversion
+                Support FAQ for NetBeans IDE</a>. A document containing frequently asked 
+                questions describing setup and usage of Subversion in NetBeans IDE.</li>
+        </ul>
+
+        <br><br>
+        <p style="text-align:center"><a href="#top">top</a></p>
+    </body>
+</html>

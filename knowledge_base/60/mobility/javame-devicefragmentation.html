@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Resolving Java ME Device Fragmentation Issues</title>
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+<META NAME="description" CONTENT="Tutorial explaining how to use Netbeans Mobility features to resolve device Fragmentation issues for CLDC and MIDP devices">
+<meta name="author" content="Karel Herink"/>
+<meta name="description" content="Java ME Device Fragmentation on CLDC and MIDP devices"/>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+</head>
+<body>
+
+<h1>Resolving Java ME Device Fragmentation Issues</h1>
+ <p>The write once, run anywhere axiom that has driven the popularity of the Java programming language does not apply very well to the world of Java Micro Edition (Java ME). Device capabilities such as screen size, color depth and memory vary considerably. Throw in the choice of profiles, configurations and J2ME APIs and you have what we call device fragmentation. This tutorial shows how to use the IDE's built-in capabilities to resolve Java ME MIDP device fragmentation problems. </p>
+
+<h3>Contents</h3>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tbody><tr>
+         <td align="left" valign="top">
+      <ul>
+  <li><a href="javame-devicefragmentation.html#requirements" title="Requirements">Requirements</a></li>
+  <li><a href="javame-devicefragmentation.html#setup" title="Setting Up">Setting up the Application</a></li>
+  <li><a href="javame-devicefragmentation.html#projectconfig" title="Creating Project Configurations">Creating Project Configurations</a></li>
+  <li><a href="javame-devicefragmentation.html#abilities" title=">Creating Abilities">Creating Abilities</a></li>
+  <li><a href="javame-devicefragmentation.html#preprocessor" title="Adding Preprocessor Code">Adding Preprocessor Code</a></li>
+  <li><a href="javame-devicefragmentation.html#running" title="Running the Ball Shot Game on an Emulator">Running the Ball Shot Game on an Emulator</a></li>
+  <li><a href="javame-devicefragmentation.html#summary" title="Summary">Summary</a></li>
+        </ul></td>
+         <td width="20"> </td>
+         <td align="right" valign="top"> 
+       <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0" height="45" width="206" align="right">
+   </td>
+       </tr>
+     </tbody
+	 </table>
+<h2><a name="requirements"></a> Requirements</h2>
+<h3>Software Needed for this Tutorial</h3>
+<p>Before you begin, you need to install the following software on your computer: 
+</p>
+<ul>
+  <li>Java Standard Development Kit (JDK) version 5.0 or 6.0 </li>
+  <li>NetBeans IDE 6.0 with Mobility pack </li>
+</ul>
+<p><b>Note:</b> You can deploy this project using the Sun Java Wireless Toolkit emulator included with the Mobility Pack. 
+No further software is necessary to follow the basic concepts presented in this 
+tutorial. However, if you need to deploy to additional platforms, we 
+recommended that you download the appropriate emulators that you are 
+targeting. Here are some of the most popular CLDC/MIDP device platforms available:</p>
+<ul>
+  <li>Nokia Series 40 SDKs for Symbian OS (<a href="http://www.forum.nokia.com/info/sw.nokia.com/id/cc48f9a1-f5cf-447b-bdba-c4d41b3d05ce/Series_40_Platform_SDKs.html" target="_blank">download</a>)</li>
+  <li>Nokia Series 60 SDKs for Symbian OS (<a href="http://www.forum.nokia.com/info/sw.nokia.com/id/6e772b17-604b-4081-999c-31f1f0dc2dbb/S60_Platform_SDKs_for_Symbian_OS_for_Java.html" target="_blank">download</a>)</li>
+  <li>Sony Ericsson SDK 2.2.4 for the Java ME platform (<a href="http://developer.sonyericsson.com/site/global/docstools/java/p_java.jsp" target="_blank">download</a>)</li>
+  <li> Motorola Java ME SDK v6.4 for Motorola OS Products (<a href="http://developer.motorola.com/docstools/sdks/motorola64/" target="_blank">download</a>)</li>
+</ul>
+
+ <p>&nbsp;</p>
+ <p>If you are new to NetBeans Mobility Pack or Java ME development, it is recommended that you go through the <a href="quickstart.html"> NetBeans Mobility Pack 6.0 for CLDC Quick Start Guide</a> before continuing this tutorial. This guide includes a section on adding and registering platform emulators.</p>
+ <h2><a name="setup"></a>Setting Up the Application </h2>
+<p>This example uses a simple game called Ball Shot to demonstrate how to target device abilities to resolve device fragmentation issues. </p>
+<ol>
+  <li>Download the <a href="../../../files/documents/4/1468/BallShotGame.zip">BallShotGame.zip</a> project</li>
+<li>Unzip the project and place the contents in your IDE's <code>project_home</code> directory. </li>
+</ol>
+<p>For further instructions about importing mobility projects to the IDE please see the <a href="http://www.netbeans.org/kb/55/import-mobility.html" target="_blank"> Mobility Project Import Guide</a>.</p>
+<h2><a name="webservice"></a>Creating Custom Configurations</h2>
+  
+<p>One tactic for resolving device fragmentation issues is based on NetBeans use of <em>project configurations</em>. This enables you
+  to create one set of source code and customize it for each mobile device you are
+targeting. Remember to keep your configurations congruent so that the emulator platform and target device correspond to the Project configuration you are creating. In the below example the Nokia Series 40 is the target configuration. </p>
+<p>&nbsp;</p>
+  <center>
+  <p><img src="../../../images/mobility/devfrag/nokias40-config.png" alt="Project Properties dialog box showing emulator, configuration and device settings set correctly"></p>
+  </center>
+<h2><a name="projectconfig"></a>Creating Project Configurations</h2>
+<ol>
+  <li>Choose File &gt; Open Project (Ctrl-Shift-O). Navigate to the folder where the unzipped and installed SingleCotopiaGameBallShot project folder is located. </li>
+  <li>Right-click on the SingleCotopiaGameBallShot project node and select Properties.</li>
+  <li>Click the Manage Configurations button at the top of the page. This opens the Manage Configurations dialog. </li>
+  <li>Click Add and then type the desired name for your configuration and press OK. </li>
+  <li>Repeat the previous step for the other emulators you want to deploy to.</li>
+</ol>
+<h2><a name="abilities"></a>Creating  Abilities</h2>
+<p>Abilities are device attributes such as screen size, color depth, API support, and audio support. Creating an ability in a project enables you to associate it with one or more project configurations that support a specific attribute or set of attributes. If you need to modify, remove or add configurations later on, simply associate the configuration with an ability to implement the change. The configuration is then automatically associated with any code block that is associated with the ability.</p>
+<ol>
+  <li>Right-click on the SingleCotopiaGameBallShot project node and choose Properties.</li>
+  <li>Choose the Abilities page from the Category menu tree.</li>
+  <li>From the Project Configuration dropdown menu, choose the configuration the ability you are defining is associated to.</li>
+  <li>If necessary, uncheck the box labeled <code>Use Values from Default Configuration</code>.</li>
+  <li>Click the Add button.</li>
+  <li>In the New Ability dialog, enter a name for the ability such as <code>screen</code> or click the edit button if the <code>screen</code> ability exists already</li>
+<li>Enter a value for the ability. In this example put 240x320. Additional abilities can be configured and targeted to other variables such as color depth or audio support. 
+    Click Ok to close the New Ability dialog. The ability is now associated with the selected project configuration.</li>
+  <center>
+  <p><img src="../../../images/mobility/devfrag/adding-screen-ability.png" alt="Dialog box showing new ability that defines the configuration screen size"></p>
+  </center>
+
+</ol>
+<p>You can associate the ability with other configurations by choosing a different configuration from the Project Configuration menu and clicking the Add button.</p>
+
+<h2><a name="preprocessor"></a>Adding Configuration-Specific Code with Preprocessor Blocks</h2>
+<p>Preprocessor blocks enable you to create, manage and track code that is specific to one or more project configurations or abilities. The code is enabled (or disabled) only for the configurations or abilities you identify. One of the most practical attributes to target on mobile devices is screen size. A useful reference site for screen sizes, color depth, API support and other features is the  <a href="http://www.jbenchmark.com/result.jsp" target="_blank">Jbenchmark site</a>.</p>
+<ol>
+  <li>In the BallShotImageCreator.java Editor window, right-click on the source code line where BallShotImageCreator is instantiated (public BallShotImageCreator() { . </li>
+  <li>Right-click on the line and choose Preprocessor Blocks &gt; Create If/Else Block. In the Available Items box scroll down and choose the previously defined ability <code>screen</code>. </li>
+<li>On the line <code>//#if screen</code>, add the following: <code>== &quot;240x320&quot;</code></li>
+  <li>The code marked by the <code>//#if</code> preprocessor directive is deployed whenever the active configuration matches the directive value. The code encased by the <code>//#else</code> preprocessor directive is used whenever the active configuration does <strong>not</strong> match the value of the preprocessor.    In other words, the emulator displays the 22 pixel balls if the active platform has 240x320 ability. The <code>//#endif</code> preprocessor directive completes the preprocessor block. Here's an example written for this game for a range of popular screen sizes: </li>
+</ol>
+   <pre>
+   //#if screen == &quot;128x128&quot;<br>   //# 			ballWidth = 10;<br>   //#elif screen == &quot;176x182&quot;<br>   //# 			ballWidth = 16;<br>   //#elif screen == &quot;176x208&quot;<br>   //# 			ballWidth = 16;<br>   //#elif screen == &quot;240x320&quot;<br>                   ballWidth = 22;<br>	//#endif
+   </pre>
+
+<h2><a name="running"></a>Running the Ball Shot Game on an Emulator</h2>
+
+  
+<ol>
+  <li>Choose Run &gt; Run Main Project.</li>
+  <li>Once the emulator starts, it should display the following menu. </li>
+ <center><p><img src="../../../images/mobility/devfrag/gameloaded.png" alt="Emulator showing menu to play new game"></p></center>
+  <li>Click the main button on the emulator to start the game. The emulator shows you the following screen. For comparison we've included a screen shot of what the game looks like without the preprocessor directives. Note that the images that are too small in relation to the emulator screen.</li>
+ <center><p><img src="../../../images/mobility/devfrag/before-after-comparison.png" alt="Before and After preprocessor code emulator screen shots"></p></center>
+</ol>
+
+<h2><a name="summary"></a>Summary</h2>
+    <p>This article demonstrated how to use the Mobility Pack to target mobile device attributes to eliminate device fragmentation problems using custom configurations and preprocessor code targeting device abilities. Unfortunately, not every device fragmentation problem can be addressed using these methods, but these examples show that there are ways to mitigate the impact of them when developing for mobile devices. </p>
+    <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send 
+        Us Your Feedback</a></div>
+</body>
+</html>

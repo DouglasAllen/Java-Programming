@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+   <head>
+      <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+      <meta name="description" content="Developer Guide to the BPEL Designer">
+      <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+      <title>Developer Guide to the BPEL Designer - Using Handlers</title>
+</head>
+   <body>
+      <a name="top"></a>
+      <h1>
+          Developer Guide to the BPEL Designer: Using Handlers
+      </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007 <br>
+</p>
+</div>
+      <h2>
+          Contents
+      </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><ul>
+            <li><a href="bpel-guide-overview.html">Overview</a></li>
+          <li><a href="bpel-guide-project.html">The BPEL Module Project</a></li>
+          <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a> </li>
+          <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+          <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a></li>
+          <li><b>Using Handlers</b>
+            <ul>
+              <li><a href="bpel-guide-handlers.html#usingfaulthandler">Using a Fault Handler</a> </li>
+              <li> <a href="bpel-guide-handlers.html#usingeventhandler">Using an Event Handler</a>  </li>
+            </ul>
+          </li>
+          <li><a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+          <li> <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> </li>
+          <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+        </ul></td>
+        <td width="20"></td>
+        <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"> </td>
+      </tr>
+    </table>
+    <!-- ======================================================================================== -->
+<h2>Using Handlers</h2>
+      <p>
+          The following sections describe, in order of their appearance:
+      </p>
+      <ul>
+         <li>
+             The circumstances under which you would use a specific handler.
+         </li>
+         <li>
+             The use of those elements within the context of the BPEL Designer.
+         </li>
+      </ul>
+      <p>
+      In this release of the BPEL Designer, you can add Fault Handlers and Event Handlers to your BPEL process. Note that Compensation and Termination Handlers are not supported.      See the <a href="https://open-esb.dev.java.net/kb/preview3/ep-bpel-se.html" target="_blank">BPEL Service Engine User's Guide</a> for details about the supported BPEL 2.0 language constructs and related limitations. </p>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingfaulthandler"></a>Using a Fault Handler
+      </h2>
+      <div class="indent"><br>
+         <h3 class="tutorial">
+             When to Use
+         </h3>
+         <p>
+             The BPEL language provides the capability to catch and manage exceptions using fault handlers. For example, exceptions occur when web services return  different data than was expected. If faults are not handled, the entire BPEL process can be thrown into a faulted state. Therefore, to prevent the entire process from fault, you can add fault handlers to catch and manage exceptions within particular Scopes. </p>
+         <p>
+             Each fault handler contains an activity that runs in case of an error. For example, a partner service is notified if an error has occurred. Fault handlers can be added to the entire process or to individual Scope elements.         </p>
+         <p>
+            You can attach one Fault Handler container to either the Process or the Scope elements. Inside the Fault Handlers container, you can create several Catch activities configured to catch specific kinds of faults, or one Catch All handler element to catch all the exceptions not caught by specific handlers.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>
+                Right-click the Scope or Process element  and choose Add &gt;  Fault Handlers.<br>
+An empty container element appears.             </li>
+            <li>
+                Right-click the Fault Handler container and choose Add &gt; Catch or Add &gt; Catch All.<br>
+           You may add as many specific Catch elements as you wish to the Fault Handlers group. You can add only one Catch All element per Fault Handlers container.            </li>
+            <li>Add an activity to the Catch or Catch All element that will be executed in case of a fault. </li>
+         </ol>
+         <h3 class="tutorial">
+             Catch Element
+         </h3>
+         <p>
+             Use this element to intercept and deal with a specific kind of fault.
+         </p>
+         <p>
+             This element is used within an appropriate Fault Handlers container element.
+         </p>
+         <h3 class="tutorial">
+             Catch Element Properties
+         </h3>
+         <p>
+             The properties of the Catch element are defined in the Properties window. You can also right-click the element on the diagram and choose Properties. The available properties are:
+         </p>
+         <ul>
+            <li>
+                Fault Name. Select the qname of the fault from the list of faults, which contains faults defined in the WSDL files.            </li>
+            <li>
+                Fault Variable Name. Specify the name of an existing BPEL variable that will contain the fault message.             </li>
+            <li>
+            Fault Variable Type. Specify the type of the variable. </li>
+         </ul>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/catchproperties.png" alt="Catch Properties Window">
+         </p>
+         <h3 class="tutorial">
+             Catch All Element
+         </h3>
+         <p>
+             Use the Catch All element to intercept and deal with all faults that are not caught by an associated catch element.
+         </p>
+         <p>
+             The Catch All element is used within a fault handler window along with one or more Catch elements. It is defined within a Fault Handlers container element along with one or more Catch elements.
+         </p>
+         <p>
+             There are no properties for the Catch All element. Its behavior is pre-defined and requires no property configuration.         </p>
+   </div>
+      <p align="center">
+         <a href="bpel-guide-handlers.html#top">top</a>
+      </p>
+      <br>
+      <!-- ======================================================================================== -->
+      <h2>
+         <a name="usingeventhandler"></a>Using an Event Handler
+      </h2>
+   <div class="indent">
+         <br>
+         <br>
+         <h3 class="tutorial">
+             When to Use
+         </h3>
+   <p>
+             The entire BPEL process as well as each individual Scope can be associated with a set of Event Handlers that are invoked concurrently if the corresponding event occurs. The actions taken within an Event Handler can be any type of activity, such as Sequence or Flow. The only immediate child of an Event Handler is Scope, so when you drag an element from the Palette into an Event Handler, it is automatically wrapped in Scope.         </p>
+         <p>There are
+two types of events:</p>
+         <ul>
+           <li>Incoming messages, which correspond to a request/response or one-way operation in WSDL. These messages are specified using the On Event elements. </li>
+           <li>Alarms, or timers, which invoke activities after the specified periods or when a deadline is reached. The times are specified using the On Alarm elements. </li>
+         </ul>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+         <ol>
+            <li>
+                Right-click the Process element or any Scope and invoke the Add Event Handlers action. This does not add any particular Event Handler, it  adds a container element to which you can then add specific Event Handlers.            </li>
+            <li>
+                Once you have added an Event Handlers container, you can right-click on the Event Handlers element to add an On Event or On Alarm branch. You may add as many specific On Event or On Alarm elements as you wish to the Event Handlers group.
+            </li>
+         </ol>
+         <h3 class="tutorial">
+             On Event Element
+         </h3>
+         <p>
+             The On Event element indicates that the specified event waits for a message to arrive. The interpretation of this tag and its attributes is very similar to a Receive activity.
+         </p>
+         <h3 class="tutorial">
+             Usage
+         </h3>
+            <ol>
+            <li>
+               Right-click the Event Handlers container and choose Add &gt; On Event.            </li>
+            <li>
+                Double-clicking the On Event element opens a Property Editor where you can specify/change the following:
+                  <div>
+                     <ul>
+                        <li>
+                The partner link              </li>
+                        <li>
+                The operation associated with the On Event element              </li>
+                        <li>
+                 The event variable              </li>
+                     </ul>
+                     <p align="center">
+                        <img src="../../../images/articles/ep-bpel-guide/60/oneventpropeditor.png" alt="OnEvent Property Editor">                     </p>
+               </div>
+            </li>
+            <li>
+           Right-clicking the On Event element and choosing Properties opens a Properties window where you can review and modify the properties of the element. In addition to the properties present in the Property Editor dialog box, the Properties window contains the Port Type field, which are filled in when you specify the partner link and operation, and the Type field, which is filled with the type of the specified even variable.        </li>
+         </ol>
+         <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/oneventproperties.png" alt="OnEvent Properties Window">
+         </p>
+         <p>
+             The Correlations tab in the On Event Property Editor dialog box enables you to examine or specify a correlation set.
+         </p>
+         <p>
+             The tab shows:
+         </p>
+         <ul>
+            <li>
+                A correlation sets' name
+            </li>
+            <li>
+                The initiation of a correlator
+            </li>
+         </ul>
+         <p>
+            You can add a correlation set by clicking the Add button. For more information, refer to <a href="bpel-guide-palette.html#defcorset">Defining a Correlation Set and Adding a Correlation Set to an Element</a>.
+         </p>
+         <h3 class="tutorial">
+             On Alarm Element
+         </h3>
+         <p>
+             The On Alarm element specifies the deadline for or the duration of the nested Scope.
+         </p>
+         <h3 class="tutorial">
+             On Alarm Element Properties
+         </h3>
+         <p>
+             The properties of the On Alarm element are defined in the Properties window, invoked by right-clicking the element on the diagram and choosing Properties. The available properties are:
+         </p>
+      <ul>
+         <li>
+             Alarm Type is used to choose the type of alarm. The available options are:
+         <div>
+           <ul>
+              <li><b>For</b>. Sets the duration for the process to wait.</li>
+              <li><b>Until</b>. Specifies the deadline for the process.</li>
+              <li><b>Repeat Every</b>. Specifies the frequency of process initiation. It initiates the process each time
+                the specified duration period expires. The clock for the very first
+                duration starts when the associated scope starts.</li>
+              <li><b>For + Repeat Every</b>. Specifies the frequency of process initiation after the duration of a specified wait time. The process is initiated each time the duration period specified in the Repeat Every
+                field expires.&nbsp;The first alarm is fired when the period of
+                time specified in the For field expires.</li>
+              <li><b>Until + Repeat Every</b>. Specifies the frequency of process initiation based on the specified deadline. The process will be initiated each
+                time the duration period specified in the Repeat Every field
+                expires.&nbsp;The first alarm is fired when the deadline specified
+                in the Until field is reached.</li>
+           </ul>
+           </div>
+         </li>
+         <li>
+             The second (and third, where available) property is used to specify the duration or deadline for the selected alarm type.         </li>
+     </ul>
+   </div>
+        <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+      <p align="center">
+         <a href="bpel-guide-handlers.html#top">top</a>
+      </p>
+   </body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>UML: Creating Use Case Diagrams</title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<meta name="description" content="">
+<meta name="author" content="your-name"> <!--Optional tag-->
+<meta name="keywords" content=""> 
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>UML: Creating Use Case Diagrams</h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:bob.may@sun.com"><i>Cindy Castillo, Bob May </i></a><br>
+November 2007</em> [Revision number: V1-4]<br>
+This publication is applicable to NetBeans IDE 6.0  release<br>
+<!-- This paragraph should contain an overview or an intro to your-tutorial ----------------------------* -->
+</p>
+</div>
+
+<p>In this tutorial, you learn how to use the UML features of the IDE to create a simple UML Use Case diagram. Using the Use Case diagram model, you show the relationship among actors and use cases within an application. The Use Case diagram that you create tracks various functions and those who interact with the functions within a theoretical banking application. </p>
+<p>A Use Case diagram is useful when you are describing requirements for a system in the analysis, design, implementation and documentation stages. The purpose of this tutorial is to introduce the IDE's UML Use Case diagram, not to teach you about UML concepts or the Java programming language.
+  <!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+  <!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+  <!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+  <!-- Update the image reference below so it references the file in your images directory ---------------* -->
+</p>
+<p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+<h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li class="tut"><a href="use-case.html#UMLProject">Creating the UML Project and the Use Case Diagram</a></li>
+             <li class="tut"><a href="use-case.html#usecasediagram">Adding and Labeling Use Case Elements</a></li>
+             <li class="tut"><a href="use-case.html#add_cmpnts">Adding and Labeling Actor Elements</a></li>
+             <li class="tut"><a href="use-case.html#add_associations">Linking Actor Elements to Other Actor Elements</a></li>
+             <li class="tut"><a href="use-case.html#linking">Linking Actor Elements to Use Case Elements</a></li>
+             <li class="tut"><a href="use-case.html#extend">Using Extend Links</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         <td align="right" valign="top">   <a href="../../index.html"> <img src="../../../images/articles/60/netbeans-stamp.gif" 
+	  alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans IDE 6.0" border="0" height="45" width="206"></a>
+
+   </td>
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<!-- tutorial. Examples: Java programming, XML, BPEL, and so on ----------------------------------------* -->
+<p>To use this tutorial, the IDE must be installed on your system and you should be familiar with the basic parts of the IDE. You should also have a basic familiarity with the Java programming language and UML. For a basic understanding of the IDE, see the IDE Basics topics in the online help. A good resource for UML techniques and theory is the official UML resource page at <a href="http://www.uml.org/" target="_blank" title="http://www.uml.org/">http://www.uml.org/</a>.</p>
+<!-- ======================================================================================== -->
+<!-- ======================================================================================== -->
+<p>This tutorial assumes that your system meets the requirements specified in the Systems Requirements section of the <a href="../../../community/releases/60/relnotes.html">NetBeans 6.0  Release Notes</a>.</p>
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+
+<!-- Replace existing text with info applicable to your tutorial ---------------------------------------* -->
+<p>Before you begin, download and install the following software:</p>
+ 
+<ul>
+	<li>NetBeans 6.0<br>
+		<br>
+	Select the All Download option.	</li>
+</ul>
+</div>
+
+<p align="center"><a href="use-case.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+
+<div class="indent"></div>
+<h2><a name="UMLProject"></a>Creating the UML Project and the Use Case Diagram</h2>
+<p>To begin this tutorial, you need to first create a UML project and a Use Case Diagram.</p>
+<ol>
+  <li class="tut">Create a new working directory called <tt>UMLTutorial</tt> on a local partition of your system.</li>
+  <li class="tut">From the main menu, choose File &gt; New Project and then do the following in the New Project wizard:<br>
+      <ol type="a">
+        <li class="tut">Under Categories, select UML.</li>
+        <li class="tut">Under Projects, select Java-Platform Model.</li>
+        <li class="tut">Click Next<br>
+        The New Java-Platform Model wizard appears.</li>
+      </ol>
+  </li>
+  <li class="tut">In the Project Name field, type <tt>UMLTutorialProject</tt>.<br>
+    Notice that when you type the Project Name, the IDE automatically suggests this name for the name of the Project Folder.</li>
+  <li class="tut">For the Project Location field, click Browse.</li>
+  <li class="tut">In the Select Project Location dialog box, select <tt>UMLTutorial</tt>, which is the directory you created in Step 1.</li>
+  <li class="tut">Click Open to dismiss the dialog box. </li>
+  <li class="tut">In the Name and Location page, click Finish.<br>
+    The IDE creates the UML project and the New Wizard opens and displays the Create New Diagram dialog box.</li>
+  <li class="tut">In the Diagram Type list, select Use Case Diagram.</li>
+  <li class="tut">In the Diagram Name field, type <tt>UseCaseDiagram</tt>.</li>
+  <li class="tut">Leave <tt>UMLTutorialProject</tt> in the Namespace field and click Finish. <br>
+    The IDE does the following: <br>
+    <ul>
+      <li class="tut">Creates the <tt>UseCaseDiagram</tt> node under the <tt>Model</tt> node</li>
+      <li class="tut">Displays the new diagram in the Diagram editor (the diagram is empty at this point)</li>
+      <li class="tut">Opens the Modeling Palette</li>
+    </ul>
+  </li>
+</ol>
+<p align="center"><a href="use-case.html#top">top</a></p>
+<br>
+<!-- ===================================================================================== -->
+<h2><a name="usecasediagram"></a>Adding and Labeling Use Case Elements</h2>
+<p>In this section, you add the Use Case elements using the Modeling Palette in the IDE. </p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Use Case icon <img src="../../../images/articles/uml-use-case/use-case.png" alt="Use Case icon"> and click once in the upper left portion of the Diagram editor.<br>
+      <br>
+    This action places a Use Case element on the diagram.</li>
+  <li class="tut">Deselect the icon by right-clicking anywhere in the Diagram editor or pressing the ESC key. </li>
+  <li class="tut">If not already selected, select the newly added element by clicking on it once. </li>
+  <li class="tut">Type <tt> Withdraw Money </tt> and press Enter.<br>
+    This labels the element <tt>Withdraw Money</tt>.</li>
+  <li class="tut">Select the Use Case icon again and place seven more Use Case elements on the diagram. Place the elements in four rows consisting of two elements across horizontally in each row.</li>
+  <li class="tut">Deselect the icon by right-clicking anywhere in the Diagram editor.</li>
+  <li class="tut">Select the Use Case element located below <tt>Withdraw Money</tt>.</li>
+  <li class="tut">Type <tt>Withdraw Cash from ATM </tt>and press Enter.</li>
+  <li class="tut">Label the remaining Use Case elements as follows:<br>
+      <ul>
+        <li class="tut"><tt>Deposit Money</tt></li>
+        <li class="tut"><tt>Process a Loan</tt></li>
+        <li class="tut"><tt>Apply for Loan</tt></li>
+        <li class="tut"><tt>Deposit Cash at ATM</tt></li>
+        <li class="tut"><tt>Service ATMs</tt></li>
+        <li class="tut"><tt>Update Customer Database</tt></li>
+      </ul>
+      <b>Tip:</b> As you add and label diagram elements, you can resize them as needed by right-clicking the element and selecting Resize to Element to Contents in the pop-up menu. <br>
+      <br>
+    The diagram should now resemble the following figure.<br>
+    <p align="center"><img src="../../../images/articles/uml-use-case/UseCase1.gif" alt="Screen capture showing the Use Case diagram with labeled Use Cases" border="0"></p>
+  </li>
+</ol>
+<p align="center"><a href="use-case.html#top">top</a><br>
+  <!-- ===================================================================================== -->
+</p>
+<h2><a name="add_cmpnts"></a>Adding and Labeling Actor Elements</h2>
+<p>Now, add and label the Actor elements.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Actor icon <img src="../../../images/articles/uml-use-case/actor.png" alt="Actor icon">.</li>
+  <li class="tut">Click once to the right of the <tt>Apply for a Loan</tt> Use Case element to place the Actor element in the diagram.<br>
+      <br>
+    An unnamed Actor element is placed in the Diagram editor. </li>
+  <li class="tut">Click ESC to deselect the icon.</li>
+  <li class="tut">Select the Actor element that you just placed in the diagram, type <tt>Customer</tt> and press Enter.<br>
+    The Actor element is labeled.<br>
+    <br>
+    <b>Tip: </b>As you add more diagram elements, click the Fit To Window button <img src="../../../images/articles/uml-use-case/fit-to-window.png" alt="Fit to Window icon"> on the Diagram toolbar to rearrange the diagram so that you can view the entire diagram in the Diagram editor. </li>
+  <li class="tut">Place five more Actor elements below the <tt>Customer</tt> Actor in the Diagram editor.</li>
+  <li class="tut">Deselect the Actor icon by clicking the anywhere in the Diagram editor.</li>
+  <li class="tut">Label the newly added Actor elements as follows:
+      <ul>
+        <li class="tut"><tt>Employees</tt></li>
+        <li class="tut"><tt>Bank Teller</tt></li>
+        <li class="tut"><tt>Loan Officer</tt></li>
+        <li class="tut"><tt>Technician</tt></li>
+        <li class="tut"><tt>Bank Computer</tt></li>
+      </ul>
+      The diagram should resemble the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-use-case/UseCase2-actors.gif" alt="Screen capture showing Use Case Diagram With Labeled Actors" border="0"></p>
+  </li>
+  <li class="tut">Right-click the UseCaseDiagram tab and choose Save Document from the pop-up menu. </li>
+</ol>
+<p align="center"><a href="use-case.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="add_associations"></a>Linking Actor Elements to Other Actor Elements</h2>
+<p>In this section, you link the Actor elements to each other, using the Generalization. </p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Generalization icon<img src="../../../images/articles/uml-use-case/GeneraLink.png" alt="Generalization icon">.</li>
+  <li class="tut">Click the <tt>Bank Teller</tt> element, then click the <tt>Employees</tt> element.<br>
+      <br>
+    A link snaps into place between the two Actor elements. Information for the Generalization notation appears in the Properties window. </li>
+  <li class="tut">Right-click anywhere in the diagram editor to deselect the Generalization icon.</li>
+  <li class="tut">In the Diagram editor, select the Generalization link.</li>
+  <li class="tut">In the Properties window, click the Stereotypes property ellipsis button (...).<br>
+      <br>
+    The Stereotypes wizard appears.</li>
+  <li class="tut">Click Add, click then click in the blank Name field and type <tt>implementation</tt>.</li>
+  <li class="tut">Click OK.<br>
+      <br>
+    The link is labeled <tt>&lt;&lt;implementation&gt;&gt;</tt>.</li>
+  <li class="tut">Add Generalization links for the following: <br>
+      <br>
+    Loan Officer to Employees<br>
+    Technician to Employees</li>
+</ol>
+<p align="center"><a href="use-case.html#top">top</a><br>
+    <!-- ======================================================================================= -->
+</p>
+<h2><a name="linking"></a>Linking Actor Elements to Use Case Elements</h2>
+<p>In this section, you link the Actor elements with the Use Case elements using the Associations. </p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Association icon <img src="../../../images/articles/uml-use-case/Association.png" alt="Association icon">.</li>
+  <li class="tut">Click <tt>Customer</tt> element and then click the <tt>Withdraw Cash From ATM</tt> Use Case element.<br>
+      <br>
+    A link snaps into place from the Actor to the Use Case.</li>
+  <li class="tut">Right-click anywhere in the diagram editor to deselect the Association icon.</li>
+  <li class="tut">With the new Association link still selected, point the cursor to the center of the line representing the link and right-click the Association link.<br>
+      <br>
+      <b>Note: </b> When the link is selected, it appears blue. It can be tricky to keep the cursor on the link. If the cursor is pointing into the white space when you right-click, you may see the pop-up menu for the Diagram editor rather than the pop-up menu for the link. Try again, making sure the link is blue, right-click and you should see the correct pop-up menu for the link as shown in the following figure.<br>
+      <p align="center"><img src="../../../images/articles/uml-use-case/label-link-name.gif" alt="Screen capture showing the pop-up menu for labeling the Association link" width="548" height="511" border="0"></p>
+  </li>
+  <li class="tut">Choose Labels &gt; Link Name from the pop-up menu.<br>
+    The link is labeled with the text <tt>Unnamed</tt>, which is highlighted.</li>
+  <li class="tut">Type the text <tt>uses</tt> and press Enter.<br>
+    The link is labeled with the text <tt>uses</tt>.</li>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Association icon and add seven more links, connecting the Actors and Use Cases by clicking the Actor element first, and then clicking the Use Case element as follows:<br>
+      <ul>
+        <li class="tut">Customer to Deposit Cash at ATM</li>
+        <li class="tut">Customer to Apply for Loan</li>
+        <li class="tut">Bank Teller to Withdraw Money</li>
+        <li class="tut">Bank Teller to Deposit Money</li>
+        <li class="tut">Bank Computer to Update Customer Database</li>
+        <li class="tut">Technician to Service ATMs</li>
+        <li class="tut">Loan Officer to Process a Loan</li>
+      </ul>
+  </li>
+  <li class="tut">Deselect the Association icon.</li>
+</ol>
+<p align="center"><a href="use-case.html#top">top</a></p>
+<br>
+<!-- ======================================================================================= -->
+<h2><a name="extend"></a>Using Extend Links</h2>
+<p>An Extend link shows a relationship from one Use Case to another, specifying how the behavior defined for the extension use case can be inserted into the behavior defined for the base use case.</p>
+<ol>
+  <li class="tut">From the Basic section of the Modeling Palette, select the Extend icon <img src="../../../images/articles/uml-use-case/Extend.png" alt="Extend icon">. </li>
+  <li class="tut">Click once in the <tt>Withdraw Cash From ATM</tt> element, and click again in the <tt>Withdraw Money</tt> element.<br>
+      <br>
+    A link labeled <tt>&lt;&lt;extend&gt;&gt;</tt> is drawn with the arrow pointing towards the <tt>Withdraw Money</tt> element.</li>
+  <li class="tut">Repeat steps 1 and 2 to draw Extend links between the following Use Cases:<br>
+      <br>
+    Deposit Cash at ATM &gt; Deposit Money<br>
+    Process a Loan &gt; Apply for Loan</li>
+  <li class="tut">Right-click anywhere in the Diagram editor to deselect the Extend Link icon. </li>
+  <li class="tut">To rearrange the diagram, click the Orthogonal Layout button <img src="../../../images/articles/uml-use-case/orthogonal-layout.png" alt="Orthogonal Style icon"> on the Diagram toolbar and click Yes in the Layout warning dialog box.<br>
+      <br>
+      <b>Note: </b>You may need to expand the diagram to see the Orthogonal Layout button on the toolbar. To do this, double-click the UseCaseDiagram tab. You can also right-click in the Diagram editor and choose Layout &gt; Orthogonal from the pop-up menu. The IDE rearranges the <tt>UseCaseDiagram</tt> diagram into a rectangular layout style. Your finished diagram should resemble the following figure. Your diagram may have a slightly different layout. As long as the relationships and elements are correctly reflected, any slight difference in appearance is normal.<br>
+      <p align="center"><img src="../../../images/articles/uml-use-case/UseCase3-finished-diagram.gif" alt="Screen capture showing the completed Use Case diagram." border="0"></p>
+  </li>
+  <li class="tut">Press Ctrl-S to save the diagram. </li>
+</ol>
+<p align="center"><a href="use-case.html#top">top</a><br>
+  <!-- ======================================================================================= -->
+</p>
+<h2>Summary</h2>
+<p> In this tutorial, you learned how to create a Use Case diagram for a simple banking application. You learned how to perform the following tasks:</p>
+<ul>
+  <li class="tut">Create a UML project</li>
+  <li class="tut">Create a Use Case diagram</li>
+  <li class="tut">Use the UML icons from the Modeling Palette to create use cases and actors</li>
+  <li class="tut">Connect the use cases and actors to show the functions of the application<br style="clear: both;">
+    <!-- ======================================================================================== -->
+</li>
+</ul>
+<p align="center"><a href="use-case.html#top">top</a></p>
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul><li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p></li>
+</ul>
+
+<!-- ======================================================================================== -->
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="use-case.html#top">top</a></p>
+<p><small>&gt;&gt; <a href="../../index.html">More NetBeans IDE Documentation</a></small></p>
+
+</body>
+</html>

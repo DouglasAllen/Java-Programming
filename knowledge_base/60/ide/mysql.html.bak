@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>       
+        <meta name="description" content="Connecting to a MySQL Database">
+        <meta name="author" content="troy.giunipero@sun.com">
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+        
+        <title>Connecting to a MySQL Database</title>
+        
+        <style type="text/css">
+        <!--
+        table.ct {
+        width: 550px;
+        border: solid 1px;
+        }
+        
+        th.ct {
+        padding: 10px;
+        background-color: #ccc;       
+        }
+            
+        td.ct {
+        padding: 10px;
+        text-align: center;        
+        background-color: #eee;       
+        }
+        -->
+        </style>
+    </head>
+    
+    <body>
+        <h1><a name="top"></a>Connecting to a MySQL Database</h1>
+        
+        <div class="articledate">Contributed and maintained by 
+            <a href="mailto:troy.giunipero@sun.com">Troy Giunipero</a>
+            <br>November 2007</div>
+
+        <p>This document demonstrates how to configure the MySQL database server on 
+            your computer and set up a connection to it from NetBeans IDE. Once connected, 
+            you can begin working with MySQL in the IDE's Database Explorer by creating 
+            new databases and tables, populating tables with data, and running SQL 
+            queries on database structures and content. This tutorial is designed for 
+            beginners with a basic understanding of database management and application 
+            development, who want to apply their knowledge to working with MySQL in 
+            NetBeans IDE.</p>
+        
+        <p><a href="http://www.mysql.com/" target="_blank">MySQL</a> is a popular Open Source relational
+            database management system (RDBMS) commonly used in web applications due to 
+            its speed, flexibility and reliability. MySQL employs SQL, or <em>Structured 
+            Query Language</em>, for accessing and processing data contained in databases.</p>
+            
+        <p>In order to work through this tutorial, you need to have the following 
+            software installed on your computer:</p>
+        
+        <ol>
+            <li>NetBeans IDE 6.0 </li>
+            <li>Java SE Development Kit (JDK&trade;) version 5.0 or higher*
+                </li>        
+            <li>MySQL server
+            (<a href="http://dev.mysql.com/downloads/mysql/5.0.html#downloads" target="_blank">download</a>)</li>
+        </ol>
+        
+        <p>*<span style="text-size:smaller"><strong>Note: </strong>You need to install 
+            the Java SE Development Kit (JDK&trade;) in order to install and run NetBeans 
+            IDE. The JDK includes the Java Runtime Environment (JRE), as well as various 
+            tools and API's necessary for development in Java.</span></p>            
+        
+        <p style="text-align:center"><strong>Expected duration: 25 minutes</strong></p>
+        
+        <img src="../../../images/articles/60/netbeans-stamp.gif" style="float:right;margin:4em 4em"
+            alt="Content on this page applies to NetBeans IDE 6.0" 
+            title="Content on this page applies to the NetBeans IDE 6.0">
+        
+        <p>The following topics are covered below:</p>
+        
+        <ul>
+            <li><a href="#installing">Installing and Configuring MySQL</a></li>
+            <li><a href="#connecting">Connecting to the MySQL RDBMS</a></li>
+            <li><a href="#creatingDB">Creating a Database Instance</a></li>
+            <li><a href="#connectingDB">Connecting to the Database Instance</a></li>            
+            <li><a href="#creating">Creating Database Tables</a></li>
+            <li><a href="#working">Working with Table Data</a></li>
+            <li><a href="#running">Running an SQL Script</a></li>
+            <li><a href="#nextSteps">Next Steps</a></li>            
+        </ul>
+        
+        
+        <h2><a name="installing"></a>Installing and Configuring MySQL</h2>
+        
+        <p>If you already have the MySQL database set up and running on your computer, 
+            skip ahead to <a href="#registering">Registering the Database in NetBeans 
+            IDE</a>. By way of example, this tutorial demonstrates how to install the 
+            MySQL Community Server on both <a href="#windows">Windows XP</a> and 
+            <a href="#unix">Unix-based</a> systems.</p>
+            
+        <div class="indent">
+            <a name="unix"></a>
+            <h3>Unix</h3>
+            
+            <ol>
+                <li>Run <tt>sudo apt-get install mysql-server</tt> in a terminal window.
+                    MySQL is automatically downloaded and installed.</li>
+                <li>Start the MySQL server by running <tt>sudo /etc/init.d/mysql start</tt>.</li> 
+                <li>Run <tt>mysqladmin -u root password nbuser</tt>. This allows you to 
+                    set a new password for the root user, which is initially blank. For 
+                    purposes of this tutorial, use <tt>nbuser</tt>.</li>
+            </ol>            
+            
+            <a name="windows"></a>
+            <h3>Windows XP</h3>
+            
+            <ol>
+                <li>Run the self-extracting file. The MySQL Setup Wizard opens to guide 
+                    you through the installation process. Accept all default settings.</li>
+
+                <li>Upon completing installation, allow the MySQL wizard to immediately 
+                    configure the server by making sure the Configure the MySQL Server 
+                    Now checkbox is selected. This will allow an instance of the server 
+                    to be created, which will run as a Windows service on your computer.</li>
+
+                <li>In the MySQL Server Instance Configuration wizard, select Standard
+                    Configuration. Click Next. When you arrive at the step allowing you 
+                    to set Windows options, select the Include Bin Directory in Windows 
+                    PATH checkbox. This will later allow you to perform a simple check 
+                    to make sure the MySQL service is up and running:
+
+                     <br><br>
+                     <img src="../../../images/articles/60/ide/mySQL/mysql-configuration-wizard.png" 
+                        alt="Include Bin Directory in Windows PATH checkbox selected in the Configuration wizard"></li>
+
+                <li>For purposes of this tutorial, set the root password to: <tt>nbuser</tt>. 
+                    Finally, click Execute to allow the wizard to generate the server 
+                    instance on your computer. If you encounter any problems, refer to 
+                    the MySQL Reference Manual included in your installation or the 
+                    <a href="http://dev.mysql.com/doc/refman/5.0/en/" target="_blank">online documentation</a>.
+                </li>
+            </ol>
+        </div>
+        
+        <br>
+        <p>Before continuing further, it is important to understand the components found 
+            in MySQL's root directory:</p>
+
+        <ul>
+            <li>The <tt>bin</tt> subdirectory contains the scripts for  
+                executing utilities and setting up the environment.</li>
+            <li>The <tt>data</tt> subdirectory contains all database  
+                instances, including their data.</li>
+            <li>The <tt>Docs</tt> subdirectory contains the MySQL Reference Manual.</li>
+            <li>The <tt>share</tt> subdirectory contains localization 
+                files, including character sets and language packages.</li>
+            <li>The <tt>my.ini</tt> file is the configuration file that was  
+                generated by the Configuration wizard, and contains information such as 
+                the port being listened on, path to installation directory, path to 
+                database root, and default character set.</li>
+        </ul>
+        
+        
+        <h2><a name="connecting"></a>Connecting to MySQL from NetBeans IDE</h2>
+                    
+        <p>Connections to databases are managed using database <em>drivers</em>, which
+            enable applications written in different programming languages to interact 
+            with the database management system. NetBeans IDE 6.0 comes bundled with 
+            the <a href="http://www.mysql.com/products/connector/j/" target="_blank">MySQL&nbsp;Connector/J</a>
+            driver, which is a pure Java implementation of the 
+            <a href="http://java.sun.com/products/jdbc/overview.html" target="_blank">JDBC API</a>, and 
+            communicates directly with the MySQL server using the MySQL protocol.</p>
+
+        <p>Begin by examining the functionality offered by the Database Explorer located 
+            in the IDE's Services window (Ctrl-5). The Database Explorer is represented 
+            by the Databases node (<img src="../../../images/articles/60/ide/mySQL/database-node-icon.png" 
+            alt="database node icon">). From this interface you can connect to database 
+            servers, view current connections, add database drivers, as well as create, 
+            browse or edit database structures.</p>
+        
+        <p>Now that you have the MySQL database server installed and configured, you can 
+            connect to it from the NetBeans IDE using the Database Explorer. Note that
+            you are connecting to the database <em>server</em>. In the next step, you
+            will create a database <em>instance</em> through this connection. Do the 
+            following:</p>
+        
+        <ol>
+            <li>In the Database Explorer, expand the Drivers node, then right-click 
+                the MySQL (Connector/J driver) and choose Connect Using. The New Database
+                Connection dialog displays.</li>
+            <li>In the Database URL field, replace the default <tt>&lt;HOST&gt;:&lt;PORT&gt;/&lt;DB&gt;</tt> 
+                with a forward-slash (<tt>/</tt>) so that the entry now reads: <tt>jdbc:mysql:///</tt>.</li>
+            <li>For User Name and Password, enter <tt>root</tt> and <tt>nbuser</tt>, 
+                respectively. Optionally, select the Remember password option.</li>
+            <li>Click OK, then click OK again to accept the default schema and exit the 
+                dialog. A new Connection node displays in the Database Explorer under 
+                the Databases node:
+
+                <br><br>
+                <img src="../../../images/articles/60/ide/mySQL/new-connection-node.png" 
+                    style="border:1px solid" alt="new connection node displayed in database explorer"></li>
+        </ol>
+            
+        <p>You are now connected to <tt>MyNewDatabase</tt> in the IDE. Note that the 
+            new connection node icon appears whole (<img alt="connection node icon" 
+            src="../../../images/articles/60/ide/mySQL/connection-node-icon.png">) when 
+            you are connected to a database. Likewise, it appears broken 
+            (<img src="../../../images/articles/60/ide/mySQL/broken-connection-node.png" 
+            alt="broken connection node icon">) when there is no connection.</p>
+
+        <p>At later stages, when working with databases through the Database Explorer, you may need to 
+            manually connect to a database. You can do so by right-clicking the broken database 
+            connection node and choosing Connect.</p>            
+            
+        
+        <h2><a name="creatingDB"></a>Creating a Database Instance</h2>
+
+        <p>A common way of interacting with databases is through an SQL editor. NetBeans 
+            IDE has a built-in SQL Editor for this purpose. The SQL Editor is generally 
+            accessible via the Execute Command option from the right-click menu of the 
+            connection node (or of the connection node's child nodes). Now that you are 
+            connected to the MySQL server, you can create a new database instance using 
+            the SQL Editor. For purposes of this tutorial, create an instance called 
+            <tt>MyNewDatabase</tt>:</p>
+            
+        <ol>
+            <li>Right-click the connection node you just added and choose Execute Command.
+                The SQL Editor opens in the main window.</li>
+            <li>In the SQL Editor, type:
+            
+                <pre class="examplecode">create database MyNewDatabase;</pre>
+                    
+                Then, right-click anywhere within the SQL Editor and choose Run Statement. 
+                The SQL query executes against the database. In the Output window (Ctrl-4) 
+                you will see output similar to the following, indicating that the query 
+                executed successfully:
+                
+                <br><br>
+                <img src="../../../images/articles/60/ide/mySQL/run-query.png" 
+                    style="border:1px solid" alt="Output window displaying output from executed query"></li>
+        </ol>
+               
+           
+        <h2><a name="connectingDB"></a>Connecting to the Database Instance</h2>            
+            
+        <p></p>
+                      
+        <ol>
+            <li>In the Services window (Ctrl-5) choose Connect Using from the right-click 
+                menu of the MySQL driver. The New Database Connection dialog opens.</li>
+            <li>In the Basic Setting tab, enter the Database's URL in the corresponding 
+                text field. The URL is used to identify the type and location of a database 
+                server. In this example, you need to specify the host name (i.e. the 
+                location of the server), the port number on which the database communicates, 
+                and the name of the database instance being used. In this case you can 
+                enter: <tt>jdbc:mysql://localhost:3306/MyNewDatabase</tt>.</li>
+            <li>For User Name and Password, enter <tt>root</tt> and <tt>nbuser</tt> 
+                respectively:
+
+                <br><br>
+                <img src="../../../images/articles/60/ide/mySQL/database-connection-dialog.png" 
+                     alt="New Database Connection dialog containing connection details"></li>
+                     
+            <li>Click OK, then click OK again to exit the dialog. A new Connection 
+                node displays in the Database Explorer under the Databases node, just 
+                as it did when you connected to the MySQL server.</li>
+        </ol>
+
+        <p><strong>Note: </strong>While you can now access <tt>MyNewDatabase</tt> through
+            your connection in the IDE, you have not yet made it available to any specific 
+            application. At this stage, you can use the IDE to access and modify the database, 
+            but <em>cannot</em> do so within the context of an application yet. <!-- This is 
+            covered in the follow-up tutorial <a href="mysql-webapp.html">Creating a Simple 
+            Web Application using a MySQL Database</a>. --> </p>
+        
+        
+        <h2><a name="creating"></a>Creating Database Tables</h2>
+        
+        <p>Now that you have connected to <tt>MyNewDatabase</tt>, you can begin exploring 
+            how to create tables, populate them with data, and modify data maintained
+            in tables. This allows you to take a closer look at the functionality
+            offered by the Database Explorer, as well as NetBeans IDE's support for
+            SQL files. As an example, you can prepare the database for use in the web 
+            application developed in the follow-up tutorial <a href="mysql-webapp.html">Creating 
+            a Simple Web Application using a MySQL Database</a>.</p>
+        
+        <p><tt>MyNewDatabase</tt> is currently empty. In the IDE it is possible to add 
+            a database table by either using the Create Table dialog, or by inputting 
+            an SQL query and running it directly from the SQL Editor. Here you can 
+            explore both methods:</p>
+        
+        <ol>
+            <li><a href="#usingSQLEditor">Using the SQL Editor</a></li>
+            <li><a href="#usingCreateTable">Using the Create Table Dialog</a></li>            
+        </ol>
+        
+        <div class="indent">
+            <a name="usingSQLEditor"></a>
+            <h3>Using the SQL Editor</h3>
+            
+            <ol>
+                <li>In the Database Explorer, expand the <tt>MyNewDatabase</tt> 
+                    connection node (<img src="../../../images/articles/60/ide/mySQL/connection-node-icon.png" 
+                    alt="connection node icon">) and note that there are three subfolders: 
+                    Tables, Views and Procedures. Right-click the Tables node beneath the 
+                    <tt>MyNewDatabase</tt> connection node and choose Execute Command. 
+                    A blank canvas opens in the SQL Editor in the main window.</li>
+                <li>In the SQL Editor, type in the following query. This is a
+                    table definition for the <tt>Counselor</tt> table you are
+                    about to create:
+                    
+                    <pre class="examplecode">
+CREATE TABLE Counselor (
+    id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    firstName VARCHAR (50),
+    nickName VARCHAR (50),
+    lastName VARCHAR (50),
+    telephone VARCHAR (25),
+    email VARCHAR (50),
+    memberSince DATE DEFAULT '0000-00-00',
+    PRIMARY KEY (id)
+);                      
+                    </pre>
+                    
+                    <strong>Note: </strong>Queries formed in the SQL Editor are parsed in 
+                    Structured Query Language (SQL). SQL adheres to strict syntax rules 
+                    which you should be familiar with when working in the IDE's Editor. 
+                    Upon running a query, feedback from the SQL engine is generated in 
+                    the Output window indicating whether execution was successful or not.
+                    <br><br></li>
+                <li>To execute the query, either click the Run SQL (<img alt="run SQL button"
+                    src="../../../images/articles/60/ide/mySQL/run-sql-button.png">) 
+                    button in the task bar at the top (Ctrl-Shift-E), or right-click within
+                    the SQL Editor and choose Run Statement. The IDE generates the 
+                    <tt>Counselor</tt> table in the database, and you receive a message 
+                    similar to the following in the Output window:
+                    
+                    <br><br>
+                    <img src="../../../images/articles/60/ide/mySQL/create-counselor-query.png" 
+                        style="border:1px solid" alt="Output window indicates successful execution"></li>
+                    
+                <li>To verify changes, right-click the Tables node in the Database Explorer 
+                    and choose Refresh. The Refresh option updates the Database Explorer's 
+                    UI component to the current status of the specified database. Note that 
+                    the new <tt>Counselor</tt> table node (<img alt="table node icon"
+                    src="../../../images/articles/60/ide/mySQL/table-node.png">) now displays 
+                    under Tables in the Database explorer. If you expand the table node you 
+                    can see the columns (fields) you created, starting with the primary key 
+                    (<img src="../../../images/articles/60/ide/mySQL/primary-key-icon.png" 
+                    alt="primary key node icon">):
+                    
+                    <br><br>
+                    <img src="../../../images/articles/60/ide/mySQL/counselor-table.png" 
+                        alt="Counselor table displayed in Database Explorer"
+                        style="border:1px solid"></li>
+            </ol>            
+            
+            <a name="usingCreateTable"></a>
+            <h3>Using the Create Table Dialog</h3>
+            
+            <ol>
+                <li>In the Database Explorer, right-click the Tables node and choose 
+                    Create Table. The Create Table dialog opens.</li>
+                <li>In the Table Name text field, type <tt>Subject</tt>.</li>
+                <li>In the first row displayed, select the Key check box. You are
+                    specifying the primary key for your table. All tables found in
+                    relational databases must contain a primary key. Note that when
+                    you select the Key check box, the Index and Unique check boxes
+                    are also automatically selected and the Null check box is deselected.
+                    This is because primary keys are used to identify a unique row in 
+                    the database, and by default form the table index. Because all rows 
+                    need to be identified, primary keys cannot contain a Null value.</li>
+                <li>For Column Name, enter <tt>id</tt>. For Data Type, choose 
+                    <tt>SMALLINT</tt> from the drop-down list, then click the Add 
+                    Column button.</li>
+                <li>Repeat this procedure by specifying all remaining fields, as shown 
+                    in the table below:
+                    
+                    <br><br>
+                    <table class="ct">
+                        <tr>
+                            <th class="ct">Key</th>
+                            <th class="ct">Index</th>
+                            <th class="ct">Null</th>
+                            <th class="ct">Unique</th>
+                            <th class="ct">Column Name</th>
+                            <th class="ct">Data Type</th>
+                            <th class="ct">Size</th>
+                        </tr>
+                        <tr>
+                            <td class="ct">[checked]</td>
+                            <td class="ct">[checked]</td>
+                            <td class="ct"></td>
+                            <td class="ct">[checked]</td>
+                            <td class="ct">id</td>
+                            <td class="ct">SMALLINT</td>
+                            <td class="ct">3</td>                       
+                        </tr>
+                        <tr>
+                            <td class="ct"></td>
+                            <td class="ct"></td>
+                            <td class="ct">[checked]</td>
+                            <td class="ct"></td>
+                            <td class="ct">name</td>
+                            <td class="ct">VARCHAR</td>
+                            <td class="ct">50</td>                         
+                        </tr>
+                        <tr>
+                            <td class="ct"></td>
+                            <td class="ct"></td>
+                            <td class="ct">[checked]</td>
+                            <td class="ct"></td>
+                            <td class="ct">description</td>
+                            <td class="ct">VARCHAR</td>
+                            <td class="ct">500</td>                           
+                        </tr>
+                        <tr>
+                            <td class="ct"></td>
+                            <td class="ct"></td>
+                            <td class="ct">[checked]</td>
+                            <td class="ct"></td>
+                            <td class="ct">FK_counselorID</td>
+                            <td class="ct">SMALLINT</td>
+                            <td class="ct">3</td>                     
+                        </tr>                        
+                    </table>
+                                      
+                    <br>
+                    You are creating a table named <tt>Subject</tt> 
+                    that will hold data for each of the following records:
+                    
+                    <br><br>
+                    <ul>
+                        <li><strong>Name: </strong>name of the subject</li>
+                        <li><strong>Description: </strong>description of the subject</li>					
+                        <li><strong>Counselor ID: </strong>counselor ID that corresponds  
+                            to an ID from the Counselor table</li>
+                    </ul>                    
+                     
+                    <br> 
+                    <img src="../../../images/articles/60/ide/mySQL/create-table-subject.png" 
+                     alt="Create Table dialog with selected fields for Subject table">
+    
+                    <br><br>
+                    Make sure that the fields in your Create Table dialog match those 
+                    shown above, then click OK. The IDE generates the <tt>Subject</tt> 
+                    table in the database, and you can see a new <tt>Subject</tt> table 
+                    node (<img src="../../../images/articles/60/ide/mySQL/table-node.png" 
+                    alt="table node icon">) immediately display under Tables in the 
+                    Database Explorer.</li>
+            </ol>
+        </div>
+        
+        
+        <h2><a name="working"></a>Working with Table Data</h2>
+        
+        <p>In order to work with table data, you can make use of the SQL Editor 
+            in NetBeans IDE. By running SQL queries on a database, you can add, 
+            modify and delete data maintained in database structures. To add a 
+            new record (row) to the <tt>Counselor</tt> table, do the following:</p>
+        
+        <ol>
+            <li>Choose Execute Command from the Tables folder in the Database Explorer. 
+                A blank canvas opens in the SQL Editor in the main window.</li>
+            <li>In the SQL Editor, type in the following query:
+                
+                <pre class="examplecode">
+INSERT INTO Counselor
+    VALUES (1, 'Ricky', '&quot;The Dragon&quot;', 'Steamboat','334 612-5678', 'r_steamboat@ifpwafcad.com', '1996-01-01')</pre></li>
+
+            <li>To execute the query, right-click within the SQL Editor and choose Run 
+                Statement. In the Output window, you can see a message indicating that 
+                the query was successfully executed.</li>
+            <li><a name="viewData"></a>To verify that the new record has been added to 
+                the <tt>Counselor</tt> table, in the Database Explorer, right-click the 
+                <tt>Counselor</tt> table node and choose View Data. A new SQL Editor pane 
+                opens in the main window. When you choose View Data, a query to select all 
+                the data from the table is automatically generated in the upper region of 
+                the SQL Editor. The results of the statement are displayed in a table view 
+                in the lower region. In this example, the <tt>Counselor</tt> table displays. 
+                Note that a new row has been added with the data you just supplied from the 
+                SQL query:
+
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/ide/mySQL/new-record.png',620,172)"
+                   href="../../../images/articles/60/ide/mySQL/new-record.png" title="Click to ENLARGE">
+                   <img src="../../../images/articles/60/ide/mySQL/new-record-small.png" 
+                   style="border:1px solid" alt="new record added to Counselor table"></a>
+            </li>
+        </ol>
+        
+        
+        <h2><a name="running"></a>Running an SQL Script</h2>
+        
+        <p>Another way to manage table data in NetBeans IDE is by running an external SQL 
+            script directly in the IDE. If you have created an SQL script elsewhere, you 
+            can simply open it in NetBeans IDE and run it in the SQL Editor.</p>
+        
+        <p>For demonstrative purposes, download 
+            <a href="../../../files/documents/4/1358/ifpwafcad.sql">ifpwafcad.sql</a> 
+            and save it to a location on your computer. This script creates two tables similar to 
+            what you just created above (<tt>Counselor</tt> and <tt>Subject</tt>), and 
+            immediately populates them with data.</p>
+            
+        <p>Because the script overwrites these tables if they already exist, delete the 
+            <tt>Counselor</tt> and <tt>Subject</tt> tables now so it becomes obvious that 
+            new tables are being created when the script is run. To delete tables:</p>
+            
+        <ol>
+            <li>Right-click the selected table node in the Database Explorer and choose
+                Delete.</li>
+            <li>In the Confirm Object Deletion dialog that displays, click Yes. Note that
+                the table node is automatically removed from the Database Explorer.</li>
+        </ol>
+            
+        <p>To run the SQL script on <tt>MyNewDatabase</tt>:</p>
+        
+        <ol>
+            <li>Choose File &gt; Open File from the IDE's main menu. In the file browser 
+                navigate to the location where you previously saved <tt>ifpwafcad.sql</tt> 
+                and click Open. The script automatically opens in the SQL Editor.</li>
+            <li>Make sure your connection to <tt>MyNewDatabase</tt> is selected from 
+                the Connection drop-down box in the toolbar at the top of the Editor:
+                
+                <br><br>
+                <img src="../../../images/articles/60/ide/mySQL/connection-drop-down.png" 
+                    style="border:1px solid" alt="Connection drop-down box in the SQL Editor toolbar"></li> 
+            
+            <li>Click the Run SQL (<img src="../../../images/articles/60/ide/mySQL/run-sql-button.png" 
+                alt="run SQL button">) button in the SQL Editor's task bar. The script is 
+                executed against the selected database, and any feedback is generated in 
+                the Output window.</li>           
+            <li>To verify changes, right-click the <tt>MyNewDatabase</tt> connection node 
+                in the Runtime window and choose Refresh. The Refresh option updates the 
+                Database Explorer's UI component to the current status of the specified 
+                database. Note that the two new tables from the SQL script now display as 
+                a table nodes under <tt>MyNewDatabase</tt> in the Database Explorer.</li>
+            <li>Choose View Data from the right-click menu of a selected table node to 
+                see the data contained in the new tables. In this manner, you can compare 
+                the tabular data with the data contained in the SQL script to see that 
+                they match.</li>
+        </ol>
+ 
+        
+        <div class="feedback-box">
+            <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send 
+            Us Your Feedback</a></div>
+        
+        <br style="clear:both;">
+        
+        <h2><a name="nextSteps"></a>Next Steps</h2>
+        
+        <p>This concludes the Connecting to a MySQL Database tutorial. This document 
+            demonstrated how to configure MySQL on your computer and set up a connection 
+            to the database server from NetBeans IDE. It also described how to work with 
+            MySQL in the IDE's Database Explorer by creating new database instances and 
+            tables, populating tables with data, and running SQL queries.</p>
+        
+        <p>For related and more advanced tutorials, see the following resources:</p>
+        
+        <ul>
+        <!-- <li><a href="mysql-webapp.html">Creating a Simple Web Application Using MySQL</a>. 
+                A follow-up tutorial demonstrating how to created a simple three-tiered web 
+                application in the IDE using the MySQL database you just created.</li> -->      
+            <li><a href="../ruby/model.html">Building Relationships Between Rails Models</a>. 
+                A document describing how to build relationships (one-to-one and one-to-many) 
+                between models using a MySQL database in a NetBeans Ruby on Rails project.</li>
+            <li><a href="http://www.netbeans.org/kb/55/using-netbeans/dbconn.html" target="_blank">Connecting to Databases</a>. A 
+                basic guide to connecting to databases in NetBeans IDE.</li>
+        </ul>
+
+        <br>
+        <p style="text-align:center"><a href="#top">top</a></p>
+        <br>
+    </body>
+</html>

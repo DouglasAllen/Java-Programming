@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="An introduction to using the Spring Framework in NetBeans IDE">
+        <meta name="author" content="troy.giunipero@sun.com">
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+        <script type="text/javascript" src="../../../images/js/window_opener.js"></script>
+        
+        <title>Introduction to the Spring Web Framework</title>
+    </head>
+    
+    <body>
+        <h1>Introduction to the Spring Framework</h1>
+        
+        <div class="articledate" style="margin-left:0px;">Contributed by 
+            <a href="mailto:troy.giunipero@sun.com">Troy Giunipero</a> and 
+            <a href="mailto:craig2600@gmail.com">Craig MacKay</a>.</div>
+        
+        <br>
+        <p>This document shows you how to install the <a href="http://www.springframework.org/" target="_blank">Spring 
+            Framework</a> and run it in NetBeans IDE. The Spring Framework is a popular 
+            open source application framework that can make J2EE development easier. It 
+            consists of a container, a framework for managing components, and a set of 
+            snap-in services for web user interfaces, transactions, and persistence.</p>
+        
+        <p>This tutorial takes advantage of Craig MacKay's <a href="http://spring-netbeans.sourceforge.net/" target="_blank">Spring 
+            NetBeans Module</a>, and documents the <a href="http://spring-netbeans.sourceforge.net/?p=8" target="_blank">flash 
+            demo</a> he has prepared that guides you through the installation process. 
+            At the end of this tutorial, you will have a module installed in your IDE 
+            that provides the following support for the Spring Framework:</p>
+        
+        <ul>
+            <li>Framework Support (enables the Spring Framework as an option when creating 
+                a new web application)</li>
+            <li>Spring XML Catalog (provides Spring related XSD and DTD's to enable XML 
+                code completion)</li>
+            <li>Integrated Library Management (installs libraries required for the Spring 
+                Framework, as well as additional required libraries)</li>
+        </ul>
+        
+        <p>For more information on the Spring Framework, visit 
+            <a href="http://www.springframework.org" target="_blank">http://www.springframework.org</a>. 
+            For a more fine-grained explanation of how Spring Framework artifacts behave 
+            and interact with other objects in an application, visit the official 
+            <a href="http://www.springframework.org/documentation" target="_blank">Spring Framework 
+            Reference Documentation</a>, or consult the 
+            <a href="http://static.springframework.org/spring/docs/2.0.x/api/index.html" target="_blank">Spring 
+            Framework API</a>.</p>
+    
+        <p>For details on the Spring NetBeans Module, see 
+            <a href="http://spring-netbeans.sourceforge.net" target="_blank">http://spring-netbeans.sourceforge.net</a>. 
+            If you are familiar with the Spring Framework, you are welcome to 
+            <a href="http://spring-netbeans.sourceforge.net/?p=9" target="_blank">contribute</a> to the 
+            development of the Spring NetBeans Module.</p>
+        
+        <br>
+        <p style="text-align:center"><strong>Expected duration: 20 minutes</strong></p>
+           
+        <img src="../../../images/articles/60/netbeans-stamp.gif" style="float:right;margin:4em 4em"
+            alt="Content on this page applies to NetBeans IDE 6.0" 
+            title="Content on this page applies to the NetBeans IDE 6.0">
+        
+        <br>
+        <p>The following topics are covered below:</p>
+        
+        <ul>
+            <li><a href="#getting">Getting the Software</a></li>
+            <li><a href="#installing">Installing the Module</a></li>
+            <li><a href="#creating">Creating a New Project</a></li>
+            <li><a href="#running">Running the Project</a></li>
+            <li><a href="#browsing">Browsing the Project's Structure</a></li>
+            <li><a href="#nextSteps">Next Steps</a></li>
+        </ul>
+        
+        <br>
+        <h2><a name="getting"></a>Getting the Software</h2>
+        
+        <p>Before beginning, make sure you have the following software installed on your computer:</p>
+        
+        <ul>
+            <li>NetBeans IDE 6.0 </li>
+            <li>The Spring NetBeans Module </li>
+        </ul>
+        
+        <p><strong>Note: </strong>In order to install and run NetBeans IDE 6.0, you also 
+            require the Java SE Development Kit (JDK) version 5.0 or higher. You can get 
+            a version of JDK for your platform at:
+            <a href="http://java.sun.com/javase/downloads/index.jsp" target="_blank">http://java.sun.com/javase/downloads/index.jsp</a>.</p>
+
+        <br>
+        <h2><a name="installing"></a>Installing the Module</h2>
+        
+        <p>Begin by installing the Spring NetBeans Module in the IDE:</p>
+        
+        <ol>
+            <li>Launch NetBeans IDE and choose Tools &gt; Plugins from the main menu. The 
+                Plugins Manager opens in a new window.</li> 
+            <li>Select the Downloaded tab at the top of the Manager, then click the Add
+                Plugins button. In the Add Plugins Dialog, navigate to the location where 
+                you downloaded the Spring NetBeans module. Select the module, then click OK. 
+                Notice that the Spring Framework Support module is now recognized in the 
+                Plugins Manager:
+                
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/web/spring/install-module.png',790,491)" 
+                   href="../../../images/articles/60/web/spring/install-module.png" title="Click to ENLARGE">
+                    <img src="../../../images/articles/60/web/spring/install-module-small.png" style="border:0"
+                     alt="Spring Framework Support listed under the Include to Install pane"></a></li>
+                     
+            <li>Click Install. The NetBeans IDE Installer opens, listing the Spring 
+                Framework Support plugin that is about to be installed. Click Next. 
+                Accept the license agreement that displays, and the Installer automatically 
+                begins downloading and validating the plugin for installation. You may 
+                receive a validation warning due to the fact that the plugin is not 
+                signed. Click Continue anyway - this plugin can be trusted. When the 
+                plugin is successfully installed into the IDE, click Finish.</li>
+        </ol>
+        
+        <br>
+        <h2><a name="creating"></a>Creating a New Project</h2>
+        
+        <p>Now that the module is installed, you can create a new project for a web 
+            application using the Spring Framework:</p>
+        
+        <ol>
+            <li>Choose New Project (Ctrl-Shift-N) from the IDE's File menu. Under Categories 
+                select Web. Under Projects select Web Application. Click Next.</li>
+            <li>In Project Name, type in SpringWebApp. From the Server drop-down list, 
+                select the server you plan to work with. Leave all other settings at 
+                their defaults and click Next.</li>
+            <li>In Step 3, the Frameworks panel, notice that because you just installed 
+                the Spring NetBeans Module, Spring Framework 2.0 is now listed:
+                
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/web/spring/frameworks-window.png',650,264)" 
+                   href="../../../images/articles/60/web/spring/frameworks-window.png" title="Click to ENLARGE">
+                    <img src="../../../images/articles/60/web/spring/frameworks-window-small.png" style="border:0"
+                     alt="Spring Framework 2.0 displayed in the Frameworks window of the New Web Application wizard"></a>
+                <br><br>
+                
+                Select the corresponding checkbox and click Finish. The IDE creates a 
+                project template for the entire application, including all metadata, as 
+                well as the project's Ant build script. You can view the template structure 
+                from the Projects window. Also note that the <tt>dispatcher-servlet.xml</tt> and
+                <tt>applicationContext.xml</tt> files, as well as the project's top level 
+                <tt>index.jsp</tt> file, open by default in the IDE's Source Editor.</li>
+        </ol>
+        
+        <br>
+        <h2><a name="running"></a>Running the Project</h2>
+        
+        <p>Try running the new project in the IDE to see what happens:</p>
+        
+        <ul>
+            <li>In the Projects window, right-click the project node and choose Run Project 
+                (alternately, press F6). The IDE automatically starts your server if it is 
+                not already running, and deploys the application to it. The application runs 
+                and employs the Spring MVC <tt>DispatcherServlet</tt> using the configuration 
+                data contained in <tt>dispatcher-servlet.xml</tt>. Note any output displayed 
+                in the IDE's Output window (Ctrl-4). The generated output should complete with 
+                a BUILD SUCCESSFUL message:
+                
+                <br><br>
+                <img src="../../../images/articles/60/web/spring/output.png" style="border:0"
+                     alt="Output window displaying information when running the project">
+                
+                <br><br>
+                Your default browser opens, and you see the output from the application's 
+                welcome page (<tt>/WEB-INF/index.jsp</tt>):
+                
+                <br><br>
+                <a onclick="return openwin('../../../images/articles/60/web/spring/browser-output.png',801,343)" 
+                   href="../../../images/articles/60/web/spring/browser-output.png" title="Click to ENLARGE">
+                    <img src="../../../images/articles/60/web/spring/browser-output-small.png" style="border:0"
+                     alt="index.jsp output in browser"></a>
+            </li>
+        </ul>
+        
+        <br>
+        <h2><a name="browsing"></a>Browsing the Project's Structure</h2>
+        
+        <p>Now that you know the project can be deployed and run successfully, look at 
+            how the Spring Framework is integrated in the project's structure:</p>
+        
+        <ul>
+            <li>In the Projects window, completely expand the Web Pages &gt; WEB-INF node. 
+                Note that the following Spring Framework artifacts have been created for you:
+                
+                <br><br> 
+                <table style="width:550px">
+                    <tr>
+                        <td>
+                            <img src="../../../images/articles/60/web/spring/projects-window.png" 
+                                style="border:0" alt="view of project structure in Projects window">
+                        </td>
+                        <td style="width:240px">
+                            <h3 style="line-height:2em">Spring Framework artifacts:</h3>
+                            
+                            <div style="margin-left:15px">
+                                <strong>jsp/:</strong>
+                                <br>contains JSP pages used to render views for the application.<br><br>
+                                <strong>applicationContext.xml:</strong>
+                                <br>defines beans which make up the application context for the 
+                                framework and provides their availability to all dispatcher 
+                                servlets.<br><br>
+                                <strong>dispatcher-servlet.xml:</strong>
+                                <br>defines beans used for specifying controllers and Spring MVC 
+                                related features.<br><br>
+                                <strong>jdbc.properties:</strong>
+                                <br>contains configuration data which can be applied to 
+                                values of other XML documents.<br><br>
+                                <strong>web.xml:</strong>
+                                <br>defines application listeners and paths to XML files that
+                                specify beans.                     
+                            </div>
+                        </td>
+                    </tr>            
+            </table><br></li>
+            
+            <li>Expand the Libraries node. Note that the Spring Framework JAR files 
+                have been included in the new project:
+                
+                <br><br> 
+                <table style="width:550px">
+                    <tr>
+                        <td>
+                            <a onclick="return openwin('../../../images/articles/60/web/spring/libraries.png',477,533)" 
+                               href="../../../images/articles/60/web/spring/libraries.png" title="Click to ENLARGE">
+                                <img src="../../../images/articles/60/web/spring/libraries-small.png" style="border:1px solid"
+                                 alt="Spring JAR files listed under the Libraries node"></a>
+                        </td>
+                        <td style="width:240px">
+                            <br><br>
+                            <strong>Note: </strong>From the Libraries node, you can also 
+                            add new libraries and JAR files. To do so, choose the appropriate 
+                            action from the Libraries node's right-click menu.
+                            
+                            <br><br>
+                            To remove any JAR files, choose Remove from the right-click 
+                            menu of a selected JAR file. Alternatively, you can make any changes 
+                            to libraries by accessing the Project Properties dialog (choose 
+                            Properties from the right-click menu of the project node, then under 
+                            Categories, select Libraries).
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+        
+        <p>You can now begin developing the application according to your needs. For example, 
+            you can start modifying the application context (<tt>application-context.xml</tt>) 
+            to add new services and DAO objects, or add new controllers to the application's 
+            dispatcher servlet (<tt>dispatcher-servlet.xml</tt>).</p>
+        
+        <br>
+        
+        
+        <h2><a name="nextSteps"></a>Next Steps</h2>
+        
+        <p>This concludes the Introduction to the Spring Framework in NetBeans IDE tutorial. 
+            This document demonstrated how to install the Spring Framework into NetBeans IDE, 
+            and introduced you to the IDE's interface for developing in the framework.</p>
+        
+        <p>You are encouraged to continue learning about the Spring Framework by working 
+            through other tutorials in NetBeans IDE, such as Thomas Risberg's 
+            <a href="http://www.springframework.org/docs/MVC-step-by-step/Spring-MVC-step-by-step.html" target="_blank">Developing 
+            a Spring Framework MVC Application Step-by-Step</a> tutorial.</p>
+        
+        <p>For related and more advanced tutorials, see the following resources:</p>
+        
+        <ul>
+            <li><a href="http://www.javapassion.com/j2ee/index.html#Spring_Framework" target="_blank">Spring 
+                Framework Hands-on Lab</a>. A comprehensive series of lectures and labs using 
+                the Spring Framework in NetBeans IDE.</li>
+            <!-- <li><a href="framework-adding-support.html">Adding Support for a Web Framework</a>. 
+                A basic guide describing how to add support by installing a web framework 
+                plugin using the NetBeans Update Center.</li>  NOT YET UPDATED -->              
+            <li><a href="tutorial-webapps.html">NetBeans IDE 6.0 Tutorial for Web Applications</a>. 
+                A detailed tutorial that teaches you how to build a complete web application 
+                using a composite view, front controllers, JSP pages, and servlets.</li>
+            <li><a href="../websvc/jax-ws.html">Getting Started with JAX-WS Web Services in 
+                NetBeans IDE 6.0</a>. A document describing how to get started developing JAX-WS 
+                web services for web applications in NetBeans IDE./li>            
+            <li><a href="../javaee/javaee-intro.html">Introduction to Java EE 5 Technology</a>. An 
+                introduction to the major concepts of the Java EE 5 specifications and how 
+                they relate to hands-on programming.</li>
+        </ul>
+        
+        <br><br>
+        <p style="text-align:center"><a href="#top">top</a></p>
+		<br>
+<h2>See Also:</h2>
+<ul>
+<li><a href="quickstart-webapps.html">Introduction to Developing Web Applications in NetBeans IDE 6.0</a></li>
+<li><a href="helloweb.html">Developing a Visual Web JSF Application</a></li>
+<li><a href="quickstart-webapps-wicket.html">Introduction to the Wicket Web Framework</a></li>
+<li><a href="quickstart-webapps-struts.html">Introduction to the Struts Web Framework</a></li>
+</ul>
+<div><br><br>
+<small>&gt;&gt; <a href="../../index.html">More NetBeans IDE Documentation</a></small></div>
+
+
+<hr class="light">
+
+<div class="date-stamp" align="right">This page was last modified:&nbsp;December 3, 2007</div>
+<table border="0" cellpadding="0" cellspacing="0" class="full-width">
+  <tr>
+    <td>
+      <div class="feedback-box">
+        <div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org"> Send Us Your Feedback</a></div>
+        Us Your Feedback</a></div>
+      
+  </tr>
+</table>
+    </body>
+    
+</html>

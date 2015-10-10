@@ -1,0 +1,7 @@
+||:callmethodbyinvocable.Main
+javax.script.ScriptEngineManager
+java.lang.Object
+javax.script.Invocable
+javax.script.ScriptEngine
+callmethodbyinvocable.Main
+java.lang.Exception

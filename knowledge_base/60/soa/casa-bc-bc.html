@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html>
+
+<head>
+	<title>Connecting Binding Components With the CASA Editor</title>
+	<meta name="description" content="Application Server, Tutorial, NetBeans SOA Pack, SOA, NetBeans IDE 6.0, IDE">
+	<meta name="author" content="MJ Early"> <!--Optional tag-->
+	<meta name="keywords" content="java IDE, java editor, java Platform, free, open source, java development, j2ee support, development enviroment, web development, NetBeans, IDE, java"> 
+	<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+	<style>
+	.comment {color:blue; font-weight:bold}
+	.change-bar {border-left: thin; border-left-style: solid; border-color:black; padding-left: 6px}
+	.deleted {text-decoration: line-through}
+	</style>
+</head>
+
+<body>
+<a name="top"></a>
+<h1>Connecting Binding Components With the CASA Editor</h1>
+
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><br>
+Contributed by Vince Genovese<br>Maintained by <a href="mailto:Irina.Filippova@sun.com">Irina Filippova</a></p>
+<p>December 2007<br>
+  This publication is applicable to NetBeans IDE 6.0.<br>
+</p>
+</div>
+<br>
+<p>This tutorial shows how to use the Composite Application Service Assembly (CASA) Editor to create connections between Binding Component endpoints.</p>
+
+<p align="center"><b>Expected duration: <i>30</i> minutes</b></p>
+
+<div class="indent">
+<h3>Contents</h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<td align="left" valign="top">
+		<ul>
+			<li><a href="casa-bc-bc.html#tut_req" title="Tutorial Requirements">Tutorial Requirements</a></li>
+			<li><a href="casa-bc-bc.html#overview" title="Overview">Overview</a></li>
+			<li><a href="casa-bc-bc.html#createSampleApp" title="Connecting WSDL Binding Endpoints">Connecting WSDL Binding Endpoints</a></li>
+			<li><a href="casa-bc-bc.html#testCase" title="Run a Test Case for the Composite Application">Run a Test Case for the Composite Application</a></li>
+		</ul>
+	</td>
+	<td width="20">&nbsp;</td>
+	<td align="right" valign="top"> 
+		<img src="../../../images/articles/60/netbeans-stamp.gif" 
+		alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right">
+	</td>
+</tr>
+</table>
+</div>
+     
+<!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<br>
+<p>Before you proceed, review the requirements in this section.</p>
+
+<!-- ======================================================================================== -->
+<div class="indent">
+<h3>Prerequisites</h3>
+<p>This tutorial assumes that you have basic knowledge of the following technologies:</p>
+<ul>
+  <li>Composite Applications and Service-oriented Architecture (SOA)</li>
+  <li>Web Services</li>
+</ul>
+<p>This tutorial assumes that you have completed the <a href="casa-quickstart.html">Quick Start Guide to the CASA Editor</a> tutorial, which illustrates the basic functionality of the CASA Editor.</p>
+
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+<p>Before you begin, you need to install the following software on your computer: NetBeans IDE 6.0 with SOA and the GlassFish application server.</p> 
+
+<!--<h3>GlassFish Application Server</h3>
+<p>
+After installing NetBeans 6.0, configure and start the GlassFish Application Server, as described in the  mini-tutorial,  <a href="http://blogs.sun.com/vinceg/resource/AppServerTutorial/soa-start-appserver-tutorial.html">Configuring and Starting the GlassFish Application Server</a>.</p>-->
+</div>
+<p align="center"><a href="casa-bc-bc.html#top">top</a></p>
+<!--  ===================================================================  -->
+<h2><a name="overview"></a>Overview</h2>
+
+<br>
+<p>
+This tutorial shows how to use the CASA Editor to modify the configuration of a composite application to provide a connection between two WSDL bindings.
+</p>
+
+<p>
+A key feature of composite applications is the ability to decouple a service consumer from the service provider. For simple use cases, this decoupling can be implemented using the BC-to-BC connection feature of the CASA Editor. These simple use cases do not require the processing logic provided by BPEL, XSLT, or JAVA. For example, if you want to route service requests received from an external endpoint address to a service located on an internal network, you can connect two endpoints directly in CASA as shown in this tutorial.
+</p>
+<p>
+The composite application you configure and build in this tutorial is the Synchronous Sample composite application provided with the NetBeans IDE 6.0 distribution. The tutorial illustrates the following:</p>
+<ul>
+	<li>Building a composite application from within the CASA Editor</li>
+	<li>Adding a new WSDL endpoint to the composite application</li>
+	<li>Connecting the new WSDL endpoint to an exiting WSDL endpoint in the composite application</li>
+	<li>Modifying the properties of the new WSDL endpoint</li>
+	<li>Deploying the composite application</li>
+	<li>Running a test case for the composite application</li>
+</ul>
+<p>Note the following:</p>
+<ul>
+	<li>One of the WSDL ports must be defined with a known port type</li>
+	<li>The provide and consume endpoints of the same WSDL port cannot be linked.</li>
+	<li>WSDL port types can be modified</li>
+</ul>
+
+<p align="center"><a href="casa-bc-bc.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="createSampleApp"></a>Connecting WSDL Binding Endpoints</h2>
+<p>This section illustrates how to connect WSDL Binding endpoints in the Synchronous Sample application.</p>
+<p><b>To create and build the Synchronous Sample Application project, which is provided with NetBeans 6.0:</b></p>
+<ol>
+	<li>In the NetBeans IDE, select the Projects tab to display the Projects window.</li>
+	<li>From the File menu, select New Project.</li>
+	<li>In the Categories list of the New Project window, select &nbsp;<tt>Samples&nbsp;&gt;&nbsp;SOA&nbsp;&gt;&nbsp;Synchronous&nbsp;BPEL&nbsp;Process</tt> and click Next.</li>
+	<li>For the Project Name, specify <tt>SynchronousSample-BC-BC</tt></li>
+	<li>Accept the default location or specify an alternate location using the Browse button.</li>
+    <li>Click Finish to create the project.<br>
+	The following projects appear in the Projects window:<br><br>
+	
+	SynchronousSample-BC-BC, the BPEL project<br>
+	SynchronousSample-BC-BCApplication, the composite application project<br><br>
+
+	<img src="../../../images/articles/soa/casa-bc-bc/project-list.png"  title="Synchronous Sample Projects" alt="Synchronous Sample Projects">
+	</li>
+	<li>Right-click the SynchronousSample-BC-BCApplication in the Projects window and select &nbsp;<tt>Edit Application Configuration</tt>.
+	<br>
+	The CASA editor opens in the NetBeans IDE, displaying the Design View of the Synchronous Sample application.
+	</li>
+	<li>In the CASA Editor, select the Build Project icon to build the composite application.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-bc-bc/casa-editor-build.png"  title="CASA Editor, Building an Application" alt="CASA Editor, Building an Application">
+	<br><br>
+	When the build successfully completes, the Design View displays a WSDL port endpoint, a JBI module, and the connection between the endpoint and the JBI module.
+	</li>
+</ol>
+<p align="center"><a href="casa-bc-bc.html#top">top</a></p>
+   <!-- ======================================================================================== -->
+<p><b>To create a new WSDL port and connect it to an existing port:</b></p>
+
+ <ol>
+	 <li>In the Palette Window, select the soap WSDL binding and drag it to the WSDL Ports area.</li>
+	 <li>
+	 Select the <tt>casaPort1</tt> Consume Endpoint and drag it to the <tt>port1</tt> Provide Endpoint.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-bc-bc/bc-bc-connection.png"  title="CASA Editor, BC-BC Connection" alt="CASA Editor, BC-BC Connection">
+	<br><br>
+	 </li>
+	 <li>
+	 Click the Edit icon for the <tt>casaPort1</tt> SOAP Binding and edit the <tt>location</tt> property by specifying the following SOAP address:
+	 <br><tt>http://localhost:18183/service</tt>
+	 </li>
+	 <li>Click OK, then click Close.</li>
+	 <li>Select the Save All icon to save your changes.</li>
+ </ol>
+<p>&nbsp;</p>
+<h2><a name="testCase"></a>Run a Test Case for the Composite Application</h2>
+ 
+ <p><b>To  create a test case:</b></p>
+ <ol>
+	 <li>In the projects window expand the SynchronousSample-BC-BCApplication, right-click Test and choose New Test Case.</li>
+	 <li>Specify <tt>BC-BC-Test</tt> for the name of the test case and click Next.</li>
+	 <li>
+	 Expand the SynchronousSample-BC-BC node, select <tt>SynchronousSample-bc-bcApplication.wsdl</tt> file, and click Next.<br><br>
+	 The composite application WSDL file contains the WSDL bindings configured by the CASA editor.
+	 </li>
+	 <li>Under <tt>casaBinding1</tt>, select <tt>operation1</tt> and click Finish.
+	 <br>The <tt>input.xml</tt> file displays.</li>
+	 <li>In <tt>input.xml</tt>, replace <tt>?string?</tt> with <tt>Hello BC-BC</tt> and save the file.</li>
+ </ol>
+ <p><b>To deploy and test the composite application:</b></p>
+ <ol>
+	<li>
+	In the Projects Window, right-click the SynchronoussampleBC-BCApplication node, and select Deploy.<br><br>
+	If you have not yet specified an application server, select GlassFish V2.<br><br>
+	The application server must be running before the composite application is deployed. If the application starter has not been previously started, wait for the application server to automatically start.<br><br>
+	After the application server starts, the composite application is deployed.<br><br>
+	The Output window informs you when the composite application has been successfully deployed.
+	</li>
+	<li>
+	In the Services window of the NetBeans IDE, expand the <tt>servers&nbsp;&gt;&nbsp;GlassFish&nbsp;V2&nbsp;&gt;&nbsp;JBI&nbsp;&gt;&nbsp;Service&nbsp;Assemblies</tt> node.
+	<br><br>
+	Notice that the SynchronousSample-BC-BCApplication Service Assembly has been deployed.
+	<br><br>
+	You might have to first right-click the Service Assemblies nodes and select Refresh to view the Service Assembly.
+<!--
+	<br><br>
+	You can view the Service Units within the Service Assembly to see that both  of the composite application.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-quickstart/deployed-application.png"  title="Deployed Service Assembly for Sample Application" alt="Deployed Service Assembly for Sample Application">
+-->
+	</li>
+ </ol>
+
+ <p><b>To  run the test case:</b></p>
+ <ol>
+	<li>
+	In the Projects window, right-click the BC-BC-Test test case and select Run.
+	<br><br>
+	Because this is the first time the test case is run, the output is an empty test case. In the Overwrite Empty Output dialog, select Yes.
+	<br><br>
+	<img src="../../../images/articles/soa/casa-bc-bc/empty-test-output.png"  title="Empty Test Case" alt="Empty Test Case">	
+	</li>
+	<li>
+	Under the BC-BC-Test node, double-click Output to open the <tt>Output.xml</tt> file from the test case.
+	</li>
+	<li>
+	In the <tt>Output.xml</tt> file, within the SOAP Envelope Body, notice the string <tt>Hello BC-BC</tt>.
+	</li>
+ </ol>
+ 
+
+<p align="center"><a href="casa-bc-bc.html#top">top</a></p>
+
+<h2>See Also</h2>
+<ul>
+  <li><a href="casa-quickstart.html">Quick Start Guide to the CASA Editor</a></li>
+</ul>
+<br>   
+
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+</body>
+</html>

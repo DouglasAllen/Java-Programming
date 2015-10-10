@@ -1,0 +1,516 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+    <!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+    <!--     Use is subject to license terms.-->
+    <title>Binding Beans and Data in a Desktop Application - NetBeans IDE Tutorial</title>
+    <link rel="stylesheet" href="../../../netbeans.css">
+</head>
+<body>
+    <h1>Binding Beans and Data in a Desktop Application</h1>
+    <p>This guide is an introduction to the support in NetBeans IDE 6.0 for beans 
+    binding and data binding in Java desktop applications.</p>
+    <table class="full-width" border="0" cellpadding="0" cellspacing="0"> 
+        <tr> 
+            <td align="left" valign="top"><p><b>Contents</b></p> 
+                <table class="vatop" border="0" cellpadding="0" cellspacing="0"> 
+                    
+                    <tr valign="top"> 
+                        <td width="9" class="hyphen">-&nbsp;</td> 
+                        <td><a href="gui-binding.html#intro">Introduction: Beans Binding in NetBeans IDE 6.0</a></td> 
+                    </tr> 
+                    <tr valign="top"> 
+                        <td width="9" class="hyphen">-&nbsp;</td> 
+                        <td><a href="gui-binding.html#prop-binding">Binding Properties to Other Properties</a></td> 
+                    </tr> 
+                    <tr valign="top"> 
+                        <td width="9" class="hyphen">-&nbsp;</td> 
+                        <td><a href="gui-binding.html#prop-advanced">Advanced Binding Properties</a></td> 
+                    </tr> 
+                    <tr valign="top"> 
+                        <td width="9"  class="hyphen">-&nbsp;</td> 
+                        <td><a href="gui-binding.html#data-binding">Binding Data to Components</a></td> 
+                    </tr> 
+                    <tr valign="top"> 
+                        <td width="9"  class="hyphen">-&nbsp;</td> 
+                        <td><a href="gui-binding.html#prop-synth">Special Binding Properties</a></td> 
+                    </tr>
+                    
+                    
+            </table></td> 
+
+        </tr> 
+    </table> 
+
+    <h3 class="tutorial">Software and Files Needed for the Tutorial</h3>
+    
+    <p>For this tutorial you need to have the following software installed on your computer:</p>
+    <ul>
+        <li>NetBeans IDE 6.0.</li>
+        <li>Java Standard Development Kit (JDK) version 5.0 or 6.0.</li>
+    </ul>
+    <!--check on importing data to form-->
+    <a name="intro"></a> 
+    <h2>Introduction: Beans Binding in NetBeans IDE 6.0</h2> 
+    
+    <p>Until the release of the beans binding library, it was somewhat cumbersome 
+        to connect UI components to databases or to keep values of component 
+        properties in sync. For example, displaying data from a standard database 
+        in a JTable required the manual creation of utility classes to handle the connection 
+        between the database and the JTable. And keeping values 
+        of different bean properties in sync (such as the value of a JTextField with 
+        the rendering of a visual bean) required hand-coding of listeners and 
+    event handlers.</p>
+    <p>The beans binding library simplifies and standardizes all of this. You can merely write a 
+        few lines of code to establish which properties of which components need to be 
+        kept in sync, and the beans binding library handles the rest. In the NetBeans IDE, beans 
+        binding features are integrated in the GUI Builder, so you can quickly get 
+        the behavior of your application coded soon after you have established the visual 
+    design.</p>
+    <p>This guide is an overview of the main aspects of beans binding in the IDE. 
+        For a concrete example of many of these features, you can try the 
+        <a href="gui-db.html">Building a Java Desktop Database Application tutorial</a>.
+        
+        <a name="prop-binding"></a> 
+        <h2>Binding Properties to Other Properties</h2> 
+        <p>At its most basic, beans binding is a way to connect bean properties without 
+        using event listening and handling code.</p>
+        
+        <p>To illustrate the concept of beans binding and how the IDE supports it, 
+            we will do a simple example where a user can adjust a slider to 
+        change a numerical value in a text field.</p>
+        
+        <p><b>To set up the example:</b></p>
+        <ol>
+            <li>In the IDE, choose, File &gt; New Project.</li>
+            <li>Select the Java category and select the Java Application template. 
+            Click Next.</li>
+            <li>In the Name and Location page of the wizard, perform the following operations:
+                <ul>
+                    <li>Type <tt>NumberSlider</tt> as the project name.</li>
+                    <li>Leave the Set As Main Project checkbox selected.</li>            
+                    <li>Clear the Create Main Class checkbox.</li>
+            </ul>
+                        <p><img src="../../../images/articles/60/java/gui-binding/numberslider.png" 
+                alt="Image showing the Name & Location page of the New Java Application wizard 
+                with the project information filled in.">
+            </p></li>
+            <li>Click Finish to exit the wizard and set up the project.</li>
+            <li>In the Projects window, right-click the NumberSlider project node 
+                and choose New &gt; JFrame Form.
+                <p>(If JFrame Form is not available in the New menu, choose Other. 
+                    Then in the New File wizard, select the Swing GUI Forms category and 
+                select the JFrame Form template.)</p>
+</li>
+            <li>In the Name and Location page of the wizard, perform the following operations:
+                <ul>
+                    <li>Type <tt>NumberSliderFrame</tt> for the class name.</li>
+                    <li>Type <tt>numberslider</tt> for the package name.</li>
+                </ul>
+                <p><img src="../../../images/articles/60/java/gui-binding/numberslider2.png" 
+                alt="Image showing the Name & Location page of the New JFrame wizard 
+                with the file information filled in.">
+            </p></li>
+            <li>Click Finish to exit the wizard and create the form.
+            <p><tt>NumberSliderForm.java</tt> should open in design mode in the editing area.</p></li>
+            <li>From the Swing Controls section of the Palette, drag a 
+            slider component into the design area. (If the Palette window is not open, 
+            choose Window &gt; Palette.)</li>
+            <li>From the Palette, drag a text field component to the design area.
+                <p>The resulting form might look something like the screenshot below. However, 
+                positioning is not important for purposes of this example.</p>
+                <p><img src="../../../images/articles/60/java/gui-binding/slider-textfield.png" 
+                alt="Image showing the form with both the slider and text field added to the form.">
+            </p></li>
+        </ol>
+        <div class="indent">
+        <h3>Source and Target</h3>
+        <p>Now that we have set up the example, we are ready to create the 
+            binding. However, first we need to determine which component will 
+            be the <i>source</i> of the binding and which will be the <i>target</i>. 
+        The binding source component is where a value for the property first originates.</p>
+        <p>When binding in the GUI Editor, you initiate a binding on the target and 
+        then you declare the source in the Bind dialog box.</p>
+        <p>In this case, since the JSlider comes with a default range of values, 
+        we will use it as the source.</p>
+        <p><b>Note:</b> Bindings can be two-way (read/write), so that changes in 
+            the target are automatically reflected in the source. However, 
+            the direction of the initial binding is always from the source to the 
+            target. See the information on 
+            Update Mode in the <a href="gui-binding.html#prop-advanced">Advanced Binding Configuration</a> 
+        section.</p>
+    <p><b>To bind the slider to the text field:</b></p>
+    <ol>
+        <li>Right-click the text field component and choose Bind &gt; text to 
+        open the Bind dialog box.</li>
+        <li>From the Binding Source combo box, select <tt>jSlider1</tt>.</li>
+        <li>From the Binding Expression combo box, select <tt>value int</tt> 
+            as shown in the image below.
+            <p><img src="../../../images/articles/60/java/gui-binding/bind-dialog.png" 
+            alt="Image showing values to select in the Binding Source combo box.">
+        </p></li>
+        <li>Click OK.</li>
+    </ol>
+    <p>You have just bound the <tt>value</tt> bean property of the slider to 
+    the <tt>text</tt> value of the text field.</p>
+    <p>In the design area, the text field should show the value <tt>50</tt>. This value reflects the fact that the slider is in the middle 
+    position and the default range of values for the slider is from 0 to 100.</p>
+    <p>You can now run the application and see the binding in action.</p>
+    
+    <p><b>To run the project:</b></p>
+    <ol>
+        <li>Choose Run &gt; Run Main Project.</li>
+        <li>In the Run Project dialog box, click OK to accept 
+        <tt>numberslider.NumberSliderForm</tt> as the main class.</li>
+    </ol>
+    <p>The applications should start in a separate window. Adjust the slider 
+    in the running application and watch the value change in the text field.</p>
+    <p><img src="../../../images/articles/60/java/gui-binding/run-numberslider.png" 
+    alt="Image showing the running application with the slider moved and the 
+    text value changed.">
+    </p>
+    
+    <!--TODO - note The syntax shown in the 
+    Binding Expression field comes from expression language syntax, which is similar to what is used in JSP and JSF 
+programming.-->
+    </div>
+    <a name="prop-advanced"></a> 
+    <h2>Advanced Binding Configuration</h2> 
+    <p>The example above shows a straightforward binding with some default behaviors. 
+        But sometimes you might want or need to configure your binding differently. If 
+    that is the case, you can use the Advanced tab of the Binding dialog box.</p>
+    
+    <p>The Advanced tab of the dialog box contains the following fields:</p>
+    <ul>
+        <li><b>Name. </b>Enables you to create a name for the binding, 
+            which gives you more flexibility for managing your bindings. The name is added to 
+            the constructor of the binding and can be referenced with the binding's <tt>getName()</tt> 
+        method.</li>
+        <li><b>Update Mode. </b> Specifies the way that the properties are kept synchronized. 
+            The possible values are: 
+            <ul>
+                <li><b>Always sync (read/write).</b> Whenever a change is made to either 
+                the source or the target, the other is updated.</li>
+                <li><b>Only read from source (read only).</b>  The target is only updated 
+                    the first time the source value is set. Changes that are made to the 
+                    source are updated in the target. Changes made to the target are not updated in 
+                the source.</li>        
+                <li><b>Read from source once (read once).</b>  The target is only updated 
+                when the target and source are initially bound.</li>        
+        </ul></li> 
+        <li><b>Update Source When </b>(available only to the <tt>text</tt> property of JTextField and 
+            JTextArea components). Enables you to select the frequency with which 
+            the properties are synchronized.
+        </li>     
+        <li><b>Ignore Adjusting</b> (available to the <tt>value</tt> property of JSlider; 
+            to the <tt>selectedElement</tt> property of JTable and JList; 
+            and to the <tt>selectedElements</tt> property of JTable and JList). 
+            If this checkbox is selected, any changes made to one 
+            property are not propagated to the other property until the user is finished making the 
+            change. For example, when the application's user drags a slider, the value 
+            of the property to which the slider's <tt>value</tt> property is bound is only 
+            updated once the user releases the mouse button.
+        </li> 
+        <li><b>Converter.</b> If your binding involves properties with different data 
+            types, you can specify code that converts values between the types. 
+            The beans binding library handles many commonly needed conversions, but you might 
+            need to provide your own converters for other combinations of property types. 
+            Such converters need to extend the <tt>org.jdesktop.beansbinding.Converter</tt> 
+            class.
+            <p>The Converter drop-down list is populated with any converters that have 
+                been added as beans  
+                to your form. You can also add the conversion code directly by 
+                clicking the ellipsis (...) button, and selecting Custom Code from the 
+            Select Converter Property Using drop-down list.</p>
+        </li>    
+        <li><b>Validator. </b> Enables you to specify code to validate a change in the target 
+            property value before propagating that change back to the source property. 
+            For example, you can use a validator to make sure that an integer property value 
+            is within a specific range.
+            <p>Validators need to extend the 
+            <tt>org.jdesktop.beansbinding.Validator</tt> class.
+            <p>The Validator drop-down list is populated with any validators that have 
+                been added as beans
+                to your form. You can also add the validation code directly by 
+                clicking the ellipsis (...) button, and selecting Custom Code from the 
+        Select Validator Property Using drop-down list.</p></li>
+        <li><b>Null Source Value. </b> Enables you to specify a different value to use if 
+            the source property has a <tt>null</tt> value when the binding is attempted. 
+            This field corresponds with the <tt>setSourceNullValue()</tt> method 
+        of the <tt>org.jdesktop.beansbinding.Binding</tt> class.</li>     
+        <li><b>Unreadable Source Value. </b> Enables you to specify a different value to use if 
+            the binding expression cannot be resolved when the binding is attempted. 
+            This field corresponds with the <tt>setSourceUnreadableValue()</tt> method 
+        of the <tt>org.jdesktop.beansbinding.Binding</tt> class.</li>    
+    </ul>
+    <p><b>Note:</b> To better understand the classes and methods mentioned above, you can 
+            access the beans binding Javadoc documentation directly 
+            from the IDE. Choose Help &gt; Javadoc References &gt; Beans Binding. In the browser 
+            window that opens, click the <tt>org.jdesktop.beansbinding</tt> link to access 
+        documentation for those classes.</p>
+    
+    <a name="data-binding"></a> 
+    <h2>Binding Data to Components</h2> 
+    
+    <p>Once you have created a new Java form and added components to the form, 
+        you can generate code to bind those components to data. The IDE makes 
+    it easy to bind data to Swing JTable, JList, and JComboBox components.</p>
+    <p>Before binding a component to data from a database, you need to have done the following things:</p>        
+    <ul>
+        <li>Connected to a database in the IDE.
+        <li>Added the component to a form in the GUI Builder.</li>
+        <li>Created classes that represent the database tables to which you want to 
+            bind. Steps on creating the entity classes for binding data to a component  
+        are given below.</li>
+    </ul>
+    <div class="indent">
+    <h3>Creating Entity Classes</h3>
+    <!--TODO verbiage on creating of entity classes; stuff about foreign keys-->
+    <p><b>To create entity classes to represent the database that is to be bound to the JTable:</b></p>
+    <ol>
+        <li>In the Projects window, right-click your project and choose 
+            New &gt; Other, select the Persistence category, and select the 
+        Entity Classes from Database template. </li>
+        <li>In the Database Tables page of the wizard, select the 
+        database connection.</li>
+        <li>Once the Available Tables column is populated, select the tables 
+            that you want to use in your application and click Add to move them to 
+            the Selected Tables column. Click Next.
+            <p><img src="../../../images/articles/60/java/gui-binding/entity-wizard1.png" 
+            alt="Image showing the Database Tables page of the New Entity Classes From Database wizard 
+            with the CUSTOMER and DISCOUNT_CODE tables selected.">
+        </p></li>
+        <li>In the Entity Classes page of the wizard, make sure the 
+        Generate Named Query Annotations for Persistent Fields dialog 
+        box is selected. 
+        <li>Make any customizations that you want to make to the 
+            names of the generated classes and their location.
+            <p><img src="../../../images/articles/60/java/gui-binding/entity-wizard2.png" 
+            alt="Image showing the Entity Classes page of the New Entity Classes From Database wizard.">
+        </p></li>
+        <li>Click Create Persistence Unit.</li>
+        <li>In the Create Persistence Unit dialog box, make sure of the following things:
+            <ul>
+                <li>That the selected Persistence Library is TopLink.</li>
+                <li>That the selected Table Generation Strategy is "None".</li>
+                <p><img src="../../../images/articles/60/java/gui-binding/persistence-unit.png" 
+                alt="Image showing the Create Persistence Unit dialog box.">
+                </p>                
+            </ul> 
+        </li>
+        <li>Click Finish.
+        <p>You should see nodes for the entity classes in the Projects window.</p></li>
+    </ol>
+    <h3>Binding Components to the Beans That Represent the Data</h3>
+    <p><b>To bind the data to a JTable component:</b></p>
+    <ol>
+        <li>Right-click the component in the GUI Builder and choose Bind &gt; elements.</li>
+        <li>Click Import Data to Form. From the Import Data to Form dialog box, 
+            select the database table to which you want to bind your components. 
+        Click OK.</li>
+        <li>From the Binding Source combo box, select the item that represents the 
+            result list of the entity class. For example, if the entity class is called, 
+        <tt>Customer.java</tt>, the list object would be generated as <tt>customerList</tt>.</li>
+        <li>Leave the Binding Expression value as <tt>null</tt>.
+        <li>If there are any database columns that you want to appear in the JTable, 
+        select those columns in the Selected list and move them to the Available list.</li>
+        <li>Select the Advanced tab
+            to further configure the binding. For example, 
+            you can specify a validator or converter, or you can specify behavior 
+        if the binding source is null or unreadable.</li>
+        <li>Click OK.</li>
+    </ol>      
+    <p><b>To bind the data to a JList component:</b></p>
+    <ol>
+        <li>Right-click the component in the GUI Builder and choose Bind &gt; elements.</li>
+        <li>Click Import Data to Form. From the Import Data to Form dialog box, 
+            select the database table to which you want to bind your components. 
+        Click OK.</li>
+        <li>From the Binding Source combo box, select the item that represents the 
+            result list of the entity class. For example, if the entity class is called, 
+        <tt>Customer.java</tt>, the list object would be generated as <tt>customerList</tt>.</li>
+        <li>Leave the Binding Expression value as <tt>null</tt>.
+        <li>In the Display Expression drop-down list, select the property that represents 
+        the database column that contains the values that you want to display in the 
+        list.
+        <li>Select the Advanced tab
+        to further configure the binding. </li>
+        <li>Click OK.</li>
+        
+    </ol>      
+    
+    
+    <!--    
+   <p><b>To bind the data to a JComboBox component:</b></p>
+        <ol>
+            <li>Right-click the component in the GUI Builder and choose Bind &gt; elements.</li>
+            <li>Click Import Data to Form. From the Import Data to Form dialog box, 
+                select the database table to which you want to bind your components. 
+            Click OK.</li>
+        <li>From the Binding Source combo box, select the item that represents the 
+            result list of the entity class. For example, if the entity class is called, 
+        <tt>Customer.java</tt>, the list object would be generated as <tt>customerList</tt>.</li>
+        <li>Leave the Binding Expression value as <tt>null</tt>.
+        <li>In the Display Expression drop-down list, select the property that represents 
+        the database column that contains the values that you want to display in the 
+        list.
+        <li>Select the Advanced tab
+            to further configure the binding. </li>
+        <li>Click OK.</li>
+        </ol>  
+    -->
+    <!--TODO talk about implementing  own renderer-->
+        
+    <p><b>Note:</b> You can also use the New Java Desktop Application wizard to 
+            quickly create a whole working application that has CRUD (create, read, 
+            update, and delete) features. However, it is better to generate all 
+            the entity classes in advance to ensure that all relations among 
+            the entities are correctly covered by the generated classes.
+    </p>    
+    
+</div>
+    <a name="prop-synth"></a> 
+    <h2>Special Binding Properties</h2> 
+
+    <p>Where necessary, the beans binding library provides special synthetic 
+        properties for some Swing components that are missing from the components 
+        themselves. These properties represent things, such as a table's selected row, 
+    that are useful to bind to other properties.</p>    
+
+    <p>Below is a list of the synthetic properties added by the beans binding libraries:</p>
+    <table border="1" cellpadding="5" cellspacing="0" summary="The left column lists the
+   component. The middle column lists properties available for the 
+   component in the left column. The right column provides a description of the property.">
+        <tr align="left" valign="top">
+            <th scope="col">Component</th>
+            <th scope="col">Property</th>
+            <th scope="col">Description</th>
+        </tr>
+        <tbody>
+            <tr>
+                <td>AbstractButton</td>
+                <td>selected</td>
+                <td>The selected state of a button.</td>
+            </tr>
+            <tr>
+                <td>JComboBox</td>
+                <td>selectedItem</td>
+                <td>The selected item of a JComboBox.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">JSlider</td>
+                <td>value</td>
+                <td>The value of a JSlider; notifies of all changes.</td>
+            </tr>
+            <tr>
+                <td>value_IGNORE_ADJUSTING</td>
+                <td>Same as "value" but does not notify of change while the slider is adjusting its value.</td>
+            </tr>
+            <tr>
+                <td rowspan="4">JList</td>
+                <td>selectedElement</td>
+                <td>The selected element of a JList; notifies of all changes. 
+                    If there is a JListBinding with the JList as the target, 
+                    the selected element is reported as an element from the 
+                    binding's source list. Otherwise, the selected element is 
+                    reported as an object from the list's model. If nothing is 
+                selected, the property evaluates to <tt>null</tt>. </td>
+            </tr>
+            <tr>
+                <td>selectedElements</td>
+                <td>A list containing the selected elements of a JList; notifies 
+                    of all changes. If there is a JListBinding with the JList as the 
+                    target, the selected elements are reported as elements from the 
+                    binding's source list. Otherwise, the selected elements are 
+                    reported as objects from the list's model. If nothing is 
+                selected, the property evaluates to an empty list. </td>
+            </tr>
+            <tr>
+                <td>selectedElement_IGNORE_ADJUSTING</td>
+                <td>Same as "selectedElement" but does not notify of change 
+                while the list selection is being updated.</td>
+            </tr>
+            <tr>
+                <td>selectedElements_IGNORE_ADJUSTING</td>
+                <td>Same as "selectedElements" but does not notify of change 
+                while the list selection is being updated.</td>
+            </tr>
+            <tr>
+                <td rowspan="4">JTable</td>
+                <td>selectedElement</td>
+                <td>The selected element of a JTable; notifies of all changes. 
+                    If there is a JTableBinding with the JTable as the target, the 
+                    selected element is reported as an element from the binding's 
+                    source list. Otherwise, the selected element is reported as a 
+                    map where the keys are composed of the string "column" plus the 
+                    column index and the values are the model values for that 
+                    column. Example: 
+                    {column0=column0value, column1=column1value, ...} 
+                If nothing is selected, the property evaluates to <tt>null</tt>. </td>
+            </tr>
+            <tr>
+                <td>selectedElements</td>
+                <td>A list containing the selected elements of a JTable; 
+                    notifies of all changes. If there is a JTableBinding with the 
+                    JTable as the target, the selected elements are reported as 
+                    elements from the binding's source list. Otherwise, each 
+                    selected element is reported as a map where the keys are 
+                    composed of the string "column" plus the column index and 
+                    the values are the model values for that column. Example: 
+                    {column0=column0value, column1=column1value, ...} 
+                    If nothing is selected, the property evaluates to an empty list.  
+                </td>
+            </tr>
+            <tr>
+                <td>selectedElement_IGNORE_ADJUSTING</td>
+                <td>Same as "selectedElement" but does notify of change while 
+                the table selection is being updated. </td>
+            </tr>
+            <tr>
+                <td>selectedElements_IGNORE_ADJUSTING</td>
+                <td>Same as "selectedElements" but does not notify of change 
+                while the table selection is being updated.</td>
+            </tr>
+            <tr>
+                <td rowspan="3">JTextComponent (including its sub-classes JTextField, JTextArea, and JEditorPane)</td>
+                <td>text</td>
+                <td>The text property of a JTextComponent; notifies of all 
+                changes (including typing).</td>
+            </tr>
+            <tr>
+                <td>text_ON_FOCUS_LOST</td>
+                <td>The text property of a JTextComponent; notifies of change 
+                    only when focus is lost on the component.  
+                </td>
+            </tr>
+            <tr>
+                <td>text_ON_ACTION_OR_FOCUS_LOST</td>
+                <td>The text property of a JTextComponent; notifies of change 
+                    only when the component notifies of actionPerformed or when 
+                    focus is lost on the component.  
+                </td>
+            </tr>  
+        </tbody>
+    </table>
+    
+    <!-- TODO synthetic bindings, available validators-->
+    <div class="feedback-box">
+        <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a>
+    </div>
+    <br style="clear:both;">
+
+    <h2>See Also</h2>
+    <p>For a more general introduction to using the 
+    IDE's GUI Builder, see <a href="quickstart-gui.html">GUI Building in NetBeans IDE</a>.</p> 
+    <p>To see how you can use the Java Desktop Application project template to 
+    build a database application with a Master/Detail view, see <a href="gui-db.html">Building a Java Desktop Database Application</a>.</p>
+        <p>For more information on Beans Binding, see the 
+    <a href="https://beansbinding.dev.java.net/" target="_blank">Beans Binding project page on java.net</a>. </p>
+    <p>For general information on JavaBeans components, see the 
+    <a href="http://java.sun.com/docs/books/tutorial/javabeans/index.html" target="_blank">Beans trail of the Java Tutorial</a>.</p>
+    </
+
+    
+</body>
+</html>

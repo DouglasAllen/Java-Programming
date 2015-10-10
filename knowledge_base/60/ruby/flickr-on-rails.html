@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+        <title>Putting Flickr on Rails - NetBeans IDE 6.0 Tutorial</title>
+        <meta name="DESCRIPTION" content="This tutorial describes to use the NetBeans IDE 6.0 with Ruby support to create a Ruby on Rails application that searches the Flickr database.">
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+	
+
+</head>
+<body>
+
+<h1>Putting Flickr on Rails</h1>
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+<div class="articledate" style="margin-left: 0px; font-style: italic;">
+<p><em>Contributed by Brian Leonard<br>
+November 2007</em> [Revision number: V6.0-5]<br>
+</p>
+</div>
+<p>This tutorial describes how to create a Ruby on Rails application that searches
+the Flickr database.</p>
+<p><b>Note:</b> This tutorial requires direct connection to the Internet and does not work if you are working behind 
+a proxy.</p>
+
+<table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><p><b>Contents</b></p>
+      <table class="vatop" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td width="247"><a href="flickr-on-rails.html#00">Tutorial Requirements</a></td>
+        </tr>
+		<tr valign="top">
+
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td width="247"><a href="flickr-on-rails.html#0a">Obtaining a Flickr API Key</a></td>
+        </tr>
+		<tr valign="top">
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td><a href="flickr-on-rails.html#01">Installing the Flickr Library</a></td>
+        </tr>
+
+        <tr valign="top">
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td><a href="flickr-on-rails.html#02">Creating the Ruby on Rails Project</a></td>
+        </tr>
+		
+		<tr valign="top">
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td><a href="flickr-on-rails.html#02a">Adding Style to the Project</a></td>
+        </tr>
+		
+		<tr valign="top">
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td><a href="flickr-on-rails.html#02b">Creating a Controller</a></td>
+        </tr>
+
+        <tr valign="top">
+          <td width="10"  class="hyphen">-&nbsp;</td>
+          <td><a href="flickr-on-rails.html#04">Defining the Search Method</a></td>
+
+        </tr>
+		<tr valign="top">
+          <td width="10" class="hyphen">-&nbsp;</td>
+          <td><a href="flickr-on-rails.html#03">Running the Application</a></td>
+        </tr>
+        <tr valign="top">
+          <td width="10"  class="hyphen">-&nbsp;</td>
+
+          <td><a href="flickr-on-rails.html#05">Improving the User Experience</a></td>
+        </tr>
+
+      </table>
+</td>
+      <td width="20"></td>
+      <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to NetBeans IDE 6.0" border="0"></td>
+
+    </tr>
+</table>
+<a name="00"></a>
+ <h2>Tutorial Requirements</h2>
+  <p>This tutorial requires the following technology: </p>
+ <ul>
+   <li>NetBeans IDE 6.0 with Ruby support</li>
+</ul>
+<a name="0a"></a>
+<h2>Obtaining a Flickr API Key</h2>
+<div>You must have an API key to make use of the Flickr API.</div>
+<ol>
+
+<li>In your web browser, go to <a href="http://www.flickr.com/services/api/misc.api_keys.html" target="blank">http://www.flickr.com/services/api/misc.api_keys.html</a>.</li>
+<li>Click Apply for your key online now.</li>
+<li>Follow the steps for obtaining a Flickr key.</li>
+<li>Copy the API key that Flickr generates and save it in a text file or other convenient location. </li>
+</ol>
+<a name="01"></a>
+
+<h2>Installing the Flickr Library</h2>
+<ol>
+<li>From the Tools menu, choose Ruby Gems.</li>
+<li>In the Ruby Gems dialog box, click the New Gems tab.</li>
+<li>Type <code>flickr</code> in the Search field and press Enter.</li>
+<li>Select flickr, and then click Install.  Click OK in the Gem  Installation Settings dialog box.</li>
+<li>Make sure you get a success message, and then close the dialog boxes.
+  </li>
+</ol>  
+<a name="02"></a>
+ <h2>Creating the Ruby on Rails Project </h2>
+ 
+ <ol>
+  <li>Choose File &gt; New Project. </li>
+  <li>Select Ruby in the Categories field and Ruby on Rails Application in the Projects field and click Next.</li>
+  <li><p>
+    Type <code>Flickr</code> in the Project Name field and click Finish.</p>
+  The Flickr library expects you to add your Flickr API Key directly to its script. You could do that, however, the approach described in the following steps enables you to use the Flickr library without touching it.
+  </li>
+  <li>
+    In the Projects window, expand the Configuration node, then open <code>environment.rb</code>.</li>
+	<li>
+	  <p>Add the following code at the bottom of the <code>environment.rb</code> file. Be sure to enter your <a href="http://www.flickr.com/services/api/misc.api_keys.html" target="blank">Flicker API Key</a> in the <code>MY_KEY</code> variable.
+	  You need the key to access the Flickr APIs.</p>
+
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 1: Adding Your Flickr API Key</b></td>
+      </tr>
+      <tr>
+        <td><pre><strong>require 'rubygems'
+require 'flickr'
+MY_KEY='<i>Enter your Flicker API Key</i>'
+class Flickr
+  alias old_initialize initialize
+  def initialize(api_key=MY_KEY, email=nil, password=nil)
+    puts "new_initialize " + MY_KEY
+    old_initialize(api_key, email, password)
+    @host="http://api.flickr.com"
+    @activity_file='flickr_activity_cache.xml'
+  end
+end</strong></pre>
+</td>
+      </tr>
+    </table> 
+	<br> 
+  </li>
+  <li>From the main menu, choose File > Save All.</li>
+</ol>
+  <a name="02a"></a>
+<h2>Adding Style to the Project</h2>
+<ol>
+  <li>In the Project window, expand the Views node, right-click the layouts node, and choose New -&gt; RHTML  file. Name the file <code>application</code> and click Finish.</li>
+
+  <li>
+    <p>Replace the existing code in <code>application.rhtml</code> with the following code:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 2: Code for <code>application.rhtml</code></b></td>
+      </tr>
+      <tr>
+     <td><pre>
+<strong>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt;
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;title&gt;Flickr&lt;/title&gt;
+      &lt;%= javascript_include_tag :defaults %&gt;
+      &lt;%= stylesheet_link_tag 'flickr' %&gt;
+    &lt;/head&gt;
+&lt;body&gt;
+      &lt;%= yield %&gt;
+&lt;/body&gt;
+&lt;/html&gt;</strong></pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+</li>
+  <li>
+    Expand the Public node, right-click stylesheets and choose New > Other.</li>
+	<li>In the New File dialog box, set the Category to <code>Other</code> and the File Type to <code>Cascading Style Sheet</code>. Click Next.</li>
+	<li><p>Name the file <code>flickr </code>and click Finish.</p>
+	The file <code>flickr.css</code> opens in the editing area.</li>
+	 <li><p>Add the following styles to <code>flickr.css</code>:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 3: Style Code</b></td>
+      </tr>
+      <tr>
+        <td><pre><strong>body {
+    background-color: #888;
+    font-family: Lucida Grande;
+    font-size: 11px;
+    margin: 25px;
+}<br><br>form {
+    margin: 0;
+    margin-bottom: 10px;
+    background-color: rgb(222,231,236);
+    border: 5px solid #333;
+    padding: 25px;
+}<br>
+
+fieldset {
+    border: none;
+}
+ 
+#spinner {<br>    float: right;<br>    margin: 10px;<br>}<br><br>#photos img {
+    border: 1px solid #000;
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+}</strong></pre>
+</td>
+      </tr>
+    </table> 
+	<br> 
+  </li>
+</ol>
+  <a name="02b"></a>
+<h2>Creating a Controller</h2>
+<ol>
+  <li>
+    Right-click the Controllers node and choose Generate.</li>
+	<li><p>In the Rails Generator dialog box, type <code>flickr</code> in the Name field and <code>index</code> in the Views field, and then click OK.</p>
+	This action creates the file <code>flickr_controller.rb</code> and opens the file in the editing area<code>.</code></li>
+	<li>
+	  Expand Views &gt; flickr  and open <code>index.rhtml.</code></li>
+	   <li>
+	     <p>Replace the existing code in <code>index.rhtml</code> with the following code:</p>
+      <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 4: Code for</b> <span class="bold"><code>index.rhtml</code></span></td>
+      </tr>
+      <tr>
+        <td><pre><strong>&lt;% form_remote_tag :url =&gt; {:action =&gt; 'search'}, :update =&gt; 'photos' do %&gt;
+    &lt;fieldset&gt;
+        &lt;label for="tags"&gt;Tags:&lt;/label&gt;
+
+        &lt;%= text_field_tag 'tags' %&gt;
+        &lt;%= submit_tag 'Find' %&gt;
+    &lt;/fieldset&gt;<br>
+    &lt;div id="photos"&gt;&lt;/div&gt;
+&lt;% end %&gt;</strong></pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+  </li>
+
+</ol>
+
+<a name="04"></a>
+<h2>Defining the Search Method</h2>
+<ol>
+  <li>
+    Open <code>flickr_controller.rb</code>.</li>
+	<li><p>Edit the code by deleting the <code>index</code> method and replacing it with the <code>search</code> method shown in <strong>bold</strong>:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 5: Code </b> <span class="bold"><code>FlickrController</code></span> <b>Class</b></td>
+      </tr>
+      <tr>
+        <td><pre>class <em>FlickrController &lt; ApplicationController</em>
+  <strong>def search
+    flickr = Flickr.new
+    render :partial =&gt; 'photo', :collection =&gt;
+      flickr.photos(:tags =&gt; params[:tags], :per_page =&gt; '24')
+  end
+  </strong>
+end</pre>
+</td>
+      </tr>
+    </table> 
+	<br> 
+  </li>
+  <li>
+    <p>Under  the Views node, right-click the flickr node and choose New -&gt; RHTML file. Name the file <code>_photo</code> and click Finish.
+  </li>
+	<li><p>Replace the contents of the file so that the file includes the following line only:<p></p>
+
+      <pre>&lt;img class='photo' src="&lt;%= photo.sizes[0]['source'] %&gt;"&gt;
+</pre>
+  </li>
+  
+</ol>
+<a name="03"></a>
+
+<h2>Running the Application</h2>
+
+<div>Here you configure the environment so that running the project launches the application. </div>
+<ol>
+  <li>
+    <p>If the WEBrick server is running, stop the server by clicking the red X icon in the Output window,
+  as shown in the following figure: </p>
+      <div style="margin:10px auto;">
+<p><b>Figure 1: Stopping the WEBrick Server</b></p>
+    <img src="../../../images/articles/60/ruby/flickr-on-rails/stop_webrick.png" width="438" height="117" border="0" alt="Figure 1:  Stopping the WEBrick server">  
+</div>
+<br>
+</li>
+   <li>
+    Under the Public node, delete <code>index.html</code>.
+
+  </li>
+  <li>
+    <p>Under the Configuration node, open <code>routes.rb</code>.  Find the line:</p>
+	<pre># map.connect '', :controller => "welcome"
+	</pre>
+</li>
+<li>Edit the line by removing the comment sign (#) and changing <code>welcome</code> to <code>flickr</code>.</li>
+  <li>
+    <p>Click the Run Main Project button in the toolbar to start the WEBrick server and launch the browser, as shown in the following figure.</p>
+        <div style="margin:10px auto;">
+<p><b>Figure 2: Flickr Application</b></p>
+    <img src="../../../images/articles/60/ruby/flickr-on-rails/find_dialog.png" width="488" height="234" alt="Figure 2: Flickr Application" border="0"> 
+</div>
+</li>
+<li><p>Enter a search string, such as <code>NetBeans</code>, and click Find. Give the images a couple of seconds to load. </p>
+        <div style="margin:10px auto;">
+<p><b>Figure 3: Loading Images</b></p>
+    <img src="../../../images/articles/60/ruby/flickr-on-rails/netbeans.png" width="575" height="674" border="0" alt="Figure 3: Loading an Image"> 
+</div>
+<br>
+</li>
+</ol>
+
+<a name="05"></a>
+<h2>Improving the User Experience</h2>
+<div>When you click the Find button, there's no feedback that something's happening behind the scenes. Here you add a simple animated gif 
+to help address this problem as well as change the effect of the images as they load.</div>
+<ol>
+  <li>Save this animated gif <img src="http://weblogs.java.net/blog/bleonard/archive/2007/03/flickr/spinner.gif"  target="_blank" width="16" height="16"> from your browser to a file on your desktop. Then drag the file under the Public &gt; images node in the Project window in the NetBeans IDE.</li>
+  <li>
+    <p>Open Views > flickr > <code>index.rhtml</code>. Delete the existing code, and replace it with the code shown in the following sample:</p>
+    <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+      <tr class="bg-white">
+        <td><b>Code Sample 6: Code for</b> <span class="bold"><code>index.rhtml</code></span></td>
+      </tr>
+      <tr>
+        <td><pre><strong>&lt;% form_remote_tag :url =&gt; {:action =&gt; 'search'}, :update =&gt; 'photos', 
+    :complete =&gt; visual_effect(:blind_down, 'photos'),
+    :before   =&gt; %(Element.show('spinner')),
+    :success  =&gt; %(Element.hide('spinner')) do %&gt;
+
+    &lt;%= image_tag 'spinner.gif', :id =&gt; 'spinner', :style =&gt; 'display: none' %&gt;
+    &lt;fieldset&gt;
+        &lt;label for="tags"&gt;Tags:&lt;/label&gt;
+        &lt;%= text_field_tag 'tags' %&gt;
+
+        &lt;%= submit_tag 'Find' %&gt;
+    &lt;/fieldset&gt;
+	
+    &lt;div id="photos" style="display: none"&gt;&lt;/div&gt;
+	
+&lt;% end %&gt;</strong></pre>
+</td>
+      </tr>
+    </table> 
+	<br>
+	 
+  </li>
+  <li>
+    <p>From the main menu, choose File &gt; Save All. Refresh your browser and try another search string, such as <code>JRuby</code>. </p>
+    <div style="margin:10px auto;">
+<p><b>Figure 4: Adding Animation</b></p>
+    <img src="../../../images/articles/60/ruby/flickr-on-rails/find_results_jruby.png" width="489" height="237" alt="Figure 4:  Adding Animation"> 
+</div>
+
+<br>
+    Now you see a simple animation to let you know the server is working on your request.  When the images appear, they drop down like a set of blinds.<br>
+  </li>
+</ol>
+<br>
+
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<br>
+<ul>
+
+  <li><p>To obtain support and stay informed of the latest 
+  changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and  
+  <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a>
+  mailing lists.</p>
+  </li>
+  <li>
+  To submit your own NetBeans Ruby tutorial, please visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+</ul>
+  
+
+<br>
+<div class="feedback-box"> <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div> 
+<br style="clear: both;">
+
+</body>
+</html>

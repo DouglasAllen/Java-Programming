@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Introduction to Developing General Java Applications - NetBeans IDE Tutorial</title>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="KEYWORDS" content="NETBEANS, TUTORIAL, GUIDE, USER, DOCUMENTATION">
+<meta name="author" content="John Jullion-Ceccarelli, Patrick Keegan"/>
+<meta name="description" content="A short guide to creating, running, and debugging a simple Java SE application in NetBeans IDE 5.5."/>
+</head>
+
+<body>
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+
+
+<h1>Introduction to Developing General Java Applications</h1>
+
+<p>The following short tutorial takes you through some of the basic steps of developing
+  a Java SE application in NetBeans IDE 6.0. 
+  This tutorial assumes you already have some familiarity with developing Java applications. 
+  Along the way, we will demonstrate some of the IDE features that simplify application 
+  development.</p>
+  <p>We will be developing an application that converts several words into a 
+  single word that contains one letter from the other words. The resulting 
+  word is composed of the first letter of the first word, the second letter of 
+  the second word, the third letter of the third word, and so on. The 
+  resulting word is called an <i>acrostic</i>.</p>
+  
+  <h3>Contents</h3>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="javase-intro.html#setup" title="Creating Projects">Project Setup</a></li>
+             <li><a href="javase-intro.html#create" title="Creating and Editing Java Source Code">Creating and Editing Java Source Code</a></li>
+             <li><a href="javase-intro.html#comp" title="Compiling and Running the Project">Compiling and Running the Project</a></li>
+             <li><a href="javase-intro.html#test" title="Testing and Debugging the Project">Testing and Debugging the Project</a></li>
+              <li><a href="javase-intro.html#nextsteps" title="Next Steps">Next Steps</a></li>
+ </ul></td>
+
+         <td width="20"> </td>
+
+         <td align="right" valign="top"> 
+       <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0" height="45" width="206">
+   </td>
+       </tr>
+     </tbody></table>
+  
+
+<h2>Project Setup<a name="setup"></a></h2>
+ <p>The application we create will contain two projects:</p>
+  <ul>
+  <li>A Java library project with a utility class.</li>
+  <li>A Java application project with a main class that implements
+  a method from the library project.</li>
+</ul>
+<p><b>Note:</b> Strictly speaking, two projects are not needed for such a simple 
+    application. We are merely using two projects to demonstrate features that you 
+    might need for a more complex application.
+</p>
+
+<p>First we will create a new Java class library to contain the utility classes
+  we will need later. Then we need to create a new Java application to use as our
+  main project. Once the MyApp project has been created, we'll add MyLib's classes
+  to its classpath. </p>
+  <!--TODO describe acrostic-->
+<div class="indent">
+    <h3 class="tutorial"><a name="setup-library">Creating a New Java Class Library</a></h3>
+
+  <ol>
+    <li>Choose File &gt; New Project (Ctrl-Shift-N). Under Categories, select
+      Java. Under Projects, select Java Class Library and click Next. </li>
+    <li>Under Project Name, enter <tt>MyLib</tt>. Change the Project Location
+      to any directory on your computer. From now on, we will refer to this directory
+      as <tt><i>NetBeans_projects</i></tt>.
+      <p><b>Note:</b> The path specified above should appear as follows in 
+      the Project Folder field of the wizard: <code>/<tt><i>NetBeans_projects</i></tt>/MyLib/</code>
+    </li>
+    <li>Click Finish. The MyLib project opens in both the Projects window and
+      the Files window.</li>
+  </ol>
+  <h3 class="tutorial"><a name="setup-application">Creating a New Java Application</a></h3>
+
+  <ol>
+    <li>Choose File &gt; New Project. Under Categories, select Java. Under
+      Projects, select Java Application and click Next.</li>
+    <li>Under Project Name, enter <tt>MyApp</tt>. Make sure the Project Location
+      is set to <tt><i>NetBeans_projects</i></tt>. </li>
+    <li>Enter <tt>acrostic.Main</tt> as the main class. </li>
+    <li>Ensure that the Set as Main Project and Create Main Class checkboxes are
+      checked. </li>
+    <li>Click Finish. The MyApp project is displayed in the Project window and
+      <code>Main.java</code> opens in the Source Editor.</li>
+  </ol>
+  <h3 class="tutorial"><a name="setup-classpath">Configuring the Compilation Classpath</a></h3>
+  
+  <p>Since MyApp is going to depend on a class in MyLib, we have to add MyLib 
+  to the classpath of MyApp. Doing so will also ensure that classes in the MyApp 
+  project can refer to classes in the MyLib project without causing compilation 
+  errors. In addition, this will enable you to use code completion in the MyApp 
+  project to fill in code based on the MyLib project.</p>
+<p><b>To add the library's utility classes to the project classpath:</b></p>
+  <ol>
+    <li>In the Projects window, right-click the Libraries node for the MyApp project
+      and choose Add Project.</li>
+    <li>Browse to <tt><i>NetBeans_projects</i>/</tt> and select the <tt>MyLib</tt>
+      project folder. The Project JAR Files pane shows the JAR files that can
+      be added to the project. Notice that a JAR file for MyLib is listed even
+      though we have not actually built the JAR file yet. This JAR file will get
+      built when we build and run the MyApp project. </li>
+    <li>Click Add Project JAR Files.</li>
+    <li>Expand the Libraries node. The MyLib project's JAR file is added
+      to the MyApp project's classpath. </li>
+  </ol>
+</div>
+<!-- =============================================================================== -->
+<h2>Creating and Editing Java Source Code<a name="create"></a></h2>
+<p>Now we need to create a Java package and add the method that we'll use to construct
+  our acrostic, after which we'll implement the <tt>acrostic</tt> method in the
+  <tt>Main</tt> class. </p>
+<div class="indent">
+  <h3 class="tutorial">Creating a Java Package and Class File</h3>
+  <ol>
+    <li>Right-click the MyLib project node and choose New &gt; Java Class. Type
+      <tt>LibClass</tt> as the name for the new class, type <tt>org.me.mylib</tt>
+      in the Package field, and click Finish. <tt>LibClass.java</tt> opens in
+      the Source Editor.
+    </li>
+    <li>In <tt>LibClass.java</tt>, place the cursor on the line after the class
+      declaration (<code>public class LibClass {</code>.</li>
+<li>Type or paste in the following method code: </li>
+    <pre class="examplecode">    public static String acrostic(String[] args) {
+        StringBuffer b = new StringBuffer();
+        for (int i = 0; i &lt; args.length; i++) {
+            if (args[i].length() &gt; i) {
+                b.append(args[i].charAt(i));
+            } else {
+                b.append('?');
+            }
+        }
+        return b.toString();
+    }</pre>
+    <li>If the code you pasted in is not formatted correctly, press Alt-Shift-F
+      to reformat the entire file.</li>
+    <!--note: reformat doesn't work for mac-->
+    <li>Press Ctrl-S to save the file.</li>
+  </ol>
+  <h3 class="tutorial">Editing a Java File</h3>
+  <p>Now we will add some code to <tt>Main.java</tt>. In doing so, 
+  we will demonstrate the Source Editor's code completion and 
+  code template (abbreviation) features.</p>
+
+  <ol>
+    <li>Select the <tt>Main.java</tt> tab in the Source Editor. If it isn't already
+      open, expand MyApp &gt; Source Packages &gt; acrostic in the Projects window and double-click
+      <tt>Main.java</tt>. </li>
+    <li>Delete the <tt>// TODO code application logic here</tt> comment in the
+      <tt>main</tt> method.</li>
+<li>In place of the comment type the following:
+      <pre class="examplecode">String result = Li</pre>
+      <p>Leave the cursor immediate after <tt>Li</tt>. In the next step we will 
+      show how to use code completion to turn <tt>Li</tt> into <tt>LibClass</tt>.      
+    </li>
+    <li>Press Ctrl-Space to open 
+        the code completion box. 
+    <p>A short list of possible ways to complete the word appears. 
+However, the class that you want, <tt>LibClass</tt> might not there.</p></li>
+    <li>Press Ctrl-Space again to display a longer list of possible matches.
+    <p><tt>LibClass</tt> should be in this list.</p></li>
+        <li>Select <tt>LibClass</tt> and press Enter. The
+      IDE fills in the rest of the class name and also automatically creates an
+      import statement for the class. 
+        <p><b>Note:</b> The IDE also opens a box above the code completion box that
+            displays Javadoc information for the selected class or package. Since there
+            is no Javadoc information for most packages, the box displays a &quot;Cannot
+    find Javadoc message&quot; until you reach a Java class.</p></li>
+    <li>In the main method, enter a period after <tt>LibClass</tt>. The code
+      completion box opens again.</li>
+      <li>Select the <tt>acrostic(String[]args)</tt> method
+      and press Enter. The IDE fills in the <tt>acrostic</tt> method and shows
+      the highlights the <tt>args</tt> parameter. </li>
+    <li>Press Enter to accept <tt>args</tt> as the parameter.</li>
+    <li>Type a semicolon. 
+        <p>The final
+      line should look like this:</p>
+      <pre class="examplecode">String result = LibClass.acrostic(args);</pre>
+    </li>
+    <li>Press Enter to start a new line. Then type <tt>sout</tt> and press Tab.
+      The <tt>sout</tt> abbreviation expands to <tt>System.out.println(&quot;&quot;);
+      </tt>with the cursor positioned between the quotation marks. Type <tt>Result
+      =</tt> inside the quotation marks and <tt>+ result</tt> after the end quotation
+      mark. The final line should look like this:
+      <pre class="examplecode">System.out.println(&quot;Result = &quot; + result);</pre>
+    </li>
+    <li>Press Ctrl-S to save the file.</li>
+  </ol>
+</div>
+<h2>Compiling and Running the Project<a name="comp"></a></h2>
+<p>Now we need to set the main class and execution arguments so we can run our
+  project. We'll also take a look at the IDE's cleaning, building, and Javadoc
+  generation features. </p>
+<div class="indent">
+  <h3 class="tutorial">Setting the Main Class and Execution Arguments</h3>
+  <ol>
+    <li>Right-click the MyApp project node, choose Properties, and select the
+      Run node in the dialog's left pane. Notice that the main class is already
+      set to <tt>acrostic.Main</tt>.</li>
+    <li>Enter <tt>However&nbsp;we&nbsp;all&nbsp;feel&nbsp;zealous </tt>in
+      the Arguments field and click OK.</li>
+  </ol>
+  <h3 class="tutorial">Running the Main Project</h3>
+
+  <ol>
+    <li>Choose Run&nbsp;&gt; Run&nbsp;Main&nbsp;Project (F6) from the Run menu.</li>
+    <li>Double-click the Output window to maximize it so you can see all the output.
+      Note that Ant builds <tt>MyLib.jar</tt> first and then compiles MyApp
+      using it. Finally, it prints the output from the program, <tt>Result =
+      Hello </tt> (the acrostic of the phrase that was passed to the program
+      as an argument). </li>
+    <li>Select the Files window and expand the MyApp project folder. The built
+      class files are in the <tt>build</tt> folder. </li>
+    <li>Press F6 to run the program again. Nothing new needs to be compiled, but
+      the program is run.</li>
+  </ol>
+  <h3 class="tutorial">Cleaning and Building the Project</h3>
+  <p>If you build a project and then later change classes, it is good to remove 
+  all build artifacts from your system and create a fresh build of the application. 
+  You can do this with the Clean and Build command.</p>
+  <ol>
+    <li>Choose Build &gt; Clean and Build Main Project (Shift-F11). Both the MyLib
+      project and the MyApp project are cleaned and rebuilt as part of the process.
+    </li>
+    <li>Right-click the MyLib project node in the Projects window and choose Clean
+      Project. Just the MyLib project is cleaned.</li>
+  </ol>
+  <h3 class="tutorial">Building an Individual Project</h3>
+  <ol>
+    <li>Right-click the MyLib project node in the Projects window.</li>
+    <li>Choose Build Project from the contextual menu.</li>
+  </ol>
+  <h3 class="tutorial">Generating Javadoc</h3>
+  <ol>
+    <li>Select the MyLib project.</li>
+    <li>Choose Build &gt; Generate&nbsp;Javadoc for&nbsp;"MyLib" from
+      the IDE's main menu.
+      <p>The IDE displays Javadoc output in the Output window, and your web browser
+        opens displaying the Javadoc.
+    </li>
+  </ol>
+</div>
+<!-- =============================================================================== -->
+<h2>Testing and Debugging the Project<a name="test"></a></h2>
+<p>Now we'll create and run a test for our project using JUnit and then run it
+  in the IDE's debugger to check for errors. In the JUnit test, we test the 
+LibClass by passing a phrase to the <tt>acrostic</tt> method and using an assertion 
+to indicate what we think the result should be.</p>
+<div class="indent">
+  <h3 class="tutorial">Creating JUnit Tests</h3>
+  <ol>
+    <li>Right-click the <tt>LibClass.java</tt> node in the Projects window and
+      choose Tools &gt;Create JUnit Tests (Ctrl-Shift-U). 
+      <p>If this is the first time you have created JUnit tests in the IDE, you 
+      will be prompted with the Select JUnit Version dialog box. Press Enter to 
+      select JUnit 4.x and continue to the Create Tests dialog box.</p></li>
+      <li>In the Create Tests dialog box, click OK
+      to run the command with the default options. The IDE creates the <tt>org.me.mylib</tt>
+      package and the <tt>LibClassTest.java</tt> file in a separate <tt>test</tt> folder. You can find this 
+  file by expanding the Test Packages node and the <tt>org.me.mylib</tt> subnode.</li>
+    <li>In <tt>LibClassTest.java</tt>, delete the body of
+      the <tt>public void acrostic()</tt> method. </li>
+<li>In place of the deleted lines, type or paste in the following:
+      <pre class="examplecode">System.err.println(&quot;Running testAcrostic...&quot;);
+String result = LibClass.acrostic(new String[]
+                  {&quot;fnord&quot;, &quot;polly&quot;, &quot;tropism&quot;});
+assertEquals(&quot;Correct value&quot;, &quot;foo&quot;, result);</pre>
+    <li> Save the file by pressing Ctrl-S. </li>
+  </ol>
+  <h3 class="tutorial">Running JUnit Tests</h3>
+  <ol>
+    <li>Select the MyLib project node and choose Run &gt; Test &quot;MyLib&quot;
+      (Alt-F6). The<tt> MyLib&nbsp;(test)</tt> tab opens in the Output window.
+      The JUnit test cases are compiled and run. The JUnit test result shows that
+      the test passes. </li>
+    <li>You can also run a single test file rather than testing the entire project.
+      Select the <tt>LibClass.java</tt> tab in the Source Editor and choose Run
+      &gt; Run File &nbsp;&gt; Test&nbsp;&quot;LibClass.java&quot; from the Run
+      menu. </li>
+  </ol>
+  <p>The JUnit API documentation is available from the IDE. Choose Help &gt; 
+Javadoc References &gt; JUnit API.</p>
+<p>You can learn more about JUnit by visiting 
+  <a href="http://www.junit.org" target="_blank">  http://www.junit.org  </a>
+<h3 class="tutorial">Debugging the Project</h3>
+  <ol>
+    <li> In the <tt>LibClass.java</tt> file, go to the <code>acrostic</code> method
+      and place the insertion point anywhere inside <tt>b.append(args[i].charAt(i));</tt>.
+      Then press Ctrl-F8 to set a breakpoint. </li>
+    <li>Choose Run&nbsp;&gt; Debug Main Project (Ctrl-F5). The IDE opens the Debugger
+      windows and runs the project in the debugger until the breakpoint is reached.
+    </li>
+    <li>Select the Local&nbsp;Variables window and expand the <tt>args</tt> node.
+      The array of strings contains the phrase you entered as the command arguments.
+    </li>
+    <li>Click Step Into (F7) in the toolbar to step through the program and watch
+      the acrostic being constructed.
+      <p>When the program reaches the end, the debugger windows close.
+    </li>
+  </ol>
+</div>
+<!--<br>-->
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<ul>
+<!--    <li><a href="import_j2se.html">Importing Existing Java Source Code into NetBeans IDE 5.5</a></li>
+    <li><a href="editor-tips.html">Source Editing</a></li>
+    <li><a href="../intro-screencasts.html">Demo: Source Editing Features</a></li>
+    <li><a href="../../trails/java-se.html">Basic IDE and Java Programming Learning Trail</a></li>  
+    <li><a href="../../trails/matisse.html">Java GUI Application Learning Trail</a></li>        
+    <li><a href="../../index.html">NetBeans IDE Support and Docs page</a></li>
+  </ul>
+
+</body>
+</html>
+

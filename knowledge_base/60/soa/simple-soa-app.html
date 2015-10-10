@@ -1,0 +1,520 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>Creating a Simple SOA Application With NetBeans</title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<meta name="description" content="Creating a Simple SOA Application With NetBeans">
+<meta name="author" content="Sherry Barkodar"> 
+<meta name="keywords" content=""> 
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>Creating a Simple SOA Application With NetBeans</h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:Sherry%20Barkodar@whatever.com"><i>Sherry Barkodar</i></a>, <a href="mailto:bob.may@sun.com">Bob May</a> <br>
+October 2007</em> [Revision number: V1-3]<br>
+This publication is applicable to NetBeans IDE/ 6.0 release<br>
+<!-- START Link to Support and Docs paragraph ----------------------------------------------------------* -->
+</p>
+</div>
+<p>In this tutorial, you will create a simple SOA project. You will then add a WSDL document to your project and use the Partner view of the WSDL editor to add the messages, partner link type, port type, and operation. You will then create a composite application project and use the Composite Application (Service Assembly) editor to modify the project configuration. This tutorial also illustrates a basic scenario of how a File Binding Component can be used in a composite application.
+  <!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+
+<!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+<!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+<!-- Update the image reference below so it references the file in your images directory ---------------* -->
+</p>
+
+<p align="center"><b>Expected duration: <i>45</i> minutes</b></p>
+
+<h3>Contents</h3>
+
+ 
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tbody><tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="simple-soa-app.html#tut_req"> Tutorial Requirements </a></li>
+             <li><a href="simple-soa-app.html#ConfiguringtheTutorialEnvironment">Configuring and Starting the GlassFish Application Server </a> </li>
+             <li><a href="simple-soa-app.html#creatingtheproject">Creating the BPEL Module Project</a></li>
+             <li><a href="simple-soa-app.html#creatingthewsdl">Creating the WSDL Document</a></li>
+             <li><a href="simple-soa-app.html#creatingthebpelprocess">Creating the BPEL Process</a></li>
+             <li><a href="simple-soa-app.html#creatinganddeploying">Creating the Composite Application Project</a></li>
+             <li><a href="simple-soa-app.html#casaeditor">Using the Composite Application (Service Assembly) Editor</a></li>
+             <li><a href="simple-soa-app.html#testing">Deploying and Testing the Composite Application</a></li>
+             <li><a href="simple-soa-app.html#summary">Summary</a></li>
+         </ul></td>
+
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<!-- tutorial. Examples: Java programming, XML, BPEL, and so on ----------------------------------------* -->
+<!-- ======================================================================================== -->
+<p>This tutorial assumes that you have some basic knowledge of, or programming experience with, the Java language and platform and the NetBeans IDE.</p>
+<!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+
+<!-- Replace existing text with info applicable to your tutorial ---------------------------------------* -->
+<p>Before you begin, you need to install the following software on your computer: NetBeans IDE 6.0 with SOA and the GlassFish application server.</p> 
+<!-- ======================================================================================== -->
+</div>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="ConfiguringtheTutorialEnvironment"></a>Configuring and Starting the GlassFish Application Server </h2>
+<p> When you install full NetBeans 6.0 download, it includes the GlassFish Application Server.  NetBeans will automatically start The Application Server when needed. </p>
+<p><strong>To start the GlassFish Application Server: </strong></p>
+<ol>
+  <li>If the Services window is not visible, choose Window &gt; Services. </li>
+  <li>In the Services window, expand the Servers node. <br>
+    The Servers node should contain a GlassFish Application Server subnode. If a GlassFish Application Server node does not appear, go to <a href="http://blogs.sun.com/barkodar/resource/nbfcs/ep-loanprocessing.html#configure-sjas" target="_blank">To configure the GlassFish Application Server </a>. </li>
+</ol>
+<blockquote>
+  <p><img src="../../../images/articles/ep-simple-soa-app/60/glassfish.PNG" width="374" height="121"></p>
+  <p>&nbsp;</p>
+</blockquote>
+<ol>
+  <li value="3"> Right-click the GlassFish Application Server node and select Start. <br>
+      <br>
+    The Output window displays logging information about the application startup. If the Output window is not visible, choose Window &gt; Output &gt; Output <br>
+    <br>
+    When the message Application server startup complete. appears in the Output window, the application server is running. <br>
+    Note: If a green arrow badge appears on the GlassFish Application Server node, the server is running. <br>
+  </li>
+</ol>
+<p><span class="bold">Note</span> : Deploying an application to the GlassFish Application Server  automatically starts the GlassFish Application Server. You do not have to manually start the application server. </p>
+<p><b>Note:</b> The following procedures shows how to configure the NetBeans 6.0 IDE to use an alternate version of the GlassFish V2 Application Server.</p>
+<p><a name="configure-sjas"></a><span class="bold">To configure the GlassFish V2 Application Server: </span></p>
+<ol>
+  <li>
+    <p>You might want to use a different version of the application server than the one provided with NetBeans 6.0. For example, you might want to download and install a more current version of the GlassFish V2 application server from the <a href="https://glassfish.dev.java.net/" target="_blank">GlassFish Community </a> site. </p>
+    <p> The following procedure shows how to configure the NetBeans 6.0 IDE to use an alternate version of the GlassFish V2 Application Server. It assumes that you have downloaded and installed the alternate version of the application server. </p>
+    <ol>
+      <li>In the Services window, right-click the Servers node and choose Add Server from the pop-up menu. <br>
+          <br>
+        The Add Server Instance dialog box opens. </li>
+      <li>In the Choose Server page, from the Server drop-down list, select GlassFish V2. </li>
+      <li>Click Next. <br>
+          <br>
+        The Platform Folder Location page opens. </li>
+      <li>In the Platform Location field, use the Browse button to navigate to and select the installation location of the application server. <br>
+        <br>
+        If you installed the GlassFish application server in the default location, then use <a href="simple-soa-app.html#table-1">Table 1 </a> as a guide for locating the installation. Otherwise, navigate to the location where you installed GlassFish V2 Application Server. <br>
+        <br>
+        <p><a name="table-1"></a><strong>Table 1: Default Application Server Installation Directory </strong></p>
+        <table>
+          <tbody>
+            <tr>
+              <td class="tblheader">Platform </td>
+              <td class="tblheader">Installing As... </td>
+              <td class="tblheader">SOA Installation </td>
+              <td class="tblheader">Tools Bundle Installation </td>
+            </tr>
+            <tr>
+              <td class="tbltd0">Solaris OS <br>
+                Linux </td>
+              <td class="tbltd0">root </td>
+              <td class="tbltd0">/opt/SUNWappserver </td>
+              <td class="tbltd0">/opt/SDK </td>
+            </tr>
+            <tr>
+              <td class="tbltd1">Solaris OS <br>
+                Linux </td>
+              <td class="tbltd1">user </td>
+              <td class="tbltd1">~/SUNWappserver </td>
+              <td class="tbltd1">~/SDK </td>
+            </tr>
+            <tr>
+              <td class="tbltd0">Mac OS X </td>
+              <td class="tbltd0">N/A </td>
+              <td class="tbltd0">~/SUNWappserver </td>
+              <td class="tbltd0">~/SDK </td>
+            </tr>
+            <tr>
+              <td class="tbltd1">Windows </td>
+              <td class="tbltd1">N/A </td>
+              <td class="tbltd1">C:\Sun\AppServer </td>
+              <td class="tbltd1">C:\Sun\SDK </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>Select the Register Local Default Domain radio button and click Next. </li>
+      <li>Enter the user name and password for the domain's administrator. <br>
+        If you accepted the default values during the installation, the user name is admin and the password is adminadmin. </li>
+      <li>Click Finish. </li>
+    </ol>
+  </li>
+</ol>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="creatingtheproject"></a>Creating the BPEL Module Project </h2>
+<p>In this section, you create a BPEL Module project called <tt>HelloSample</tt>.</p>
+<p><b>To create the project:</b></p>
+<ol>
+  <li>From the main menu, choose File &gt; New Project.<br>
+    The New Project wizard opens. </li>
+  <li>In the Categories list, select the <tt>SOA</tt> node. </li>
+  <li>In the Projects list, select the BPEL Module node. </li>
+  <li>Click Next. </li>
+  <li>In the Project Name field, type <tt>HelloSample</tt>. </li>
+  <li>(Optional) In the Project Location field, use the Browse button to navigate to and select a different folder where the IDE will store the project files. </li>
+  <li>Click Finish. <br>
+    The Projects window now contains a project node for a BPEL Module project called <tt>HelloSample</tt>.<br>
+  </li>
+</ol>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="creatingthewsdl"></a>Creating the WSDL Document</h2>
+<p>In this section, you add a WSDL document, <tt>HelloSample.wsdl</tt> to your BPEL Module project and then you use the Partner view of the WSDL editor to configure the components of the WSDL document.</p>
+<p><b>To create the WSDL document:</b></p>
+<ol>
+  <li>In the Projects window, expand the <tt>HelloSample</tt> project node, right-click the <tt>Process&nbsp;Files</tt> node and choose New &gt; WSDL&nbsp;Document. <br>
+    The New WSDL Document wizard opens. </li>
+  <li>In the File Name field, type <tt>HelloSample</tt>.</li>
+  <li>Click Finish.<br>
+      <ul>
+        <li>In the Projects window, the IDE adds a <tt>HelloSample.wsdl</tt> node under the <tt>Process Files</tt> node. </li>
+        <li>The <tt>HelloSample.wsdl</tt> file is open in the WSDL editor. <br>
+        The WSDL editor has three views: Source, WSDL, and Partner.<br>
+        For more information about the WSDL editor, see <a href="../websvc/wsdl-guide.html" title="Developer Guide to the WSDL Editor">Developer Guide to the WSDL Editor</a>.</li>
+        <li>The Properties window is open.<br>
+        If you do not see the Properties window, choose Window &gt; Properties. </li>
+        <li>The Navigator window is open. </li>
+      </ul>
+      <p><a href="../../../images/articles/ep-simple-soa-app/60/wsdl-document-added-open-editor.png" title="New WSDL document open in WSDL editor and visible Properties window, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-document-added-open-editor-small.png" alt="New WSDL document open in WSDL editor and visible Properties window, click to enlarge" width="600" height="206" border="0"></a></p>
+  </li>
+</ol>
+<p><b>To add messages:</b> </p>
+<ol>
+  <li>In the WSDL view, click the Partner button to open the Partner view of the WSDL editor. <br>
+    The editor switches to the Partner view and the Palette is opened. <br>
+    If the Palette window is not visible, choose Window &gt; Palette from the main menu.</li>
+  <li>In the WSDL Components section of the Palette, select the Message icon.</li>
+  <li>Drag your selection to the Partner view design area, into the Messages area (the lower part of the design area). <br>
+    The IDE adds a message called <tt>message1</tt>.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-document-message-added.png" alt="Message added to WSDL document" width="600" height="334"></p>
+    <b>Note:</b> If you do not see the Part Name and Part Element or Type columns, click the down arrow in the <tt>message1</tt> box to expand the box.</li>
+  <li>In the Part Name column for <tt>message1</tt>, double-click the default value, <tt>part1</tt> to make the field editable.</li>
+  <li>Type <tt>inputType</tt> and press Enter.</li>
+  <li>In the Part Element or Type column for <tt>message1</tt>, click the ellipsis button, and in the dialog box that opens, expand <tt>Built-In Schema Types</tt>, select <tt>string</tt> and click OK.</li>
+  <li>Repeat steps 2-6 to create another message, <tt>message2</tt> and use <tt>resultType</tt> as the Part Name.<br>
+    When you are done, your design area should look similar to the one shown below.<br>
+    <br>
+    <p><a href="../../../images/articles/ep-simple-soa-app/60/wsdl-document-2-messages-added.png" title="Two messages added to WSDL document, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-document-2-messages-added-small.png" alt="Two message added to WSDL document, click to enlarge" width="600" height="345"></a></p>
+  </li>
+</ol>
+<p><b>To add a partner link type:</b></p>
+<ol>
+  <li>In the WSDL Components section of the Palette, select the Partner Link Type icon.</li>
+  <li>Drag your selection to the design area, into the Partner Link Types area (the upper part of the design area). <br>
+    The IDE adds a partner link type called <tt>partnerlinktype1</tt>. You can now create new roles and port types. Roles and port types are drawn as dotted vertical lines with the external names shown at the top.<br>
+    <br>
+    <p><a href="../../../images/articles/ep-simple-soa-app/60/wsdl-document-partner-link-type-added.png" title="Partner link type added to WSDL document, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-document-partner-link-type-added-small.png" alt="Partner link type added to WSDL document, click to enlarge" width="600" height="286"></a></p>
+  </li>
+  <li>In the <tt>partnerlinktype1</tt> box, double-click the box under <tt>role1</tt>.<br>
+    This makes the port type editable and a default value <tt>portType1</tt>, appears in the field.</li>
+  <li>Press Enter.<br>
+    The new <tt>portType1</tt> is assigned. </li>
+  <li>In the WSDL Components section of the Palette, select the Request-Response icon. </li>
+  <li>Drag your selection to the design area, below <tt>portType1</tt>. <br>
+    The IDE adds an operation, <tt>operation1</tt>.<br>
+    <br>
+    <p><a href="../../../images/articles/ep-simple-soa-app/60/wsdl-document-operation1-added.png" title="Request-response added to WSDL document, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-document-operation1-added-small.png" alt="Request-response added to WSDL document, click to enlarge" width="600" height="280"></a></p>
+  </li>
+  <li>Under <tt>operation1</tt>, select the solid message arrow labeled &lt;No Message Selected&gt;.</li>
+  <li>In the Properties window, from the Message drop-down list, select tns:message1.<br>
+    The label changes to <tt>message1</tt>.</li>
+  <li>Under <tt>operation1</tt>, select the dotted message arrow labeled &lt;No Message Selected&gt;.</li>
+  <li>In the Properties window, from the Message drop-down list, select tns:message2.<br>
+    The label changes to <tt>message2</tt>.<br>
+    When you have completed these steps, your design area should look similar to the one shown below.<br>
+    <br>
+    <p><a href="../../../images/articles/ep-simple-soa-app/60/wsdl-document-partnerlinktype-added.png" title="Partner link type added to WSDL document, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-document-partnerlinktype-added-small.png" alt="Partner link type added to WSDL document, click to enlarge" width="600" height="262"></a></p>
+  </li>
+</ol>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="creatingthebpelprocess"></a>Creating the BPEL Process</h2>
+<p>In this section, you add a BPEL process file, <tt>HelloSample.bpel</tt>. You then add a partner link and three activities to the BPEL process file.</p>
+<p><b>To create the BPEL process file:</b></p>
+<ol>
+  <li>In the Projects window, expand the <tt>HelloSample</tt> project node, right-click the <tt>Process&nbsp;Files</tt> node and choose New &gt; BPEL Process. <br>
+    The New BPEL Process wizard opens. </li>
+  <li>In the File Name field, type <tt>HelloSample</tt>.</li>
+  <li>Click Finish. <br>
+      <ul>
+        <li>In the Projects window, the IDE adds a <tt>HelloSample.bpel</tt> node under the <tt>Process&nbsp;Files</tt> node. </li>
+        <li>The <tt>HelloSample.bpel</tt> file is open in the BPEL Designer. <br>
+        The BPEL Designer has two views: Source and Design.<br>
+        For more information about the BPEL Designer, see <a href="bpel-guide.html" title=" Developer Guide to the BPEL Designer">Developer Guide to the BPEL Designer</a>.</li>
+        <li>The Properties window is open.<br>
+        If you do not see the Properties window, choose Window &gt; Properties. </li>
+        <li>The Navigator window is open showing the BPEL Logical View of the BPEL Process document.</li>
+      </ul>
+      The IDE window should look similar to the one shown below.<br>
+      <br>
+      <p><a href="../../../images/articles/ep-simple-soa-app/60/bpel-process-added.png" title="BPEL process file added, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/bpel-process-added-small.png" alt="BPEL process file added, click to enlarge" width="600" height="211"></a></p>
+  </li>
+</ol>
+<p><b>To add a partner link:</b></p>
+<ol>
+  <li>In the Web Service section of the Palette, select the Partner Link icon and drag your selection to the design area.<br>
+    The Create New Partner Link dialog box opens.</li>
+  <li>Accept the defaults (Name: <tt>PartnerLink1</tt>, WSDL File: <tt>/HelloSample.wsdl</tt>, Use Existing Partner Link Type radio button selected) and click OK.<br>
+    The IDE adds the partner link to the design area.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/bpel-process-partnerlink-added.png" alt="Partner link added to BPEL process file" width="547" height="500"></p>
+  </li>
+</ol>
+<p><b>To add a receive activity:</b></p>
+<ol>
+  <li>In the Web Service section of the Palette, select the Receive icon.</li>
+  <li>Drag your selection to the <tt>HelloSample</tt> box in the design area, between the <tt>Process Start</tt> and the <tt>Process End</tt> activities.<br>
+    The IDE provides you with visual clues to show you where you can drop the selection. <br>
+    This action places a receive activity called <tt>Receive1</tt> in the Design view. </li>
+  <li>Double-click the <tt>Receive1</tt> activity. <br>
+    The Receive1 [Receive] - Property Editor opens. </li>
+  <li>On the Main tab, from the Partner Link drop-down list, select PartnerLink1. <br>
+    The IDE fills in the Operation field with <tt>operation1</tt>.</li>
+  <li>Create a new input variable by doing the following:
+      <ol type="a">
+        <li>Click the Create button next to the Input Variable field. <br>
+        The New Input Variable dialog box opens. </li>
+        <li>Change the value in the Name field to <tt>inputVar</tt>. </li>
+        <li>Click OK.</li>
+      </ol>
+  </li>
+  <li>Click OK to close the Receive1 [Receive] - Property Editor. <br>
+    The Design view now shows a connection between <tt>operation1</tt> in PartnerLink1 and the <tt>Receive1</tt> activity.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/bpel-process-receive-added.png" alt="Receive activity added to BPEL process file" width="552" height="478"></p>
+  </li>
+</ol>
+<p><b>To add a reply activity:</b></p>
+<ol>
+  <li>In the Web Service section of the Palette, select the Reply icon.</li>
+  <li>Drag your selection to the design area between the <tt>Receive1</tt> activity and the <tt>Process&nbsp;End</tt> activity. <br>
+    The IDE provides you with visual clues to show you where you can drop the selection. <br>
+    This action places a reply activity called <tt>Reply1</tt> in the Design view. </li>
+  <li>Double-click the <tt>Reply1</tt> activity. <br>
+    The Reply1 [Reply] - Property Editor opens. </li>
+  <li>On the Main tab, from the Partner Link drop-down list, select PartnerLink1. <br>
+    The IDE fills in the Operation field with <tt>operation1</tt>. </li>
+  <li>Create a new output variable by doing the following:
+      <ol type="a">
+        <li>Make sure the Normal Response radio button is selected. </li>
+        <li>Click the Create button next to the Output Variable field. <br>
+        The New Output Variable dialog box opens. </li>
+        <li>Change the value in the Name field to <tt>outputVar</tt>. </li>
+        <li>Click OK.</li>
+      </ol>
+  </li>
+  <li>Click OK to close the Reply1 [Reply] - Property Editor. <br>
+    The Design view now shows a connection between the <tt>Reply1</tt> activity and <tt>operation1</tt> in PartnerLink1.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/bpel-process-reply-added.png" alt="Reply activity added to BPEL process file" width="574" height="496"></p>
+  </li>
+</ol>
+<p><b>To add an assign activity: </b></p>
+<ol>
+  <li>In the Basic Activities section of the Palette, select the Assign icon.</li>
+  <li>Drag your selection to the design area between the <tt>Receive1</tt> activity and the <tt>Reply1</tt> activity. <br>
+    This action places an assign activity called <tt>Assign1</tt> in the Design view. </li>
+  <li>Select the <tt>Assign1</tt> activity. </li>
+  <li>If the BPEL Mapper window is not visible, choose Window &gt; Other &gt; BPEL Mapper from the main menu. </li>
+  <li>In the Source tree pane (the left pane) of the BPEL Mapper, under Variables, expand the <tt>inputVar</tt> node. <br>
+    An <tt>inputType</tt> node appears under the <tt>inputVar</tt> node. </li>
+  <li>In the Destination tree pane (the right pane) of the BPEL Mapper, under Variables, expand the <tt>outputVar</tt> node. <br>
+    A <tt>resultType</tt> node appears under the <tt>outputVar</tt> node. </li>
+  <li>In the Source tree pane, select the <tt>inputType</tt> node and drag your selection to the <tt>resultType</tt> node in the Destination tree pane.<br>
+    This assignment copies the input statement into the output. <br>
+    <br>
+    <p><a href="../../../images/articles/ep-simple-soa-app/60/assignment-done.png" title="Result of assignment in BPEL Mapper, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/assignment-done-small.png" alt="Result of assignment in BPEL Mapper, click to enlarge" width="600" height="119"></a></p>
+  </li>
+  <li>To save your changes, in the Projects window, select the <tt>HelloSample</tt> project node, and from the main menu, choose File &gt; Save All. </li>
+</ol>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="creatinganddeploying"></a>Creating the Composite Application Project</h2>
+<p>Before you deploy the BPEL Module project, you must add the JBI module to the deployment project. Deploying the project makes the service assembly available to the application server, thus allowing its service units to be run. </p>
+<p><b>To create the Composite Application project:</b></p>
+<ol>
+  <li>From the main menu, choose File &gt; New Project. <br>
+    The New Project wizard opens. </li>
+  <li>In the Categories list, select the <tt>SOA</tt> node. </li>
+  <li>In the Projects list, select the Composite&nbsp;Application node. </li>
+  <li>Click Next. </li>
+  <li>In the Project Name field, type <tt>SampleCompositeApp</tt>. </li>
+  <li>Click Finish. <br>
+    The Projects window now contains a project node for a Composite Application project called <tt>SampleCompositeApp</tt>.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/projects-window-new-compapp-project.png" alt="Projects window with new project node for Composite Application project" width="210" height="252"></p>
+  </li>
+</ol>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="casaeditor"></a>Using the Composite Application (Service Assembly) Editor</h2>
+<p>In this section, you use the Composite Application (Service Assembly) editor to modify the project configuration and build the BPEL Module project. You then add a WSDL endpoint and a connection and then you verify and change the properties of the auto-generated WSDL endpoints.</p>
+<p><b>To use the Composite Application (Service Assembly) editor to modify the project configuration and build the BPEL Module project:</b></p>
+<ol>
+  <li>In the Projects window, select the <tt>SampleCompositeApp</tt> project node and choose Edit Application Configuration from the pop-up menu.<br>
+    The IDE opens the <tt>.casa</tt> file in the Composite Application (Service Assembly) editor. The design area of the Design view of the editor has three parts: WSDL Ports, JBI Modules, and External Modules.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/casa-editor-design-area.png" alt="CASA editor, design area of the Design view" width="559" height="483"></p>
+  </li>
+  <li>In the Projects window, select the <tt>HelloSample</tt> project node and drag your selection to the JBI Modules area in the Design view of the <tt>SampleCompositeApp.casa</tt> file. <br>
+      <br>
+      <p><a href="../../../images/articles/ep-simple-soa-app/60/add-jbi-module-casa-editor.png" title="JBI Module added using Composite Application editor, click to enlarge"><img src="../../../images/articles/ep-simple-soa-app/60/add-jbi-module-casa-editor.png" alt="JBI Module added using Composite Application editor, click to enlarge" width="588" height="463"></a></p>
+  </li>
+  <li>In the editor toolbar, click the Build Project button to build the <tt>HelloSample</tt> BPEL Module project.<br>
+    When this step has completed:
+      <ul>
+        <li>The status bar message shows the following message:<br>
+            <tt>Finished building build.xml (jbi-build).</tt></li>
+        <li>The Output window should look similar to the one shown below.<br>
+            <br>
+            <p><img src="../../../images/articles/ep-simple-soa-app/60/bpel-module-project-build-done-output-window.png" alt="Output window after BPEL Module project is built" width="598" height="153"></p>
+        </li>
+        <li>The Design view of the <tt>SampleCompositeApp.casa</tt> file should look similar to the one shown below.<br>
+            <br>
+            <p><img src="../../../images/articles/ep-simple-soa-app/60/bpel-module-project-build-done-design-view.png" alt="Design view after BPEL Module project is built" width="514" height="353"></p>
+        </li>
+      </ul>
+  </li>
+</ol>
+<p><b>To create the WSDL endpoint:</b></p>
+<ol>
+  <li>In the WSDL Bindings section of the Palette, select the file icon.</li>
+  <li>Drag your selection to the WSDL Ports area in the Design view of the <tt>SampleCompositeApp.casa</tt> file.<br>
+    The IDE adds a WSDL port labeled <tt>casaPort1</tt>.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/wsdl-endpoint-casaport1-added-design-view.png" alt="Design view after WSDL endpoint casaport1 is added" width="514" height="377"></p>
+  </li>
+</ol>
+<p><b>To create a connection:</b></p>
+<ol>
+  <li>In the <tt>casaPort1</tt> port in the Design view, click the consume endpoint icon, .<br>
+  The colors of the icon change when you select the endpoint: .</li>
+  <li>Drag your selection to <tt>role1_myRole</tt> in the <tt>(BPEL)&nbsp;HelloSample</tt> box in the JBI Modules area.<br>
+    The IDE creates a new connection.<br>
+    <br>
+    <p><img src="../../../images/articles/ep-simple-soa-app/60/connection-added-design-view.png" alt="Design view after adding connection" width="492" height="295"></p>
+  </li>
+</ol>
+<p><b>To verify and change the properties of the auto-generated WSDL endpoint:</b></p>
+<ol>
+  <li>If the Navigator window is not visible, choose Window &gt; Navigating &gt; Navigator from the main menu.</li>
+  <li>In the Navigator window, from the drop-down list, select Logical View.</li>
+  <li>Expand <tt>WSDL&nbsp;Ports</tt> &gt; <tt>casaPort1</tt> &gt; <tt>casaBinding1</tt> &gt; <tt>operation1</tt> &gt; <tt>input1</tt> and select the <tt>file:message</tt> node.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-simple-soa-app/60/navwindow-input-file-message-selected.png" alt="Navigator window, file:message node under input1 selected" width="312" height="436"></p>
+  </li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties from the main menu.<br>
+    The Properties window shows the properties of the <tt>file:message</tt> node you selected in the Navigator window.</li>
+  <li>In the Properties window, change the properties to match the values shown below:<br>
+      <br>
+      <table class="tablebg">
+        <tbody>
+          <tr>
+            <td class="tblheader">Property</td>
+            <td class="tblheader">Value</td>
+          </tr>
+          <tr>
+            <td class="tbltd0">use</td>
+            <td class="tbltd0">literal</td>
+          </tr>
+          <tr>
+            <td class="tbltd1">fileName</td>
+            <td class="tbltd1">input.txt</td>
+          </tr>
+          <tr>
+            <td class="tbltd0">pollingInterval</td>
+            <td class="tbltd0">5000</td>
+          </tr>
+        </tbody>
+      </table>
+  </li>
+  <li>In the Navigator window, expand <tt>WSDL&nbsp;Ports</tt> &gt; <tt>casaPort1</tt> &gt; <tt>casaBinding1</tt> &gt; <tt>operation1</tt> &gt; <tt>output1</tt> and select the <tt>file:message</tt> node.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-simple-soa-app/60/navwindow-output-file-message-selected.png" alt="Navigator window, file:message node under output1 selected" width="312" height="436"></p>
+  </li>
+  <li>In the Properties window for <tt>file:message</tt>, assign <tt>output.txt</tt> to the <tt>fileName</tt> property.</li>
+  <li>In the Navigator window, expand <tt>WSDL&nbsp;Ports</tt> &gt; <tt>casaPort1</tt> &gt; <tt>casaPort1</tt> and select the <tt>file:address</tt> node.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-simple-soa-app/60/navwindow-file-address-selected.png" alt="Navigator window, file:address node under casaPort1 selected" width="312" height="436"></p>
+  </li>
+  <li>In the Properties window for <tt>file:address</tt>, in the <tt>fileDirectory</tt> property, replace <tt>C:\Temp</tt> with the string <tt>c:\test</tt>.</li>
+  <li>To save your changes, in the Projects window, select the <tt>SampleCompositeApp</tt> project node, and from the main menu, choose File &gt; Save All. </li>
+</ol>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="testing"></a>Deploying and Testing the Composite Application</h2>
+<p>In this section, you deploy the Composite Application project and then test that deployed application. If you skipped the steps in <a href="simple-soa-app.html#ConfiguringtheTutorialEnvironment" title="Configuring and Starting the Sun Java System Application Server">Configuring and Starting the Sun Java System Application Server</a> earlier in this tutorial, you must perform them before these deployment and test tasks.</p>
+<p><b>To deploy the Composite Application:</b></p>
+<ul>
+  <li>In the Projects window, select the <tt>SampleCompositeApp</tt> project node, right-click and choose Deploy. <br>
+    A message similar to the following message appears in the Output window:<br>
+    <tt>BUILD SUCCESSFUL (total time: 6 seconds)</tt></li>
+</ul>
+<p><b>To test the Composite Application:</b></p>
+<ul>
+  <li>Use an editor to create a new text file that contains the string <tt>Hello World!</tt> and save the file as <tt>input.txt</tt> in the <tt>c:\test</tt> folder.<br>
+    The running process should do the following:<br>
+    <ul>
+      <li>Create <tt>input.txt&lt;UUID&gt;</tt> <tt>_processed</tt> under the archive folder. </li>
+      <li> Create output.txt in the C:/test folder with the same content as input.txt, in this case, the string Hello World!.</li>
+    </ul>
+    If this does not happen then there is an error processing which will do the following:<br>
+    <ul>
+      <li>Create <tt>input.txt&lt;UUID&gt;</tt> _error under the c:\test\filebc_tmp folder </li>
+    </ul>
+  </li>
+</ul>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="summary"></a>Summary</h2>
+<p>In this tutorial, you created a BPEL Module project. You then added a WSDL document to your project and used the Partner view of the WSDL editor to add the messages, partner link type, port type, and operation. Next, you created a composite application project and used the Composite Application (Service Assembly) editor to modify the project configuration. You also used the File Binding Component in the composite application.</p>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul><li><p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE J2EE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p></li>
+</ul>
+
+<!-- ======================================================================================== -->
+<h2><a name="see_also"></a>See Also</h2>
+<ul><li><a href="../websvc/wsdl-guide.html">Developer Guide to the WSDL Editor</a> </li>
+<li> <a href="bpel-guide.html">Developer Guide to the BPEL Designe</a>r&nbsp;&nbsp;<br>
+   
+ </li>
+</ul>
+
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a><br style="clear:both;">
+</div>
+<p align="center"><a href="simple-soa-app.html#top">top</a></p>
+
+</body>
+</html>

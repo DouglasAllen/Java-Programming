@@ -1,0 +1,1672 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <script src="index_files/tigris.txt" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="index_files/netbeans.css">
+  <title>LAB-5116: Find Memory Leak Using NetBeans Profiler</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="SourceCastVersion" content="2.6.2.4.10">
+  <link rel="shortcut icon" href="http://www.netbeans.org/favicon.ico"
+ type="image/x-icon">
+  <meta name="keywords"
+ content="NetBeans, IDE, Platform, free, open source, developer">
+  <link rel="stylesheet" href="index_files/netbeans_002.css">
+  <meta name="author" content="Sang Shin">
+  <style type="text/css">
+#search {height:100%;}
+#topmodule {align:right;}
+  </style>
+  <script language="JavaScript" type="text/javascript">
+<!--
+function get_sc_login() {
+  var sclogin = "guest";
+  return (sclogin);
+}
+var username=get_sc_login();
+//-->
+  </script>
+</head>
+<body onload="loginfocus()" class="composite"
+ style="background-image: url(index_files/beige.jpg);">
+<!-- begin TopTabs --><!-- end TopTabs --><!-- start NavCol --><!-- end NavCol --><!-- Servlet-Specific template --><!-- Show servlet name if it is a servlet -->
+<br>
+<br>
+<h1 style="text-align: center;">Finding Memory Leaks Using the NetBeans
+Profiler<br>
+</h1>
+<div class="articledate" style="margin-left: 0px; text-align: center;"><a
+ href="http://weblogs.java.net/blog/gsporar/">Gregg
+Sporar</a>, <a href="www.javapassion.com">Sang Shin</a><i>
+</i></div>
+<div class="indent"><br>
+<br>
+<div style="text-align: center;"><img alt="" src="index_files/gregg.png"
+ style="width: 76px; height: 85px;">&nbsp; <img alt=""
+ src="index_files/sshin51.jpg" style="width: 51px; height: 86px;"><br>
+</div>
+<br>
+The NetBeans profiler has powerful capabilities to help you track down
+memory leaks in Java applications.&nbsp; Using instrumentation, you see
+allocations on
+the heap happen as your program runs and the profiler provides
+statistical values to highlight patterns in your application's memory
+allocations.&nbsp; This
+"behavioral"
+approach can help you quickly identify the most likely memory leak
+candidates, even in situations where each individual
+leak is very small.&nbsp; The profiler also has a HeapWalker that can
+be
+used to examine the relationships between objects on the heap. This
+"after
+the fact" approach can help you quickly identify why a particular
+object is not being garbage collected by the Java virtual machine. And
+with its tight integration into the developer
+work flow, the profiler makes it easy to
+start/stop profiling sessions and more importantly, to go from profiler
+results directly into the source code that has the problem.<br>
+<br>
+In this hands-on lab, you are going to use the NetBeans profiler to
+find out where exactly a memory leak is located, first in
+a web application (Exercise 1) and then in a stand-alone application
+(Exercise 2).&nbsp; The latter is based on a real-life story
+where the NetBeans profiler was used to find a memory leak.
+&nbsp; In Exercise 3, you are going to use the HeapWalker
+feature of the profiler to analyze a heap.&nbsp; In Exercise 4, you
+will learn how to attach the NetBeans profiler to an already-running
+application.<br>
+<br>
+<b><br>
+</b>
+<div style="text-align: center;"><b>Expected duration: 100 minutes
+(excluding homework)<br>
+<br>
+</b></div>
+<br>
+<br>
+<p></p>
+<br>
+<h3 class="tutorial">Software Needed</h3>
+<p>Before you begin, you need to install the following software on your
+computer.&nbsp; <br>
+</p>
+<ul>
+  <li>Java Standard Development Kit (JDK™) version 6.0 (<a
+ href="http://java.sun.com/javase/downloads/index.jsp">download</a>)</li>
+  <ul>
+    <li>Select <span style="font-weight: bold;">JDK 6 Update 2</span>
+from the download page<br>
+    </li>
+    <li>The Dynamic attachment (Exercise 4)
+require JDK 6.0.&nbsp; <br>
+    </li>
+  </ul>
+  <li>NetBeans IDE 6.0 (<a
+ href="http://sunmicro.vo.llnwd.net/c1/netbeans/6.0/final/">download</a>)</li>
+  <ul>
+    <li>Download either "<span style="font-weight: bold;">Web &amp;
+Java EE</span>" or "<span style="font-weight: bold;">All</span>"
+bundles.<br>
+    </li>
+    <li>When you install NetBeans IDE, it will ask you which JDK
+you want to use.&nbsp; Select JDK 6.0.</li>
+  </ul>
+  <li>5116_nbprofilermemory.zip (<a
+ href="http://www.javapassion.com/handsonlabs/5116_nbprofilermemory.zip">download</a>)</li>
+  <ul>
+    <li>The zip file contains this document and the lab contents<br>
+    </li>
+    <li>Download it and unzip in a directory of your choice.</li>
+    <br>
+  </ul>
+</ul>
+<br>
+<h3 class="tutorial">Operating Systems/platforms you can use<br>
+</h3>
+<ul>
+  <li>Windows</li>
+  <li>Solaris x86, Solaris Sparc</li>
+  <li>Linux</li>
+</ul>
+<h3 class="tutorial"><a name="Change_Log"></a>Change Log<br>
+</h3>
+<ul>
+  <li>Sep. 16th, 2007: Created</li>
+  <li>Dec. 5th, 2007: Updated to reflect NetBeans IDE 6.0 final realease<br>
+  </li>
+</ul>
+<br>
+<h3 class="tutorial">Things to do (by Authors)<br>
+</h3>
+<ul>
+  <li>Modify the memoryleak to use GlassFish (instead of Tomcat)</li>
+  <li>HeapWalker exercise need to describe the reference better</li>
+  <li>HeapWalker exercise to provide a step for fixing the problem</li>
+  <li>JVM heapwalker generation at the command line should be described<br>
+  </li>
+</ul>
+<br>
+<h3 class="tutorial"><a name="Tutorial_Exercises"></a>Lab Exercises</h3>
+<ul>
+  <li><a href="#Exercise_0">Exercise 0: Perform JDK calibration</a><br>
+  </li>
+  <li><a href="#Exercise_1">Exercise 1: Build and run
+"memoryleak" sample Web
+application in Memory Profiling mode (30 minutes)</a><br>
+  </li>
+  <li><a href="#Exercise_2">Exercise 2: Build and run
+"HttpUnit"
+sample Java SE
+application in Memory profiling mode (20 minutes)</a></li>
+  <li><a href="#Exercise_3">Exercise 3: Use
+"HeapWalker" to analyze memory problem (30 minutes)</a></li>
+  <li><a href="#Exercise_4">Exercise 4: Perform memory usage analysis
+on locally running application (20 minutes)</a></li>
+  <li><a href="#Homework_Exercise">Homework
+Exercise (for people who
+are taking Sang Shin's "Java EE Programming online course")</a></li>
+</ul>
+</div>
+<br>
+<h2><a name="Exercise_0"></a>Exercise 0: Perform JDK calibration<br>
+</h2>
+<br>
+<div style="margin-left: 40px;">In this exercise, you will perform
+calibration against the JDK running on your system.&nbsp; The
+calibration is
+required in order to perform profiling. It does not affect any of
+behavior of your Java applications.<br>
+<br>
+Note: Instrumenting the bytecode of the profiled application imposes
+some overhead. To guarantee the high accuracy of profiling results,
+NetBeans Profiler needs to collect calibration data in order to "factor
+out" the time spent in code instrumentation. You need to run the
+calibration process for each JDK you will use for profiling. The
+calibration data for each JDK is saved in the
+<span style="font-weight: bold;">.nbprofile</span> directory in your
+home directory. You are prompted to run the
+calibration the first time you invoke NetBeans Profiler. You are also
+prompted if the calibration data for the local machine and JVM is
+unavailable. <br>
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="0.1"></a>(0.1)
+Run profiler calibration<br>
+</h3>
+<div style="margin-left: 40px;"><br>
+1. Select <span style="font-weight: bold;">Profile </span>from
+top-level menu and select <span style="font-weight: bold;">Advanced
+Commands-&gt;Run Profiler Calibration</span>.&nbsp; (Figure-0.20 below)<br>
+</div>
+<br>
+<div style="margin-left: 40px;"><img alt=""
+ src="index_files/0_cali2.png" style="width: 901px; height: 704px;"><br>
+Figure-0.20: Run Profiler Calibration<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">JDK 1.6 (Default)</span>
+(Figure-0.21 below)</li>
+  <li>Click <span style="font-weight: bold;">OK</span>.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/0_cali3.png"
+ style="width: 306px; height: 237px;"><br>
+Figure-0.21: Select Java Platform to calibrate<br>
+<ul>
+  <li>Observe that the <span style="font-weight: bold;">Information </span>dialog
+box indicating that the Calibration was successful.</li>
+  <li>Click <span style="font-weight: bold;">OK</span> to close the
+dialog box.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/0_cali4.png"
+ style="width: 493px; height: 223px;"><br>
+Figure-0.22: Information dialog box<br>
+<br>
+</div>
+<span style="font-weight: bold;"><br>
+</span>
+<p style="margin-left: 40px;"></p>
+<div style="margin-left: 40px;">
+</div>
+<!-- ===================================================================================== -->
+<h2><a name="Exercise_1"></a>Exercise 1: Build and run
+"memoryleak" Web sample application in Memory Profiling mode<br>
+</h2>
+<i></i>
+<p style="margin-left: 40px;">In this exercise, you are going to
+profile the <span style="font-weight: bold;">memoryleak </span>sample
+application that contains a badly designed
+code fragment in which <span style="font-weight: bold;">double </span>and
+<span style="font-weight: bold;">float </span>arrays are allocated in
+a loop and
+then saved as an entry into a HashMap, which would result in
+OutOfMemoryError eventually. The goal of using the profiler is to find
+out
+where this code fragment is located.<br>
+</p>
+<ul style="margin-left: 40px;">
+</ul>
+<div style="margin-left: 40px;">
+<ol>
+</ol>
+</div>
+<ol style="margin-left: 40px;">
+</ol>
+<h3 style="margin-left: 40px;" class="tutorial">(1.1)
+Open "memoryleak" sample application<br>
+</h3>
+<p style="margin-left: 40px;">0. Start NetBeans IDE.&nbsp; <br>
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">memoryleak</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/nbprofilermemory/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <ul>
+    <li>Windows: If you unzipped the <span style="font-weight: bold;">5116_nbprofilermemory.zip</span>
+file under<span style="font-weight: bold;">
+C:\handsonlabs</span>
+directory, the directory to which you want
+to browse down should be <span style="font-weight: bold;">C:\handsonlabs\nbprofilermemory\samples.</span></li>
+    <li>Solaris/Linux: If you unzipped the <span
+ style="font-weight: bold;">5116_nbprofilermemory.zip</span>
+file under <span style="font-weight: bold;">$HOME/handsonlabs</span>
+directory, the directory to which you want
+to browse down should be <span style="font-weight: bold;">$HOME/handsonlabs/nbprofilermemory/samples.</span><span
+ style="font-weight: bold;"></span></li>
+  </ul>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">memoryleak</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.
+    <br>
+  </li>
+</ul>
+<ul>
+  <li>Observe that the <span style="font-weight: bold;">memoryleak</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;">2. Observe the memory leaking code
+fragment.&nbsp; The goal of this exercise is to find this memory
+leaking code using the NetBeans profiler.<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Expand <span style="font-weight: bold;">memoryleak </span>project
+node.</li>
+  <li>Expand <span style="font-weight: bold;">Source
+Packages-&gt;demo.memoryleak</span>.</li>
+  <li>Double-click <span style="font-weight: bold;">LeakThread.java</span>
+to open it in the source editor window.</li>
+  <li>Observe that two arrays, one with a single float and another with
+a single double, are being
+allocated in a loop and saved in a HashMap.
+(Figure-1.11 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory1.png"
+ style="width: 870px; height: 704px;"><br>
+Figure-1.11: Code fragment that contains the memory leaking code<br>
+<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="1.2"></a>(1.2)
+Run the project
+in "profiling" mode<br>
+</h3>
+<div style="margin-left: 40px;"><br>
+1. Make sure the <span style="font-weight: bold;">memoryleak </span>project
+is the Main project.&nbsp; (The project node should be in
+bold-font.)&nbsp; If it is not the Main project, right click the
+project
+and select Set as Main Project.<br>
+2. Select <span style="font-weight: bold;">Profile </span>from the
+top-level menu and select <span style="font-weight: bold;">Profile
+Main Project</span>. (Figure-1.20 below)<br>
+<br>
+<img alt="" src="index_files/1_memory2.png"
+ style="width: 870px; height: 704px;"><br>
+Figure-1.20: Profile Main Project<br>
+<br>
+<hr style="width: 100%; height: 2px;"></div>
+<div style="margin-left: 40px;"><span style="color: rgb(255, 0, 0);">Trouble-shooting</span>:&nbsp;
+If
+you see the following dialog box, it is because the JDK that is being
+used by the NetBeans profiler has not been calibrated.<br>
+<span style="color: rgb(51, 51, 255);">Solution</span>: Perform the
+calibration as described <a href="#0.1">above</a>.<br>
+<br>
+<img alt="" src="index_files/0_cali1.png"
+ style="width: 406px; height: 176px;"><br>
+Figure-1.27: Calibration data missing dialog box<br>
+<hr style="width: 100%; height: 2px;">
+</div>
+<div style="margin-left: 40px;"><br>
+3. If the project is being profiled for the first time, you may
+encounter this
+dialog box. Click <span style="font-weight: bold;">OK</span>.
+(Figure-1.21 below)&nbsp; If you have profiled the project previously,
+you will not see this dialog box.<br>
+<br>
+<img alt="" src="index_files/1_memory9.png"
+ style="width: 611px; height: 237px;"><br>
+Figure-1.21: Permission to Profile <br>
+<br>
+4. Configure Analyze Memory options.<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">Memory</span> on the
+left.</li>
+  <li>Select <span style="font-weight: bold;">Record both object
+creation and garbage collection</span>.</li>
+  <li>Select <span style="font-weight: bold;">Record stack trace for
+allocations</span>.</li>
+  <li>Make sure the <span style="font-weight: bold;">Use defined
+Profiling Points</span> option is not selected.</li>
+  <li>Click the <span style="font-weight: bold;">Run </span>button.
+(Figure-1.22 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory3.png"
+ style="width: 627px; height: 448px;"><br>
+Figure-1.22: Analyze Memory options<br>
+<br>
+5. Trigger the memory-leaking.<br>
+<ul>
+  <li>Observe that the browser gets displayed.</li>
+  <li>Click the <span style="font-weight: bold;">Start Leaking</span>
+button.&nbsp; This will trigger the memory
+leaking code to get executed.&nbsp; (Figure-1.23 below )<br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory4.png"
+ style="width: 753px; height: 585px;"><br>
+Figure-1.23: Run the browser<br>
+<br>
+6. Display the live profiling result.<br>
+<ul>
+  <li>Click <span style="font-weight: bold;">Live Results</span>
+button on the left.</li>
+  <li>Observe that the <span style="font-weight: bold;">Live Profiling
+Results</span> window gets displayed on
+the right side of the IDE.</li>
+  <li>Click the <span style="font-weight: bold;">Generations</span>
+column
+in the Live Results window to display the results in sorted
+order.&nbsp; (Figure-1.24 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory5.png"
+ style="width: 870px; height: 704px;"><br>
+Figure-1.24: Profiling result<br>
+<br>
+The columns of the live results provide object allocation and memory
+usage information.<br>
+<ul>
+  <li>The<b> Allocated Objects</b> (third column from the right) is the
+number of objects that the profiler is monitoring. In the example shown
+in Figure-1.24 above, there are 11,727 instances of <tt>char[]</tt>
+that are
+being monitored. By default this number will be approximately
+ten percent of the objects actually allocated by your application. By
+monitoring only a subset of the created objects the profiler is able to
+dramatically reduce the overhead it places on the JVM, which then
+allows your application to run at close to full speed.</li>
+  <li>The<b> Live Objects</b> is the number of the Allocated Objects
+that are still on the JVM's heap and are therefore taking up memory.</li>
+  <li>The two <b>Live Bytes</b> columns show the amount of heap memory
+being used by the Live Objects. One column displays a graph, the other
+displays text.</li>
+  <li>The <b>Avg. Age</b> value is calculated using the Live Objects.
+The age of each object is the number of garbage collections that it has
+survived. The sum of the ages divided by the number of Live Objects is
+the Avg. Age.</li>
+  <li>The <b>Generations</b> value is calculated using the Live
+Objects. As with Avg. Age, the age of an object is the number of
+garbage collections it has survived. The Generations value is the
+number of different ages for the Live Objects.</li>
+</ul>
+7. Detect which object types are not being garbarge-collected.<br>
+<ul>
+  <li>As the program continues to run, the profiler will
+update the display. Keep your eye on the entries for <tt>float[]</tt>
+and <tt>double[]</tt>. Notice how their <b>Generation</b> values
+continue to
+increase. As a result, <tt>float[]</tt> and <tt>double[]</tt>
+continue to move higher in the list. Eventually they will be displayed
+at the top of the list, right under <tt>java.util.HashMap$Entry</tt>,
+which also has an increasing value for generations. As the application
+continues to run the generations value continues to increase for <tt>java.util.HashMap$Entry</tt>,
+    <tt>float[]</tt>, and <tt>double[]</tt>, but not for any of the
+other classes</li>
+  <li>Right click <span style="font-weight: bold;">double[]</span> and
+select <span style="font-weight: bold;">Take Snapshot and Show
+Allocation Stack Traces</span>. (Figure-1.26 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory6.png"
+ style="width: 870px; height: 704px;"><br>
+Figure-1.26: Take the Snapshot<br>
+<br>
+8. Find the location of the code fragment that leaks memory.<br>
+<ul>
+  <li>Observe that methods in which the <span
+ style="font-weight: bold;">double </span>primitive is allocated is
+displayed.&nbsp; In this example, there is only one.</li>
+  <li>Double click<span style="font-weight: bold;">
+demo.memoryleak.LeakThread.run()</span>.&nbsp; This will display the
+code.<br>
+  </li>
+</ul>
+<span style="font-weight: bold;"><img alt=""
+ src="index_files/1_memory6.1.png" style="width: 833px; height: 650px;"><br>
+</span>
+<ul>
+  <li>Observe that the <span style="font-weight: bold;">run()</span>
+method of the <span style="font-weight: bold;">LeakThread.java</span>,
+which contains the code fragment that causes the memory leak is now
+displayed in the source editor.&nbsp;&nbsp; (Figure-1.27 below)&nbsp; <span
+ style="font-weight: bold;">So, congratulations!&nbsp; you found the
+memory leaking code.</span><br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory7.png"
+ style="width: 870px; height: 704px;"><br>
+Figure-1.27: Code is found<br>
+<br>
+9. Stop profiling.<br>
+<ul>
+  <li>End the profiling session by choosing <b>Profile &gt; Stop</b>
+or click the&nbsp;<img alt="" src="index_files/StopButton.jpg"
+ style="width: 11px; height: 12px;"> button.</li>
+</ul>
+<br>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"></p>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;"> In this exercise, you learned how to use
+the profiler to monitor the memory usage of your application. You
+learned how to interpret the data collected, especially Generation,
+which can be used to find out which objects are not being
+garbage-collected.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="#Tutorial_Exercises">return to the top</a>
+<br>
+</p>
+<p style="margin-left: 40px;"><br>
+<br>
+</p>
+<!-- ===================================================================================== -->
+<br>
+<h2><a name="Exercise_2"></a>Exercise 2: Build and run
+"HttpUnit" Java SE sample application in Memory profiling mode<br>
+</h2>
+<p style="margin-left: 40px;">This exercise is based on an actual usage
+of the NetBeans profiler
+as part of the development and testing of a production
+application.&nbsp;
+Andrés González of Spain used the NetBeans profiler to track down a
+memory leak in HttpUnit.&nbsp; HttpUnit is an open source project that
+provides a framework for unit testing of web pages. It essentially acts
+as a web browser so that you can write unit tests to verify that the
+correct pages are being sent back from your web application. </p>
+<p style="margin-left: 40px;">Andrés was using HttpUnit to run
+multi-day tests of his application. He discovered something sort of odd
+- the
+JVM that was running the tests he created with HttpUnit would
+eventually report an OutOfMemoryError. The tests had to run for long
+period of time before the OutOfMemoryError would occur though, so
+apparently each memory leak was relatively small.
+</p>
+<p style="margin-left: 40px;">Andrés used the NetBeans profiler to
+track down the problem and he wrote a <a class="external"
+ href="http://coyotevil.blogspot.com/2006/12/httpunit-y-2-esa-fuga-de-memoria.html">blog
+entry</a> about it (the entry is in Spanish, but Google can translate).
+There is also <a class="external"
+ href="http://sourceforge.net/mailarchive/forum.php?thread_name=15147e430612120141l71a5b2f0kf174eca4a50d30d8%40mail.gmail.com&amp;forum_name=httpunit-develop">this
+thread</a> out on the HttpUnit mailing lists where he reported what he
+found.
+</p>
+<p style="margin-left: 40px;">The <span style="font-weight: bold;">HttpUnit
+</span>sample application included here is not the program that Andrés
+wrote - it does, however, encounter the same problem in HttpUnit that
+Andrés has used. The
+underlying issue has to do with the way that HttpUnit processes web
+pages that include JavaScript. The framework does have support for a
+subset of JavaScript, but not the entire language. If it encounters
+JavaScript that it does not understand it will throw an exception. If
+the web page you are attempting to test includes JavaScript that
+HttpUnit does not support and you do not want to wade through all those
+exceptions in the output then the HttpUnit documentation recommends
+that your test program call <span style="font-weight: bold;">HttpUnitOptions.setExceptionsThrownOnScriptError(
+false );</span>.&nbsp;
+</p>
+<p style="margin-left: 40px;">The side effect, however, is that
+HttpUnit will store every exception thrown during its JavaScript
+processing in an <span style="font-weight: bold;">ArrayList </span>and
+it <i>never</i>
+removes them. So if your tests access enough web pages that either have
+JavaScript errors or that include JavaScript that HttpUnit does not
+support, you can eventually get an OutOfMemoryError.
+</p>
+<p style="margin-left: 40px;">One additional note on the sample
+application - it does not require
+a web server in order to run. HttpUnit has a nice feature where if what
+you want to test is the response from a servlet then it can host the
+servlet for you, in the same JVM as your test application. So the
+sample application consists of:<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li> a servlet that returns JavaScript that has an error</li>
+  <li> a <span style="font-weight: bold;">main()</span> method that
+repeatedly requests a page from that servlet.</li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"></p>
+<div style="margin-left: 40px;">
+</div>
+<div style="margin-left: 40px;">The process of finding out the
+offending code fragment is similar to what you've done in Exercise 1.<br>
+<ol>
+  <li><a href="#2.1">Open "HttpUnit" sample application<br>
+    </a></li>
+  <li><a href="#2.2">Run the application in "profiling" mode</a></li>
+  <li><a href="#2.3">Display and anaylize the collected data</a></li>
+  <li><a href="#2.4">Correct the problem</a><br>
+  </li>
+</ol>
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="2.1"></a>(2.1)
+Open "HttpUnit" sample application<br>
+</h3>
+<p style="margin-left: 40px;">Before you start this exercise, it is
+highly recommended for you to read the above and have a good
+understanding of
+the context.<br>
+</p>
+<p style="margin-left: 40px;">1. Open <span
+ style="font-weight: bold; color: rgb(51, 51, 255);">HttpUnit</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/nbprofilermemory/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">HttpUnit</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.
+    <br>
+  </li>
+</ul>
+<ul>
+  <li>Observe that the <span style="font-weight: bold;">HttpUnit</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.<br>
+  </li>
+</ul>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="2.2"></a>(2.2)
+Run the application
+in "profiling" mode<br>
+</h3>
+<div style="margin-left: 40px;">
+<br>
+1. Make sure the <span style="font-weight: bold;">HttpUnit </span>project
+is the Main project.&nbsp; (The project
+node should be in bold-font.)&nbsp; If it is not the Main project,
+right
+click
+the project and select <span style="font-weight: bold;">Set as Main
+Project</span>.<br>
+<br>
+2. Select <span style="font-weight: bold;">Profile </span>from the
+top-level menu and select <span style="font-weight: bold;">Profile
+Main Project</span>. <br>
+<ul>
+  <li> If the project is being profiled for the first time, you may
+encounter this
+dialog box. Click <span style="font-weight: bold;">OK</span>.
+(Figure-2.19 below)&nbsp; If you have profiled the project previously,
+you will not see this dialog box.<br>
+    <br>
+    <img alt="" src="index_files/1_memory9.png"
+ style="width: 611px; height: 237px;"><br>
+Figure-2.19: Permission to Profile </li>
+</ul>
+3. Configure Analyze Memory options and run profiling.<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">Memory </span>on the
+left.</li>
+  <li>Select <span style="font-weight: bold;">Record both object
+creation and garbage collection</span>.</li>
+  <li>Select <span style="font-weight: bold;">Record stack trace for
+allocations</span>.</li>
+  <li>Make sure the Use defined Profiling Points is not selected.</li>
+  <li>Click <span style="font-weight: bold;">Run </span>button.&nbsp;
+(Figure-2.20 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/1_memory3.png"
+ style="width: 627px; height: 448px;"><br>
+Figure-2.20: Configure Analyze Memory options<br>
+<ul>
+  <li>Observe that the application begins running in the Output window
+of the IDE.&nbsp; (Figure-2.21
+below)&nbsp; This is a simple test application that emulates the
+behavior that
+Andrés saw. It uses HttpUnit to process the HTML that is returned by a
+servlet. Requests are being repeatedly sent to that servlet by the test.</li>
+</ul>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="2.3"></a>(2.3)
+Display and analyze the collected data<br>
+</h3>
+<div style="margin-left: 40px;">
+<div style="margin-left: 40px;"><br>
+</div>
+1. Display Telemetry Overview.<br>
+<ul>
+  <li>Click <span style="font-weight: bold;">Telemetry Overview</span>
+icon.&nbsp; (Figure-2.21 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http1.png"
+ style="width: 873px; height: 805px;"><br>
+Figure-2.21: Application is running<br>
+<ul>
+  <li>Observe that the<span style="font-weight: bold;"> Telemetry
+Overview</span> window gets displayed.
+(Figure-2.22 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http2.png"
+ style="width: 873px; height: 805px;"><br>
+Figure-2.22: VM Telemetry Overview<br>
+<p>In the graph on the left, the red shading indicates the allocated
+size of the JVM heap. The purple overlay indicates the amount of heap
+space actually in use. In the example above, the allocated heap size at
+the last update was about 5 megabytes. Of that, a little over 2
+megabytes is actually being used to hold Java objects.</p>
+<p>The graph on the right shows the count of active threads in the JVM.</p>
+<p>The graph in the center shows two important heap statistics. </p>
+<ul>
+  <li>The blue line is the percentage of execution time spent by the
+JVM doing garbage collection and is graphed against the y-axis on the
+right edge of the graph. Time spent by the JVM doing garbage collection
+is time that is not available for it to run your application. So if the
+blue line indicates a large percentage you may want to consider tuning
+the JVM by configuring a larger heap size (refer to the <span
+ style="font-weight: bold;">-Xmx</span> parameter <a
+ href="http://java.sun.com/j2se/1.5.0/docs/tooldocs/solaris/java.html#nonstandard">documentation</a>)
+or perhaps switching to a different garbage collection <a
+ href="http://java.sun.com/docs/hotspot/gc1.4.2/">algorithm</a>.<br>
+  </li>
+  <li>The red line is surviving generations and is graphed against the
+y-axis
+scale on the left edge of the graph. The count of surviving generations
+is the number of different ages of all the Java objects on the JVM's
+heap, where "age" is defined as the number of garbage collections that
+an object has survived. When the value for surviving generations is
+low,
+it indicates that most of the objects on the heap have been around
+about the same amount of time. If, however, the value for surviving
+generations is increasing at a high rate over time, then it indicates
+your application is allocating new objects while maintaining references
+to many of the older objects it already allocated. If those older
+objects are in fact no longer needed then your application is wasting
+(or "leaking") memory. </li>
+</ul>
+2. Display live profiling result.<br>
+<ul>
+  <li>Click <span style="font-weight: bold;">Live Results</span> icon
+in the profile window.</li>
+  <li>Observe that the<span style="font-weight: bold;"> Live Profiling
+Results</span> window shows activity on the heap. The column on the
+left contains class names. For each class you can see information about
+the number of objects created, the number that are still in use (live),
+and a particularly interesting statistic called Generations.</li>
+  <li>Click the <span style="font-weight: bold;">Generations </span>column
+to sort the display by Generations.
+This will sort it in descending order.&nbsp; (Figure-2.23 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http3.png"
+ style="width: 863px; height: 685px;"><br>
+Figure-2.23: Live Profiling Results <br>
+<br>
+<hr style="width: 100%; height: 2px;"><span
+ style="color: rgb(255, 0, 0);"></span><span
+ style="color: rgb(255, 0, 0);">Trouble-shooting</span>: If you don't
+see the live results data as shown in Figure-1.25 below, it is due to a
+known-bug of NetBeans profiler, which has been fixed in the daily build
+but not in Beta1 unfortunately
+as described <a
+ href="http://www.netbeans.org/issues/show_bug.cgi?id=114997">here</a>.<br>
+<span style="color: rgb(51, 51, 255);">Workaround</span>: Stop the
+profiling by clicking Stop button <img alt=""
+ src="index_files/StopButton.jpg" style="width: 11px; height: 12px;">
+and redo the profiling again taking the steps of <a href="#2.2">2.2</a>;
+this time select the Use defined
+Profiling Points option. The Take Snapshot option always works.<br>
+<hr style="width: 100%; height: 2px;"><br>
+3. Detect which object types are not being garbarge-collected.<br>
+<ul>
+  <li>Observe that the two of the classes have huge values for
+Generation, in comparison to all the other classes: <span
+ style="font-weight: bold;">String</span> and <span
+ style="font-weight: bold;">char</span><span style="font-weight: bold;">[]
+    </span>array. (Figure-2.25 below)&nbsp;
+More importantly, the Generations
+value for both of them
+continues to increase as the application runs. Note that, for the rest
+of
+the classes, this is not the case - they have stabilized.</li>
+  <br>
+Note: The generation count for a class is easy to understand. All you
+have to
+understand is that each object has an age. The age of an object is
+simply the number of the Java virtual machine's garbage collections it
+has survived. So if, for example, an object is created at the beginning
+of an application and the garbage collector has run 466 times then the
+age of that object at that point in time is 466. To calculate the
+Generation value for a class, just count up the number of different
+ages across <b>all</b> of its objects that are currently on the heap.
+That count of different ages is the number of generations.<br>
+  <br>
+  <li>Right-click<span style="font-weight: bold;"> java.lang.String</span>
+and select <b>Take Snapshot and Show Allocation Stack Traces</b>.&nbsp;
+This will take the snapshot of the java.lang.String objects and display
+more detailed information.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http4.png"
+ style="width: 863px; height: 685px;"><br>
+Figure-2.25: Take Snapshot and Show Allocation Stack Traces<br>
+<br>
+4. Stop the profiling<br>
+<ul>
+  <li>Click Stop button <img alt="" src="index_files/StopButton.jpg"
+ style="width: 11px; height: 12px;"> to stop the profiling (since we
+got the
+profiling data). (Figure-2.26 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http5.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-2.26: Stop the profiling<br>
+<br>
+5. Analyze the profiled data.<br>
+<br>
+Note: The displayed view shows all the places in the application
+where
+Strings were allocated. In a typical Java application, there can be
+dozens or even hundreds or thousands of places where Strings are
+allocated. What you want to know is: which of those allocations are
+resulting in memory leaks? You can use the generation count as a key
+indicator. Notice that only one of the allocation locations in this
+group has created Strings that have a large value for Generation count:
+<span style="font-weight: bold;">java.lang.StringBuffer.toString()</span>
+- it has the value of 20 in the Figure-2.28 below.&nbsp; If we were to
+continue
+running the application and take more snapshots we would see larger
+values each time.<br>
+<br>
+Now that you know that StringBuffer's <span style="font-weight: bold;">toString()</span>
+method is allocating Strings
+that
+appear to be candidate memory leaks, you need to determine how that
+relates to our application's usage of HttpUnit.<br>
+<ul>
+  <li>Double-click <span style="font-weight: bold;">Memory:
+&lt;time&gt;</span> tab window to display it in maximized window.&nbsp;
+(You can click it again to minimize it.)<br>
+  </li>
+  <li>Expand <span style="font-weight: bold;">java.lang.StringBuffer.toString()</span>
+(Figure-2.28 below)&nbsp; This will display all the places where <span
+ style="font-weight: bold;">StringBuffer.toString() </span>method<span
+ style="font-weight: bold;"> </span>is invoked.<span
+ style="font-weight: bold;"><br>
+    </span></li>
+  <li>Observe that the only strings allocated in <span
+ style="font-weight: bold;">StringBuffer.toString()</span>
+with a large value for generation count are the Strings that resulted
+from calls to <span style="font-weight: bold;">StringBuffer.toString()</span>
+by a call from the
+HttpUnit code: <span style="font-weight: bold;">com.meterware.httpunit.javascript.JavaScript$JavaScriptEngine.handleScriptException()</span>.</li>
+</ul>
+<img alt="" src="index_files/2_http6.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-2.28: Expand the suspicious code<br>
+<ul>
+  <li>Expand <span style="font-weight: bold;">com.meterware.httpunit.javascript.JavaScript$JavaScriptEngine.handleScriptException()</span>.
+    <br>
+  </li>
+  <li>Observe that the profiler goes ahead and expands the
+entire stack trace. You will see a straight-line back to the <span
+ style="font-weight: bold;">main()</span> method since there
+is only
+one way it is being called (in this example). <br>
+  </li>
+  <li>Right click <span style="font-weight: bold;">Main.main(String[])</span>
+and select<span style="font-weight: bold;"> Go To Source</span>.
+(Figure-2.29 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http7.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-2.29: Display the source of the main() method<br>
+<ul>
+  <li>Observe the code fragment that calls HttpUnit's <span
+ style="font-weight: bold;">getResponse()</span>
+method on line 46 in Figure-2.30 below, which ends up making the call
+that results in memory leak. <br>
+  </li>
+</ul>
+<img alt="" src="index_files/2_http8.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-2.30: Sample application's call to the code that has a memory
+leak<br>
+<br>
+6. Take a look at the memory-leaking code.<br>
+<ul>
+  <li>Right click <span style="font-weight: bold;">com.meterware.httpunit.javascript.JavaScript$JavaScriptEngine.handleScriptException(Exception,String)</span>
+and select<span style="font-weight: bold;"> Go To Source</span>.</li>
+</ul>
+<img alt="" src="index_files/2_http10.png"
+ style="width: 878px; height: 650px;"><br>
+Figure-2.31: See the source code that <br>
+<ul>
+  <li>Observe the code that actually has the memory leak: it adds
+Strings to an ArrayList and they never get removed. (Figure-2.32
+below)&nbsp;<span style="font-weight: bold; color: red;"></span></li>
+</ul>
+<img alt="" src="index_files/2_http11.png"
+ style="width: 878px; height: 650px;"><br>
+Figure-2.32: Memory leaking code<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="2.4"></a>(2.4)
+Correct the
+problem<br>
+</h3>
+<div style="margin-left: 40px;"><br>
+In this step, you are going to correct the problem - actually removing
+the offending code for the sake of the simplicity of the exercise.<br>
+<br>
+<a name="httpunit"></a>1. Comment out the offending code in the <span
+ style="font-weight: bold;">com.meterware.httpunit.javascript.JavaScript$JavaScriptEngine.handleScriptException()
+</span>method.<br>
+<br>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+private void handleScriptException( Exception e, String badScript ) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+final String errorMessage = badScript + " failed: " + e;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if
+(!(e instanceof EcmaError) &amp;&amp; !(e instanceof
+EvaluatorException)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+e.printStackTrace();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+throw new RuntimeException( errorMessage );<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+else if (isThrowExceptionsOnError()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+e.printStackTrace();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+throw new ScriptException( errorMessage );<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+ style="font-weight: bold;">&nbsp; // _errorMessages.add( errorMessage
+); // Commented out</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+Code-2.33: Remove the offending code<br>
+<br>
+2. Rerun the application in the profiling mode.<br>
+3. Observe that the Generation number of the String class remains in
+the range of 10 to 12.&nbsp; (Figure-2.34 below)&nbsp; This indicates
+that the memory leaking problem has been resolved.<br>
+<br>
+<img alt="" src="index_files/2_http13.png"
+ style="width: 872px; height: 773px;"><br>
+Figure-2.34: String objects are garbage collected.<br>
+<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise, you have used NetBeans
+profiler to find the memory leaking code in the production application
+- HttpUnit code.&nbsp; By
+the way, the HttpUnit provides a method that will clear the <tt>ArrayList</tt>
+in which these Strings are being collected.
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+</p>
+<h2><a name="Exercise_3"></a>Exercise 3:&nbsp; Use "HeapWalker" to
+analyze memory problem<br>
+</h2>
+<br>
+<div style="margin-left: 40px;">The HeapWalker provides a complete
+picture of the objects on the heap and the references between
+the objects.&nbsp;
+The HeapWalker is especially useful for analyzing binary heap dump
+files produced when an OutOfMemoryError occurs.&nbsp;
+The <span style="font-weight: bold;">Find Nearest GC Root</span>
+feature can help you track down
+memory leaks by showing the owner of the reference that prevents an
+object from
+being garbage collected.<br>
+<ol>
+  <li><a href="#3.1">Open "PrimeNumber" project</a></li>
+  <li>Run "PrimeNumber" project in "profiling" mode</li>
+  <li>Use HeapWalker to analyze the problem<br>
+  </li>
+</ol>
+</div>
+<p style="margin-left: 40px;"></p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="3.1"></a>(3.1)
+Open
+"PrimeNumber" project<br>
+</h3>
+<p style="margin-left: 40px;">
+1. Open <span style="font-weight: bold; color: rgb(51, 51, 255);">PrimeNumber</span>
+NetBeans project.&nbsp; <br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select <span style="font-weight: bold;">File</span>-&gt;<span
+ style="font-weight: bold;">Open Project (Ctrl+Shift+O)</span>. The <span
+ style="font-weight: bold;">Open Project</span> dialog box appears.</li>
+  <li>Browse down to <span style="font-weight: bold;">&lt;LAB_UNZIPPED_DIRECTORY&gt;/nbprofilermemory/samples</span>
+directory.&nbsp; <br>
+  </li>
+  <li>Select <span style="font-weight: bold; color: rgb(51, 51, 255);">PrimeNumber</span>.&nbsp;
+  </li>
+  <li>Click <span style="font-weight: bold;">Open Project Folder</span>.&nbsp;
+The <span style="font-weight: bold;">PrimeNumber</span>
+project node appears under <span style="font-weight: bold;">Projects </span>tab
+window.</li>
+</ul>
+2. Observe that the maximum heap size is set to 6M bytes.&nbsp; This is
+to use smaller heap space than the default (in order to generate the
+problem fast.)<br>
+<ul>
+  <li>Right click the <span style="font-weight: bold;">PrimeNumber</span>
+project and select Properties.</li>
+  <li>Select <span style="font-weight: bold;">Run</span>.</li>
+  <li>Observe that the <span style="font-weight: bold;">VM Options</span>
+field is set to <span style="font-weight: bold;">-Xmx6m</span>.&nbsp;&nbsp;
+(Figure-3.10
+below)<br>
+  </li>
+  <li>Click OK to close it. <br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap17.png"
+ style="width: 836px; height: 633px;"><br>
+Figure-3.10: Maximum heap size<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="3.2"></a>(3.2)
+Run
+"PrimeNumber" project in profiling mode<br>
+</h3>
+<div style="margin-left: 40px;"><br>
+1. Make sure the <span style="font-weight: bold;">PrimeNumber </span>project
+is the Main project.&nbsp; (The project node should be in
+bold-font.)&nbsp; If it
+is not the Main project, right click the project and select Set as Main
+Project.<br>
+2. Select <span style="font-weight: bold;">Profile </span>from the
+top-level menu and select <span style="font-weight: bold;">Profile
+Main Project</span>. <br>
+3. Configure profiling mode.<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">Monitor </span>on the
+left.</li>
+  <li>Click <span style="font-weight: bold;">Run </span>button.&nbsp;
+(Figure-3.20 below)</li>
+</ul>
+<img alt="" src="index_files/3_heap1.png"
+ style="width: 627px; height: 412px;"><br>
+Figure-3.20: Monitor application<br>
+<br>
+4. Run the application.<br>
+<ul>
+  <li>For the <span style="font-weight: bold;">Enter a Number</span>
+field, type <span style="font-weight: bold;">1000000</span>.</li>
+  <li>Click <span style="font-weight: bold;">Calculate Prime Numbers</span>
+button.&nbsp; (Figure-3.21 below)&nbsp; It will calculate the largest
+prime number less than or equal to the number that was entered, 1000000
+in this example.</li>
+</ul>
+<img alt="" src="index_files/3_heap2.png"
+ style="width: 393px; height: 132px;"><br>
+Figure-3.21: Calculate Prime Number under 1000000<br>
+<ul>
+  <li>Observe that the result displays <span style="font-weight: bold;">999983</span>.&nbsp;
+(Figure-3.22 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap3.png"
+ style="width: 393px; height: 132px;"><br>
+Figure-3.22: Result<br>
+<br>
+5. Generate OutOfMemoryError condition.<br>
+<ul>
+  <li> Click the <span style="font-weight: bold;">Calculate Prime
+Numbers</span> button again.&nbsp;</li>
+  <li><span style="font-weight: bold; color: red;"></span>Wait until
+you see a dialog box of Figure-3.23
+below. (It might take a couple of minutes)&nbsp; The dialog box
+indicates that an OutOfMemoryError was
+thrown so the profiler requested a standard
+binary heap dump snapshot from the JVM. <br>
+  </li>
+  <li>Click Yes.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap4.png"
+ style="width: 410px; height: 173px;"><br>
+Figure-3.23: Question<span style="font-weight: bold; color: red;"></span><br>
+<ul>
+  <li>Observe also that, in the <span style="font-weight: bold;">Output
+    </span>window of the IDE, the application displays an <span
+ style="font-weight: bold;">java.lang.OutOfMemoryError:&nbsp; Java heap
+space</span>. &nbsp; (Figure-3.24 below).&nbsp; We are now ready to use
+the HeapWalker to analyze the memory usage when this error occurred.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap6.png"
+ style="width: 874px; height: 681px;"><br>
+Figure-3.24: java.lang.OutOfMemoryError:&nbsp; Java heap space<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="3.3"></a>(3.3)
+Use HeapWalker to
+analyze the problem<br>
+</h3>
+<div style="margin-left: 40px;"><br>
+1. Use the HeapWalker.<br>
+<ul>
+  <li>Observe that the&nbsp; heapwalker opens up with a <span
+ style="font-weight: bold;">Summary </span>view.&nbsp; You can see the
+summary view of the heap usage: size, operating system, and the JVM
+system properties.&nbsp; (Figure-3.30 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap7.png"
+ style="width: 874px; height: 681px;"><br>
+Figure-3.30: Summary view of the HeapWalker<br>
+<ul>
+  <li> Click the <span style="font-weight: bold;">Classes </span>view
+button and then click the <span style="font-weight: bold;">Size </span>column
+to sort by size.&nbsp; (Figure-3.31 below)&nbsp; This is a list of all
+the classes that are on the heap, along with the
+number of object instances of each class and the total size occupied by
+those
+object instances.</li>
+</ul>
+<img alt="" src="index_files/3_heap8.png"
+ style="width: 874px; height: 681px;"><br>
+Figure-3.31: Classes view<br>
+<ul>
+  <li>Observe that the most of the heap is taken up by <span
+ style="font-weight: bold;">int[] </span>arrays.&nbsp; You are going
+to take a look at the object instances for <span
+ style="font-weight: bold;">int[] </span>array.</li>
+  <li> Right click the <span style="font-weight: bold;">int[] </span>array
+and choose <span style="font-weight: bold;">Show in Instances
+View</span>.&nbsp; (Figure-3.32 below)</li>
+  <li>Observe that there are 1896 int[] arrays on the heap (in the
+example picture below), whose total size amounts to 4414336 bytes. (The
+numbers of your system will be somewhat different from these numbers.)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap9.png"
+ style="width: 874px; height: 681px;"><br>
+Figure-3.32: Show in Instances View of int[] array<br>
+<ul>
+  <li>Click on the first <span style="font-weight: bold;">int[]</span>
+array instance that has the size of 4000012 bytes.</li>
+  <li>Now that you have selected an instance, you can see two things
+over on the right: its fields and a list of any objects that reference
+this particular instance.&nbsp; (Figure-3.33 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap10.png"
+ style="width: 874px; height: 681px;"><br>
+Figure-3.33: Display information on int[] instance that holds large
+memory<br>
+<ul>
+  <li>Expand the &lt;items 0-499&gt; entry.&nbsp; (Figure-3.35 below)
+Since this is an array, the
+list of Field column is actually a list of array indexes, in groups of
+500.&nbsp; The Type and Value columns display the type and the value of
+entries in the array.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap11.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-3.35: View the values of the &lt;items 0-499&gt;<br>
+<ul>
+  <li>Scroll down the items.</li>
+  <li>Observe that this array holds all the prime numbers less than the
+requested value, with place holder entries, each of which has value of <span
+ style="font-weight: bold;">-1</span>, for integers that are not
+prime.&nbsp; (Figure-3.36 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap11-1.png"
+ style="width: 874px; height: 798px;"><br>
+Figure-3.36: Observe the int[] array contains the prime numbers<br>
+<br>
+We have found something on the heap that should not be there - in this
+case, this appears to be an array that was used during the calculation
+that should have been garbage collected after the calculation. So why
+didn't the JVM's garbage collector remove it? There must be some
+accidental reference to it that is being made (and that should be
+cleared). This is where the References information comes in handy.<br>
+<ul>
+  <li> Right click <span style="font-weight: bold;">this</span> in the
+    <span style="font-weight: bold;">References </span>panel and
+click <span style="font-weight: bold;">Show nearest GC Root</span>.
+(Figure-3.37 below)&nbsp; [Note: Garbage Collection (GC) roots are the
+objects that never get removed from the heap - they are the starting
+point for the JVM's garbage collector. Any object that is reachable
+from a GC root cannot be removed from the heap.]</li>
+</ul>
+<img alt="" src="index_files/3_heap12.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-3.37: Show Nearest GC Root<br>
+<ul>
+  <li>Observe that the display expands so that the entry for <span
+ style="font-weight: bold;">primeNumbers </span>is shown.&nbsp; [Note:
+There are actually several GC roots in this case, but what is often
+more interesting is what we can learn by looking at the object
+references along the way, since if they were to let go of their
+reference this array would be eligible for removal by the garbage
+collector. Notice this variable called completeResults_.]</li>
+  <li>Right click <span style="font-weight: bold;">completeResults_</span>
+and choose <span style="font-weight: bold;">Go To Source</span>.
+(Figure-3.39 below)&nbsp; [Note: An advantage of an integrated tool -
+easy access to the source code.]<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap13.png"
+ style="width: 874px; height: 716px;"><br>
+Figure-3.39: Go To Source<br>
+<ul>
+  <li>Observe that PrimeNumbers.java file opens up in the Source editor
+window.</li>
+  <li>Observe that the <span style="font-weight: bold;">completeResults_</span>
+variable is on line 31.&nbsp;&nbsp; It is a <span
+ style="font-weight: bold;">Map </span>object.<br>
+  </li>
+  <li>Right-click it and select <span style="font-weight: bold;">Find
+Usages</span>.&nbsp; (Figure-3.40 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap13-1.png"
+ style="width: 874px; height: 798px;"><br>
+Figure-3.40: Find Usage of the completeResults_<br>
+<ul>
+  <li>Observe that the Find Usage dialog box appears.</li>
+  <li>Set the Scope to <span style="font-weight: bold;">PrimeNumbers</span>.</li>
+  <li>Click <span style="font-weight: bold;">Find</span>.&nbsp;
+(Figure-3.41 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap15.png"
+ style="width: 518px; height: 283px;"><br>
+Figure-3.41: Find Usage<br>
+<ul>
+  <li>Observe that the Usages window opens with the results</li>
+  <li>Double-click the only result.&nbsp; (Figure-3.42 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap16.png"
+ style="width: 874px; height: 785px;"><br>
+Figure-3.42: Result of the Find <br>
+<ul>
+  <li>Observe that the complete list of candidate prime numbers is
+being put into this Map. (Figure-3.43 below)&nbsp; But as we can see
+from the Usages results it is never removed. So we don't need the array
+anymore, but it cannot be garbage collected - that is a memory leak.
+And one easily found with the profiler's heapwalker.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap18.png"
+ style="width: 874px; height: 785px;"><br>
+Figure-3.43: Code fragment<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="3.4"></a>(3.4)
+Take and load
+Heap Dump<br>
+</h3>
+<div style="margin-left: 40px;"><br>
+One last thing to note - the profiler's heapwalker can also be used on
+any binary heap dump file produced by one of Sun's JVMs. There are a
+variety of ways to get a JVM to produce a heap dump; as an example,
+there is a command line flag that you can use to have the JVM create
+the file whenever an OutOfMemoryError is thrown. You can then open that
+file with this feature.<br>
+<br>
+You can also create a Heap Dump from the IDE.<br>
+<br>
+1. Create a Heap Dump.<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">Profile </span>from
+top-level menu and select<span style="font-weight: bold;"> Take Heap
+Dump</span>. (Figure-3.46 below)&nbsp; This will save the heap dump as
+a file.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap19-0.png"
+ style="width: 874px; height: 749px;"><br>
+Figure-3.46: Take Heap Dump<br>
+<ul>
+  <li>Select<span style="font-weight: bold;"> Custom Directory</span>.</li>
+  <li>Create a new directory, for example, <span
+ style="font-weight: bold;">c:\mydump</span>, in this example.<br>
+  </li>
+  <li>Specify the directory into which you are going to create Heap
+Dump file.</li>
+  <li>Click OK.&nbsp; (Figure-3.47 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap19-1.png"
+ style="width: 351px; height: 208px;"><br>
+Figure-3.47: Specify the directory<br>
+<ul>
+  <li>Click No for now.&nbsp; (This is to simulate a situation in which
+you are reading a Heap Dump file created previously.)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap19-2.png"
+ style="width: 382px; height: 181px;"><br>
+Figure-3.48: Heap Dump Saved.<br>
+<br>
+2.&nbsp; Load the Heap Dump file.<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">Profile </span>from
+the top-level menu and select<span style="font-weight: bold;"> Load
+Heap Dump</span>.&nbsp; (Figure-3.49 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap19.png"
+ style="width: 874px; height: 749px;"><br>
+Figure-3.49: Load Heap Dump<br>
+<ul>
+  <li>Observe that the loaded heap dump is displayed. (Figure-3.50
+below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/3_heap22.png"
+ style="width: 871px; height: 650px;"><br>
+Figure-3.50: Loaded heap dump<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have learned
+how to use the HeapWalker of the NetBeans profiler to analyze a memory
+usage
+problem, specifically to find a reference to an object that prevents it
+from being
+garbage collected.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+<br>
+</p>
+<h2><a name="Exercise_4"></a>Exercise 4: Perform memory usage analysis
+on locally running applications<br>
+</h2>
+<br>
+<div style="margin-left: 40px;">With JDK 6 you can attach the profiler
+to an application that is already running. No special JVM command line
+flags are necessary when you start that application.&nbsp;
+Dynamic attach works even if you do not have a NetBeans project defined
+for the application.<br>
+<br>
+Please note that Dynamic attach <b>only works</b> if the application
+being profiled is running on JDK6 <i>and</i> the NetBeans IDE itself
+is running on JDK6.&nbsp;
+JDK5 does not support dynamic attach.<br>
+<ol>
+  <li><a href="#4.1">Ceate AnagramGame project</a></li>
+  <li><a href="#4.2">Attach profiler to locally running (but external
+to NetBeans IDE) Java application<br>
+    </a></li>
+</ol>
+</div>
+<p style="margin-left: 40px;"></p>
+<div style="margin-left: 40px;">
+</div>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="4.1"></a>(4.1)
+Create
+AnagramGame project</h3>
+<br>
+<div style="margin-left: 40px;">1. Create a new NetBeans project.<br>
+<ul>
+  <li>Select File-&gt;New Project. (Figure-4.10 below)<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote1.png" style="width: 874px; height: 716px;"><br>
+Figure-4.10: Create a new project<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Expand Samples under Categories and select Java.</li>
+  <li>Select Anagram Game under Projects.&nbsp; (Figure-4.11 below)<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote2.png" style="width: 729px; height: 505px;"><br>
+Figure-4.11: Select Anagram Game sample application<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Select Finish (Figure-4.12 below)<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote3.png" style="width: 729px; height: 505px;"><br>
+Figure-4.12: Finish creating the project<br>
+</p>
+<div style="margin-left: 40px;">2. Make sure the project is using JDK 6.<br>
+<ul>
+  <li>Right click the <span style="font-weight: bold;">AnagramGame </span>project
+node and select <span style="font-weight: bold;">Properties</span>.</li>
+  <li>Select <span style="font-weight: bold;">Sources</span> and make
+sure the <span style="font-weight: bold;">Source Level</span> is set
+to <span style="font-weight: bold;">1.6</span>.&nbsp; (Figure-4.13
+below)</li>
+  <li>Click OK.<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote3.1.png" style="width: 836px; height: 633px;"><br>
+Figure-4.13: Make sure you are using JDK 6.<br>
+</p>
+<p style="margin-left: 40px;">3. Build the project.<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right click the <span style="font-weight: bold;">AnagramGame </span>project
+and select <span style="font-weight: bold;">Clean and Build Project</span>.</li>
+  <li>Note that you can run the program at the command line by
+typing&nbsp;<span style="font-weight: bold;"> java -jar
+"C:\myprojects\AnagramGame\dist\anagrams.jar"</span>.&nbsp; (You will
+run the application this way later to simulate a locally running Java
+application.)<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote4.png" style="width: 874px; height: 716px;"><br>
+Figure-4.14: Take the command line<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Right click project node and select <span
+ style="font-weight: bold;">Close</span>.<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote5.png" style="width: 874px; height: 716px;"><br>
+Figure-4.15: Command line<br>
+</p>
+<p style="margin-left: 40px;">4. Run the program external to the
+NetBeans IDE.<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Open a terminal window and type <span style="font-weight: bold;">java
+-jar "C:\myprojects\AnagramGame\dist\anagrams.jar"</span>.&nbsp; <br>
+  </li>
+</ul>
+If you are running on FAT32 system on Windows, open a terminal window,
+and type <span style="font-weight: bold;">java
+-XX:+PerfBypassFileSystemCheck -jar
+"C:\myprojects\AnagramGame\dist\anagrams.jar"</span>.</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote6.png" style="width: 832px; height: 696px;"><br>
+Figure-4.16: Run the programming outside of the IDE<br>
+</p>
+<div style="margin-left: 40px;">
+<ul>
+  <li>Observe that the Anagrams dialog box appears.</li>
+  <li>Type in abstraction and click Guess.<br>
+  </li>
+</ul>
+</div>
+<p style="margin-left: 40px;"></p>
+<p style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote7.png" style="width: 361px; height: 213px;"><br>
+Figure-4.17: Anagram program<br>
+</p>
+<br>
+<h3 style="margin-left: 40px;" class="tutorial"><a name="4.2"></a>(4.2)
+Attach NetBeans
+profiler to the locally running (but externally from NetBeans IDE)
+application<br>
+</h3>
+<br>
+<div style="margin-left: 40px;">1. Select Profile-&gt;Attach Profiler.
+(Figure-4.20 below)<br>
+<br>
+</div>
+<div style="margin-left: 40px;"><img alt=""
+ src="index_files/4_remote10.png" style="width: 874px; height: 716px;"><br>
+Figure-4.20:&nbsp; Attach profiler<br>
+<br>
+2. Configure Memory Analyzer options.<br>
+<ul>
+  <li>Make sure <span style="font-weight: bold;">&lt;External
+Application&gt;</span> is chosen for the <span
+ style="font-weight: bold;">Attach
+to:</span> field.</li>
+  <li>Select <span style="font-weight: bold;">Memory </span>on the
+left.</li>
+  <li>Select <span style="font-weight: bold;">Record both object
+creation and garbage collection</span>.</li>
+  <li>Select <span style="font-weight: bold;">Record stack trace for
+allocations</span>.</li>
+  <li>Select <span style="font-weight: bold;">Attach</span>.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/4_remote11.png"
+ style="width: 627px; height: 486px;"><br>
+Figure-4.21: Attach Profiler <br>
+<br>
+3. Configure Attach options.<br>
+<ul>
+  <li>Select <span style="font-weight: bold;">Local</span> under <span
+ style="font-weight: bold;">Attach </span>method.</li>
+  <li>Select <span style="font-weight: bold;">Dynamic (JDK 1.6</span>)
+under <span style="font-weight: bold;">Attach </span>invocation.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/4_remote12.png"
+ style="width: 731px; height: 561px;"><br>
+Figure-4.23: Select Target Type<br>
+<ul>
+  <li>Observe that the Review Attach Settings dialog box appears.</li>
+  <li>Click Next.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/4_remote13.png"
+ style="width: 731px; height: 565px;"><br>
+Figure-4.24: Review Attach Settings<br>
+<ul>
+  <li>Click Finish.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/4_remote14.png"
+ style="width: 731px; height: 565px;"><br>
+Figure-4.25: Manual Integration<br>
+<br>
+4. Select the target process to monitor.<br>
+<ul>
+  <li>In the <span style="font-weight: bold;">Select Process</span>
+dialog box, select AnagramGames process.</li>
+  <li>Click OK.&nbsp; (Figure-4.26 below)<br>
+  </li>
+</ul>
+<img alt="" src="index_files/4_remote17.png"
+ style="width: 508px; height: 237px;"><br>
+Figure-4.26: Select the target process<br>
+<br>
+<hr style="width: 100%; height: 2px;"><span
+ style="color: rgb(255, 0, 0);">Trouble-shooting</span>: If you
+experience &lt;Error Getting Running Processes&gt; as shown below, it
+is highly likely because you are running the AnagramGame application on
+a Windows system that has FAT32
+file system.&nbsp; This symptom is explained in the "<font face=""><a
+ href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5042659">hsperfdata
+is not being created on non-NTFS partitions</a>".</font><br>
+<span style="color: rgb(51, 51, 255);">Workaround</span>:&nbsp; When
+run the AnagramGame application in a terminal window, type <span
+ style="font-weight: bold;">java -XX:+PerfBypassFileSystemCheck -jar
+"C:\myprojects\AnagramGame\dist\anagrams.jar" </span>not <span
+ style="font-weight: bold;">java -jar
+"C:\myprojects\AnagramGame\dist\anagrams.jar".<br>
+<br>
+</span><img alt="" src="index_files/4_remote15-junk.png"
+ style="width: 508px; height: 237px;"><br>
+Figure-4.27: Process is not being shown<br>
+<hr style="width: 100%; height: 2px;"><br>
+5. Analyze the process.<br>
+<ul>
+  <li>Click Live Results icon.</li>
+  <li>Observe that the live result is being displayed.<br>
+  </li>
+</ul>
+<img alt="" src="index_files/4_remote18.png"
+ style="width: 872px; height: 773px;"><br>
+Figure-4.26: Display live results<br>
+<br>
+<span style="color: rgb(255, 0, 0);">Trouble-shooting</span>: If the
+live result is not being shown, stop the profiling and try it again. <br>
+<br>
+<br>
+</div>
+<h3 style="margin-left: 40px;" class="tutorial">Summary</h3>
+<p style="margin-left: 40px;">In this exercise,&nbsp; you have learned
+how to dynamically attach the NetBeans profiler to a locally running
+application.<br>
+</p>
+<p style="margin-left: 40px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <a href="index.html#Tutorial_Exercises">return to
+the top</a><br>
+<br>
+</p>
+<br>
+<br>
+<br>
+<h2><a name="Homework_Exercise"></a><a name="Homework"></a>Homework
+Exercise (for people
+who
+are taking Sang Shin's "Java SE Programming online course") <br>
+</h2>
+<br>
+<div style="margin-left: 40px;"><span style="color: rgb(0, 0, 0);">&lt;to
+be provided&gt;<br>
+</span></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="indent"><br>
+<br>
+<br>
+</div>
+<br>
+<p> </p>
+<!-- ======================================================================================== -->
+</body>
+</html>

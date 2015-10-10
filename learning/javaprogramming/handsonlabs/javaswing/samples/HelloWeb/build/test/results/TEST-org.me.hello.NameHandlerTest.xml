@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" name="org.me.hello.NameHandlerTest" tests="3" time="0.062">
+  <properties>
+    <property name="default.javac.source" value="1.5"></property>
+    <property name="file.encoding.pkg" value="sun.io"></property>
+    <property name="javac.source" value="1.4"></property>
+    <property name="Env-TMP" value="C:\DOCUME~1\sang\LOCALS~1\Temp"></property>
+    <property name="libs.jaxrpc16.src" value=""></property>
+    <property name="netbeans.system_http_proxy" value="DIRECT"></property>
+    <property name="java.home" value="C:\jdk1.5.0_06\jre"></property>
+    <property name="test.src.dir" value="test"></property>
+    <property name="javadoc.version" value="false"></property>
+    <property name="Env-USERNAME" value="sang"></property>
+    <property name="env-userdomain" value="PASSION"></property>
+    <property name="libs.CopyLibs.classpath" value="C:\Program Files\netbeans-5.0\ide6\ant\extra\org-netbeans-modules-java-j2seproject-copylibstask.jar"></property>
+    <property name="java.endorsed.dirs" value="C:\jdk1.5.0_06\jre\lib\endorsed"></property>
+    <property name="src.dir" value="src/java"></property>
+    <property name="nbplatform.default.harness.dir" value="C:\Program Files\netbeans-5.0/harness"></property>
+    <property name="Env-COMPUTERNAME" value="PASSION"></property>
+    <property name="env-homedrive" value="C:"></property>
+    <property name="source.root" value="src"></property>
+    <property name="have.sources" value="true"></property>
+    <property name="deployment.Scp.scriptfile" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\scr\deploy-scp-impl.xml"></property>
+    <property name="sun.os.patch.level" value="Service Pack 2"></property>
+    <property name="java.vendor.url" value="http://java.sun.com/"></property>
+    <property name="libs.GWT.src" value=""></property>
+    <property name="libs.jakarta_slide_ant_webdav.classpath" value="C:\Program Files\netbeans-5.0\mobility7.2\external\commons-httpclient.jar;C:\Program Files\netbeans-5.0\mobility7.2\external\commons-logging.jar;C:\Program Files\netbeans-5.0\mobility7.2\external\jdom-1.0.jar;C:\Program Files\netbeans-5.0\mobility7.2\external\jakarta-slide-webdavlib-2.1.jar;C:\Program Files\netbeans-5.0\mobility7.2\external\jakarta-slide-ant-webdav-2.1.jar"></property>
+    <property name="java.version" value="1.5.0_06"></property>
+    <property name="Env-SystemDrive" value="C:"></property>
+    <property name="libs.jsf.classpath" value="C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jsf\commons-beanutils.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jsf\commons-collections.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jsf\commons-digester.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jsf\commons-logging.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jsf\jsf-api.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jsf\jsf-impl.jar"></property>
+    <property name="Env-ComSpec" value="C:\WINDOWS\system32\cmd.exe"></property>
+    <property name="build.web.excludes" value="**/*.java,**/*.form"></property>
+    <property name="Env-CLIENTNAME" value="Console"></property>
+    <property name="javac.debug" value="true"></property>
+    <property name="display.browser" value="true"></property>
+    <property name="conf.dir" value="src/conf"></property>
+    <property name="org.openide.major.version" value="IDE/1"></property>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
+    <property name="wsclientuptodate.classpath" value="C:\Program Files\netbeans-5.0\enterprise2\ant\extra\wsclientuptodate.jar"></property>
+    <property name="libs.absolutelayout.javadoc" value=""></property>
+    <property name="netbeans.buildnumber" value="200601251500"></property>
+    <property name="client.urlPart" value=""></property>
+    <property name="env-processor_architecture" value="x86"></property>
+    <property name="user.name" value="sang"></property>
+    <property name="env-temp" value="C:\DOCUME~1\sang\LOCALS~1\Temp"></property>
+    <property name="Env-PROCESSOR_REVISION" value="1c00"></property>
+    <property name="has.custom.manifest" value="true"></property>
+    <property name="env-java_home" value="c:\jdk1.5.0_06"></property>
+    <property name="build.meta.inf.dir" value="build/web/META-INF"></property>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"></property>
+    <property name="Env-QTJAVA" value="C:\Program Files\Java\j2re1.4.1_02\lib\ext\QTJava.zip"></property>
+    <property name="sun.jnu.encoding" value="Cp1252"></property>
+    <property name="do.war.package.with.custom.manifest" value="true"></property>
+    <property name="java.runtime.name" value="Java(TM) 2 Runtime Environment, Standard Edition"></property>
+    <property name="env-logonserver" value="\\PASSION"></property>
+    <property name="jdk.home" value="C:\jdk1.5.0_06"></property>
+    <property name="jspc.classpath" value="C:\Program Files\netbeans-5.0\ide6\ant\lib\ant.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\ant.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\commons-el.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jasper-compiler.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jasper-runtime.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jsp-api.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-factory-dbcp.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-factory.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-resources.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\servlet-api.jar:C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jasper-compiler-5.5.9.jar:C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jasper-runtime-5.5.9.jar:C:\Program Files\netbeans-5.0\enterprise2\modules\ext\commons-el.jar:C:\Program Files\netbeans-5.0\ide6\modules\ext\commons-logging-1.0.4.jar"></property>
+    <property name="deployment.WebDAV.scriptfile" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\scr\deploy-webdav-impl.xml"></property>
+    <property name="lib.dir" value="web/WEB-INF/lib"></property>
+    <property name="sun.awt.keepWorkingSetOnMinimize" value="true"></property>
+    <property name="org.openide.TopManager" value="org.netbeans.core.NonGui"></property>
+    <property name="netbeans.dirs" value="C:\Program Files\netbeans-5.0\nb5.0;C:\Program Files\netbeans-5.0\ide6;C:\Program Files\netbeans-5.0\enterprise2;C:\Program Files\netbeans-5.0\harness;C:\Program Files\netbeans-5.0\profiler1;C:\Program Files\netbeans-5.0\mobility7.2"></property>
+    <property name="java.specification.name" value="Java Platform API Specification"></property>
+    <property name="javadoc.author" value="false"></property>
+    <property name="user.timezone" value=""></property>
+    <property name="web.docbase.dir" value="web"></property>
+    <property name="libs.junit.javadoc" value="C:\Program Files\netbeans-5.0\ide6\docs\junit-3.8.1-api.zip"></property>
+    <property name="org.openide.specification.version" value="6.2"></property>
+    <property name="path.separator" value=";"></property>
+    <property name="Env-LOGONSERVER" value="\\PASSION"></property>
+    <property name="libs.absolutelayout.classpath" value="C:\Program Files\netbeans-5.0\ide6\modules\ext\AbsoluteLayout.jar"></property>
+    <property name="libs.jaxrpc16.classpath" value="C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\activation.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\FastInfoset.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\jax-qname.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\jaxp-api.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\jaxrpc-api.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\jaxrpc-impl.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\jaxrpc-spi.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\jsr173_api.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\mail.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\relaxngDatatype.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\saaj-api.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\saaj-impl.jar;C:\Program Files\netbeans-5.0\ide6\modules\ext\jaxrpc16\xsdlib.jar"></property>
+    <property name="Env-Path" value="c:\sun\appserver\bin;c:\bin;c:\cygwin\bin;c:\jdk1.5.0_06\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI Control Panel;C:\ant\apache-ant-1.6.5\bin;C:\Program Files\QuickTime\QTSystem\;C:\MySQL\MySQL Server 5.0\bin;C:\Sun\AppServer8\bin;C:\Sun\AppServer\bin"></property>
+    <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense"></property>
+    <property name="file.encoding" value="Cp1252"></property>
+    <property name="dist.javadoc.dir" value="dist/javadoc"></property>
+    <property name="libs.J2MEUnit.javadoc" value="C:\Program Files\netbeans-5.0\mobility7.2\docs\j2meunit-1.1.1-api.zip;C:\download\j2se\jdk-1_5_0-doc.zip"></property>
+    <property name="env-programfiles" value="C:\Program Files"></property>
+    <property name="https.nonProxyHosts" value="localhost|127.0.0.1|passion|passion.i.fmedr.com"></property>
+    <property name="libs.j2me_ant_ext.src" value=""></property>
+    <property name="libs.junit.src" value=""></property>
+    <property name="env-systemroot" value="C:\WINDOWS"></property>
+    <property name="ant.file" value="C:\handson2\development\javaswing\samples\HelloWeb\build.xml"></property>
+    <property name="copyfiles.classpath" value="C:\Program Files\netbeans-5.0\enterprise2\ant\extra\copyfiles.jar"></property>
+    <property name="platforms.J2ME_Wireless_Toolkit_2_2.home" value="C:\Documents and Settings\sang\.netbeans\5.0\emulators\wtk22_win\emulator\wtk22"></property>
+    <property name="j2ee.server.instance" value="tomcat55:home=$bundled_home:base=$bundled_base"></property>
+    <property name="libs.NetBeans MIDP Components.src" value="C:\Program Files\netbeans-5.0\mobility7.2\sources\nb_midp_components-src.zip"></property>
+    <property name="Env-windir" value="C:\WINDOWS"></property>
+    <property name="java.io.tmpdir" value="C:\DOCUME~1\sang\LOCALS~1\Temp\"></property>
+    <property name="env-processor_identifier" value="x86 Family 15 Model 28 Stepping 0, AuthenticAMD"></property>
+    <property name="build.test.results.dir" value="build/test/results"></property>
+    <property name="user.language" value="en"></property>
+    <property name="Env-=::" value="::\"></property>
+    <property name="line.separator" value="
+"></property>
+    <property name="apple.laf.useScreenMenuBar" value="true"></property>
+    <property name="libs.absolutelayout.src" value=""></property>
+    <property name="javac.compilerargs" value=""></property>
+    <property name="netbeans.osenv.nullsep" value="true"></property>
+    <property name="env-tmp" value="C:\DOCUME~1\sang\LOCALS~1\Temp"></property>
+    <property name="Env-SystemRoot" value="C:\WINDOWS"></property>
+    <property name="war.name" value="HelloWeb.war"></property>
+    <property name="jar.compress" value="false"></property>
+    <property name="Env-FP_NO_HOST_CHECK" value="NO"></property>
+    <property name="libs.proguard.javadoc" value=""></property>
+    <property name="java.vm.info" value="mixed mode, sharing"></property>
+    <property name="libs.j2me_ant_ext.classpath" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\org-netbeans-modules-kjava-antext.jar;C:\Program Files\netbeans-5.0\ide6\modules\org-netbeans-modules-classfile.jar"></property>
+    <property name="platforms.J2ME_Wireless_Toolkit_2_2.preverifycommandline" value=""></property>
+    <property name="env-os" value="Windows_NT"></property>
+    <property name="ant.file.HelloWeb" value="C:\handson2\development\javaswing\samples\HelloWeb\build.xml"></property>
+    <property name="javadoc.private" value="false"></property>
+    <property name="sun.desktop" value="windows"></property>
+    <property name="build.test.classes.dir" value="build/test/classes"></property>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"></property>
+    <property name="env-systemdrive" value="C:"></property>
+    <property name="org.netbeans.lib.collab.xmpp.session.keepaliveinterval" value="30"></property>
+    <property name="netbeans.dynamic.classpath" value="C:\Program Files\netbeans-5.0\platform6\core\core.jar;C:\Program Files\netbeans-5.0\platform6\core\org-openide-filesystems.jar;C:\Program Files\netbeans-5.0\nb5.0\core\org-netbeans-upgrader.jar;C:\Program Files\netbeans-5.0\nb5.0\core\locale\core_nb.jar;C:\Program Files\netbeans-5.0\ide6\core\org-netbeans-modules-utilities-cli.jar"></property>
+    <property name="compile.jsps" value="false"></property>
+    <property name="no.dist.ear.dir" value="true"></property>
+    <property name="platform.active" value="default_platform"></property>
+    <property name="Env-CommonProgramFiles" value="C:\Program Files\Common Files"></property>
+    <property name="env-appdata" value="C:\Documents and Settings\sang\Application Data"></property>
+    <property name="ant.file.HelloWeb-impl" value="C:\handson2\development\javaswing\samples\HelloWeb\nbproject\build-impl.xml"></property>
+    <property name="http.nonProxyHosts" value="localhost|127.0.0.1|passion|passion.i.fmedr.com"></property>
+    <property name="libs.jsf.src" value=""></property>
+    <property name="Env-PROCESSOR_LEVEL" value="15"></property>
+    <property name="build.classes.dir.real" value="build/web/WEB-INF/classes"></property>
+    <property name="libs.GWT.javadoc" value=""></property>
+    <property name="javadoc.encoding" value=""></property>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"></property>
+    <property name="libs.struts.classpath" value="C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\antlr.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\commons-beanutils.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\commons-digester.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\commons-fileupload.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\commons-logging.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\commons-validator.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\jakarta-oro.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\struts\struts.jar"></property>
+    <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
+    <property name="netbeans.home" value="C:\Program Files\netbeans-5.0\platform6"></property>
+    <property name="javadoc.nonavbar" value="false"></property>
+    <property name="user.properties.file" value="C:\Documents and Settings\sang\.netbeans\5.0\build.properties"></property>
+    <property name="netbeans.importclass" value="org.netbeans.upgrade.AutoUpgrade"></property>
+    <property name="env-allusersprofile" value="C:\Documents and Settings\All Users"></property>
+    <property name="build.web.dir" value="build/web"></property>
+    <property name="https.proxyPort" value=""></property>
+    <property name="env-windir" value="C:\WINDOWS"></property>
+    <property name="env-qtjava" value="C:\Program Files\Java\j2re1.4.1_02\lib\ext\QTJava.zip"></property>
+    <property name="Env-APPDATA" value="C:\Documents and Settings\sang\Application Data"></property>
+    <property name="j2ee.server.type" value="Tomcat55"></property>
+    <property name="build.generated.dir" value="build/generated"></property>
+    <property name="netbeans.home+have.tests" value="true"></property>
+    <property name="env-clientname" value="Console"></property>
+    <property name="os.name" value="Windows XP"></property>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
+    <property name="run.test.classpath" value=":build/web/WEB-INF/classes:C:\Program Files\netbeans-5.0\ide6\modules\ext\junit-3.8.1.jar:build/test/classes"></property>
+    <property name="libs.CopyLibs.src" value=""></property>
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"></property>
+    <property name="org.openide.version" value="deprecated"></property>
+    <property name="env-number_of_processors" value="1"></property>
+    <property name="libs.junit.classpath" value="C:\Program Files\netbeans-5.0\ide6\modules\ext\junit-3.8.1.jar"></property>
+    <property name="env-pathext" value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH"></property>
+    <property name="env-homepath" value="\Documents and Settings\sang"></property>
+    <property name="java.library.path" value="C:\jdk1.5.0_06\jre\bin;.;C:\WINDOWS\system32;C:\WINDOWS;c:\sun\appserver\bin;c:\bin;c:\cygwin\bin;c:\jdk1.5.0_06\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI Control Panel;C:\ant\apache-ant-1.6.5\bin;C:\Program Files\QuickTime\QTSystem\;C:\MySQL\MySQL Server 5.0\bin;C:\Sun\AppServer8\bin;C:\Sun\AppServer\bin"></property>
+    <property name="env-processor_revision" value="1c00"></property>
+    <property name="libs.jakarta_slide_ant_webdav.src" value=""></property>
+    <property name="ant.java.version" value="1.5"></property>
+    <property name="basedir" value="C:\handson2\development\javaswing\samples\HelloWeb"></property>
+    <property name="java.class.version" value="49.0"></property>
+    <property name="javadoc.noindex" value="false"></property>
+    <property name="war.package" value="true"></property>
+    <property name="platforms.J2ME_Wireless_Toolkit_2_2.type" value="UEI-1.0.1"></property>
+    <property name="build.ear.web.dir" value="build/ear-module"></property>
+    <property name="sun.awt.exception.handler" value="org.netbeans.core.NbErrorManager$AWTHandler"></property>
+    <property name="javac.test.classpath" value=":build/web/WEB-INF/classes:C:\Program Files\netbeans-5.0\ide6\modules\ext\junit-3.8.1.jar"></property>
+    <property name="j2ee.platform" value="1.4"></property>
+    <property name="build.ear.classes.dir" value="build/ear-module/WEB-INF/classes"></property>
+    <property name="Env-USERDOMAIN" value="PASSION"></property>
+    <property name="ant.home" value="C:\Program Files\netbeans-5.0\ide6\ant"></property>
+    <property name="libs.proguard.src" value=""></property>
+    <property name="resource.dir" value="setup"></property>
+    <property name="javadoc.splitindex" value="true"></property>
+    <property name="Env-TEMP" value="C:\DOCUME~1\sang\LOCALS~1\Temp"></property>
+    <property name="no.dependencies" value="false"></property>
+    <property name="javadoc.preview" value="true"></property>
+    <property name="runmain.jvmargs" value=""></property>
+    <property name="libs.CopyLibs.javadoc" value=""></property>
+    <property name="env-sessionname" value="Console"></property>
+    <property name="env-=::" value="::\"></property>
+    <property name="Env-PATHEXT" value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH"></property>
+    <property name="build.dir" value="build"></property>
+    <property name="sun.boot.library.path" value="C:\jdk1.5.0_06\jre\bin"></property>
+    <property name="war.content.additional" value=""></property>
+    <property name="sun.management.compiler" value="HotSpot Client Compiler"></property>
+    <property name="libs.J2MEUnit.classpath" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\ext\j2meunit-1.1.1.jar"></property>
+    <property name="user.variant" value=""></property>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"></property>
+    <property name="dist.ear.war" value="dist/HelloWeb.war"></property>
+    <property name="Env-SESSIONNAME" value="Console"></property>
+    <property name="deployment.Ftp.scriptfile" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\scr\deploy-ftp-impl.xml"></property>
+    <property name="javadoc.windowtitle" value=""></property>
+    <property name="http.proxyPort" value=""></property>
+    <property name="j2ee.platform.classpath" value="C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\ant.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\commons-el.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jasper-compiler.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jasper-runtime.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jsp-api.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-factory-dbcp.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-factory.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-resources.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\servlet-api.jar"></property>
+    <property name="env-computername" value="PASSION"></property>
+    <property name="https.proxyHost" value=""></property>
+    <property name="libs.jstl11.javadoc" value="C:\Program Files\netbeans-5.0\enterprise2\docs\jstl-1.1.2-javadoc.zip"></property>
+    <property name="netbeans.osenv" value="C:\DOCUME~1\sang\LOCALS~1\Temp\nbenv8"></property>
+    <property name="libs.proguard.classpath" value="C:\Program Files\netbeans-5.0\mobility7.2\external\proguard.jar"></property>
+    <property name="build.compiler.emacs" value="true"></property>
+    <property name="deployment.Copy.scriptfile" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\scr\deploy-copy-impl.xml"></property>
+    <property name="libs.jstl11.src" value=""></property>
+    <property name="ant.project.name" value="HelloWeb"></property>
+    <property name="libs.swing-layout.classpath" value="C:\Program Files\netbeans-5.0\platform6\modules\ext\swing-layout-1.0.jar"></property>
+    <property name="env-commonprogramfiles" value="C:\Program Files\Common Files"></property>
+    <property name="java.vm.specification.version" value="1.0"></property>
+    <property name="build.web.dir.real" value="build/web"></property>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"></property>
+    <property name="javadoc.use" value="true"></property>
+    <property name="sun.cpu.isalist" value=""></property>
+    <property name="Env-CLASSPATH" value=".;C:\Program Files\Java\j2re1.4.1_02\lib\ext\QTJava.zip"></property>
+    <property name="java.ext.dirs" value="C:\jdk1.5.0_06\jre\lib\ext"></property>
+    <property name="os.version" value="5.1"></property>
+    <property name="libs.jstl11.classpath" value="C:\Program Files\netbeans-5.0\enterprise2\modules\ext\standard.jar;C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jstl.jar"></property>
+    <property name="user.home" value="C:\Documents and Settings\sang"></property>
+    <property name="org.xml.sax.driver" value="com.sun.org.apache.xerces.internal.parsers.SAXParser"></property>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."></property>
+    <property name="javax.xml.parsers.DocumentBuilderFactory" value="org.netbeans.core.startup.DOMFactoryImpl"></property>
+    <property name="Env-ALLUSERSPROFILE" value="C:\Documents and Settings\All Users"></property>
+    <property name="libs.struts.src" value=""></property>
+    <property name="platforms.J2ME_Wireless_Toolkit_2_2.debugcommandline" value=""></property>
+    <property name="env-comspec" value="C:\WINDOWS\system32\cmd.exe"></property>
+    <property name="Env-PROCESSOR_IDENTIFIER" value="x86 Family 15 Model 28 Stepping 0, AuthenticAMD"></property>
+    <property name="libs.jakarta_slide_ant_webdav.javadoc" value=""></property>
+    <property name="user.dir" value="C:\handson2\development\javaswing\samples\HelloWeb"></property>
+    <property name="org.openide.TopManager.GUI" value="true"></property>
+    <property name="deployment.SonnyEricsson.scriptfile" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\scr\deploy-sonyericsson-impl.xml"></property>
+    <property name="env-username" value="sang"></property>
+    <property name="libs.jsf.javadoc" value="C:\Program Files\netbeans-5.0\enterprise2\docs\jsf-1.1.01-javadoc.zip"></property>
+    <property name="Env-NUMBER_OF_PROCESSORS" value="1"></property>
+    <property name="env-path" value="c:\sun\appserver\bin;c:\bin;c:\cygwin\bin;c:\jdk1.5.0_06\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI Control Panel;C:\ant\apache-ant-1.6.5\bin;C:\Program Files\QuickTime\QTSystem\;C:\MySQL\MySQL Server 5.0\bin;C:\Sun\AppServer8\bin;C:\Sun\AppServer\bin"></property>
+    <property name="Env-HOMEPATH" value="\Documents and Settings\sang"></property>
+    <property name="sun.cpu.endian" value="little"></property>
+    <property name="platforms.J2ME_Wireless_Toolkit_2_2.runcommandline" value=""></property>
+    <property name="Env-HOMEDRIVE" value="C:"></property>
+    <property name="java.vm.version" value="1.5.0_06-b05"></property>
+    <property name="dist.war" value="dist/HelloWeb.war"></property>
+    <property name="java.class.path" value="C:\handson2\development\javaswing\samples\HelloWeb\build\web\WEB-INF\classes;C:\Program Files\netbeans-5.0\ide6\modules\ext\junit-3.8.1.jar;C:\handson2\development\javaswing\samples\HelloWeb\build\test\classes;C:\handson2\development\javaswing\samples\HelloWeb;C:\Program Files\Java\j2re1.4.1_02\lib\ext\QTJava.zip;C:\Program Files\netbeans-5.0\ide6\ant\lib\ant-launcher.jar;C:\Program Files\netbeans-5.0\ide6\ant\lib\ant.jar;C:\Program Files\netbeans-5.0\ide6\ant\lib\ant-junit.jar"></property>
+    <property name="javax.xml.parsers.SAXParserFactory" value="org.netbeans.core.startup.SAXFactoryImpl"></property>
+    <property name="os.arch" value="x86"></property>
+    <property name="javac.deprecation" value="false"></property>
+    <property name="http.proxyHost" value=""></property>
+    <property name="nbplatform.default.netbeans.dest.dir" value="C:\Program Files\netbeans-5.0"></property>
+    <property name="build.classes.excludes" value="**/*.java,**/*.form"></property>
+    <property name="dist.dir" value="dist"></property>
+    <property name="Env-OS" value="Windows_NT"></property>
+    <property name="netbeans.user" value="C:\Documents and Settings\sang\.netbeans\5.0"></property>
+    <property name="debug.classpath" value=":build/web/WEB-INF/classes:build/ear-module/WEB-INF/classes"></property>
+    <property name="Env-ProgramFiles" value="C:\Program Files"></property>
+    <property name="libs.NetBeans MIDP Components.classpath" value="C:\Program Files\netbeans-5.0\mobility7.2\modules\ext\nb_midp_components.jar"></property>
+    <property name="jspcompilation.classpath" value="C:\Program Files\netbeans-5.0\ide6\ant\lib\ant.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\ant.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\commons-el.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jasper-compiler.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jasper-runtime.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\jsp-api.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-factory-dbcp.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-factory.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\naming-resources.jar:C:\Program Files\netbeans-5.0\enterprise2\jakarta-tomcat-5.5.9\common\lib\servlet-api.jar:C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jasper-compiler-5.5.9.jar:C:\Program Files\netbeans-5.0\enterprise2\modules\ext\jasper-runtime-5.5.9.jar:C:\Program Files\netbeans-5.0\enterprise2\modules\ext\commons-el.jar:C:\Program Files\netbeans-5.0\ide6\modules\ext\commons-logging-1.0.4.jar:"></property>
+    <property name="do.display.browser" value="true"></property>
+    <property name="env-fp_no_host_check" value="NO"></property>
+    <property name="com.sun.aas.installRoot" value="C:\Sun\AppServer"></property>
+    <property name="Env-JAVA_HOME" value="c:\jdk1.5.0_06"></property>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
+    <property name="file.separator" value="\"></property>
+    <property name="env-processor_level" value="15"></property>
+    <property name="java.runtime.version" value="1.5.0_06-b05"></property>
+    <property name="libs.j2me_ant_ext.javadoc" value=""></property>
+    <property name="env-userprofile" value="C:\Documents and Settings\sang"></property>
+    <property name="debug.test.classpath" value=":build/web/WEB-INF/classes:C:\Program Files\netbeans-5.0\ide6\modules\ext\junit-3.8.1.jar:build/test/classes"></property>
+    <property name="sun.boot.class.path" value="C:\jdk1.5.0_06\jre\lib\rt.jar;C:\jdk1.5.0_06\jre\lib\i18n.jar;C:\jdk1.5.0_06\jre\lib\sunrsasign.jar;C:\jdk1.5.0_06\jre\lib\jsse.jar;C:\jdk1.5.0_06\jre\lib\jce.jar;C:\jdk1.5.0_06\jre\lib\charsets.jar;C:\jdk1.5.0_06\jre\classes"></property>
+    <property name="libs.NetBeans MIDP Components.javadoc" value="C:\Program Files\netbeans-5.0\mobility7.2\docs\nb_midp_components-api.zip"></property>
+    <property name="have.tests" value="true"></property>
+    <property name="user.country" value="US"></property>
+    <property name="javadoc.notree" value="false"></property>
+    <property name="Env-USERPROFILE" value="C:\Documents and Settings\sang"></property>
+    <property name="Env-PROCESSOR_ARCHITECTURE" value="x86"></property>
+    <property name="libs.struts.javadoc" value="C:\Program Files\netbeans-5.0\enterprise2\docs\struts-javadoc.zip"></property>
+    <property name="javadoc.additionalparam" value=""></property>
+    <property name="default.javac.target" value="1.5"></property>
+    <property name="javac.classpath" value=""></property>
+    <property name="build.classes.dir" value="build/web/WEB-INF/classes"></property>
+    <property name="libs.swing-layout.src" value=""></property>
+    <property name="libs.swing-layout.javadoc" value="C:\Program Files\netbeans-5.0\platform6\docs\swing-layout-1.0-doc.zip"></property>
+    <property name="javac.target" value="1.4"></property>
+    <property name="java.vendor" value="Sun Microsystems Inc."></property>
+    <property name="libs.jaxrpc16.javadoc" value=""></property>
+    <property name="libs.GWT.classpath" value="C:\download\gwt\gwt-windows-1.0.21\gwt-user.jar"></property>
+    <property name="java.specification.version" value="1.5"></property>
+    <property name="war.ear.name" value="HelloWeb.war"></property>
+    <property name="env-classpath" value=".;C:\Program Files\Java\j2re1.4.1_02\lib\ext\QTJava.zip"></property>
+    <property name="sun.arch.data.model" value="32"></property>
+  </properties>
+  <testcase classname="org.me.hello.NameHandlerTest" name="testGetUsername" time="0.0"></testcase>
+  <testcase classname="org.me.hello.NameHandlerTest" name="testSetUsername" time="0.0"></testcase>
+  <testcase classname="org.me.hello.NameHandlerTest" name="testAddnumber" time="0.0"></testcase>
+  <system-out><![CDATA[getUsername
+setUsername
+addnumber
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

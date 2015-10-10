@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+  <head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+    <title>Developer Guide to the BPEL Designer - The BPEL Module Project</title>
+    <meta name="description" content="Developer Guide to the BPEL Designer">
+   <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+    <meta name="author" content="Dmitry Markovski">
+</head>
+  <body>
+    <a name="top"></a>
+    <h1>
+       Developer Guide to the BPEL Designer: The BPEL Module Project    </h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007<br>
+</p>
+</div>
+    <h2>
+    Contents    </h2>
+	<p><a href="bpel-guide.html">Developer Guide to the BPEL Designer</a></p>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tr>
+         <td align="left" valign="top">
+           <ul>
+             <li><a href="bpel-guide-overview.html">Overview</a></li>
+             <li><b>The BPEL Module Project</b>
+               <ul>
+                 <li><a href="bpel-guide-project.html#understand">Understanding the BPEL Module Project</a> </li>
+                 <li> <a href="bpel-guide-project.html#createnew">Creating a  BPEL Module Project</a> </li>
+                 <li> <a href="bpel-guide-project.html#jbideploy">Creating a Composite Application Project </a> </li>
+                 <li> <a href="bpel-guide-project.html#deploy">Deploying a Composite Application Project</a> </li>
+                 <li> <a href="bpel-guide-project.html#createsample">Creating Sample Processes in the BPEL Designer</a> </li>
+               </ul>
+             </li>
+             <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a> </li>
+             <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+             <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> </li>
+             <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+             <li><a href="bpel-guide-validation.html">Finding Usages of BPEL Components and Validating BPEL</a> </li>
+             <li> <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> </li>
+             <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+         </ul>         </td>
+         <td width="20"></td>
+         <td align="right" valign="top">  
+	  <img src="../../../images/articles/60/netbeans-stamp.gif" 
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right">
+   </td>
+   </tr>
+</table>
+  <br>
+  <!-- ======================================================================================== -->
+  <h2>
+      <a name="understand"></a>Understanding the BPEL Module Project    </h2>
+    <p>The BPEL Module project is a group of source files which includes BPEL files, WSDL files, and XML schema files. Within a BPEL Module project, you can author a business process  compliant with the WS-BPEL 2.0 language specification. </p>
+    <p>
+       The BPEL Module project provides point-and-click support for the following:    </p>
+    <ul>
+      <li>
+         Using the New Project wizard to create a BPEL Module project and a Composite Application project.      </li>
+      <li>
+         Importing WSDL Resources to act as partner services in the business process.      </li>
+      <li>
+         Creating new WSDL resources, as needed.      </li>
+      <li>
+         Importing XML Schema resources.      </li>
+      <li>
+         Adding BPEL activities to the business process diagram; further defining the elements by using Property Editor dialog boxes, Properties windiw, and pop-up menu actions. </li>
+      <li>
+      Adding to the source code of the BPEL, WSDL and XSD files.      </li>
+      <li>
+         Checking and validating XML source code.      </li>
+      <li>
+         Building and adding the project as a JBI module to a Composite Application project. </li>
+      <li>
+         Test running BPEL processes by sending sample messages to the deployed process or processes.      </li>
+      <li>
+         Debugging deployed business processes      </li>
+    </ul>
+    <p>
+       Accordingly, the typical procedure to follow when building a BPEL process is:    </p>
+    <ol>
+      <li>
+         <a href="bpel-guide-project.html#createnew">Create a BPEL Module project</a> using 
+         the New Project wizard.      </li>
+      <li>
+         <a href="bpel-guide-project.html#jbideploy">Create a Composite Application project</a>.
+        <br>
+        For sample processes, Composite Application projects are created automatically for you.
+      For the processes created from scratch, you should create the Composite Application project manually. </li>
+      <li>
+         <a href="bpel-guide-project.html#addjbi">Add the BPEL Module as a JBI Module</a> to the Composite Application project.      </li>
+      <li>
+         (Optional) Build the Composite Application project and <a href="bpel-guide-overview.html#bpelse">make sure that the Application Server is started</a>.      </li>
+      <li>
+         <a href="bpel-guide-project.html#deploy">Deploy</a> the Composite Application project
+      to the BPEL Service Engine. </li>
+      <li>
+         <a href="bpel-guide-test.html#createtestcase">Create test cases</a>.
+        <br>
+      For sample processes, test cases are automatically created; for new projects, you need to create at least one test case.      </li>
+      <li>
+         <a href="bpel-guide-test.html#Running">Run</a> one or all test cases.      </li>
+      <li>(Optional) <a href="bpel-guide-test.html#debug">Debug the BPEL process</a>. </li>
+  </ol>
+    <p align="center">
+      <a href="bpel-guide-project.html#top">top</a><br>
+      <!-- ======================================================================================== -->
+    </p>
+    <h2>
+      <a name="createnew"></a>Creating a  BPEL Module Project    </h2>
+    <p><b>
+       To create a BPEL Module project:</b></p>
+    <ol>
+      <li>
+         In the IDE, choose File &gt; New Project from the main menu and then perform the following steps:
+         <ol type="a">
+        <li>
+           Under Categories, select <tt>SOA</tt>.        </li>
+        <li>
+           Under Projects, select <tt>BPEL Module</tt> and click Next. </li>
+      </ol>
+      <p align="center">
+        <img src="../../../images/articles/ep-bpel-guide/60/newprj.png" alt="Step 1">      </p>
+      </li>
+      <li>In the Name and Location page, enter the project name and specify the project location or accept the defaults. </li>
+      <li>
+         Click Finish.
+        <p align="center">
+          <img src="../../../images/articles/ep-bpel-guide/60/nameandlocation.png" alt="Step 2">        </p>
+        <p>
+           The Projects window now contains a project node for the BPEL Module project.        </p>
+        <p align="center">
+          <img src="../../../images/articles/ep-bpel-guide/60/bpelmodule.png" alt="BPEL Module node">        </p>
+      </li>
+      <li>
+         To create a BPEL file for your project, right-click the <tt>Process Files</tt> node and choose New &gt; BPEL Process from the pop-up menu.      </li>
+      <li>
+         In the New BPEL Process dialog box, specify the file name and folder. Click Finish.
+           <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/newbpel.png" alt="New BPEL Process file">         </p>
+      </li>
+      <li>
+         To create a WSDL file for your project, right-click the <tt>Process Files</tt> node and choose New &gt; WSDL Document from the pop-up menu.      </li>
+      <li>
+         In the New  WSDL Document dialog box, specify the file name and folder. Optionally, select the Import XML Schema File(s) checkbox and browse for a Schema file to import. Click Finish.
+           <p align="center">
+            <img src="../../../images/articles/ep-bpel-guide/60/newwsdl.png" alt="New WSDL file">         </p>
+      </li>
+  </ol>
+    <div class="indent">
+      <h3 class="tutorial">
+         Exploring the BPEL Module Project in the Projects Window      </h3>
+      <p>
+         A typical BPEL Module project contains a BPEL source file, WSDL and XSD files.      </p>
+      <p>
+         Take a look at the artifacts you have created:      </p>
+      <ol>
+        <li>
+           In the Projects window, expand the created <tt>BPELModule1</tt> node and the <tt>Process Files</tt> node.
+          <br>
+           The <tt>Process Files</tt> node contains these items:
+        <ul>
+          <li>
+            <tt>newProcess.bpel</tt>, the BPEL process          </li>
+          <li>
+            <tt>newWSDL.wsdl</tt>, the process web service interface.
+            <br>
+          </li>
+        </ul>
+        <p align="center">
+          <img src="../../../images/articles/ep-bpel-guide/60/bpel-wsdlfiles.png" alt="BPEL Module Process Files">        </p>
+        </li>
+        <li>
+           Double-click the <tt>newProcess.bpel</tt>  node.
+          <br>
+           Notice the following:
+        <ul>
+          <li> The <tt>newProcess.bpel</tt> diagram opens in the Design view. <br>
+              The Design view is the area where you can visually model business processes. The BPEL Designer automatically generates BPEL code that corresponds to the visual design.<br>
+</li>
+          <li>The Source view for <tt>newProcess.bpel</tt> can be invoked by clicking the Source button.          </li>
+          <li>The Palette of BPEL elements opens in the Design view to the right of the design area.          </li>
+          <li>
+            The Properties window opens for a selected element below the Palette.          </li>
+          <li>
+             The Navigator window shows the BPEL Logical View of the BPEL process.          </li>
+          <li>
+             The BPEL Mapper window appears in the bottom (if it does not appear automatically, choose Window &gt; Other &gt; BPEL Mapper from the main menu).          </li>
+        </ul>
+        <p align="center">
+          <a href="../../../images/articles/ep-bpel-guide/60/exploringbpel.png"><img src="../../../images/articles/ep-bpel-guide/60/exploringbpel_tn.png" alt="BPEL File Open"><br>Click to enlarge</a>        </p>
+        </li>
+        <li>
+         Double-clicking the <tt>newWSDL.wsdl</tt> node opens the <a href="../websvc/wsdl-guide.html" title="Developer Guide to the WSDL Editor">WSDL Editor</a> where you can view and modify your <tt>newWSDL.wsdl</tt> file.        </li>
+      </ol>
+      <h3 class="tutorial">
+         Properties of a BPEL Module Project      </h3>
+      <p>
+          You open the Properties dialog box for a BPEL Module project by right-clicking the BPEL Module project's node and choosing Properties. The tree in the left pane shows that you have access to three pages:      </p>
+      <ul>
+         <li>
+            <strong>General</strong>         </li>
+         <li><b>P</b><strong>roject&nbsp;References</strong>         </li>
+         <li><b>XML Catalog </b></li>
+      </ul>
+      <p>
+          The <strong>General</strong> page allows you to view the path to the folder containing the project's files and view or modify the prefix for the project service engine (such as <tt>com.sun.bpelse</tt>).      </p>
+      <p>
+          The <strong>Project References</strong> page displays other BPEL Module projects that are referenced by your BPEL Module project. In this page, you can add and remove projects referenced by the BPEL Module project.      </p>
+      <p>The <b>XML Catalog</b> page displays XML catalog entries used within your BPEL Module project. XML catalogs provide mapping information that maps an external entity in an XML document to the actual location of the document being referenced. In this page, you can remove XML catalog entries from the list of XML catalogs for your BPEL Module project. </p>
+    </div>
+    <p align="center">
+      <a href="bpel-guide-project.html#top">top</a>    </p>
+    <br>
+    <!-- ======================================================================================== -->
+    <h2>
+      <a name="jbideploy"></a>Creating a Composite Application Project    </h2>
+    <p>
+       A BPEL Module project is not directly deployable. You must first add a BPEL Module project, as a JBI module, to a Composite Application project. You can then deploy the Composite Application project. Deploying the project makes the service assembly available to the application server, thus allowing its service units to run. </p>
+    <div class="indent">
+      <h3 class="tutorial">
+         Creating Composite Application Projects      </h3>
+      <p>
+          The New Project wizard guides you through the steps needed to create a Composite Application project.      </p>
+      <p>
+         <b>To create a new Composite Application project:</b>      </p>
+      <ol>
+         <li>
+             Choose File &gt; New Project (Ctrl-Shift-N).
+            <br>
+         </li>
+         <li>
+             In the Categories list, select SOA and in the Projects list, select Composite Application and click Next.         </li>
+         <li>
+             In the Name and Location page, name the project and specify the location of project files.         </li>
+         <li>
+             To set the new Composite Application project as main, leave the Set as Main Project checkbox selected.         </li>
+        <li>
+             Click Finish.
+            <br>
+            The new Composite Application project appears in the Projects window. In order to deploy and perform test runs of your business process, add the BPEL Module as a JBI module to the Composite Application project. </li>
+      </ol>
+      <h3 class="tutorial">
+         <a name="buildproject"></a>Building a BPEL Module Project      </h3>
+    <p>
+       When you build a project, the IDE compiles the BPEL source file and packages the BPEL file and web service artifacts, including WSDL and XSD files, into a JAR archive. You should add this project JAR file to a Composite Application project and then deploy it to the JBI server.    </p>
+      <p>
+         Follow this procedure to build a BPEL Module project:      </p>
+      <ol>
+        <li>
+           In the Projects window, right-click the BPEL Module project's node and choose Build Project.
+            <br>
+        You can also perform a clean build by right-clicking the BPEL Module project's node in the Projects window and choosing Clean and Build Project. </li>
+        <li>
+         Watch for the <tt>BUILD SUCCESSFUL</tt> message in the Output window.
+           <br>
+        </li>
+      </ol>
+      <!-- Adding JBI Modules to Composite Application Projects -->
+      <h3 class="tutorial">
+         <a name="addjbi"></a>Adding JBI Modules to Composite Application Projects      </h3>
+      <p>
+         <b>To add a JBI module to the Composite Application project:</b>      </p>
+      <ol>
+         <li>
+             In the Projects window, right-click the Composite Application project's node and choose Add JBI Module.         </li>
+         <li>
+             In the Select Project dialog box, select the BPEL Module project folder, make sure that the project's JAR file has appeared in the Project JAR Files list, and click Add Project JAR Files.
+            <br>
+             To verify that the BPEL Module has been added as a JBI Module, in the Projects window, expand Composite Application project&nbsp;&gt; JBI Modules. You should see the JAR file of the BPEL Module project.         </li>
+      </ol>
+      <p align="center">
+      <a href="bpel-guide-project.html#top">top</a>    </p>
+    </div>
+    <br>
+    <!-- ======================================================================================== -->
+    <h2>
+      <a name="deploy"></a>Deploying a Composite Application Project</h2>
+    <p>
+       The Deploy action compiles the files in the Composite Application project, packages the compiled BPEL and related web service artifacts (including WSDL and XSD files) into an archive, and deploys them to the Application Server.    </p>
+    <p>
+       To deploy a Composite Application Project:    </p>
+    <ol>
+      <li>
+         Right-click the Composite Application project's node, and choose Deploy Project.      </li>
+      <li>
+         In the Warning dialog box, make sure the <tt>GlassFish V2</tt> is selected and click OK.      </li>
+      <li>
+         Deployment has succeeded if you see the <tt>Build successful</tt> message in the Output window.      <br>
+        If the Output window is not visible, choose Window &gt; Output &gt; Output.      </li>
+      <li>
+      Open the Services window and expand <tt>Servers</tt> &gt; <tt>GlassFish V2</tt>&gt; <tt>JBI</tt> &gt; <tt>Service Assemblies</tt> to see the  deployed Service Assembly.      <br>
+      If you do not see the deployed project, right-click the <tt>Service Assemblies</tt> node and choose Refresh. </li>
+  </ol>
+    <p align="center">
+      <a href="bpel-guide-project.html#top">top</a>    </p>
+    <br>
+    <!-- ======================================================================================== -->
+    <h2>
+      <a name="createsample"></a>Creating Sample Processes in the BPEL Designer    </h2>
+    <p>
+       The best way to get acquainted with constructing BPEL diagrams is to create sample processes. You can design your BPEL process by modifying existing sample processes.    </p>
+    <p>
+     For samples, the New Project sample wizard automatically generates both types of projects, BPEL Module and Composite Application, so you do not need to separately create  each of these projects. The IDE automatically adds the sample BPEL Module project as a JBI module to the Composite Application project.    </p>
+    <p>
+       In the BPEL Designer, you can create the following sample processes:    </p>
+    <ul>
+      <li>
+         <a href="synchsample.html">A Synchronous Sample Process</a>      </li>
+      <li>
+         <a href="asynchsample.html">An Asynchronous Sample Process</a>      </li>
+      <li>
+         <a href="understand-trs.html">Travel Reservation Service sample</a>      </li>
+    </ul>
+    <div class="indent">
+      <h3 class="tutorial">
+         A Synchronous Sample Process      </h3>
+      <p>
+         A synchronous process refers to a conversation style in which the client sends a message to the process, waits for a reply, and continues work only when the reply comes back. When you create a synchronous sample process, the IDE generates a skeletal process with a single synchronous operation and the required WSDL and XML schema files.      </p>
+      <h3 class="tutorial">
+         An Asynchronous Sample Process      </h3>
+      <p>
+         An asynchronous process applies to long-running conversations in which the client does not wait for a reply from the process before continuing its work. Instead of returning the result synchronously to the client, this process accepts the client's request, performs work that might be long-running, and then asynchronously calls back to the client when the work is done. When you create an asynchronous process, the IDE generates a skeletal process with one incoming and one outgoing asynchronous operation and the required WSDL and XML schema files.      </p>
+      <p>
+         Note that any particular process can consist of an arbitrary collection of synchronous and asynchronous interactions with one or more conversational partners.      </p>
+      <h3 class="tutorial">
+         Travel Reservation Service Sample      </h3>
+      <p>
+         This sample is a real-world BPEL process sample constructed using the majority of BPEL elements and several partner web services.      </p>
+      <p>
+         Together with the Travel Reservation Service sample, the wizard creates another project, Reservation Partner Services, a basic EJB and JMS based implementation of the three partner services.      </p>
+      <h3 class="tutorial">
+         Creating a Sample BPEL Module Project: General Flow      </h3>
+      <p>
+         To create a sample BPEL Module project:      </p>
+      <ol>
+        <li>
+           Choose File &gt; New Project (Ctrl-Shift-N).        </li>
+        <li>
+           In the Categories list, expand the <tt>Samples</tt> node and select <tt>SOA</tt>.</li>
+        <li>
+           In the Projects list, select the sample project you want to create and click Next.        </li>
+        <li>
+           In the Name and Location page, name the project and specify the location of project files.        </li>
+        <li>
+           Click Finish.
+          <br>
+           The wizard creates two types of projects for the selected sample: a sample BPEL Module project and a sample Composite Application project. You are free to modify the sample business process and or add additional BPEL processes to the BPEL Module. To deploy, test-run, and debug the BPEL process, use the Composite Application project.        </li>
+      </ol>
+    </div>
+    <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+        <p align="center">
+      <a href="bpel-guide-project.html#top">top</a>    </p>
+    <!-- ======================================================================================== -->
+  </body>
+</html>

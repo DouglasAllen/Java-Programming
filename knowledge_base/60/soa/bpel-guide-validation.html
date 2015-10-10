@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html>
+  <head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type">
+    <title>Developer Guide to the BPEL Designer - Finding Usages of BPEL Components and Validating BPEL</title>
+    <meta name="description" content="Developer Guide to the BPEL Designer">
+    <link rel="stylesheet" type="text/css" href="../../../netbeans.css" media="screen">
+    <meta name="author" content="Dmitry Markovski">
+</head>
+  <body>
+    <a name="top"></a>
+    <h1>
+       Developer Guide to the BPEL Designer: Finding Usages of BPEL Components and Validating BPEL</h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p>Contributed by <a href="mailto:Bob.May@Sun.COM">Bob May</a>, maintained by <a href="mailto:Irina.Filippova@Sun.COM">Irina Filippova</a><br>
+December 2007<br>
+</p>
+</div>
+    <!-- ======================================================================================== -->
+    <h2>
+       Contents    </h2>
+    <p>
+      <a href="bpel-guide.html">Developer Guide to the BPEL Designer</a>    </p>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><ul>
+            <li><a href="bpel-guide-overview.html">Overview</a></li>
+          <li><a href="bpel-guide-project.html">The BPEL Module Project</a></li>
+          <li><a href="bpel-guide-views.html">The BPEL Design and Source View</a> </li>
+          <li> <a href="bpel-guide-mapper.html">The BPEL Mapper</a> </li>
+          <li> <a href="bpel-guide-palette.html">Using the Palette Elements</a> </li>
+          <li> <a href="bpel-guide-handlers.html">Using Handlers</a> </li>
+          <li><b>Finding Usages of BPEL Components and Validating BPEL</b>
+            <ul>
+              <li><a href="bpel-guide-validation.html#findingusages">Finding Usages of BPEL Components</a> </li>
+              <li> <a href="bpel-guide-validation.html#validation">Validating BPEL</a></li>
+            </ul>
+          </li>
+          <li> <a href="bpel-guide-test.html">Testing and Debugging BPEL Processes</a> </li>
+          <li> <a href="bpel-guide-troubleshoot.html">Troubleshooting</a></li>
+        </ul></td>
+        <td width="20"></td>
+        <td align="right" valign="top"><img src="../../../images/articles/60/netbeans-stamp.gif"
+alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies to the NetBeans 6.0 IDE" border="0" height="45" width="206" align="right"> </td>
+      </tr>
+    </table>
+    <h2><a name="findingusages" id="findingusages"></a>Finding Usages of BPEL Components  </h2>
+    <!-- ======================================================================================== -->
+    <p>For BPEL files, the Find Usages command determines where the following elements are used in the associated <tt> </tt><tt>.bpel</tt> files:</p>
+    <ul>
+      <li>Variable </li>
+      <li>Partner Link</li>
+      <li>Correlation set</li>
+    </ul>
+    <p><b>To find usages of a BPEL component:</b></p>
+    <ol>
+      <li>In the IDE, open the BPEL file (<tt>.bpel</tt>) you want to work with.<br>
+      By default, the IDE opens the Design view for the BPEL file.</li>
+      <li>In the Design view, select the element for which you want to see usages.<br>
+      You can also select the element in the BPEL Logical View of the Navigator window. </li>
+      <li>Right-click the element either in the Design view or in the Navigator window and choose Find Usages from the pop-up menu.<br>
+      The IDE opens the XML Usages window in the lower part of the IDE. The  first time you invoke the Find Usages function, the window has no tabs.  For each consequent query, the IDE adds a Find XML Usages tab that  shows the usages of the component you selected. </li>
+      <li>(Optional) To go to the source for an element and double-click that element in the tree. The right part of the XML Usages windows is a visual representation of element usages throughout the project. </li>
+    </ol>
+	<h2><a name="validation"></a>Validating BPEL	</h2>
+    <p>
+	  The BPEL Designer has a built-in BPEL code validation functionality that helps developers create well-formed, valid and standard-compliant code. The code is checked for errors and the user is notified if validation fails.	</p>
+	<div class="indent">
+	<h3 class="tutorial">
+	Validation Criteria	</h3>
+	<p>
+	The Validator checks the BPEL process in accordance with the following criteria:	</p>
+	<ol>
+	  <li>
+		For conformance with the BPEL 2.0 schema.<br>
+		See the <a href="bpel-guide-troubleshoot.html">Troubleshooting</a> section of this guide for	more information about using BPEL schemas different from the BPEL 2.0 specification.</li>
+		<li>
+		For compliance with static analysis rules defined in the WS-BPEL 2.0 specification.		</li>
+		<li>
+		For broken references.		</li>
+		<li>For constructs that are valid per the BPEL 2.0 specification but are not yet supported by the Sun BPEL Service Engine.		</li>
+	</ol>
+	</div>
+	<div class="indent">
+	<h3 class="tutorial">
+	Validation Types	</h3>
+	<p>
+	The BPEL Designer provides two types of validation:	</p>
+	
+	<b>Real-time validation</b>
+
+        
+		<p>This type of validation is invoked automatically and does not require any explicit actions from the user. Only the current file is checked. The validation is performed in accordance with all the criteria mentioned above, except for validation for conformance with the BPEL 2.0 schema.        </p> 
+        <p><b>Explicit validation</b></p>
+		
+        <p>
+		This type of validation requires that the user explicitly invoke the validation process. All imported XSD and WSDL files are also checked. The validation is performed in accordance with all the criteria mentioned above.        </p>
+		<p>
+		To invoke explicit validation, do one of the following:		</p>
+		<ul>
+			<li>
+			In the Source view, right-click the source to invoke the pop-up menu and choose Validate XML (Alt-Shift-F9)			</li>
+			<li>
+			In the Design view, click the Validate XML button (Alt-Shift-F9) on the Editor toolbar.
+				
+					<p align="center">
+        				<img src="../../../images/articles/ep-bpel-guide/60/validate.png" alt="Validate XML">				  </p>
+			  
+		  </li>
+		</ul>
+  </div>
+		
+	<div class="indent">
+	<h3 class="tutorial">Notifications</h3>
+	<p>
+	The user is notified about validation errors or success in the Outpur window, in the Design view, and in the Navigator.	</p>
+	<p>		<b>The Output window</b>   </p>     
+			<p>
+			The results of validation appear in the Output window if validation has been invoked explicitly. If validation fails, the Output window contains errors and/or warnings:			</p>
+			<p align="center">
+        			<img src="../../../images/articles/ep-bpel-guide/60/owvalfailed.png" alt="Validation Failed">   			  </p>
+      			<p>
+      			If validation is successful, there are no warnings or errors in the Output window.      			</p>	
+			
+	<p><b>The Design view</b></p>
+			
+			<p>
+			The Design view shows the results of both real-time and explicit validation in callout windows on the diagram and the error stripe. </p>
+			
+            <p>In the diagram, a red cross next to an element on the diagram means that the element has not passed validation and the output contains errors. A yellow triangle with an exclamation mark means that the element has not passed validation and the output contains warnings. If there are both errors and warnings, the Design view shows a red cross. If you click the cross or the triangle, a callout window appears with a list of errors and/or warnings: </p>
+            <p align="center">
+              <img src="../../../images/articles/ep-bpel-guide/60/callout.png" alt="Callout window">   			  </p>
+            <p>
+              The callout window includes messages related to validation in accordance with all the criteria listed above. Messages related to the real-time validation are constantly updated.</p>
+        <p>In the Design view, validation results are also shown by the error stripe, which is a strip to the right of the scroll bar that contains red marks if some elements have not passed validation. The error stripe represents the entire diagram, not just the portion that is currently displayed. You can immediately see if your BPEL process contains errors without having to scroll through the entire diagram. You can click a red mark to jump to the element that causes problems. If no errors are detected, the small square in the error stripe is green.      </p>
+        <p><b>The Navigator window</b></p>
+        <p>
+			The Navigator window shows the results of both real-time and explicit validation by adding a red cross or a yellow triangle to the element's icon if validation has failed. For example, in the screenshot below, the <tt>AirlineReserved</tt> receive activity has not passed validation and the output contains errors.			</p>
+			<p align="center">
+				<img src="../../../images/articles/ep-bpel-guide/60/navvalfailed.png" alt="Navigator - Validation Failed">			</p>
+  </div>
+		
+	
+	        <br>
+        <div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+        <br style="clear:both;">
+    <p align="center">
+      <a href="bpel-guide-validation.html#top">top</a>    </p>
+  </body>
+</html>

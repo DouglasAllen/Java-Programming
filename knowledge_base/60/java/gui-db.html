@@ -1,0 +1,456 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<!--      Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved. -->
+<!--     Use is subject to license terms.-->
+    <title>Building a Java Desktop Database Application - NetBeans IDE Tutorial</title>
+    <link rel="stylesheet" href="../../../netbeans.css">
+</head>
+<body>
+<h2>Building a Java Desktop Database Application</h2>
+
+
+<p><img src="../../../images/articles/60/netbeans-stamp.gif" align="right"
+alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+IDE 6.0" border="0" height="45" width="206">This tutorial shows how to create a desktop Java application through which you can 
+    access and update a database. The tutorial takes advantage of support in 
+NetBeans IDE 6.0 for the following technologies:</p>
+<ul>
+    <li>The Java Persistence API (JPA), which helps you use Java code to interact with databases.</li>
+    <li>Beans Binding (JSR-295), which provides a way for different JavaBeans components 
+        to have property values that are synchronized with each other. For example, you can use beans 
+        binding to keep the values of cells in a JTable visual component in 
+        synch with the values of fields in an entity class. (In turn, the entity class 
+    represents the database table.)</li>
+    <li>The Swing Application Framework (JSR-296), which provides some useful 
+        building blocks for quickly creating desktop applications.
+    </li>
+</ul>
+<p>We will create a database CRUD (create, read, update, delete) 
+application with a custom component used for visualizing the data (car design preview).</p>
+
+<p>This tutorial is largely based on this <a href="http://www.netbeans.org/download/flash/netbeans_6_gui_builder/netbeans_6_gui_builder.html">video demo (about 9 minutes)</a>, which was based on an earlier 
+    development build. Some of the user interface has changed since that demo 
+was made, so you might notice some differences between this tutorial and the demo.</p>
+
+
+<p align="center"><b>Expected duration: 45 minutes</b></p>
+<div class="indent">
+
+    
+    <h3 class="tutorial">Software and Files Needed for the Tutorial</h3>
+    
+    <p>For this tutorial you need to have the following software installed on your computer:</p>
+    <ul>
+        <li>NetBeans IDE 6.0.</li>
+        <li>Java Standard Development Kit (JDK) version 5.0 or 6.0.</li>
+        <li>Java DB database server (Java DB is included with JDK 6)</li>
+        <li>An SQL script to populate the database, which you can get by clicking <a href="../../../files/documents/40/1423/car.sql">this link</a>.</li>
+        <li>The CarPreview project, which you can get by clicking <a href="../../../files/documents/40/1433/CarPreview.zip">this link</a>.</li>
+    </ul>
+    
+</div>
+
+
+<div class="indent">
+    
+    <h3 class="tutorial"><a name="setup-db">Setting Up the Database</a></h3>
+    <p>Before you begin creating a desktop CRUD (create, read, update, delete) application 
+        in the IDE, you should already have the IDE connected to the database that  
+        your application will use. Having this connection set up in advance will 
+        allow you to take advantage of IDE features that automate the binding of the 
+    database to your application.</p>
+    <p>In this tutorial, we provide instructions for using a Java DB database, since 
+        there is a convenient interface for starting and stop the Java DB database server from the IDE. 
+        However, you can use a different database server without too much difficulty. 
+    <!-- TODO P3 - point to other tutorial - MYSQL --></p>
+    <p>First check to see if you have Java DB registered in the IDE. 
+        Java DB is 
+        automatically registered in the IDE in a number of cases, such as when 
+        you have Sun Java System Application Server registered in the IDE 
+    or when you are running on JDK 6.</p>
+    <p><b>To determine if Java DB is registered in the IDE:</b></p>
+    <ul>
+        <li>Open the 
+            Tools menu and open the Java DB Database sub-menu item.
+            <p>If the Settings menu item is the only item that is not 
+        grayed out, you need to manually register Java DB in the IDE.</p></li>
+    </ul> 
+
+    <p><b>To manually register Java DB in the IDE:</b></p>
+    <ol>
+        <li>Choose Tools &gt; Java DB Database &gt; Settings.</li>
+        <li>In the Java&nbsp;DB Installation field, enter the path to the database server. </li>
+        <li>In the Database Location property, enter the folder where you want the databases to be stored.</li>
+        <li>Click OK.
+    </ol>
+    
+    
+    
+    <h3 class="tutorial"><a name="starting-db">Starting the Server and Creating a Database</a></h3>
+    
+    <p>Once Java DB is registered with the IDE, you can easily start and stop
+    the database server, as well as create a new database. </p>
+    <p><b>To start the database server:</b></p>
+    <ul>
+        <li>Choose Tools &gt; Java&nbsp;DB Database &gt; Start Server.
+            <p>If you do not already have a location set for the database, the Set Database Location 
+                dialog box appears. Enter a location for the database server to store the databases. You can create 
+            a new folder there if you wish.</p>
+            <p>Once the server is started, Java DB Database Process tab opens in the 
+            Output window and displays a message similar the following:</p>
+            <pre>Apache Derby Network Server - 10.2.2.0 - (485682) started and ready 
+            to accept connections on port 1527 at 2007-09-05 10:26:25.424 GMT</pre> 
+            
+        </li>
+    </ul>
+    
+    <p><b>To create the database:</b></p>
+    <ol>
+        <li>Choose Tools &gt; Java&nbsp;DB Database &gt; Create Database. The
+        Create Java&nbsp;DB Database dialog opens.</li>
+        <li>For the Database Name text field, type <tt>car_database</tt>. Also set the User Name and
+        Password to nbuser. </li>
+        <li>Click OK.</li>
+        
+    </ol>
+    
+    <h3 class="tutorial"><a name="connecting">Connecting to the Database</a></h3>
+    
+    <p>So far, we have successfully started the the database server and created a database. 
+        However, we still need to connect to the new database before we can
+    start working with it in the IDE. To connect to the <tt>car_database</tt> database:</p>
+    
+    <ol>
+        <li>Switch to the Services window (Ctrl+5) and expand the Databases node to see
+        your new database.</li>
+     
+        <li>Right-click the database connection node
+            (<tt>jdbc:derby://localhost:1527/car_database[nbuser on NBUSER]</tt>) and choose
+            Connect.
+            <p>The connection node icon should now appear whole (<img src="../../../images/articles/derby/55/connection-node-icon.png"
+                                                                      alt="connection node icon">), which signifies that the connection was successful.</p>
+        <!--<p></p>-->
+        <img src="../../../images/articles/60/java/gui-db/services-db-node.jpg" alt="car_database under Databases node in Services window">
+        <!--<p></p>-->            
+        </li>
+        <li>Expand the connection node, right-click its Tables subnode, and choose Execute Command.</li>
+        <li>Copy the contents of the 
+            <a href="../../../files/documents/40/1423/car.sql">car.sql</a> file 
+            and paste them into the SQL Command 1 tab of the Source Editor.
+            <p>This is the SQL script which will populate the database with data about cars.</p>
+        </li>
+        <li>Click the Run SQL button (<img src="../../../images/articles/ide-gui-db-prev/execute-sql.png" alt="Run SQL button">)in 
+        the toolbar of the Source Editor to run the script.</li>
+    </ol>
+    
+
+    <h3 class="tutorial"><a name="create-app">Creating the Application</a></h3>
+    <ol>
+        <li>Choose Project &gt; New Project.</li>
+        <li>In the first panel of the wizard, expand the Java category and select the Java Desktop Application template. Click Next.
+        <p>The Java Desktop Application template provides many basics of a visual application, including basic menu items and commands.</p></li>
+        <li>In the Name and Location page of the wizard, do the following things:
+            <ol>
+                <li>In the Project Name field, type <tt>CarsApp</tt>. The value of this field sets the display name for the project in the Projects window.  </li>
+                <li>Optionally, edit the Project Location field to change the location of your project metadata.</li>
+                <li>In the Choose Application Shell field, select Database Application.</li>
+                <li>Click Next.</li>
+        </ol></li>
+        <li>In the Master Table page of the wizard, select the database connection for the <tt>CAR</tt> database. 
+        The listing for the database should look something like the following: <tt>jdbc:derby://localhost:1527/car_database[nbuser on NBUSER]</tt></li>
+        <li>Fill in the password (<tt>nbuser</tt>) for the database and select the 
+            Remember Password During This Session checkbox.
+            <p>After the connection to the database is established, the Database Table field 
+            should display <tt>CAR</tt> and 
+            the Columns to Include list should include the names of 
+        10 columns for the CAR database. For now, we will use only five of them in the application.</li>
+        <li>Select the bottom five column names (beginning with 
+            <tt>SUN_ROOF</tt> and ending with <tt>MODERNNESS</tt>) and click the <tt>&lt;</tt> button 
+            to move them to the left column. Click Next.
+        </li>
+        <li>In the Detail Options panel, click Finish.
+            <p>The wizard then generates the a basic user interface with a table and a  
+        database connection. This might take a few seconds as the IDE generates the 
+project and the code..</p></li>
+        <!--TODO P3: provide info on what you can do here  On the next panel note the icon showing the detail part of the form (set of text fields for selected row of the table)-->
+    </ol>
+    
+    
+    
+    <h3 class="tutorial"><a name="run-generated-app">Running the Generated Application</a></h3>
+    <p>At this point, you have a basic running application with a 
+    graphical user interface (GUI) that has the following features:</p>
+    <ul>
+        <li>Ability to view and modify values in five columns of the CAR database.</li>
+        <li>Basic menu items.</li>
+        <li>Persistence of its window state between sessions. When you 
+            close the application, the window position and size are remembered. So 
+            when you reopen the application, the window opens in the same position as 
+        it was when you closed it.</li>
+        <li>An About dialog box, which you can easily customize.</li>
+        <li><tt>.properties</tt> files containing the labels in the user interface. Using 
+            <tt>.properties</tt> files is a good way to keep the logic of your code separate from the 
+            text that appears in the user interface of your application. Such separation is useful 
+        for making it easier to localize your program, among other reasons.</li>
+    </ul>
+    
+    <p><b>To see some of the features that are already built into the application, follow these steps:</b></p>
+    <ol>
+        <li>Right-click the project's node and choose Run.
+            <p>After a few seconds, the application stars and a window called Database Application Example appears. 
+        This window contains a table and several controls that enable you to edit the CARS database.</p></li>
+        <li>Select the first record in the table (for the Acura).</li>
+        <li>Select the Price text field and replace the existing value with <tt>46999</tt>. Then press Enter. 
+            <p>The value should appear updated in the table. (However, that value will 
+            not be reflected in the database until you click Save.)</p>
+        <p>Similarly, you can update any other values in the table.</p></li>
+        <li>Click New to create a new record. Then fill in values for each of the fields (Make, Model, Price, Body Style, Color). For example, you can fill in 
+            <tt>Trabant</tt>, <tt>Classic</tt>, <tt>1000</tt>, <tt>wagon</tt>, and <tt>blue</tt>. Click Save to 
+        save the entry in the database.</li> 
+        <li>Click the Database Application Example title bar and drag the application to a different place on your screen.</li>
+        <li>Click the left border of the Database Application Example window and drag to the left to increase the size of the window.</li>
+        <li>In the Database Application Example menu bar, choose File &gt; Exit.</li>
+        <li>In the IDE, right-click the project's node and choose Run Project.
+            <p>The Database Application Example window will open in the same size and position it was in when you 
+        closed the application.</p></li>
+        
+    </ol>
+    
+    <h3 class="tutorial"><a name="review-gen-app">Reviewing the Generated Parts of the Application</a></h3>
+    
+    <p>The connection between the master table (a JTable component) and the database is 
+        handled with a combination of the following mechanisms, all of which have been 
+    generated by the IDE:</p>
+    <ul>
+        
+        <li>The <tt>Car.java</tt> entity class, which is used to read and write data to 
+            the CAR database table. Entity classes are a special type of class 
+            that enable you to interact with databases through Java code. 
+        Entity classes use Java annotations to map class fields to database columns. <!--TODO P3: maybe explain annotations-->.</li>
+        <li>The <tt>META-INF/persistence.xml</tt> file, which defines a connection between 
+        the database and the entity class. This file is also known as the persistence unit.</li>
+        <li>Using <i>beans binding</i> to connect the properties of the entity class 
+            with the properties of the JTable component. Beans binding is a new technology 
+        based on JSR 295 and which will probably be included in a future Java SE release.</li>
+        <li>The <tt>entityManager</tt>, <tt>query</tt>, and <tt>list</tt> 
+            objects, which are defined in the <tt>CarsAppFrame</tt> class and 
+            which are listed in the Inspector window.
+            <ul>
+                <li>The entity manager object is used to retrieve and commit data 
+                within the defined persistence unit scope.</li>
+                <li>The query object defines how the particular data collection is retrieved from 
+                    the entity manager. (You can change the way that the query object works by selecting the 
+                    query object in the Inspectory window and changing the <tt>query</tt> property in the property sheet. 
+                The <tt>query</tt> property uses JPA query language.</li>
+                <li>The list object is an observable collection that holds the data from the query. An 
+                    observable collection is a special kind of collection on which you can place a listener to 
+                find out when changes to the collection have been made.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <p>Using the Inspector window and the property sheet, you can follow these steps to see how 
+    the JTable is bound to data:</p>
+    <ol>
+        <li>In the Inspector window, select the 
+           mainPanel[JPanel] &gt; masterScrollPane [ScrollPane] &gt; masterTable [JTable] 
+           node. 
+        Then click the Binding tab in the Properties window.</li>
+        <li>Look at the elements property to confirm that it is bound to a list.<!--TODO P3 talk about observable list--></li>
+        <li>Click the ellipsis [...] button to open the Bind masterTable.elements customizer, where you can 
+            further customize the binding between the table and the database. For example, you can see that the 
+        customizer enables you to specify which table columns are bound.</li>
+    </ol> 
+    <p>Besides the Binding category in property sheet you can also use the 
+    Bind menu in context menu.</p>
+    <!-- TODO P3: Note that it is bound to a selected element's attribute. All "detail" 
+    components are bound to the selected ("master") element taken from the table.-->
+ 
+    
+    <h3 class="tutorial">Adding More Controls</h3>
+    <p>We will now add controls to the form for some of the attributes we initially excluded. 
+        Instead of using a table, we will add JSlider components (for the tire size and 
+modernness attributes) and JCheckbox components (for the sun roof and the spoiler).</p>
+    <p><b>Follow these steps to add the additional components:</b></p>
+    <ol>
+        <li>Add the first slider by clicking the Slider button in the Palette window and 
+            then clicking in the form just above the New button. Before clicking in the form 
+            to insert the slider, make sure that no horizontal slotted guiding lines are shown. 
+            These lines indicate that the slider will be inserted in the same line as the 
+            fields or the buttons. See the figure below to see where you should drop the 
+            slider into the form.
+            <!--<p></p>--><img src="../../../images/articles/ide-gui-db-prev/add-slider.png" width="367" height="93" alt="Image showing the proper placement of the JSlider before dropping it into the form">
+            <!--<p></p>-->
+            <p><b>Note:</b> If you drop the component in a place you do not want and thus 
+                cause several undesired layout changes, you can use the Undo command 
+                to reverse the changes. Choose Edit &gt; Undo or press Ctrl-Z.
+            </p>
+        </li>
+        <li>If necessary, stretch the slider to the left to align it with the left side of the text field components.</li>
+        <li>Stretch the slider to the 
+        right to span the whole form width.</li>
+        <li>Add a label to the left of the slider and set its text to <tt>Tire Size</tt>. 
+        (Click the label to make it editable.)</li>
+        <li>Add another slider below the first slider, and adjust its width and alignment where necessary.</li>
+        <li>Add another label below the Tire Size label and set its text to <tt>Modernness</tt>.</li>
+        <li>Add two checkboxes below the sliders. Set their text to <tt>Spoiler</tt> and <tt>Sun Roof</tt>. 
+        (Make the display text editable by clicking the checkbox once, pausing, and then clicking 
+    the checkbox again. You can also right-click the checkbox and choose Edit Text.)</li>
+    </ol>
+    <p>The form should look like the screenshot shown below.</p>
+    <!--<p></p>-->
+    <img src="../../../images/articles/60/java/gui-db/all-controls-added.png" width="463" height="485" alt="A screenshot of the design area with all controls added">"
+    <!--<p></p>-->
+    <h3 class="tutorial">Binding Controls to Values in the Table</h3>
+    <p>We will now use beans binding features to tie the values shown in table cells to 
+        the state of the controls we have added. This will allow you to change the values 
+    of cells in the table by using the sliders and checkboxes.</p>
+   <!-- <p>Since no record is selected when the application starts, we also need to 
+    set a default value for the source of the binding expression. For the sliders, 
+we will do this through the Advanced tab of the Binding dialog box. For the 
+checkboxes, we will add the code manually in the Customize Code dialog box.</p>-->
+    <p><b>To bind the sliders to their corresponding table elements:</b></p>
+    <ol>
+        <li>In the form, right-click the Tire Size slider and choose Bind &gt; value.</li>
+        <li>In the Binding Source drop-down list of the Binding dialog box, select masterTable.</li>
+        <li>In the Binding Expression drop-down list, select the selectedElement &gt; tiresize node.</li>
+      <!--  <li>Click the Advanced tab.</li>
+        <li>Select the Unreadable Source Value checkbox.</li>
+        <li>Click the ellipsis (...)button that is next to the Unreadable Source Value checkbox.</li>
+        <li>In the Incomplete Path Value dialog box, select Custom Code from the 
+        drop-down list. Then type the integer <tt>0</tt>.</li>
+        <li>Click OK to close the Incomplete Path Value dialog box. 
+        Then click OK to close the Bind dialog box.</li>-->
+                    <!--<p></p>-->
+            <img src="../../../images/articles/60/java/gui-db/bind-dialog.png" width="370" height="367" alt="A screenshot of the Bind dialog box showing the modernness field being bound to the second slider">"
+            <!--<p></p>-->
+        <li>In the form, right-click the Modernness slider and choose Bind &gt; value.</li>
+        <li>In the Binding Source drop-down list of the Binding dialog box, select masterTable.</li>
+        <li>In the Binding Expression drop-down list, select selectedElement &gt; modernness.</li>
+               <!-- <li>Repeat steps 4 through 8 to set the Incomplete Path Value.</li>-->
+        </ol>
+            <p><b>To bind the checkboxes to their corresponding table elements:</b></p>
+        <ol>
+        <li>In the form, right-click the Spoiler checkbox and choose Bind &gt; selected.</li>
+        <li>In the Binding Source drop-down list of the Binding dialog box, select masterTable.</li>
+        <li>In the Binding Expression drop-down list, select selectedElement &gt; spoiler.</li>
+        <li>Click OK to exit the Bind dialog box.</li>
+       <!-- <li>Right-click the Spoiler checkbox again and choose Customize Code.</li>
+        <li>In white line under the <tt>bindingGroup.addBinding(binding)</tt> line, type:
+        <pre class="examplecode">binding.setSourceUnreadableValue(false);</pre>
+    <li>Click OK to close the Customize Code dialog box.</li>-->
+        <li>In the form, right-click the Sun Roof checkbox and choose Bind &gt; selected.</li>
+        <li>In the Binding Source drop-down list of the Binding dialog box, select masterTable.</li>
+        <li>In the Binding Expression drop-down list, select selectedRow &gt; sunRoof.</li>    
+        <li>Click OK.</li>
+         <!-- <li>Repeat steps 5 through 7 for the second checkbox.</li>-->
+        </ol>
+        
+        <p>You should now be able to change database entries using the slider and 
+        checkboxes.</p>
+        <p><b>To verify that the sliders and checkboxes work:</b></p>
+        <ol>
+            <li>Open the Services window.</li>
+            <li>Make sure the IDE has a connection to the database by right-clicking 
+            Databases &gt; jdbc:derby;//localhost:1527/car_database and choosing Connect.</li>
+            <li>Right-click the Databases &gt; jdbc:derby;//localhost:1527/car_database &gt; Tables &gt; node 
+            and choose View Data.</li>
+            <li>Look at the SUN_ROOF, SPOILER, TIRE_SIZE, and MODERNNESS values 
+            for the first record.</li>
+            <li>Choose Run &gt; Run Main Project to execute the application.
+        <p>The running application should look similar to the screenshot shown below.</p>
+            <!--<p></p>-->
+    <img src="../../../images/articles/60/java/gui-db/run-after-binding-controls.png" width="463" height="485" alt="A screenshot of the Bind dialog box showing the modernness field being bound to the second slider">"
+    <!--<p></p>--></li> 
+        <li>In the running application, select the first record.</li>
+        <li>Move the sliders and change the checkbox selections.</li>
+        <li>Click Save to save the changes into the database.</li>
+        <li>In the Services window, use the View Data command again.
+        <p>The values in the database should reflect changes that you have made.</p></li>
+        
+    </ol>
+  
+ 
+    <h3 class="tutorial"><a name="custom_component">Setting up a Custom Component</a></h3>
+    <p>For an even more graphic demonstration of beans binding in action, 
+        let's add a custom component that will paint a preview of the 
+        selected car. We will bind properties of this component to corresponding table 
+        elements. Then when you run the application again, the car preview 
+        will be modified as you change the selected row and change the values of the 
+    various fields.</p>
+    
+    <!-- TODO P3 talk about the code  in CarPreview, how the binding works-->
+
+    
+    <p><b>To make the CarPreview component available for the CarsApp project:</b></p>
+    <ol>
+        <li>If you have not already done so, download the <a href="../../../files/documents/40/1433/CarPreview.zip">CarPreview.zip file</a>.</li>
+        <li>Using a standard zip tool, extract the archives of the zip file.</li>
+        <li>Choose File &gt; Open Project and navigate into the extracted contents of the zip file and select the CarPreview project.</li>
+        <li>Click Open Project.
+        <p>The project opens in the IDE.</p></li>
+        <li>Right-click the CarPreview node and choose Build.
+            <p>This compiles the files in the project so that you can use the CarPreview class as a 
+            bean that can be dragged and dropped directly on to the form.</p>
+        </li>
+    </ol>
+    
+    <p>This component was written as a JavaBeans component, so you 
+        could add it to the Palette, which would be convenient for adding the 
+        component to multiple applications. But for now 
+        we will simply drag the component directly into your application directly from the 
+    Projects window.</p>
+    <p><b>To add the CarPreview component to the application:</b></p>
+    <ol>
+        <li>In the Projects window, expand the 
+        Car Preview &gt; Source Packages &gt; carpreview &gt; nodes.</li>
+        <li>Drag the CarPreview.java class to the form. To insert it properly 
+            just below the menus, place it over the table left aligned with 
+            the other controls and snapped to the bottom of the menu bar, as 
+            shown in the image below.
+            <!--<p></p>-->
+                    <img src="../../../images/articles/60/java/gui-db/add-carpreview.png" width="386" height="211" alt="Screenshot showing how to add the car preview component to the form">
+        <!--<p></p>--></li>
+        <li>Resize the preview component horizontally over the entire form.</li>
+        <li>In the same way that you bound the sliders and checkboxes to  
+            elements in the <tt>masterTable</tt> component, bind all the binding properties of the CarPreview component to 
+            the corresponding selectedElement attributes of the <tt>masterTable</tt>. 
+        Use the Bind popup menu or the Binding tab in the property sheet.</li>
+        <li>Run the CarApp application again.
+            <p>In the running application, you can see the CarPreview component 
+                change as you select different rows in the table, alter values in the table, 
+        move the sliders, and select and deselect the checkboxes.</p></li>
+    </ol>
+    <p>The image below shows the final running application.</p>
+    <!--<p></p>-->
+                        <img src="../../../images/articles/60/java/gui-db/running-app.png" width="463" height="620" alt="Screenshot showing the final running application with the Toyota record showing">
+    <!--<p></p>-->
+   
+    <h3 class="tutorial">Next Steps</h3>
+    <p>This tutorial has provided an introduction to support for the Swing Application 
+        Framework and Beans Binding in the IDE. </p>
+        <p>For a more general introduction to using the 
+        IDE's GUI Builder, see <a href="quickstart-gui.html">GUI Building in NetBeans IDE</a>.</p> 
+        <p>For more information on using beans binding in the IDE, see 
+        <a href="gui-binding.html">Binding Beans and Data in a Desktop Application</a>.</p>
+        
+            <!--<br><br>-->
+        <div class="feedback-box">
+            <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a>
+        </div>
+        <br style="clear:both;">
+        
+        <h3 class="tutorial">Other Resources</h3>
+        <ul>
+        <li><a href="https://beansbinding.dev.java.net/" target="_blank">Beans Binding project page on java.net</a></li>  
+        <li><a href="https://appframework.dev.java.net/" target="_blank>Swing Application Framework project page on java.net</a></li>
+        <li><a href="http://java.sun.com/javaee/5/docs/tutorial/doc/bnbpz.html" target="_blank>Java EE Tutorial: Introduction to the Java Persistence API</li>
+        </ul> 
+</div>
+<!--TODO P3 - cleanup database story-->
+<!--    TODO P3 explain structure of classes in project</li>-->
+
+</body>
+</html>

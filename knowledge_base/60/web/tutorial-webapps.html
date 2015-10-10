@@ -1,0 +1,1020 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    
+    <title>NetBeans IDE 6.0 Tutorial for Web Applications</title>
+    
+   <link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+    <meta name="AUTHOR" content="Geertjan Wielenga">
+    <meta name="DESCRIPTION" content="An advanced tutorial for web applications in NetBeans 6.0.">
+    <!--      Copyright (c) 2006 Sun Microsystems, Inc. All rights reserved. -->
+    <!--     Use is subject to license terms.-->
+</head>
+<body>
+<h1>NetBeans IDE 6.0 Tutorial for Web Applications</h1>
+
+
+<table class="tablebg" align="right">
+  <tr> 
+    <td class="tblheader">Tutorial Downloads</td>
+  </tr>
+  <tr> 
+    <td class="tbltd0"> 
+      <p><a href="http://plugins.netbeans.org/PluginPortal/faces/PluginDetailPage.jsp;jsessionid=59bea2610362ef5f4c0e80fedc12e?pluginid=4133" target="_blank">Download the sample</a></p>
+    </td>
+  </tr>
+</table>
+
+<p>Welcome to the NetBeans IDE 6.0 tutorial for web applications. In this
+ tutorial, you build a fairly complex web application while being introduced to
+ a number of tools and technologies in NetBeans IDE, as well as a typical
+ web development cycle, from creation to deployment. Beginning with the creating
+ of servlets and JSP pages, the advanced sections of this tutorial show you how to use 
+ the JavaServer Pages Standard Tag Library (JSTL) to fetch
+ dynamic data and to internationalize the JSP pages used in this application. You end
+ the tutorial with an introduction to the IDE's HTTP Monitor, which helps you analyze
+ a web application while it is deployed.
+</p>
+<p><b>Note:</b> If you are new to web development in NetBeans IDE, you are recommended to
+follow <a href="quickstart-webapps.html">Introduction to Developing Web Applications</a> before continuining.
+
+
+<div class="indent"> 
+
+    
+ <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left" valign="top"><h3>Contents</h3>
+<ul>
+  <li><a href="#terms">Terminology</a></li>
+  <li><a href="#obtain">Obtaining the required source files</a></li>
+  <li><a href="#create">Developing the Application</a></li>
+  <ul>
+        <li><a href="#create-project">Creating a web project from the provided source files</a></li>
+        <li><a href="#frontcontroller">Creating a front controller using a servlet</a></li>
+        <li><a href="#process-requests">Adding the methods to process requests and to create a cookie</a></li>
+        <li><a href="#createmain">Creating the JSP page that receives all the requests</a></li>
+        <li><a href="#addparameters">Creating the parameter files used to handle user input</a></li>
+        <li><a href="#usejstl">Using JSTL to handle internationalization</a></li>
+        <li><a href="#wrapup">Wrapping up</a></li>
+  </ul>
+  <li><a href="#run-and-monitor">Running and Monitoring the Application</a></li>
+  <ul>
+        <li><a href="#enable-http">Enabling the HTTP Monitor</a></li>
+        <li><a href="#verify-context">Verifying the Context Path</a></li>
+        <li><a href="#run-app">Running the application</a></li>
+        <li><a href="#monitor-requests">Monitoring requests and sessions</a></li>
+        <li><a href="#monitor-cookies">Monitoring cookies</a></li>
+        <li><a href="#monitor-non-pages">Monitoring requests for non-existent pages</a></li>
+        <li><a href="#enable-inter">Enabling internationalization</a></li>
+  </ul>
+  <li><a href="#apply">Applying What You Have Learned</a></li>
+  <li><a href="#more">Exploring Further</a></li>
+  <li><a href="#glossary">Glossary</a></li>
+  <li><a href="#nextsteps">Next Steps</a></li>
+</ul>     </td>
+      <td width="20">&nbsp;</td>
+      <td align="right" valign="top"> 
+        <img src="../../../images/articles/60/netbeans-stamp.gif" alt="Content on this page applies to the NetBeans 6.0 IDE" title="Content on this page applies 
+    to the NetBeans 6.0 IDE" height="45" width="206" border="0">          </td>
+    </tr>
+  </table>
+    
+     
+
+ <h3 class="tutorial"><a name="install"></a>Installing the Software</h3>
+   
+    
+      <p>Before you begin, you need to install the following software on your 
+        computer:</p>
+ <ul>
+      <li>NetBeans IDE 6.0 Web & Java EE .
+    <li>Java Standard Development Kit (JDK&trade;) version
+        5.0 or version 6.0 </li>
+  </ul>
+
+</div>    
+    
+<h2><a name="terms"></a>Terminology</h2>
+     
+
+<p>Below are explanations of some of the terms used in this tutorial.</p>
+
+<ul><li><b>Composite View.</b> A design pattern that is used to present information in JSP pages. This design pattern 
+    creates an aggregate view from component views. Component views might include dynamic and 
+    modular portions of the page. The Composite View design pattern pertains to web application 
+    design when you are creating a view from numerous subviews. Complex web pages frequently consist 
+    of content derived from various resources. The layout of the page is managed independently of 
+    the content of its subviews. For instance, a view might have subviews such as Navigation, Search, 
+    Feature Story, and Headline.
+    <p>When creating a composite view, you can include static content and dynamic content. Static content 
+        might consist of an HTML file. Dynamic content is a fragment of a JSP page. The specific content 
+    can be determined at either JSP translation time or at runtime.</p>
+    <li><b>Front controllers.</b> Components that are responsible for routing incoming requests and enforcing 
+    navigation in web applications. For more information on the use of the Front Controller 
+    design pattern, see the <a href="http://java.sun.com/blueprints/patterns/" target="_blank">J2EE Patterns catalog</a>.
+    <li><b>JSP Pages.</b> Files that are used in web applications to present information to end users and to enable 
+    data from end users to flow back to the server. JSP pages must be placed within a 
+    web application in order for the JSP pages to be executable within the IDE.
+    <li><b>Servlets.</b> Java classes that execute within a servlet container, which is typically running 
+    within a web server. Servlets are used to do the following:
+    <ul><li>Generate dynamic content.</li>
+        <li>Extend the capabilities of web servers and web-enabled application servers.</li>
+        <li>Interact with web clients (typically a browser application such as Netscape or 
+        Internet Explorer) using a request-response paradigm.</li>
+    </ul>
+</ul>
+
+<h2><a name="obtain"></a>Obtaining the required source files</h2>
+
+
+<p>To create the Midnight Cookie Company application, you need the <tt>midnight.zip</tt> 
+    file, which contains the source files on which you build 
+    the application. The source files include the <tt>WEB-INF</tt> 
+    folder, which contains the <tt>classes</tt>, <tt>docs</tt>, <tt>tlds</tt> 
+and <tt>lib</tt> folders that you will use in this tutorial.</p>
+<ol>
+<li>In your file system, create a folder named <tt>midnight</tt>.
+ This is where you will unzip the application's files. From now on,
+we will refer to this folder as <tt><i>$</i><i>UNZIPHOME</i></tt>.
+<li>Click <a href="../../../files/documents/misc/midnight.zip">here</a> to download the file.</li>
+<li>Use an application that unzips files to unzip the <tt>midnight.zip</tt> 
+file to <tt><i>$</i><i>UNZIPHOME</i></tt>.
+<p><tt><i>$</i><i>UNZIPHOME</i></tt> now has a <tt>WEB-INF</tt> folder, which 
+contains the following files and folders: </p>
+<table width="76%" border="1">
+    
+    <tr> 
+        <td> 
+            <div align="left"><b>File or Folder</b></div>
+        </td>
+        <td> 
+            <div align="left"><b>Description</b></div>
+        </td>      
+    </tr>
+    <tr> 
+        <td  align="left" valign="top"><tt>web.xml</tt></td>
+        <td>Deployment descriptor for the web application.</td>
+    </tr>
+    <tr> 
+        <td align="left"  valign="top"><tt>classes</tt></td>
+        <td> 
+            Contains the resource bundle property files that are used to internationalize 
+            the pages and contains the <tt>com/midnightcookies/taghandlers</tt> 
+            folder. The <tt>taghandlers</tt> folder contains the class 
+            files for the ContentHandler tag handler, the ButtonHandler tag handler, 
+            and the LinksHandler tag handler. The ContentHandler includes the contents 
+            of the specified JSP file. The ButtonHandler prints a submit button 
+            with a localized message. The LinksHandler displays a set of links, 
+            including a separator, from the tag attribute.
+        </td>
+    </tr>
+    <tr> 
+        <td align="left" valign="top"><tt>docs</tt></td>
+        <td> 
+            Contains the <tt>header.jsp</tt> file, the <tt>index.jsp</tt> file, 
+            and the <tt>nonesuch.jsp</tt> file. During the tutorial, you will create 
+            the <tt>main.jsp</tt> page and place it in this folder.
+            Also contains the <tt>cookies</tt> folder, which includes the 
+            <tt>CookieCutter.jsp</tt> file and the <tt>CookieMake.jsp</tt> file. 
+            During the tutorial, you will create the <tt>Tray.jsp</tt> page and 
+            place it in this folder. The <tt>about</tt> folder contains 
+            the <tt>about.jsp</tt> file, which outlines this web application's architecture.
+        </td>
+    </tr>
+    <tr> 
+        <td align="left" valign="top"><tt>lib</tt></td>
+        <td>Contains the <tt>standard.jar</tt> file and the <tt>jstl.jar</tt> file. 
+            These two files contain the implementation for the JSTL. The <tt>standard.jar</tt> 
+            contains the TLDs and the tag handlers. The <tt>jstl.jar</tt> file contains 
+        other application program interfaces (APIs) that are needed.</td>
+    </tr>
+    <tr> 
+        <td align="left" valign="top"><tt>tlds</tt></td>
+        <td>Contains the proprietary <tt>midnight.tld</tt>.</td>
+    </tr>
+</table>
+</li>
+</ol>
+
+<h2><a name="create"></a>Developing the Application</h2>
+
+<div class="indent">
+    
+    <h3 class="tutorial"><a name="create-project"></a>Creating a web project from the provided source files</h3>
+    
+    <ol>
+        <li>Choose File &gt; New Project (Ctrl-Shift-N). Under Categories, select Web.
+        Under Projects, select Web Project with Existing Sources. 
+        Click Next.</li>
+        <li>In Location, click Browse to select the web application's document root. The
+            document root is <tt><i>$</i><i>UNZIPHOME</i></tt>, which is called <tt>midnight</tt>,
+            if you followed the instructions above. This is the folder to which you 
+        unzipped the <tt>midnight.zip</tt> file.
+    You should see the following:
+<p><p><img src="../../../images/articles/60/web/midnight/web-proj-wiz-1.png" border="1" alt="conde completion">
+
+</li>
+        <li>In Project Name, notice that <tt>midnight</tt> has been set.
+        Capitalize the name to "Midnight", just for display purposes, because project name's
+        initial letter is typically capitalized. Change the Project Location to any 
+            folder on your computer. From now on, we will refer to this folder as 
+        <tt><i>$</i><i>PROJECTHOME</i></tt>.</li>
+        <li>In Server, select the server. </li>
+        <li>In Java EE Version, make sure that Java EE 5 is selected.  Notice
+        that the Context Path is <tt>/Midnight</tt>. Click Next.</li>
+        <li>In Web Pages Folder, select the document root (<tt><i>$</i><i>UNZIPHOME</i></tt>).
+            Notice that the <tt><i>$</i><i>PROJECTHOME</i>/Midnight/WEB-INF/lib</tt> and the <tt><i>$</i><i>PROJECTHOME</i>/Midnight/WEB-INF/classes</tt>
+            folders are automatically selected as your lib and sources folders, respectively, as shown here: 
+            <p><p><img src="../../../images/articles/60/web/midnight/web-proj-wiz-3.png" border="1" alt="conde completion">
+            
+            <p><p>Click Finish. <p>You are
+            prompted to let the IDE delete your class files, because they will automatically
+            be compiled to your project's <tt>build</tt> folder when you build the project.
+<p><p><img src="../../../images/articles/60/web/midnight/web-proj-wiz-4.png" border="1" alt="conde completion">
+
+            <p><p>Click Delete to let the IDE do this. 
+            <p>The IDE imports your sources, deletes the class files, and creates the Midnight project in the IDE. 
+                You can view its logical structure in the Projects window and its file 
+        structure in the Files window.</p>
+<p><p><img src="../../../images/articles/60/web/midnight/initial-proj.png" border="1" alt="conde completion">
+    
+    
+    </li>
+    </ol>
+    
+    <h3 class="tutorial"><a name="frontcontroller"></a>Creating a front controller using a servlet</h3>
+    
+    <p>A front controller is responsible for routing incoming user requests and can 
+        enforce navigation in web applications. A front controller provides a single 
+        entry point through which requests for several resources in a web application 
+        pass. A front controller can reduce duplication of code in JSP pages, especially 
+        in cases where several resources require the same processing. For more information 
+        on front controllers, see the <a href="http://java.sun.com/blueprints/patterns/" target="_blank">J2EE Patterns catalog</a>.</p>
+    <ol>
+        <li>Expand the Midnight project node and the Source Packages
+        node. </li>
+        <li>Right-click the <tt>com.midnightcookies</tt> package node and choose
+        New &gt; Servlet.</li>
+        <li>Enter <tt>FrontController</tt> in the Class Name text box and make 
+            sure that the <tt>com.midnightcookies</tt> package is selected in the Package 
+        drop-down. Click Next.</li>
+        <li>Change the value of the URL Pattern(s) text box to the following:
+            <pre class="examplecode"> /docs/*, /</pre>
+        
+          <p><p><img src="../../../images/articles/60/web/midnight/url-patterns.png" border="1" alt="conde completion">
+  
+            <p><p>Note that the "<tt>,</tt>" in the line above is a delimiter between URL mappings.
+        It enables you to create multiple URL mappings for each servlet.</li>
+  
+        
+        <p><li>Click Finish.
+                <p><tt>FrontController.java</tt>
+        opens in the Source Editor.</p></li></p>
+        <li>Expand the Web Pages node and the WEB-INF node. Double-click the 
+            <tt>web.xml</tt> node. The content of the deployment descriptor file, <tt>web.xml</tt>,
+            is displayed in the graphical editor. Click Servlets at the top of the editor.
+            Expand the node for the FrontController servlet's entry. Notice the servlet's URL Patterns,
+            which you defined in step 4 above:
+<p><p><img src="../../../images/articles/60/web/midnight/web-xml.png" border="1" alt="conde completion">
+            <p>The servlet mapping "<tt>/docs/*</tt>" prevents the FrontController servlet
+                from forwarding pages to itself, while the servlet mapping "<tt>/</tt>" gives the 
+                FrontController servlet a servlet mapping to handle a request such as
+                <tt>http://</tt><i>hostname:portnumber</i><tt>/midnight/</tt>. 
+            </p>
+            <p>Click XML at the top of the editor. The content of the deployment descriptor file
+            is shown in XML format. The servlet mappings are as follows:</p>
+     <p><p><img src="../../../images/articles/60/web/midnight/web-xml2.png" border="1" alt="conde completion">
+ </ol>
+    
+    <h3 class="tutorial"><a name="process-requests"></a>Adding the methods to process requests and to create a cookie</h3>
+    
+    <p>Now you will edit the <tt>FrontController.java</tt> file to include the logic 
+        needed to process the requests received by the web application. You will modify 
+        the <tt>processRequest</tt> method and create a new method called <tt>createCookie</tt>, 
+    which demonstrates how to create a cookie used in a web application.</p>
+    <ol>
+        <li>Open the Navigator (Ctrl-7) and select the FrontController.java node in the
+        Projects window. You now see the class's methods in the Navigator:
+        <p><p><img src="../../../images/articles/60/web/midnight/process-request.png" border="1" alt="process request">
+
+        </li>
+        <li>Click the processRequest method's node in the Navigator. The Source Editor 
+            displays the <tt>processRequest</tt> method.
+        </li>
+        <li>Replace the default <tt>processRequest</tt> method with the 
+        following code:
+        <p><pre class="examplecode">
+
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+   throws ServletException, IOException {
+     String id = request.getRequestURI();
+     id = id.substring(request.getContextPath().length());
+     getServletContext().log
+       ("Midnight Cookies FrontController received a request for " + id);
+        
+     // The page variable holds the path to the page that will be included
+     // in the content area of the template page /WEB-INF/docs/main.jsp.
+     // It is passed to the template in a request attribute.
+     String page;
+        
+     // If no request is received or if the request received is
+     // for the root, serve /WEB-INF/docs/index.jsp
+     if (id == null || id.trim().equals("") || id.equals("/")){
+         page = "/WEB-INF/docs/index.jsp";
+     }
+        
+     // If a request received is for a file that does not end in
+     // .jsp or .html, there was an error. Include the
+     // error page (nonesuch.jsp) and set the nonesuch attribute with
+     // the path requested.
+     else if (!id.endsWith(".jsp") && !id.endsWith(".html")) {
+         page = "/WEB-INF/docs/nonesuch.jsp";
+         request.setAttribute("nonesuch", id);
+     }
+     else {
+         page = "/WEB-INF".concat(id);
+            
+         if (id.equals("/docs/cookies/CookieMake.jsp")) {
+             Cookie cookie = createCookie(request);
+             if (cookie == null) {
+                 page = "/WEB-INF/docs/cookies/CookieCutter.jsp";
+             }
+             else {
+                 response.addCookie(cookie);
+                 request.setAttribute("cookie", cookie);
+             }
+         }
+     }
+        
+     request.setAttribute("page", page);
+     try {
+         request.getRequestDispatcher("/WEB-INF/docs/main.jsp").forward(request, response);
+     }
+     catch(Throwable t) {
+         getServletContext().log(t.getMessage());
+     }
+ }
+        </pre>
+        
+        <p><b><a name="format"></a>Note:</b> After you enter code (either by typing 
+            or copying and pasting) into the Source Editor, place the cursor in the 
+            Source Editor and press Alt-Shift-F to automatically format the code.
+            To show line numbers, right-click the left margin and choose Show Line 
+        Numbers from the contextual menu. </p>
+        <p>The line with the call to the <tt>createCookie</tt> method is underlined 
+            and marked as an error, similar to the following illustration. This is because 
+        the method does not exist yet. </p>
+        
+        <p>Click Alt-Enter in the line with the error and notice that the IDE presents a suggestion
+        of how to solve the error:
+        <p><img src="../../../images/articles/midnight_images/mcc-cookieError-50.png" alt="Source Editor with the call to the createCookie method marked as an error because the createCookie method does not exist yet."> 
+        
+        <li>Select the suggestion. The IDE creates the skeleton <tt>createCookie</tt> method at the end of the file.
+        </li>
+        <li>Fill out the new <tt>createCookie</tt> method by copying the following code and pasting it in the Source Editor: 
+            <p><pre class="examplecode">  
+    private Cookie createCookie(HttpServletRequest request) {
+
+        String name = (String)request.getParameter("name");
+        if (name == null || name.trim().equals("")) {
+            request.setAttribute("noname", "noname");
+            request.setAttribute("error", "true");
+	    return null; 
+        }
+        
+        String value = (String)request.getParameter("value");
+        if (value == null || value.trim().equals("")) {
+            request.setAttribute("novalue", "novalue");
+            request.setAttribute("error", "true");
+	    return null; 
+        }
+        
+	System.out.println(name); 
+	System.out.println(value); 
+
+	Cookie cookie = null; 
+	try { 
+	    cookie = new Cookie(name, value);
+	}
+	catch(IllegalArgumentException ex) { 
+	    // Probably an illegal name
+	    ex.printStackTrace(); 
+	    request.setAttribute("error", "true");
+	    request.setAttribute("noname", "badname");
+	    return null; 
+	}
+
+	String maxage = request.getParameter("maxage");
+	if (maxage != null && !maxage.trim().equals("")) {
+	    try {
+		cookie.setMaxAge(Integer.parseInt(maxage));
+	    }
+	    catch(NumberFormatException nfe) {
+		nfe.printStackTrace(); 
+		request.setAttribute("badnumber", "badnumber");
+		request.setAttribute("error", "true");
+		return null; 
+	    }
+	}
+        
+	String domain = request.getParameter("domain");
+	if (domain != null && !domain.trim().equals("")) {
+	    cookie.setDomain(domain);
+	}
+        
+	String path = request.getParameter("path");
+	if (path != null && !path.trim().equals("")) {
+	    cookie.setPath(path);
+	}
+        
+	String secure = request.getParameter("secure");
+	if (secure != null && secure.equals("on")) {
+	    cookie.setSecure(true);
+	} else {
+	    cookie.setSecure(false);
+	}
+        return cookie;
+    }
+
+            </pre></p>
+        </li>
+        
+        <li>The asterisk in the file's tab at the top of the
+            Source Editor appears whenever there are changes 
+            that have not been saved to disk:
+            <p><img src="../../../images/articles/midnight41_images/unsavedfile.png" alt="Asterisk in source editor tab."></p>
+            <p>Press Ctrl-S to save the document. The asterisk in the file's tab at the top of the
+            Source Editor disappears.
+            
+        </li>
+        <li>In the Projects window, right-click the FrontController.java node
+            and select Compile File (F9) to check that there were no errors introduced 
+            in the steps you have completed. The Output window displays messages from the compiler, 
+            including any errors. You can double-click the links in the error messages to 
+            locate the source of the error. Resolve all errors listed in the Output 
+        window before continuing with the tutorial.</li>
+    </ol>
+    
+    
+    <h3 class="tutorial"><a name="createmain"></a>Creating the JSP page that receives all the requests</h3>
+    
+    <p>The <tt>main.jsp</tt> page receives all the requests that the FrontController 
+        servlet processes. A dynamic include statement and a LinksHandler are used 
+    to create the page.</p>
+    <ol>
+        <li>Expand the Midnight project node, the Web Pages node, and the WEB-INF node. 
+            Right-click the docs node, choose New &gt; JSP, and name the JavaServer 
+            Pages file <tt>main</tt>. Click Finish. 
+            <p><p>Now <tt>main.jsp</tt> opens in the 
+        Source Editor.</li>
+        <li>In the Source Editor, replace the contents of the <tt>main.jsp</tt> file with
+            the following code: 
+            <pre class="examplecode">
+
+  &lt;%@page contentType=&quot;text/html;charset=UTF-8&quot;%&gt;
+  &lt;%@page buffer=&quot;none&quot;%&gt; 
+  &lt;%-- The &lt;midnight:content/&gt; tag which handles the contents section 
+  is simplistically implemented to use an include. Hence this page
+  cannot be buffered --%&gt;
+		
+  &lt;%@taglib prefix=&quot;midnight&quot; uri=&quot;http://www.midnightcookies.com/midnight&quot;%&gt; 
+
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;The Midnight Cookie Company&lt;/title&gt;&lt;/head&gt;
+    &lt;body text=&quot;#996633&quot; link=&quot;#cc6600&quot; vlink=&quot;#993300&quot; alink=&quot;#000000&quot;&gt;
+        &lt;span font-style=&quot;sans-serif&quot;&gt;
+            &lt;TABLE border=&quot;0&quot;&gt;
+		&lt;tr&gt;
+		    &lt;table border=&quot;0&quot;&gt;
+			&lt;tr&gt;&lt;td width=&quot;80&quot; height=&quot;100&quot;&gt;&amp;nbsp;&lt;/td&gt;
+			    &lt;td width=&quot;500&quot; height=&quot;100&quot; 
+
+				text=&quot;#996633&quot; bgcolor=&quot;#ffff99&quot;
+				valign=&quot;center&quot;halign=&quot;center&quot;&gt;
+				&lt;jsp:include page=&quot;/WEB-INF/docs/header.jsp&quot; 
+					     flush=&quot;true&quot;/&gt;
+			    &lt;/td&gt;
+		        &lt;/tr&gt;
+			&lt;tr&gt;&lt;td width=&quot;90&quot; height=&quot;300&quot; 
+				text=&quot;#996633&quot; bgcolor=&quot;#ffff99&quot;
+				valign=&quot;top&quot;&gt;
+				&lt;midnight:links separator=&quot;&lt;br&gt;&quot;/&gt;
+			    &lt;/td&gt;
+			    &lt;td width=&quot;500&quot; height=&quot;300&quot; 
+				valign=&quot;top&quot;cellpadding=&quot;15&quot;
+				cellspacing=&quot;15&quot;&gt;
+				&lt;midnight:content/&gt;
+			    &lt;/td&gt;
+		        &lt;/tr&gt;
+		    &lt;/table&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;&lt;td width=&quot;580&quot; height=&quot;50&quot; text=&quot;#996633&quot; 
+			bgcolor=&quot;#ffff99&quot; valign=&quot;top&quot;&gt;
+			&lt;midnight:links separator=&quot;|&quot;/&gt;
+		    &lt;/td&gt;
+		&lt;/tr&gt;
+	    &lt;/TABLE&gt;
+        &lt;/span&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+
+            </pre>
+            
+            <p><b><a name="format"></a>Note:</b> After you enter code (either by typing 
+                or copying and pasting) into the Source Editor, place the cursor in the 
+            Source Editor and press Alt-Shift-F to automatically format the code.</p>
+        </li>
+        <li>Press Ctrl-S to save your changes.
+        </li>
+    </ol>
+    
+    
+    
+    
+    <h3 class="tutorial"><a name="addparameters"></a>Creating the parameter files used to handle user input</h3>
+    
+    
+    <p>The parameter files that you create in this section illustrate 
+        the use of tags from tag libraries to handle internationalization. They also 
+        show how input is passed through the Request parameters, specifically 
+        through the JSP expression language (EL) expression <tt>${param.input}</tt>, 
+    which is set in the input field of the <tt>Input.jsp</tt> page.<tt> </tt></p>
+    <ol>
+        <li>Right-click the docs node and select New &gt; Other from the contextual 
+        menu. Under Categories, select Other and under File Types, select Folder. Click Next.
+        
+        <li>In the Name and Location panel, type <tt>parameters</tt> in the Folder Name text field and click Finish. 
+            The new parameters folder appears in the Projects window under the docs 
+            node.
+        </li>
+        <li>Right-click the parameters node and choose New &gt; JSP. 
+            Type <tt>Input</tt> in the JSP File Name text field and make sure that
+            <tt>WEB-INF/docs/parameters</tt> is selected in the Folder text box. Click Finish. 
+            <p><p>Now <tt>Input.jsp</tt> opens in the Source Editor.</p>
+        </li>
+        <li>In the Source Editor, replace the contents of the <tt>Input.jsp</tt> file with the following code: 
+            <pre class="examplecode">
+
+  &lt;%@page contentType=&quot;text/html;charset=UTF-8&quot;%&gt;
+  &lt;%@taglib prefix=&quot;fmt&quot; uri=&quot;http://java.sun.com/jstl/fmt&quot; %&gt;
+  &lt;%@taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jstl/core&quot; %&gt;
+  &lt;%@taglib prefix=&quot;midnight&quot; uri=&quot;/WEB-INF/tlds/midnight.tld&quot;%&gt; 
+
+  &lt;fmt:setBundle basename=&quot;com.midnightcookies.Midnight&quot; var=&quot;bundle&quot;
+	       scope=&quot;page&quot;/&gt;
+
+  &lt;h3&gt;&lt;fmt:message key=&quot;provide_input&quot; bundle=&quot;${bundle}&quot;/&gt;&lt;/h3&gt;
+  &lt;form method=&quot;POST&quot; action=&quot;Output.jsp&quot;&gt;
+        &lt;table&gt;
+            &lt;tr&gt;
+		&lt;td&gt;&lt;fmt:message key=&quot;type_input&quot; bundle=&quot;${bundle}&quot;/&gt;:&lt;td&gt;
+		&lt;%-- The value of the Input field will be placed in a
+		      request parameter named &quot;input&quot; and it will be
+		      passed to Output.jsp --%&gt; 
+		&lt;td&gt;&lt;input type=&quot;text&quot; size=&quot;20&quot; name=&quot;input&quot; value=&quot;&quot;&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+	    &lt;tr&gt;
+		&lt;td&gt;&lt;fmt:message key=&quot;submit&quot; bundle=&quot;${bundle}&quot; 
+		                 var=&quot;buttonLabel&quot; scope=&quot;page&quot;/&gt;
+                     &lt;midnight:button/&gt;
+                &lt;/td&gt;
+                &lt;td&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+  &lt;/form&gt;
+
+            </pre>
+        </li>
+        <li>Press Ctrl-S to save your changes.
+            
+        </li>
+        <li>Create an <tt>Output.jsp</tt> file in the Parameters folder using the 
+            same method that you used to create the <tt>Input.jsp</tt> file.
+            
+        </li>
+        <li>In the Source Editor, replace the contents of the <tt>Output.jsp </tt> file 
+            with the following code: 
+            <pre class="examplecode">
+
+  &lt;%@page contentType=&quot;text/html;charset=UTF-8&quot;%&gt;
+  &lt;%@ taglib prefix=&quot;fmt&quot; uri=&quot;http://java.sun.com/jstl/fmt&quot; %&gt;
+  &lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jstl/core&quot; %&gt;
+
+  &lt;fmt:setBundle basename=&quot;com.midnightcookies.Midnight&quot; var=&quot;bundle&quot; scope=&quot;page&quot;/&gt;
+  &lt;h3&gt;&lt;fmt:message key=&quot;display_input&quot; bundle=&quot;${bundle}&quot;/&gt;&lt;/h3&gt;
+  &lt;fmt:message key=&quot;datareceived&quot; bundle=&quot;${bundle}&quot;/&gt;: 
+
+  &lt;!--The following line gets the value of the request parameter named
+  &quot;input&quot;. This is a demo application. For security reasons, one should
+  never echo user input without parsing first. --&gt;
+  &lt;c:out value=&quot;${param.input}&quot;/&gt;
+
+            </pre>
+        </li>
+        <li> 
+            Press Ctrl-S to save your changes.
+        </li>
+    </ol>
+    
+    <h3 class="tutorial"><a name="usejstl"></a>Using JSTL to handle internationalization</h3>
+    
+    <p>The <tt>Tray.jsp</tt> page that you create in this section illustrates the 
+        use of the JSTL, instead of scripting, to internationalize the page. The <tt>CookieCutter.jsp</tt> 
+        file, <tt>CookieMaker.jsp</tt> file, and resource bundle property files have 
+        been provided with the <tt>midnight.zip</tt> file. You can take a closer look 
+        at those files and the <tt>Tray.jsp</tt> file for examples of how internationalization 
+    is handled in this application.</p>
+    <ol>
+        <li>Expand the docs node and expand the cookies node.
+            
+        </li>
+        <li>Create a <tt>Tray.jsp</tt> file in the <tt>cookies</tt> folder using 
+            the same method that you used to create the other JSP files. Make sure that 
+            you put it in the <tt>cookies</tt> folder.
+        </li>
+        <li>In the Source Editor, replace the contents of the <tt>Tray.jsp</tt> file 
+            with the following code:
+            <pre class="examplecode">
+
+  &lt;%@page contentType=&quot;text/html;charset=UTF-8&quot;%&gt;
+  &lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jstl/core&quot; %&gt;
+  &lt;%@ taglib prefix=&quot;fmt&quot; uri=&quot;http://java.sun.com/jstl/fmt&quot; %&gt;
+
+  &lt;fmt:setBundle basename=&quot;com.midnightcookies.Midnight&quot; var=&quot;bundle&quot; scope=&quot;page&quot;/&gt;
+  &lt;h3&gt;&lt;fmt:message key=&quot;cookies&quot; bundle=&quot;${bundle}&quot;/&gt;&lt;/h3&gt;
+    
+  &lt;table border=&quot;1&quot;&gt;
+     &lt;tr&gt;
+        &lt;th halign=&quot;center&quot;&gt;#&lt;/th&gt;
+	&lt;th align=&quot;left&quot;&gt;
+	    &lt;fmt:message key=&quot;name&quot; bundle=&quot;${bundle}&quot;/&gt;
+        &lt;/th&gt;
+        &lt;th align=&quot;left&quot;&gt;
+	    &lt;fmt:message key=&quot;value&quot; bundle=&quot;${bundle}&quot;/&gt;
+        &lt;/th&gt;
+     &lt;tr&gt; 
+     &lt;%-- We have to use expression to get at an array. 
+          If we use ${cookie} then we get a map and 
+          the entries are not automatically cast --%&gt;   
+     &lt;% request.setAttribute(&quot;cookies&quot;, request.getCookies()); %&gt;
+     &lt;c:set var=&quot;i&quot; value=&quot;0&quot;/&gt;
+     
+     &lt;c:forEach var=&quot;ck&quot; items=&quot;${cookies}&quot;&gt;
+	&lt;c:set var=&quot;i&quot; value=&quot;${i+1}&quot;/&gt;
+	&lt;tr&gt;
+	    &lt;td&gt;&lt;c:out value=&quot;${i}&quot;/&gt;&lt;/td&gt;
+	    &lt;td&gt;&lt;c:out value=&quot;${ck.name}&quot;/&gt;&lt;/td&gt;
+	    &lt;td&gt;&lt;c:out value=&quot;${ck.value}&quot;/&gt;&lt;/td&gt;
+        &lt;/tr&gt; 
+    &lt;/c:forEach&gt;
+  &lt;/table&gt; 
+
+            </pre>
+        </li>
+        <li> 
+            Press Ctrl-S to save your changes.
+        </li>
+    </ol>
+    
+    
+    
+    
+    <h3 class="tutorial"><a name="wrapup"></a>Wrapping up</h3>
+    
+    <p>Once you have completed the development stage as described above, 
+    the views in the Projects window and Files window should look as follows:</p>
+    <p align="left"> <img border="1" src="../../../images/articles/60/web/midnight/projects-view.png" alt="Projects window with files of completed Midnight Cookie Company application"  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img border="1" src="../../../images/articles/60/web/midnight/files-view.png" alt="Files window with files of completed Midnight Cookie Company application" ></p>
+    <p><b>Note:</b> The application illustrated above deploys to the Tomcat Web Server. If you have  
+        <a href="#register">registered</a> and selected
+        a different target server instead, you will not have a <tt>META-INF/context.xml</tt> file.
+        For example, if your server is the Sun Java System Application Server, you will have
+    a <tt>WEB-INF/sun-web.xml</tt> file as your deployment descriptor.</p>
+</div>
+
+
+<h2><a name="run-and-monitor"></a>Running and Monitoring the Application</h2>
+<div class='indent'>
+<h3 class="tutorial"><a name="enable-http"></a>Enabling the HTTP Monitor</h3>
+
+<p>The HTTP Monitor is enabled by default for the Tomcat Web Server. However, for 
+    other servers, you must
+    manually enable the HTTP Monitor. In addition, the HTTP Server must be started
+for the HTTP Monitor to work for other servers.</p>
+<p>Do
+the following to prepare to use the HTTP Monitor:</p>
+<ol>
+    <li>Choose Tools &gt; Server Manager from the main window.</li>
+    <li>Select the server.</li>
+    <li>Click Enable HTTP Monitor and then click Close.</li>
+<li>In the Runtime window, right-click the HTTP Server node and choose Start HTTP Server.</li></ol>
+
+
+<h3 class="tutorial"><a name="verify-context"></a>Verifying the Context Path</h3>
+
+
+<ol>
+    <li>Right-click the Midnight project node and choose Properties.</li>
+    <li>In the Project Properties dialog box, click Run.</li>
+<li>Make sure that the Context Path is set to <tt>/Midnight</tt>.</li></ol>
+
+<h3 class="tutorial"><a name="run-app"></a>Running the application</h3>
+
+<ol>
+    <li>In the Projects window, right-click the Midnight project node and choose Run 
+        Project from the contextual menu.
+        <p>A progress monitor window appears as the application is 
+        prepared and deployed to the web server.</p>
+        <p>The web browser launches with the URL set to <tt>http://</tt><i>hostname:port</i><tt>/Midnight</tt>. 
+            The following example shows the web browser running on a Microsoft Windows 
+        platform. </p>
+        <p align="left"><img src="../../../images/articles/midnight40_images/mcc-browserintro.png" alt="Contents of web browser after the web application was executed."></p>
+        
+    </li>
+    <li>In the IDE, notice that the HTTP Monitor is displayed. <p>The following sections illustrate
+        how you can use the HTTP Monitor to monitor requests, sessions, and cookies.</p>
+    </li>
+</ol>
+<h3 class="tutorial"><a name="monitor-requests"></a>Monitoring requests and sessions</h3>
+
+<ol>
+    <li>In the HTTP Monitor, select the last entry under the Current Records 
+        node. 
+        <p>The last entry represents the request for the Midnight web application. 
+        </p>
+    </li>
+    <li>Select the Request tab and you see information similar to the following. 
+        <p><p align="left"><img src="../../../images/articles/midnight40_images/mcc-http1strequest.png" alt="HTTP Monitor displaying records in the Request tab after the web application was executed."></p>
+    </li>
+    <li>Select the Session tab and you see information similar to the following. 
+        <p><p>
+            <img src="../../../images/articles/midnight40_images/mcc-http1stsession.png" alt="Session Tab in HTTP Monitor after the web application was executed.">
+        </p>
+    </li>
+    <li>In your web browser, click the Parameters link to display the <tt>Input.jsp</tt> 
+        page. 
+        <p><p>Your web browser displays information similar to the following.</p>
+        <p align="left"><img src="../../../images/articles/midnight40_images/mcc-inputjsp.png" alt="Web browser displaying Input.jsp page "></p>
+    </li>
+    <li>In the Type Input text field, type <tt>hello</tt> and click Submit data.
+        <p><p>Your web browser displays the contents of the <tt>Output.jsp</tt> page, similar 
+        to the following.</p>
+        <p align="left"><img src="../../../images/articles/midnight40_images/mcc-outputjsp.png" alt="Web browser displaying Output.jsp page" ></p>
+    </li>
+    <li>In the HTTP Monitor, select the last entry under the Current Records and 
+        select the Request tab. 
+        <p><p>The HTTP Monitor displays information similar to the following.</p>
+        <p align="left"><img src="../../../images/articles/midnight40_images/mcc-httpoutputreq.png" alt="HTTP Monitor displaying the records in the Request tab."></p>
+    </li>
+</ol>
+
+<h3 class="tutorial"><a name="monitor-cookies"></a>Monitoring cookies</h3>
+
+<ol>
+    <li>In your web browser, click the Cookies link. 
+        <p><p>Your web browser displays the <tt>CookieCutter.jsp</tt> page.</p>
+    <li>In the Name text field, type <tt>cookie</tt>, <tt>and</tt> in the Value 
+            text field, type <tt>chocolate</tt>. 
+            <p><p><img src="../../../images/articles/midnight40_images/mcc-cutterjsp.png" alt="Web browser displaying CookieCutter.jsp page with Name and Value text fields populated."> 
+            </p>
+    </li>
+    </li>
+    <li>Click "Make me a cookie now!". 
+        <p><p>Your web browser displays information similar to the following.</p>
+        <p align="left"><img src="../../../images/articles/midnight40_images/mcc-makecookie.png" alt="Web browser after entering values in the Name and Value text fields"></p>
+    </li>
+    <li>In the HTTP Monitor, select the last entry under the Current Records node.
+        <p><p>The Cookies tab in the HTTP Monitor displays information similar to the following.
+        </p>
+        <p><img src="../../../images/articles/midnight40_images/mcc-httpmakecookie.png" alt="HTTP Monitor records after Cookie is made."> 
+        </p>
+    </li>
+    <li>In your web browser, click Cookie tray, and your web browser displays information 
+        similar to the following. 
+        
+    <p><p><img src="../../../images/articles/midnight40_images/mcc-trayjsp.png" alt="Browser displaying the Tray.jsp page."> 
+        </p>
+    </li>
+    <li>In the HTTP Monitor, select the last entry under the Current Records node 
+        and select the Cookies tab. 
+        <p><p>The HTTP Monitor displays information similar to the following.</p>
+        <p><img src="../../../images/articles/midnight40_images/mcc-httptraycookiestab.png" alt="Cookies tab in the HTTP Monitor after Tray.jsp page is displayed."> 
+        </p>
+    </li>
+    <li>Select the Request tab and the HTTP Monitor displays information similar 
+        to the following. 
+        <p><p><img src="../../../images/articles/midnight40_images/mcc-httptrayreqtab.png" alt="Request tab on the HTTP Monitor after Tray.jsp page is displayed.">
+        </p>
+    </li>
+    <li>In the HTTP Monitor, right-click the same entry (GET Tray.jsp) under the 
+        Current Records node and choose Edit and Replay from the contextual menu. 
+        In the Edit and Replay dialog box, click the Cookies tab and click Add Cookie. 
+        Set the name to Ingredient and the value to Sugar. Click Send HTTP Request. 
+        The browser redisplays the page with the new cookie.
+    </li>
+</ol>
+
+<h3 class="tutorial"><a name="monitor-non-pages"></a>Monitoring requests for non-existent pages</h3>
+
+<ol>  
+    <li>In your web browser, type a URL for a page that does not exist to see how 
+        the <tt>nonesuch.jsp</tt> page is used. For example, you might type <tt>http://localhost:8084/Midnight/docs/Bake.jsp</tt> 
+        for the URL and your web browser displays something similar to the following.
+        <p><p><img src="../../../images/articles/midnight40_images/mcc-bakejsp.png" alt="Web browser displaying contents of nonesuch.jsp after request was made for the non-existent Bake.jsp page"> 
+        </p>
+    </li>
+    <li>In the HTTP Monitor, select the Request tab and you will see information 
+        similar to the following.
+        <p><p><img src="../../../images/articles/midnight41_images/mcc-httpreqbakejsp.png" alt="HTTP Monitor's Request tab after the call to non-existent Bake.jsp page."></p>
+        <p>Notice that the content of <tt>nonesuch.jsp</tt> page is displayed in place 
+        of the non-existent <tt>Bake.jsp</tt> page. </p>
+    </li>
+</ol>
+<h3 class="tutorial"><a name="enable-inter"></a>Enabling internationalization</h3>
+
+<ol>  
+    <li>Modify the language preference used by your web browser to either French 
+        or Swedish in order to see the internationalization feature of this Midnight 
+        Cookie Company web application. 
+        <p>Note that you might have to add these two languages to the list of languages 
+        currently available to your web browser.</p>
+    </li>
+    <li>Reload or refresh the pages you have viewed in the previous steps. 
+        <p>Notice how the links in the left navigation bar, the links on the bottom 
+            of the pages, and the contents of some of the application's JSP pages have 
+        been translated to the language you have chosen.</p>
+        <p>The web application uses the resource bundle property files to help translate 
+            some of the pages used in this web application. So, the translation is only 
+        as extensive as the contents of the resource bundle property files.</p>
+    </li>
+</ol>
+</div>
+
+
+<h2><a name="apply"></a>Applying What You Have Learned</h2>
+<div class="indent">
+    <h3 class="tutorial">Add an Exit 
+    link that takes the user to a page that says "Goodbye" in the appropriate language</h3>
+    
+    <ol>
+        <li>Right-click the <tt>com/midnightcookies/Midnight.properties</tt> file and choose Open from
+            the contextual menu. Add the following keywords and values.
+            <p><p><table border=1 cellpadding=5 cellspacing=1>
+                    <tr>
+                        <td><b>Keyword</b></td>
+                        <td><b>Default</b></td>
+                        <td><b>French</b></td>
+                        <td><b>Swedish</b></td>
+                    </tr>
+                    <tr>
+                        <td>exit</td>
+                        <td>Exit</td>
+                        <td>Sortie</td>
+                        <td>Utg&aring;ng</td>
+                    </tr>
+                    <tr>
+                        <td>closingRemark</td>
+                        <td>Goodbye</td>
+                        <td>Au revoir</td>
+                        <td>Hej d&aring;</td>
+                    </tr>
+            </table></p>
+            <p>Use &amp;aring; to display the &aring; character.</p>
+        </li>
+        <li>Add an Exit.jsp content file. Use the message tag from the fmt tag library 
+            to display the message for the closingRemark keyword (Hint: look at Output.jsp). 
+            Don't forget to add a taglib directive for the fmt tag library.
+            
+        </li>
+        <li>Open the com/midnightcookies/taghandlers/LinksHandler.java file in the Source 
+            Editor and add a link to the Exit.jsp file. Use the exit keyword to get the 
+            link text from the properties bundle. Compile the class.
+        </li>
+        <li>Execute the web application.</li>
+    </ol>
+</div>
+
+<h2><a name="more"></a>Exploring Further</h2> <div class="indent">
+    
+    <p>Below are some other web application features that you might want to explore.</p>
+    
+    
+    <h3 class="tutorial">Examining the Midnight tag library</h3>
+    
+    <p>Expand the tlds/Midnight node to see the list of tags in the library. Look at the 
+        the Links tag in the Source Editor and at its Attributes to see that it takes a separator 
+    attribute.</p>
+    
+    
+    <h3 class="tutorial">Debugging web applications</h3>
+    
+    <p>Open the docs/main.jsp file in the Source Editor and set a breakpoint by clicking 
+        in the margin at approximately line 32 (the line that invokes midnight:content). Right-click 
+        the project node in the Projects or Files window and choose Debug Project from the contextual menu. 
+        The web 
+        application will stop at the breakpoint that you set. Press F7 to step into 
+        the code. Whenever a dialog appears because of missing source, press OK to select 
+        the default of stopping at the first line with source. Continue pressing F7 
+        until you enter the otherDoStartTagOperations() function in the ContentHandler 
+        class. Set a breakpoint at line 50 (request.getRequestDispatcher(page).include(request, 
+        response)) and press Ctrl-F5 (continue). Place the cursor over "page", "request", 
+        and "response" to see the values. You can also see the values in the Local Variables 
+        tab. Note that the Call Stack tab shows the relationship between the JSP code 
+        and the generated servlet methods. Try setting other breakpoints. Right-click 
+        a variable and choose New Watch from the contextual menu. Click the Watches 
+        tab to see the values change as you execute the various pages in the web application. 
+    Choose Debug &gt; Finish Session to quit the debugging session. </p>
+    
+    <h3 class="tutorial">Testing JSP files</h3>
+    <p>To run a public JSP file (one that is not under the WEB-INF folder), you 
+        simply right-click the file's node and choose Execute from the contextual menu. 
+        If a page is loaded, clicking the Browser's reload button will display any modifications 
+        that you have made. Private JSP files, like the ones in this tutorial, are a 
+        little harder to execute. One way to test a modified private JSP file without 
+        having to restart the web application and navigate to that page is to use the HTTP 
+        Monitor's replay action. Modify the docs/cookies/Tray.jsp file by setting the 
+        table's border to 10 and save your changes. In the HTTP Monitor, right-click 
+        a GET Tray.jsp record and choose Replay from the contextual menu. The Tray.jsp 
+    page should appear in the browser with a larger table border.</p>
+</div>
+
+<h2><a name="glossary"></a>Glossary</h2> <div class="indent">
+    
+    <p>Below are explanations of some of the terms used in this tutorial.</p>
+    
+    <h3 class="tutorial"><a name="compositeview"></a>Composite View</h3>
+    
+    <p>A design pattern that is used to present information in JSP pages. This design pattern 
+        creates an aggregate view from component views. Component views might include dynamic and 
+        modular portions of the page. The Composite View design pattern pertains to web application 
+        design when you are creating a view from numerous subviews. Complex web pages frequently consist 
+        of content derived from various resources. The layout of the page is managed independently of 
+        the content of its subviews. For instance, a view might have subviews such as Navigation, Search, 
+    Feature Story, and Headline.</p>
+    <p>When creating a composite view, you can include static content and dynamic content. Static content 
+        might consist of an HTML file. Dynamic content is a fragment of a JSP page. The specific content 
+    can be determined at either JSP translation time or at runtime.</p>
+    <h3 class="tutorial"><a name="frontcontroller"></a>Front Controller</h3>
+    <p>Front controllers are responsible for routing incoming requests and enforcing 
+        navigation in web applications. For more information on the use of the Front Controller 
+        design pattern, see the <a href="http://java.sun.com/blueprints/patterns/" target="_blank">J2EE Patterns catalog</a>.</p>
+    <h3 class="tutorial"><a name="jsppage"></a>JSP page</h3>
+    
+    <p>Pages that are used in web applications to present information to end users and to enable 
+        data from end users to flow back to the server. JSP pages must be placed within a 
+    web application in order for the JSP pages to be executable within the IDE.</p>
+    <h3 class="tutorial"><a name="servlet"></a>Servlet</h3>
+    
+    <p>Servlets are Java classes that execute within a servlet container, which is typically running 
+        within a web server. Servlets are used to do the following:
+  <ul><li>Generate dynamic content.</li>
+            <li>Extend the capabilities of web servers and web-enabled application servers.</li>
+            <li>Interact with web clients (typically a browser application such as Netscape or 
+            Internet Explorer) using a request-response paradigm</li>
+  </ul></p>
+</div>
+
+<h2><a name="nextsteps"></a>Next Steps</h2>
+
+<p>For more information about using NetBeans IDE 6.0, see the following resources: 
+</p>
+  <ul>
+      
+      <li><a href="../websvc/jax-ws.html">Getting Started with JAX-WS Web Services in NetBeans IDE 6.0</a></li>
+      <li><a href="../websvc/client.html">Getting Started with JAX-WS Web Service Clients in NetBeans IDE 6.0</a></li>
+    
+  
+  </ul>
+
+<p>To send comments and suggestions, get support, and keep informed on the latest 
+    developments on the NetBeans IDE J2EE development features, join the nbj2ee@netbeans.org 
+    mailing list<a href="mailto:nbusers@netbeans.org"></a>. For more information 
+about upcoming J2EE development features in NetBeans IDE, see <a href="http://j2ee.netbeans.org" target="_blank">j2ee.netbeans.org</a>.</p>
+
+<br>
+<h2>See Also:</h2>
+<ul>
+<li><a href="quickstart-webapps.html">Introduction to Developing Web Applications in NetBeans IDE 6.0</a></li>
+<li><a href="helloweb.html">Developing a Visual Web JSF Application</a></li>
+</ul>
+
+
+
+<hr class="light">
+
+<div class="date-stamp" align="right">This page was last modified:&nbsp;December 3, 2007</div>
+<table border="0" cellpadding="10" cellspacing="0" class="full-width">
+<!-- BEGIN SPACER ROW -->
+<tr>
+<td><br>
+<div class="feedback-box">
+<a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">
+Send Us Your Feedback</a></div>
+<br style="clear:both;" /> 
+</td>
+</tr>
+<!-- END SPACER ROW -->
+</table>
+</body>
+</html>
+

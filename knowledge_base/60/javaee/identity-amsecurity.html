@@ -1,0 +1,410 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c)2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+-->
+<html>
+<head>
+<title>Securing Web Services Using the SAML or UserNameToken Profiles</title>
+<link rel="stylesheet" href="../../../netbeans.css" type="text/css">
+<!-- Replace this CSS URL with the appropriate relative URL -->
+<meta name="description" content="Securing Web Services Using the SAML or UserNameToken Profiles">
+<meta name="author" content="Bob May"> <!--Optional tag-->
+<meta name="keywords" content=""> <!--Useful for including potential alternate search terms (shouldn't
+overlap with words that are prominently listed in the  tutorial) -->
+
+
+</head>
+<body>
+<a name="top"></a>
+<h1>Securing Web Services Using the SAML or UserNameToken Profiles</h1>
+<div class="articledate" style="margin-left: 0px;font-style:italic;">
+<p><em>Contributed and maintained by <a href="mailto:bob.may@sun.com"><i>Bob May </i></a><br>
+November 2007</em> [Revision number: V1-3]<br>
+This publication is applicable to the full NetBeans IDE 6.0  release<br>
+</p>
+
+</div>
+
+<p>This tutorial illustrates how you can enable <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=security" target="_blank">SAML</a>-based and UserNameToken-based authentication between a web service client and a web service provider using the bundled Access Manager along with the integrated support for the WS-Security standard in Application Server's web services client and server-side containers.
+  <!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+  <!-- START Link to Support and Docs paragraph ----------------------------------------------------------* -->
+  <!-- END Link to Support and Docs paragraph ------------------------------------------------------------* -->
+
+  <!-- START Note about videos in your-tutorial ----------------------------------------------------------* -->
+  <!-- Include this note only if you actually have videos in your doc, otherwise, delete this paragraph --* -->
+  <!-- Update the image reference below so it references the file in your images directory ---------------* -->
+  <!--Special warning/notice box-->
+</p>
+<p align="center"><b>Expected duration: <i>40 </i>minutes</b></p>
+
+ <h3>Contents</h3>
+
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tbody>  <tr>
+         <td align="left" valign="top"><ul><li><span class="tutorial"><a href="identity-amsecurity.html#verify">Verifying the Configuration of the Access Manager Installation</a></span></li>
+             <li><a href="identity-amsecurity.html#install">Installing the Sun Java System Access Manager</a></li>
+             <li><a href="identity-amsecurity.html#config">Configuring the Tutorial Environment</a></li>
+           <li><a href="identity-amsecurity.html#open">Creating the Tutorial Projects</a></li>
+           <li>Securing Web Services
+               <ul>
+                 <li><a href="identity-amsecurity.html#usingsaml">Using the SAML-HolderOfKey Security Mechanism</a></li>
+                 <li><a href="identity-amsecurity.html#usingusernamepassword">Using the UserNameToken Security Mechanism</a></li>
+               </ul>
+           </li>
+           <li><a href="identity-amsecurity.html#deploy">Deploying and Running the Project</a></li>
+           <li><a href="identity-amsecurity.html#exploringthelogfiles">Exploring the Log Files</a> </li>
+           <li><a href="identity-amsecurity.html#addlconfigtasks">Additional Configuration Tasks</a></li>
+           <li><a href="identity-amsecurity.html#references">References</a></li>
+           <li><a href="identity-amsecurity.html#summary">Summary</a></li>
+         </ul></td>
+         <td width="20">&nbsp;</td>
+         
+
+       </tr>
+
+     </tbody></table>
+     <!-- ======================================================================================== -->
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<p>NetBeans IDE 6.0  comes bundled with all the necessary runtimes to enable you to start developing secure, identity-enabled web services clients and providers. These runtimes include:</p>
+<ul>
+  <li> Java  Application Server SDK Update 3 Beta</li>
+  <li>Sun Java System Access Manager 7.1 and Policy Agent 2.2 for Web Services</li>
+</ul>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+
+<div class="indent">
+<!-- ======================================================================================== -->
+<h3>Prerequisites</h3>
+
+<!-- Use this section to let the reader know what they're expected to know before starting this --------* -->
+<p>This tutorial assumes that you have some basic knowledge of, or programming experience
+    with, Java and Web Services technologies.</p>
+  <!-- ======================================================================================== -->
+<h3>Software Needed for This Tutorial</h3>
+
+<!-- Replace existing text with info applicable to your tutorial ---------------------------------------* -->
+<p>Before you begin, you need to install the following software on your computer:</p>
+
+
+        <ul>
+          <li>NetBeans IDE 6.0</a><br>
+              <br>
+          Select the Full Download option.          </li>
+	          <li>Sun Java System Access Manager 7.1- As obtained from the Java Application Platform SDK Update 2  or later.(<a href="http://java.sun.com/javaee/downloads/index.jsp" title="Downloads for Java Web Services Developer Pack (Java WSDP) Version 2.0" target="_blank">download</a>)</li>
+        </ul>
+
+<!-- ======================================================================================== -->
+<!-- ======================================================================================== -->
+<!--<h3>Contents</h3> -->
+<!-- Consider including a table of contents into your tutorial -------------------------------* -->
+<!-- Use the sample format shown below -------------------------------------------------------* -->
+<!-- <ul>
+	<li><a href="#first_h2_head" title="First H2 Heading">First H2 Heading</a></li>
+	<li><a href="#second_h2_head" title="Second H2 Heading">Second H2 Heading</a></li>
+	<li><a href="#third_h2_head" title="Third H2 Heading">Third H2 Heading</a></li>
+	<li><a href="#summary" title="Summary">Summary</a></li>
+	<li><a href="#next_steps_h2_head" title="Next Steps">Next Steps</a></li>
+</ul>-->
+</div>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="install" id="install"></a>Installing the Sun Java System Access Manager</h2>
+<p>If you have already installed and configured the Access Manager in the past, please check your userdir and if it exists, delete the file </p>
+<p><tt>[Your_Userdir]/AccessManager/AMConfig_opt_SUNWappserver_domains)domain1_applications_j2ee-modules_amserver_ </tt></p>
+<p>before you begin a fresh installation. </p>
+<p>To install the Sun Java System Access Manager, you must first esnure that you have installed the full NetBeans IDE. Next,</p>
+<ol>
+  <li>Obtain the Java Application Platform SDK Update 2 or later from <a href="http://java.sun.com/javaee/downloads/index.jsp" target="_blank">http://java.sun.com/javaee/downloads/index.jsp</a>. </li>
+  <li>Run the Java SDK installer, specifying an installation directory of your choice, and accepting the default options.</li>
+  <li>Choose Add-Ons that include the Sun Java System Access Manager.</li>
+  <li>Continue to run the Installer, when it finishes, start the Server and select Finish.</li>
+  <li>Start the IDE.</li>
+  <li>In the Services tab, select the Servers node.  right-click the <tt>Servers</tt> node and choose Add Server from the pop-up menu.. The Add Server Instance dialog opens. </li>
+  <li>Click Next. The Platform Location Folder page opens. </li>
+  <li>In the Platform Location field, use the Browse button to navigate to and select the directory containing the Java Application Platform SDK you have just installed.</li>
+  <li>Click Finish.</li>
+  <li> The Sun Java System Access Manager appears as a node in the Services Tab under the Application Server you have just installed. You must start the Application Server to begin working with Sun Java System Access Manager.
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <blockquote>
+            <blockquote>
+              <blockquote>
+                <blockquote>
+                  <blockquote>
+                    <blockquote>
+                      <blockquote>
+                        <p><a href="identity-amsecurity.html#top">top</a></p>
+                      </blockquote>
+                    </blockquote>
+                  </blockquote>
+                </blockquote>
+              </blockquote>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </li>
+</ol>
+<h2 class="tutorial"><a name="verify" id="verify"></a>Verifying the Configuration of the Access Manager Installation</h2>
+<ol>
+  <li>In the Services window, expand the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Access&nbsp;Managers</tt> node.</li>
+  <li>You are then redirected to the Login page, which is displayed immediately on successive logins. You can login into the Sun Java System Access Manager.The Log In page opens, indicating that Access Manager server is running. </li>
+</ol>
+<blockquote>
+  <p>You need to configure the  Access Manager to run properly. It is configured by default when you first start the Glassfish Server you obtained from the SDK, but you can reconfigure it later, if needed. For further information, check the<tt> [your_SDKGlassfish_location]/addons/README.html </tt>file.</p>
+</blockquote>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+<h2><a name="config"></a>Configuring the Tutorial Environment</h2>
+<ol>
+  <li>Start the IDE.</li>
+  <li>To verify that the Sun Java System Application Server is configured in the IDE, click the Runtime tab and expand the <tt>Servers</tt> node.</li>
+  <li>If the <tt>Servers</tt> node does not contain a <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server&nbsp;9</tt> node, follow the steps in <a href="identity-amsecurity.html#configtasks_addingappserver">Adding an Application Server</a>.</li>
+  <li>In the Runtime window, expand the <tt>Servers</tt> node, right-click the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application Server&nbsp;9</tt> node and choose Start from the pop-up menu.<br>
+    Wait until the following message appears in the Output window:<br>
+    <tt>Application server startup complete.</tt> <br>
+    When the server is running, the IDE displays a green arrow badge on the Sun Java System Application Server 9 node. <br>
+    <b>Note:</b> If the Start option is not available, your server is already running.</li>
+</ol>
+<p align="center"><a href="identity-amsecurity.html#top">top</a><!-- ======================================================================================== -->
+</p>
+<h2><a name="open"></a>Creating the Tutorial Projects</h2>
+<p>Two tutorial projects are <tt>StockQuoteServer</tt> and <tt>StockQuoteClient</tt>.</p>
+<p><b>To create the <tt>StockQuoteServer</tt> project:</b></p>
+<ol>
+  <li>From the IDE's main menu, choose File &gt; New Project. </li>
+  <li>In the Categories list, expand the <tt>Samples</tt> node, then select the <tt>Identity&nbsp;Blueprints</tt> node.</li>
+  <li>In the Projects list, select <tt>Stock Service</tt>. </li>
+  <li>Click Next. </li>
+  <li>Accept the default Project Name (<tt>StockQuoteServer</tt>) and optionally change the Project Location.</li>
+  <li>Click Finish.<br>
+  </li>
+</ol>
+<p><b>To create the <tt>StockQuoteClient</tt> project:</b></p>
+<ol>
+  <li>From the IDE's main menu, choose File &gt; New Project. </li>
+  <li>In the Categories list, expand the <tt>Samples</tt> node, then select the <tt>Identity&nbsp;Blueprints</tt> node.</li>
+  <li>In the Projects list, select <tt>Stock Client</tt>. </li>
+  <li>Click Next. </li>
+  <li>Accept the default values for Project Name (<tt>Stock Client</tt>) and Project Location.</li>
+  <li>Click Finish.<br>
+    The Projects window now contains a <tt>Stock Client</tt> project node.</li>
+</ol>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+<br>
+<!-- ======================================================================================== -->
+<h2><a name="usingsaml"></a>Securing Web Services: Using the SAML-HolderOfKey Security Mechanism</h2>
+<p>In this scenario, we are using the SAML-HolderOfKey security profile without the response being signed but using the default key store. To do this, we will first edit the token profile for the Access Manager and then configure the web service provider and client.</p>
+<p><b>To edit the SAML-HolderOfKey profile:</b></p>
+<ol>
+  <li>In the Runtime window, expand the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Access&nbsp;Managers</tt> node, then expand the <tt>Default&nbsp;Instance</tt> and the <tt>Profiles</tt> nodes.</li>
+  <li>Select the <tt>SAML-HolderOfKey</tt> node</li>
+  <li> Right-click and choose Edit. <br>
+    The Edit SAML-HolderOfKey Profile dialog box opens. </li>
+  <li>Clear the Sign Response checkbox.</li>
+  <li>Locate Existing Certificate Settings, and confirm the Use Default Key Store checkbox selected.</li>
+  <li>Click OK. <br>
+      <br>
+      <p><img src="../../../images/articles/ep-amsecurity/60/amsec-saml-holderofkey-am-edit-profile.png"></p>
+  </li>
+</ol>
+<p><img src="../../../images/articles/ep-amsecurity/60/amsec-saml-holderofkey-wsp.png"></p>
+<p><b>To configure the web service client:</b></p>
+<ol>
+  <li>In the Projects window, expand the <tt>StockQuoteClient</tt> node and the <tt>Web&nbsp;Service&nbsp;References</tt> node.</li>
+  <li>Locate the <tt>Web&nbsp;Service&nbsp;References</tt> node, right-click the <tt>StockService</tt> node and choose Edit Web Service Attributes from the pop-up menu.<br>
+    The Web Service Client Security Configuration dialog box opens.</li>
+  <li>Select the Enable Message Level Security checkbox.</li>
+  <li>Locate  Security Mechanism from the Request drop-down list, select SAML-HolderOfKey.</li>
+  <li>Locate  Existing Certificate Settings. Confirm that the Use Default Key Store checkbox is selected.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-amsecurity/60/amsec-saml-holderofkey-wsc.png"></p>
+  </li>
+  <li>Click OK.</li>
+</ol>
+<p>You can now proceed to deploying and running the sample by following the instructions in <a href="identity-amsecurity.html#deploy">Deploying and Running the Project</a>.</p>
+<p align="center"><a href="identity-amsecurity.html#top">top</a><br>
+  <!-- ======================================================================================== -->
+</p>
+<h2><a name="usingusernamepassword"></a>Securing Web Services: Using the UserNameToken Security Mechanism</h2>
+<p>In this scenario, you use the UserNameToken security profile with signed response and use the default key store. To do this, you first edit the token profile for the Access Manager and then configure the web service provider and client.</p>
+<p><b>To edit the UserNameToken profile:</b></p>
+<ol>
+  <li>In the Runtime window, expand the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Access&nbsp;Managers</tt> node, then expand the <tt>Default&nbsp;Instance</tt> and the <tt>Profiles</tt> nodes.</li>
+  <li>Select the <tt>UserNameToken</tt> node, then right-click and choose Edit. <br>
+    The Edit UserNameToken Profile dialog box opens. </li>
+  <li>Locate  Existing Certificate Settings, and confirm that the Use Default Key Store checkbox selected.</li>
+  <li>Locate  Username Token Profile Info. Click the Add button to add a UserNameToken record for the web service client.<br>
+  The Add User dialog box opens.</li>
+  <li>In the Username field, type <tt>sherry</tt>, in the Password field, type <tt>mypw</tt>, and click OK.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-amsecurity/60/amsec-usernametoken-am-edit-profile.png"></p>
+  </li>
+  <li>Click OK to close the Edit UserNameToken Profile dialog box.</li>
+</ol>
+<p><b>To configure the web service provider:</b></p>
+<ol>
+  <li>In the Projects window, expand the <tt>StockServer</tt> node and the <tt>Web&nbsp;Services</tt> node.</li>
+  <li>Locate  the <tt>Web&nbsp;Services</tt> node. Right-click the <tt>stockservice</tt> node and choose Edit Web Service Attributes from the pop-up menu.<br>
+    The Web Service Provider Security Configuration dialog box opens.</li>
+  <li>Select the Enable Message Level Security checkbox.</li>
+  <li>Locate Security Mechanism, from the Request drop-down list, select UserNameToken.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-amsecurity/60/amsec-usernametoken-wsp.png"></p>
+  </li>
+  <li>Click OK.</li>
+</ol>
+<p><b>To configure the web service client:</b></p>
+<ol>
+  <li>In the Projects window, expand the <tt>StockClient</tt> node and the <tt>Web&nbsp;Service&nbsp;References</tt> node.</li>
+  <li>Locate  the <tt>Web&nbsp;Service&nbsp;References</tt> node. Right-click the <tt>Stock service</tt> node and choose Edit Web Service Attributes from the pop-up menu.<br>
+    The Web Service Client Security Configuration dialog box opens.</li>
+  <li>Select the Enable Message Level Security checkbox.</li>
+  <li>Locate  Security Mechanism from the Request drop-down list, select UserNameToken.</li>
+  <li>In the Username field, type <tt>sherry</tt> and in the Password field, type <tt>mypw</tt>.</li>
+  <li>Select the Verify Response checkbox.</li>
+  <li>Locate Existing Certificate Settings, and confirm that the Use Default Key Store checkbox selected.<br>
+      <br>
+      <p><img src="../../../images/articles/ep-amsecurity/60/amsec-usernametoken-wsc.png"></p>
+  </li>
+  <li>Click OK.</li>
+</ol>
+<p>You can now proceed to deploying and running the sample by following the instructions in <a href="identity-amsecurity.html#deploy">Deploying and Running the Project</a>.</p>
+<p align="center"><a href="identity-amsecurity.html#top">top</a><br>
+  <!-- ======================================================================================== -->
+</p>
+<h2><a name="deploy"></a>Deploying and Running the Project</h2>
+<ol>
+  <li>In the Projects window, right-click the 
+
+
+    <tt>StockQuoteService</tt> project node and choose Deploy Project.<br>
+    The IDE does the following:<br>
+    <ul>
+      <li>Starts the application server if it is not already started.</li>
+      <li>Builds the 
+
+
+      <tt>StockQuoteService</tt> project. You can see the build results in the Output window.</li>
+      <li>Deploys <tt>server.war</tt> to the Application Server.</li>
+    </ul>
+  </li>
+  <li>In the Projects window, right-click the <tt>StockQuoteClient</tt> project node and choose Run Project.<br>
+    The IDE does the following: <br>
+    <ul>
+      <li>Builds the <tt>StockQuoteClient</tt> project. You can see the build results in the Output window.</li>
+      <li>Deploys <tt>client.war</tt> to the Application Server.</li>
+      <li>Opens the application in the browser</li>
+      <li>Confirm that the URL field always displays: <br>
+      <tt>http://localhost:8080/stockquoteclient/</tt></li>
+    </ul>
+    <p><img src="../../../images/articles/ep-amsecurity/60/stockclientrunmozilla.png"></p>
+  </li>
+  <li>Click Submit.<br>
+      <p><img src="../../../images/articles/ep-amsecurity/60/amsec-saml-holderofkey-submit-stockclient.png"></p>
+      <p>You can click on the &quot;View SOAP Messages&quot; part of the display to see SOAP messages associated with this request.</p>
+  </li>
+</ol>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="exploringthelogfiles"></a>Exploring the Log Files</h2>
+<p>The instructions in this section are optional. Use these instructions to view the changes in the log files.</p>
+<ol>
+  <li>Before you proceed to the next step, enable the most granular logging level. <br>
+    Follow the instructions in <a href="identity-amsecurity.html#configtasks_changeseclvl">Changing the Security Level on the Application Server</a>.</li>
+  <li>In the Projects window, right-click the <tt>StockQuoteClient</tt> project node and choose Run Project from the pop-up menu. </li>
+  <li>Open the Application Server log file (<tt>server.log</tt>) in the following directory: <tt><i>application-server-installation-directory</i>\domains\domain1\logs</tt>.<br>
+    If you accepted the default values during installation, the window displays the <tt>C:\Sun\AppServer\domains\domain1\logs</tt> directory.</li>
+  <li>Notice the changes in the log file.<br>
+    The log file is edited to show that the modules are is using the methods defined in the configuration panels.<br>
+    Samples of sections of the modified log file are available from the following links..<br>
+    <ul>
+      <li><a href="../../../files/documents/4/1118/amsec-UsernameTokenProfileClientRequestIntheClient.txt">UsernameTokenProfile client request in the log file</a></li>
+      <li><a href="../../../files/documents/4/1117/amsec-UsernameTokenProfileServerResponseIntheServer.txt">UsernameTokenProfile server response in the log file</a></li>
+      <li><a href="../../../files/documents/4/1115/amsec-SAML-HolderofKeyClientRequestIntheClient.txt">SAML-HolderofKey client request in the log file</a></li>
+      <li><a href="../../../files/documents/4/1116/amsec-SAML-HolderofKeyServerResponseIntheServer.txt">SAML-HolderofKey server response in the log file</a></li>
+    </ul>
+  </li>
+</ol>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+<!-- ======================================================================================== -->
+<h2><a name="addlconfigtasks"></a>Additional Configuration Tasks</h2>
+<p>This section provides information about additional configuration tasks that you might want to perform.</p>
+<div class="indent">
+  <p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+  <h3 class="tutorial">&nbsp;</h3>
+  <h3 class="tutorial"><a name="trouble-config-as-8080"></a>Configuration Information for Application Server Not Installed on Port <tt>8080</tt></h3>
+  <p>If the installation of the Sun Java System Application Server was performed on a port other than <tt>8080</tt>, you must perform the additional configuration steps, as follows: </p>
+  <ol>
+    <li>In the Projects window, expand <tt>StockQuoteClient</tt> &gt; <tt>Web&nbsp;Pages</tt> &gt; <tt>WEB-INF</tt> and <tt>wsdl</tt>, and open the <tt>stock.wsdl</tt> file in the editor.</li>
+    <li>Click the Source button to switch to the Source view of the file.</li>
+    <li>Scroll to the bottom of the file and locate the following line:<br>
+&lt;soap:address location=&quot;http://localhost:8080/stockservice/stockservice&quot; xmlns:soap12=&quot;http://schemas.xmlsoap.org/wsdl/soap12/&quot;/&gt;</li>
+    <li>Replace the <tt>8080</tt> value with the port number where the Application Server is installed. </li>
+    <li>Save your changes and close the file.</li>
+  </ol>
+  <p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+  <h3 class="tutorial"><a name="configtasks_changeseclvl"></a>Changing the Security Level on the Application Server</h3>
+  <ol>
+    <li>In the Runtime window, right-click the <tt>Sun&nbsp;Java&nbsp;System&nbsp;Application&nbsp;Server&nbsp;9</tt> node and choose View Admin Console.</li>
+    <li>Type <tt>admin</tt> for the username and <tt>adminadmin</tt> for the password.</li>
+    <li>In the left navigation frame, click the Application Server link.</li>
+    <li>In the right frame, click the Logging tab and then click the Log Levels tab.<br>
+        <br>
+        <p align="center"><a href="../../../images/articles/ep-amsecurity/60/amsec-appserverloglvls.png" title="Application Server admin console, Log Levels tab, Click to enlarge"><img src="../../../images/articles/ep-amsecurity/60/amsec-appserverloglvls-small.png" alt="Application Server admin console, Log Levels tab, click to enlarge"></a></p>
+    </li>
+    <li>Scroll to the bottom of the page and set the Security to FINEST.<br>
+        <br>
+        <p align="center"><a href="../../../images/articles/ep-amsecurity/60/amsec-appserverseclvl.png" title="Application Server admin console, Security setting, Click to enlarge"><img src="../../../images/articles/ep-amsecurity/60/amsec-appserverseclvl-small.png" alt="Application Server admin console, Security setting, click to enlarge"></a></p>
+    </li>
+    <li>Click the Save button and log out.</li>
+  </ol>
+</div>
+<p align="center"><a href="identity-amsecurity.html#top">top</a><br>
+    <!-- ======================================================================================== -->
+</p>
+<h2><a name="references"></a>References</h2>
+<ul>
+  <li><a href="http://www.oasis-open.org/committees/download.php/16768/wss-v1.1-spec-os-SAMLTokenProfile.pdf" target="_blank">The SAML specification</a> (PDF)</li>
+  <li><a href="http://www.oasis-open.org/committees/download.php/5532/oasis-200401-wss-username-token-profile-1.0.pdf" target="_blank">OASIS WSS UserNameToken Profile</a> (PDF)</li>
+  <li><a href="http://docs.sun.com/app/docs/coll/1343.3" target="_blank">Sun Java System Application Server Platform Edition 9 Documentation</a></li>
+  <li>For answers to any other questions you might have about securing web services by using NetBeans IDE 6.0, see <a href="http://wiki.netbeans.info/wiki/view/NetBeansUserFAQ">NetBeansUserFAQ</a> in the NetBeans wiki.</li>
+</ul>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+<h2><a name="summary"></a>Summary</h2>
+<p>In this tutorial, we have learned how to enable <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=security" target="_blank">SAML</a>-based and UserNameToken-based authentication between a web service client and a web service provider. To do this, we have </p>
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+
+<!-- ======================================================================================== -->
+<h2><a name="next_steps"></a>Next Steps</h2>
+<!-- Intro paragraph for this topic --------------------------------------------------------------------* -->
+<ul>
+<li>
+  <p>To learn more about Identity Management, see the appropriate help topics in the NetBeans IDE.</p>
+</li>
+
+<li>
+  <p>To send comments and suggestions, obtain support, and stay informed of the latest
+  changes to the NetBeans IDE development features, join the <a href="mailto:nbusers@netbeans.org">nbusers@netbeans.org</a>
+  mailing list. </p>
+</li>
+</ul>
+
+<!-- ======================================================================================== --><!-- Change your-tutorial-title to the title of your tutorial -------------------------------------------* -->
+<br>
+<div class="feedback-box" ><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="identity-amsecurity.html#top">top</a></p>
+
+</body>
+</html>

@@ -1,0 +1,1632 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+*     Copyright (c) 2007 Sun Microsystems, Inc. All rights reserved.
+*     Use is subject to license terms.
+--> 
+<html>
+<head>
+
+
+<title>Developer Guide to the WSDL Editor</title>
+<link rel="stylesheet" type="text/css" href="../../../netbeans.css">
+<meta name="description" content="This guide describes how to use the WSDL Editor component of NetBeans IDE 6.0.">
+<meta name="author" content="Jeff Stein">
+
+</head>
+
+<body>
+
+<a name="top"></a>
+
+<h1>Developer Guide to the WSDL Editor</h1>
+
+<!-- START INTRO ---------------------------------------------------------------------------------------* -->
+
+
+
+
+<br>
+<div class="articledate" style="margin-left: 0px; font-style: italic;">
+Contributed by Jeff Stein
+<br>
+September 2007 
+<br>
+This publication is applicable to NetBeans IDE 6.0.<br>
+<br>
+</div>
+<!-- END INTRO -----------------------------------------------------------------------------------------* -->
+
+<p>This guide describes how to use the WSDL Editor component of NetBeans IDE 6.0 Beta 2. 
+This component is included in the SOA functionality.</p>
+
+
+<h3>Contents</h3>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <tr>
+         <td align="left" valign="top">
+           <ul>
+		   <li><a href="wsdl-guide.html#tut_req" title="Tutorial Requirements">Tutorial Requirements</a></li>
+            <li><a href="wsdl-guide.html#AboutTheWSDLEditor" title="About the WSDL Editor">About the WSDL Editor</a></li>
+			<li><a href="wsdl-guide.html#SourceView" title="Source View">Source View</a></li>
+			<li><a href="wsdl-guide.html#WSDLView" title="WSDL View">WSDL View</a></li>
+			<li><a href="wsdl-guide.html#PartnerView" title="Partner View">Partner View</a></li>
+			<li><a href="wsdl-guide.html#WorkingWithWSDLFiles" title="Working with WSDL Files">Working with WSDL Files</a></li>
+<li><a href="wsdl-guide.html#see_also" title="See Also">See Also</a></li>
+           </ul></td>
+
+       </tr>
+     </table>
+
+
+<!-- ======================================================================================== -->
+<div class="indent">
+<h2><a name="tut_req"></a>Tutorial Requirements</h2>
+<p>Before you proceed, make sure you review the requirements in this section.</p>
+
+
+
+
+  <h3>Prerequisites</h3>
+<p>This tutorial assumes that you have some basic knowledge of, or programming experience with, the Java language and platform and the NetBeans IDE.</p>
+<h3>Software Needed for This Tutorial</h3>
+<p>Before you begin, you need to install the following software on your computer: </p>
+<ul>
+<li>NetBeans IDE 6.0</a> <br>
+  <br>
+  <br>Select the Download All option. The Download All option includes SOA Pack and GlassFish V2, which are required for this tutorial.</li>
+</ul>
+
+<h2><a name="AboutTheWSDLEditor"></a>About the WSDL Editor</h2>
+
+<p>The WSDL Editor enables you to edit Web Services Description Language (WSDL) files.</p>
+
+<p>WSDL is an XML-based language for describing web services. 
+A WSDL file contains the following types of information:</p>
+
+<ul>
+<li>Information about the functionality of the web service</li>
+<li>Information about how to access the web service</li>
+</ul>
+
+<p>The WSDL Editor supports <a href="http://www.w3.org/TR/wsdl" target="_blank">version 1.1</a> of the WSDL specification.</p>
+
+<!--
+<p>In a BPEL Module project, you use WSDL files to define the interfaces for business processes and their partner services.</p>
+-->
+
+<p>The WSDL Editor provides the following views:</p>
+
+<ul>
+<li>In the <a href="wsdl-guide.html#SourceView" title="Source View">Source view</a>, the underlying XML source code appears.</li>
+<li>In the <a href="wsdl-guide.html#WSDLView" title="WSDL View">WSDL view</a>, the WSDL file appears as a tree component or a series of columns.</li>
+<li>In the <a href="wsdl-guide.html#PartnerView" title="Partner View">Partner view</a>, you can visualize and configure the abstract elements in a WSDL file.</li>
+</ul>
+
+<p>To create a WSDL file, you use a wizard. You must choose one of the following approaches:</p>
+
+<ul>
+<li>Create a WSDL file from scratch</li>
+<li>Create a WSDL file based on an existing WSDL file</li>
+</ul>
+
+
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="SourceView"></a>Source View</h2>
+
+<p>In the Source view, the underlying XML source code appears. You can directly edit the XML.</p>
+
+<p>The top of the Source Editor has a tab for each open document. 
+Each tab shows the name of the document. 
+If the document has been modified and has not been saved, then an asterisk (*) appears after the name. 
+You can right-click a tab to access various commands.</p>
+
+<p>A toolbar is located at the top of the Source Editor window.</p>
+
+<p>Source code displayed in the Source Editor is syntactically colored.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-source-view.png" 
+   alt="Source view for the sample file SynchronousSample.wsdl">
+</p>
+
+<p>The Source Editor status line is located beneath the horizontal scroll bar. 
+To toggle between insert mode and overwrite mode, use the Insert key.</p>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Using Code Completion in WSDL Files</h3>
+
+<p>The WSDL Editor enables you to use the following types of code completion in WSDL files:</p>
+
+<ul>
+
+  <li><b>Element code completion.</b> When you type a starting tag (&lt;) inside a parent element, 
+         the code completion box displays a list of child elements for the parent element. 
+         For example, assume that you place the cursor immediately after the <tt>&lt;portType&gt;</tt> element. 
+         When you type the starting tag (&lt;), the code completion box displays the following list of child elements: 
+         <tt>documentation</tt> and <tt>operation</tt>.</li>
+
+  <li><b>Attribute code completion.</b> When you press Spacebar inside an element tag, 
+         the code completion box displays a list of attributes for the element.</li>
+
+</ul>
+
+<p>The code completion box can include elements and attributes that are specific to individual bindings, 
+such as the FTP binding.</p>
+
+<p>When the code completion box is visible, you can continue typing to fine tune the selection of items in the list. 
+You can also use the mouse or navigation keys to scroll through the list.</p>
+
+<p>To select an item in the list, do one of the following:</p>
+
+<ul>
+  <li>Highlight the item and press Enter</li>
+  <li>Double-click the item</li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="WSDLView"></a>WSDL View</h2>
+
+<p>In the WSDL view of the WSDL Editor, the WSDL file appears as a tree component or a series of columns.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-wsdl-view.png" 
+   alt="WSDL view for the sample file SynchronousSample.wsdl">
+</p>
+
+<p>The WSDL view has two subviews: tree view and column view. 
+  To switch between the subviews, use the buttons in the WSDL Editor toolbar.</p>
+
+<p>The main nodes in the WSDL view correspond to the major elements in a WSDL file.</p>
+
+<ul>
+<li><b>Types.</b> This node enables you to import XML schemas and to add inline schemas.</li>
+<li><b>Imports.</b> This node enables you to import WSDL files.</li>
+<li><b>Messages.</b> This node enables you to create, edit, and delete messages.</li>
+<li><b>Port Types.</b> This node enables you to create, edit, and delete port types.</li>
+<li><b>Bindings.</b> This node enables you to create, edit, and delete bindings.</li>
+<li><b>Services.</b> This node enables you to create, edit, and delete services.</li>
+<li><b>Extensibility Elements.</b> This node enables you to add the following extensibility elements: 
+partner link types, properties, and property aliases.</li>
+</ul>
+
+<p>Some of the nodes in the WSDL view allow you to add extension attributes. 
+  Right-click the node and choose Add Extension Attribute. 
+  In the Add Extension Attribute dialog box, specify the name and namespace. 
+  Once you add the attribute, you can specify the value from the Properties window. 
+  To delete the attribute, right-click the node and choose Remove Attributes.</p>
+
+<p>If you right-click a node and choose Go To &gt; Source, 
+  then the Source view appears with the cursor positioned at the beginning of the component's block.</p>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring the Root Element</h3>
+
+<p>The root element of a WSDL file contains properties for the name of the WSDL file, 
+the target namespace, the default namespace, and namespace prefixes. 
+You can use the WSDL Editor to edit these properties.</p>
+
+<p><b>To configure the root element:</b></p>
+
+<ol>
+  <li>In the WSDL view, select the root node.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Edit the name, target namespace, and default namespace as necessary.</li>
+  <li>Edit the values of the namespace prefixes as necessary.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Importing XML Schemas Using the WSDL View</h3>
+
+<p>You can use the WSDL Editor to import one or more XML schema files into a WSDL file.</p>
+
+<p>If an XML schema file cannot be imported, then the file is crossed out in the Add Import dialog box. 
+This situation can happen for the following reasons:</p>
+
+<ul>
+  <li>The XML schema file has already been imported.</li>
+  <li>The namespace is incompatible with the WSDL file that is doing the import.</li>
+</ul>
+
+<p>The WSDL Editor allows you to import an XML schema file that is located in a different project. For more information, see 
+the "About Cross-Project XML File References" topic in the IDE online help.</p>
+
+<p><b>To import an XML schema:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Types node and choose Add &gt; Schema Import.<br>
+    The Add Import dialog box opens.</li>
+  <li>Expand the <tt>By File</tt> or <tt>By Namespace</tt> node to navigate to and select the XML schema file.</li>
+<!--
+  <li>(Optional) In the New Prefix column, type the prefix that you want to use.
+-->
+  <li>Click OK.<br>
+    The schema import node appears.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Adding Inline Schemas Using the WSDL View</h3>
+
+<p>The WSDL Editor provides support for the built-in simple types in W3C XML Schema. 
+The built-in simple types include such types as <tt>string</tt>, <tt>date</tt>, and <tt>integer</tt>.</p>
+
+<p>You can define your own data types by adding an inline schema. 
+  The WSDL Editor enables you to configure one or more schema elements and types, and to define the structure of the elements and types.</p>
+
+<p><b>To add an inline schema:</b></p>
+
+<ul>
+  <li>In the WSDL view, right-click the Types node and choose Add &gt; Inline Schema. <br>
+    The inline schema node appears.</li>
+</ul>
+
+<p><b>To configure the global properties of the inline schema:</b></p>
+
+<ol>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the inline schema node.</li>
+  <li>Perform one or more of the following optional tasks:
+  <ul>
+    <li>Specify a unique ID.</li>
+    <li>Specify whether locally declared attributes must be qualified with the namespace prefix.</li>
+    <li>Specify whether locally declared elements must be qualified with the namespace prefix.</li>
+    <li>Specify the default value of the <tt>block</tt> attribute, which controls the use of substitution.</li>
+    <li>Specify the default value of the <tt>final</tt> attribute, which controls the use of type derivation.</li>
+    <li>Specify the version of the schema.</li>
+    <li>Specify the target namespace of the schema.</li>
+  </ul></li>
+</ol>
+
+<p><b>To define the structure of the inline schema:</b></p>
+
+<ul>
+  <li>Add one or more of the following XML Schema components as necessary. 
+    The interface is the same as the Schema view that appears when you edit an XML schema.
+  <ul>
+    <li>Complex types</li>
+    <li>Simple types</li>
+    <li>Elements</li>
+    <li>Attributes</li>
+    <li>Attribute groups</li>
+    <li>Global group</li>
+  </ul></li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Importing WSDL Files Using the WSDL View</h3>
+
+<p>You can use the WSDL Editor to import one or more other WSDL files into a WSDL file.</p>
+
+<p>If a WSDL file cannot be imported, then the file and the file's namespace are crossed out in the Add Import dialog box. 
+This situation can happen for the following reasons:</p>
+
+<ul>
+  <li>The WSDL file has already been imported.</li>
+  <li>The WSDL file is the same WSDL file.</li>
+  <li>The namespace is incompatible with the WSDL file that is doing the import.</li>
+</ul>
+
+<p>The WSDL Editor allows you to import a WSDL file that is located in a different project. For more information, see 
+the "About Cross-Project XML File References" topic in the IDE online help.</p>
+
+<p><b>To import a WSDL file:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Imports node and choose Add WSDL Import.<br>
+    The Add Import dialog box opens.</li>
+  <li>Expand the <tt>By File</tt> or <tt>By Namespace</tt> node to navigate to and select the WSDL file.</li>
+<!--
+  <li>(Optional) In the New Prefix column, type the prefix that you want to use.
+-->
+  <li>Click OK.<br>
+    The WSDL import node appears.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring Messages Using the WSDL View</h3>
+
+<p>You can use the WSDL Editor to create, edit, and delete messages.</p>
+
+<p>In a WSDL file, a port type contains one or more related operations that the web service can perform. 
+  An operation receives a message, sends a message, or does both.</p>
+
+<p>Each message contains one or more logical parts. 
+  For each part, you must specify the name and the type of content.</p>
+
+<p>If you change the name of a message or part, 
+  then the WSDL Editor renames all occurrences in the same file. 
+  To rename all occurrences in associated XSD, WSDL, and BPEL files as well, 
+  right-click the component node and choose Refactor &gt; Rename.</p>
+
+
+
+<p><b>To create a message:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Messages node and choose Add Message. <br>
+    A message node appears. The message contains one part. The part's type of content is undefined.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>The Element or Type property specifies the type of content. 
+    To set the value, click the ellipsis (...) button. 
+    The Element or Type dialog box enables you to select any of the built-in types in W3C XML Schema. 
+    If you added an inline schema or imported a schema, then you can select an element or type from the schema.</li>
+</ol>
+
+<p><b>To add a part to a message:</b></p>
+
+<ul>
+  <li>Right-click the message node and choose Add &gt; Part. <br>
+    A part node appears. The type of content is undefined.</li>
+</ul>
+
+
+
+<p><b>To change the name of a message or part:</b></p>
+
+<ol>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the message or part node.</li>
+  <li>Set the Name property to the new name.</li>
+</ol>
+
+<p><b>To delete a message or part:</b></p>
+
+<ol>
+  <li>Select the message or part node.</li>
+  <li>Press Delete.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring Port Types Using the WSDL View</h3>
+
+<p>You can use the WSDL Editor to create, edit, and delete port types.</p>
+
+<p>In a WSDL file, a <i>port type</i> contains one or more related operations that the web service can perform. 
+  An example of an operation is <tt>GetQuote</tt>.</p>
+
+<p>The WSDL Editor supports the following categories of operations:</p>
+
+<ul>
+  <li><b>Request-response</b>. The operation receives a message as input, and sends a message as output.</li>
+  <li><b>One-way</b>. The operation receives a message as input.</li>
+</ul>
+
+<p>Each message contains one or more logical parts. 
+  For each part, you must specify the name and the type of content.</p>
+
+<p>If you change the name of a port type or operation, 
+  then the WSDL Editor renames all occurrences in the same file. 
+  To rename all occurrences in associated XSD, WSDL, and BPEL files as well, 
+  right-click the component node and choose Refactor &gt; Rename.</p>
+
+
+
+<p><b>To create a port type:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Port Types node and choose Add Port Type. <br>
+    The Create New Port Type dialog box appears.</li>
+  <li>Enter a name for the port type.</li>
+  <li>Enter a name for the operation.</li>
+  <li>Select the category of operation.</li>
+  <li>Define the message that the operation receives as input. 
+    You can create a message from scratch by entering a new message name in the drop-down list, or you can select an existing message from the drop-down list. 
+    For a new message, the Add and Remove buttons enable you to add and remove message parts.</li>
+  <li>If the operation is a request-response operation, then define the message that the operation sends as output.</li>
+  <li>(Optional) If the operation is a request-response operation, then you can define a message that the operation sends as a fault.</li>
+  <li>Click OK. <br>
+    A port type node appears. The port type node contains an operation node. 
+    If you created one or more messages, then the message nodes appear. 
+    In addition, a partner link type is automatically created.</li>
+</ol>
+
+<p><b>To add an operation to an existing port type:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the port type node and choose Add &gt; Operation. <br>
+    The Create New Operation dialog box appears.</li>
+  <li>Enter a name for the operation.</li>
+  <li>Select the category of operation.</li>
+  <li>Define the message that the operation receives as input. 
+    You can create a message from scratch by entering a new message name in the drop-down list, or you can select an existing message from the drop-down list. 
+    For a new message, the Add and Remove buttons enable you to add and remove message parts.</li>
+  <li>If the operation is a request-response operation, then define the message that the operation sends as output.</li>
+  <li>(Optional) If the operation is a request-response operation, then you can define a message that the operation sends as a fault.</li>
+  <li>Click OK. <br>
+    An operation node appears. 
+    If you created one or more messages, then the message nodes appear.</li>
+</ol>
+
+<p><b>To add a fault to a request-response operation:</b></p>
+
+<ol>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Right-click the operation node and choose Add &gt; Fault. <br>
+    The fault node appears.</li>
+  <li>Set the Message property to the fault message.</li>
+</ol>
+
+
+
+<p><b>To change the name of a port type or operation:</b></p>
+
+<ol>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the port type or operation node.</li>
+  <li>Set the Name property to the new name.</li>
+</ol>
+
+<p><b>To change the parameter order of an operation:</b></p>
+
+<ul class="note">
+  <li>The parameter order is intended for use with RPC bindings.</li>
+</ul>
+
+<ol>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the operation node.</li>
+  <li>Click the ellipsis (...) button for the Parameter Order property. <br>
+    The Parameter Order dialog box appears.</li>
+  <li>Move message parts from the Available Parameters list to the Current Parameters list.</li>
+  <li>Arrange the parts in the desired order.</li>
+  <li>Click OK.</li>
+</ol>
+
+<p><b>To delete a port type or operation:</b></p>
+
+<ol>
+  <li>Select the port type or operation node.</li>
+  <li>Press Delete.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring Bindings Using the WSDL View</h3>
+
+<p>You can use the WSDL Editor to create, edit, and delete bindings.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-binding.png" 
+   alt="binding example in WSDL view of WSDL Editor">
+</p>
+
+<p>In a WSDL file, a <i>binding</i> contains protocol and data format information 
+for the operations and messages of a port type.</p>
+
+<p>The WSDL view provides the following approaches:</p>
+
+<ul>
+  <li>You can quickly create a binding and service from an existing port type.</li>
+  <li>You can create the binding, service, and their subnodes individually.</li>
+</ul>
+
+<p>If you change the name of a binding, 
+  then the WSDL Editor renames all occurrences in the same file. 
+  To rename all occurrences in associated XSD, WSDL, and BPEL files as well, 
+  right-click the binding node and choose Refactor &gt; Rename.</p>
+
+
+
+<p><b>To create a binding and service from a port type:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the port type node and choose Add &gt; Binding and Service Port. <br>
+    The Generate Binding and Service Port dialog box appears.</li>
+  <li>Enter a name for the binding.</li>
+  <li>Select the type of binding.</li>
+  <li>Select the binding subtype. The choices vary depending on the binding type.</li>
+  <li>Enter a name for the service.</li>
+  <li>Enter a name for the port.</li>
+  <li>Click OK.<br>
+    A binding node and a service node appear.<br>
+    The binding node contains an extensibility element (for example, <tt>file:binding</tt>) that identifies the type of binding. 
+    The binding node also contains one or more operation nodes.<br>
+    The service node contains a port node. 
+    The port node contains an address extensibility element (for example, <tt>file:address</tt>).</li>
+  <li>For information on how to configure the extensibility elements of the binding and service, see the appropriate binding component user's guide.</li>
+</ol>
+
+<p><b>To create a binding individually:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Bindings node and choose Add Binding. <br>
+    A binding node appears.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the binding node.</li>
+  <li>(Optional) Change the value of the Name property.</li>
+  <li>Set the Type property to the port type that the binding will reference.</li>
+  <li>Right-click the binding node, point to Add, and choose the desired binding type (for example, File Binding).<br>
+      A node that identifies the binding type appears.</li>
+  <li>Right-click the binding node and choose Add &gt; Binding Operation.</li>
+  <li>If the binding's port type has more than one operation, then the Select Operation dialog box appears. 
+    Choose one or more operations, and click OK.<br>
+    One or more operation nodes appear.</li>
+  <li>For information on how to configure the binding's extensibility elements, see the appropriate binding component user's guide.</li>
+</ol>
+
+<p><b>To delete a binding:</b></p>
+
+<ol>
+  <li>Select the binding node.</li>
+  <li>Press Delete.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring Services Using the WSDL View</h3>
+
+<p>You can use the WSDL Editor to create, edit, and delete services.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-service.png" 
+   alt="service example in WSDL view of WSDL Editor">
+</p>
+
+<p>In a WSDL file, a <i>service</i> consists of one or more related ports. 
+Each <i>port</i> associates a binding with a network address, thus defining an individual endpoint that clients can access.</p>
+
+<p>The WSDL view provides the following approaches:</p>
+
+<ul>
+  <li>You can quickly create a binding and service from an existing port type.</li>
+  <li>You can create the binding, service, and their subnodes individually. Before you can configure the service's port, you must create the binding.</li>
+</ul>
+
+
+
+<p><b>To create a binding and service from a port type:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the port type node and choose Add &gt; Binding and Service Port.<br>
+    The Generate Binding and Service Port dialog box appears.</li>
+  <li>Enter a name for the binding.</li>
+  <li>Select the type of binding.</li>
+  <li>Select the binding subtype. The choices vary depending on the binding type.</li>
+  <li>Enter a name for the service.</li>
+  <li>Enter a name for the port.</li>
+  <li>Click OK.<br>
+    A binding node and a service node appear.<br>
+    The binding node contains an extensibility element (for example, <tt>file:binding</tt>) that identifies the type of binding. 
+    The binding node also contains one or more operation nodes.<br>
+    The service node contains a port node. 
+    The port node contains an address extensibility element (for example, <tt>file:address</tt>).</li>
+  <li>For information on how to configure the extensibility elements of the binding and service, see the appropriate binding component user's guide.</li>
+</ol>
+
+<p><b>To create a service individually:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Services node and choose Add Service. <br>
+    A service node appears.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the service node.</li>
+  <li>(Optional) Change the value of the Name property.</li>
+  <li>Right-click the service node and choose Add &gt; Service Port. <br>
+    A port node appears.</li>
+  <li>Select the port node.</li>
+  <li>(Optional) Change the value of the Name property.</li>
+  <li>Set the Binding property to the desired binding.</li>
+  <li>Right-click the port node and add the address extensibility element (for example, File Address).</li>
+  <li>For information on how to configure the address extensibility element, see the appropriate binding component user's guide.</li>
+</ol>
+
+<p><b>To delete a service or port:</b></p>
+
+<ol>
+  <li>Select the service or port node.</li>
+  <li>Press Delete.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring Partner Link Types Using the WSDL View</h3>
+
+<p>A <i>partner link type</i> characterizes the conversational relationship between two services. 
+A partner link type can have one role or two roles.</p>
+
+<ul>
+  <li>If a partner link type has one role, then the relationship involves a service that is willing to interact with any other service, without placing any requirements on the other service.</li>
+  <li>If a partner link type has two roles, then the relationship involves two peer services.</li>
+</ul>
+
+<p>A role describes the function that a partner has in the relationship. 
+For example, in a procurement scenario, the partner link type could have two roles: <tt>Buyer</tt> and <tt>Seller</tt>.</p>
+
+<p>A role must specify the port type that the service will use to receive messages.</p>
+
+<p><b>To add a partner link type automatically</b></p>
+
+<ol>
+  <li>When you do either of the following tasks, a partner link type is automatically generated. 
+    The partner link type has a default role.
+  <ul>
+    <li>Create a WSDL file from scratch.</li>
+    <li>Create a port type.</li>
+  </ul></li>
+  <li>(Optional) To add a second role, do the following:
+  <ol type="a">
+    <li>Right-click the partner link type node and choose Add &gt; role.</li>
+    <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+    <li>Select the role.</li>
+    <li>(Optional) Change the default name.</li>
+    <li>Specify the port type.</li>
+  </ol></li>
+</ol>
+
+<p><b>To add a partner link type manually:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Extensibility Elements node and choose Add &gt; PartnerLinkType. <br>
+    A partner link type node appears under the Extensibility Elements node. 
+    The partner link type has a default role.</li>
+  <li>(Optional) To add a second role, right-click the partner link type node and choose Add &gt; role.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>For each role, do the following:
+  <ol type="a">
+    <li>Select the role.</li>
+    <li>(Optional) Change the default name.</li>
+    <li>Specify the port type.</li>
+  </ol></li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Configuring Properties and Property Aliases Using the WSDL View</h3>
+
+<p>The BPEL Service Engine uses a mechanism called <i>correlation</i> to track the multiple, stateful, long-running exchanges of messages 
+that typically take place between a BPEL process and its partner services.</p>
+
+<p>The procedure for enabling correlation in a BPEL process includes the following initial steps, 
+  which must be performed in the WSDL file:</p>
+
+<ul>
+  <li>Define one or more properties in the WSDL file. <br>
+    A <i>property</i> creates an association between business data and a name that can play an important role 
+    in the global context of the BPEL process. 
+    Each property consists of a globally unique name (for example, <tt>claimNumberProperty</tt>) 
+    and a type (for example, <tt>xsd:string</tt>).</li>
+  <li>Define property aliases in the WSDL file. <br>
+    A <i>property alias</i> maps a specific property to a specific element or attribute in a message part. 
+    When you create a property alias, you must specify the property and the message.</li>
+</ul>
+
+<p>Once you perform these steps in the WSDL file, you can create a correlation set in the BPEL process. 
+  The correlation set references one or more properties. 
+  The correlation set can then be used by message activities (Invoke, Reply, and Receive) 
+  and by the <tt>onMessage</tt> branches of Pick elements.</p>
+
+
+
+<ul class="note">
+  <li>You can also use the BPEL Designer Navigator to add properties and property aliases to a WSDL file. 
+  For more information, see 
+  the "Adding Properties and Property Aliases to WSDL Files Using the Navigator" topic in the IDE online help.</li>
+</ul>
+
+
+
+<p><b>To add a property to a WSDL file:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Extensibility Elements node and choose Add &gt; Property. <br>
+    A property node appears under the Extensibility Elements node.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the property node.</li>
+  <li>Set the name property.</li>
+  <li>You can set the ElementOrType property to a built-in simple type, such as <tt>string</tt> or <tt>date</tt>. 
+    If you added an inline schema or imported a schema, then you can select a type from the schema.</li>
+</ol>
+
+<p><b>To add a property alias to a WSDL file:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the Extensibility Elements node and choose Add &gt; Property Alias. <br>
+    A property alias node appears under the Extensibility Elements node.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the property alias node.</li>
+  <li>Specify values for the propertyName and ElementOrTypeOrMessagePart properties. 
+    These properties enable you to map data from a message into a property value.</li>
+  <li>To add a query, right-click the property alias node and choose Add &gt; query. <br>
+    A query node appears. 
+    The query node enables you to set the query language and the text of the query.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Finding Usages of WSDL Components</h3>
+
+<p>You can quickly determine where a WSDL component is used in the WSDL file. </p>
+
+<p><b>To find usages of a WSDL component:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click the component and choose Find Usages. <br>
+    The Usages window opens in the lower part of the IDE. The window has three parts:
+  <ul>
+    <li><b>Toolbar.</b> The toolbar buttons let you refresh information in the window, expand and collapse nodes in the 
+      tree pane, and cycle through the found usages.</li>
+    <li><b>Tree pane.</b> The tree pane contains nodes for the results of the query.</li>
+    <li><b>Graph pane.</b> The graph pane shows a graphical representation of the results.</li>
+  </ul></li>
+  <li>To zoom out, right-click in the graphic and drag up. To zoom in, right-click in the graphic and drag down.</li>
+  <li>To pan, click and drag in any direction.</li>
+  <li>To drag a node, click and drag the node.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Adding Documentation</h3>
+
+<p>You can add documentation to any WSDL language element.</p>
+
+<p><b>To add documentation:</b></p>
+
+<ol>
+  <li>In the WSDL view, right-click an element and choose Add &gt; Documentation. <br>
+    A documentation node appears.</li>
+  <li>If the Properties window is not visible, choose Window &gt; Properties.</li>
+  <li>Select the documentation node.</li>
+  <li>Enter the documentation text.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Using Find in the WSDL View</h3>
+
+<p>You can search for WSDL components in the current WSDL file.</p>
+
+<p>You can define the type of find to be performed:</p>
+
+<ul>
+  <li><b>Search Selection.</b> 
+         Starts the find action from the component most recently selected in the WSDL view.</li>
+  <li><b>Use regular expression.</b> 
+         The phrase entered into the text field is treated as a regular expression, with case-sensitivity.</li>
+</ul>
+
+<p>For more information about regular expressions, see 
+the "Regular Expressions For Finding and Replacing Text" topic in the IDE online help.</p>
+
+<p><b>To search for WSDL components:</b></p>
+
+<ol>
+  <li>From from the IDE's main menu, choose Edit &gt; Find. You can also press Ctrl-F.<br>
+      The Find bar opens at the bottom of the WSDL view.</li>
+  <li>In the Find box, click the magnifying glass icon and select the type of search that you want to perform: 
+      Component Name, Component Kind, Attribute Declaration, or Attribute Value.</li>
+  <li>If you want to find matches from a specific point, then select a component in the WSDL view, click the magnifying glass icon, and select Search Selection.</li>
+  <li>If you want to use a regular expression, then click the magnifying glass icon and select Use regular expression.</li>
+  <li>In the Find box, type the text or regular expression and press Enter.<br>
+      The IDE finds any matching components and highlights the matches in the WSDL view.</li>
+  <li>To cycle through the matching components, use the Find Next and Find Previous buttons.</li>
+</ol>
+
+<p><b>To clear highlights after a search:</b></p>
+
+<ul>
+  <li>In the Find bar, click Clear.<br>
+      The highlights are removed from the WSDL view.</li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="PartnerView"></a>Partner View</h2>
+
+<p>The Partner view of the WSDL Editor represents the abstract elements of a WSDL file as 
+interactions between partners.</p>
+
+<p>The abstract elements include partner link types, roles, port types, operations, and messages.</p>
+
+<p>A <i>partner link type</i> characterizes the conversational relationship between two services. 
+  A <i>role</i> describes the function that a service has in the relationship. 
+  A partner link type can have one role or two roles.</p>
+
+<ul>
+  <li><b>Client/Server.</b> In this type of interaction, the partner link type has one role. The role represents the server. 
+    The server can be invoked by one or more unspecified clients.</li>
+  <li><b>Peer to Peer.</b> In this type of interaction, the partner link type has two roles. Each role represents a peer service.</li>
+</ul>
+
+<p>A role must specify the port type that the service will use to receive messages. 
+  A <i>port type</i> contains one or more related <i>operations</i> that the web service can perform. 
+  The WSDL Editor supports the following categories of operations:</p>
+
+<ul>
+  <li><b>Request-response</b>. The operation receives a message as input, and sends a message as output.</li>
+  <li><b>One-way</b>. The operation receives a message as input.</li>
+</ul>
+
+<p>The concrete elements of a WSDL file (that is, bindings and services) 
+describe how to invoke the functionality defined by the abstract elements. 
+Creating a WSDL file that contains only abstract elements is an effective design approach. 
+You can define the concrete elements at deployment time by using the Composite Application Service Assembly (CASA) editor. 
+Thus, if you need to change the bindings at some point, you can do so without modifying the project.</p>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Strategies for Defining the Abstract Elements</h3>
+
+<p>In the Partner view of the WSDL Editor, 
+you can define the abstract elements by starting with the partner interactions 
+or by starting with the messages that are exchanged by the partners.</p>
+
+<p><b>To define the abstract elements by starting with the partner interactions:</b></p>
+
+<ol>
+  <li>Create a partner link type. 
+    The partner link type contains a default role, which appears on the right. 
+    If you want to define a peer-to-peer interaction, then you must add a second role on the left.</li>
+  <li>Choose or create the port types and operations.</li>
+  <li>Create the messages that will be sent from one partner to another.</li>
+  <li>Assign the messages to the partner link type's operations.</li>
+  <li>Specify the data types for the message parts. 
+    Note that you can create or import an XML schema by using the Navigator window, 
+    and then drag the schema elements or types into the messages.</li>
+</ol>
+
+<p><b>To define the abstract elements by starting with the messages:</b></p>
+
+<ol>
+  <li>Create or import an XML schema by using the Navigator window.</li>
+  <li>Create the messages that will be sent from one partner to another. 
+    Note that you can drag the schema elements or types from the Navigator window into the messages.</li>
+  <li>Create a partner link type. 
+    The partner link type contains a default role, which appears on the right. 
+    If you want to define a peer-to-peer interaction, then you must add a second role on the left.</li>
+  <li>Choose or create the port types and operations.</li>
+  <li>Assign the messages to the partner link type's operations.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Partner View Layout</h3>
+
+<p>The Partner view of the WSDL Editor has the following components:</p>
+
+<ul>
+  <li><b>Toolbar.</b> The toolbar is located at the top of the Partner view, just below the tab for the WSDL file.</li>
+  <li><b>Partner Link Types area.</b> Contains one configuration box for each partner link type in the WSDL file.</li>
+  <li><b>Messages area.</b> Contains one configuration box for each message in the WSDL file.</li>
+  <li><b>Palette.</b> Contains partner link type, operation, and message icons. 
+    To display the Palette, choose Window &gt; Palette from the IDE's main menu.</li>
+</ul>
+
+<p>You can expand or collapse the configuration boxes. 
+When a box is collapsed, click the downward arrow to expand the box. 
+When a box is expanded, click the upward arrow to collapse the box.</p>
+
+<p>The IDE's Navigator window provides a compact view of the currently selected file and simplifies navigation between different parts of the file. 
+For WSDL files, the Navigator has two views: WSDL and XML.</p>
+
+<p>The WSDL view of the Navigator window is identical to the WSDL view of the WSDL Editor.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-navigator-wsdl.png" 
+   alt="WSDL view of Navigator window">
+</p>
+
+<p>The XML view uses a tree structure to represent the XML tags in the WSDL file.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-navigator-xml.png" 
+   alt="XML view of Navigator window">
+</p>
+
+<p>To display the Navigator, choose Window &gt; Navigator from the IDE's main menu.</p>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Navigating in the Partner View</h3>
+
+<p>You can perform the following tasks from the toolbar of the Partner view:</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-toolbar-partner-view.png" 
+   alt="Partner view toolbar">
+</p>
+
+<ul>
+  <li>Set the magnification. The lowest magnification is 33 percent. The highest magnification is 200 percent.
+  <ul>
+    <li>To set the magnification so that the entire diagram fits within the viewable area, click the Fit Diagram icon.</li>
+    <li>To set the magnification so that the width of the diagram fits within the viewable area, click the Fit Width icon.</li>
+    <li>To set the magnification to 100 percent, click the 100% icon.</li>
+    <li>To set the magnification to a predefined percentage, select the percentage from the drop-down box.</li>
+    <li>To set the magnification to any value between 33 and 200, enter the percentage in the drop-down box.</li>
+    <li>To increase the magnification, click the Zoom In icon.</li>
+    <li>To decrease the magnification, click the Zoom Out icon.</li>
+  </ul></li>
+  <li>Show or hide the partner link types.</li>
+  <li>Show or hide the messages.</li>
+  <li>Validate the WSDL file. The validation tool reviews the WSDL file for problems with syntax and semantics. The Output window displays any errors or warnings.</li>
+</ul>
+
+<p>If you right-click a component and choose Go To &gt; Source, 
+  then the Source view appears with the cursor positioned at the beginning of the component's block.</p>
+
+<p>If you right-click a component and choose Go To &gt; WSDL, 
+  then the WSDL view appears with the appropriate node highlighted.</p>
+
+<p>After performing an action in the Partner view, you can reverse the action by choosing Edit &gt; Undo (Ctrl-Z) from the IDE's main menu. 
+You can reverse an undo command by choosing Edit &gt; Redo (Ctrl-Y) from the IDE's main menu.</p>
+
+<p>You can print the contents of the Partner view by using the IDE's standard print feature.</p>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Creating Partner Link Types Using the Partner View</h3>
+
+<p>The Partner Link Types area in the Partner view contains one configuration box for each partner link type in the WSDL file.</p>
+
+<p align="center">
+   <a href="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-partner-view.png">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-partner-view-tn.png" 
+   alt="configuration box for a partner link type"><br>Click to enlarge</a>
+</p>
+
+<p>A partner link type can have one role or two roles. The first role appears in the right side of the configuration box. 
+If included, the second role appears in the left side of the configuration box.</p>
+
+<p>The role's port type appears below the role. A port type has one or more operations, which are illustrated in the area below the port types. 
+A solid horizontal arrow indicates an input message. A dashed horizontal arrow indicates an output message.</p>
+
+<p>If the operation is a request-response operation, then you can optionally add a fault. 
+A dashed horizontal arrow indicates a fault message.</p>
+
+<ul class="note">
+  <li>The configuration box resembles a sequence diagram in Unified Modeling Language (UML).</li>
+</ul>    
+
+<p>Partner link types from imported WSDL files do not appear in the Partner view.</p>
+
+
+
+<p><b>To create a partner link type with one role:</b></p>
+
+<ul class="note">
+  <li>If the WSDL file contains a port type that is not associated with a partner link type, 
+    then the Auto Create button appears in the Partner Link Types area. 
+    To generate a partner link type that references the port type, click Auto Create.</li>
+</ul>
+
+<ol>
+
+  <li>Do one of the following:<br>
+  <ul>
+    <li>Click Add Partner Link Type.</li>
+    <li>Drag the Partner Link Type icon from the Palette onto a blank portion of the Partner Link Types area.</li>
+    <li>Right-click a blank portion of the Partner Link Types area and choose Add PartnerLinkType.</li>
+  </ul>
+  The configuration box for the partner link type appears. The partner link type contains a default role.</li>
+
+  <li>In the right side of the configuration box, specify the port type that the service will use to receive messages. 
+  To create a new port type, double-click <tt>Enter or Select a Port Type</tt> and enter the name. 
+  To use an existing port type, click <tt>Enter or Select a Port Type</tt> and select the port type from the drop-down menu.</li>
+
+  <li>If you created a new port type, or if you want to add one or more operations to an existing port type, then do the following:
+
+  <ol type="a">
+    <li>Drag one or more operations from the Palette onto the dashed vertical line that extends below the port type.</li>
+    <li>For each operation, select the messages. 
+    You can double-click <tt>&lt;No Message Selected&gt;</tt> and select a message from the drop-down list. 
+    Alternately, you can drag a message from the Navigator window onto <tt>&lt;No Message Selected&gt;</tt>.</li>
+  </ol></li>
+
+</ol>
+
+
+
+<p><b>To add a second role to a partner link type:</b></p>
+
+<ol>
+
+  <li>In the left side of the configuration box, double-click <tt>[External Partner]</tt> and enter the role name.</li>
+
+  <li>In the left side of the configuration box, specify the port type that the service will use to receive messages. 
+  To create a new port type, double-click <tt>Enter or Select a Port Type</tt> and enter the name. 
+  To use an existing port type, click <tt>Enter or Select a Port Type</tt> and select the port type from the drop-down menu.</li>
+
+  <li>If you created a new port type, or if you want to add one or more operations to an existing port type, then do the following:
+
+  <ol type="a">
+    <li>Drag one or more operations from the Palette onto the dashed vertical line that extends below the port type.</li>
+    <li>For each operation, select the messages. 
+    You can double-click <tt>&lt;No Message Selected&gt;</tt> and select a message from the drop-down list. 
+    Alternately, you can drag a message from the Navigator window onto <tt>&lt;No Message Selected&gt;</tt>.</li>
+  </ol></li>
+
+</ol>
+
+
+
+<p><b>To add a fault to a request-response operation:</b></p>
+
+<ol>
+  <li>Right-click the operation name and choose Add Fault.<br>The fault appears.</li>
+  <li>Double-click <tt>&lt;No Message Selected&gt;</tt>.</li>
+  <li>Select the fault message.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Editing Partner Link Types Using the Partner View</h3>
+
+<p>The Partner Link Types area in the Partner view enables you to 
+modify or delete the partner link types, roles, port types, and operations in a WSDL file.</p>
+
+
+
+<p><b>To change the name of a partner link type, role, port type, or operation:</b></p>
+
+<ul class="note">
+  <li>This procedure will rename all occurrences in the same WSDL file. 
+    If you want to rename all occurrences in the same WSDL file and all associated XSD, WSDL, and BPEL files, 
+    then right-click the component and choose Refactor &gt; Rename.</li>
+</ul>
+
+<ol>
+  <li>Double-click the partner link type name, role name, port type name, or operation name.</li>
+  <li>Change the name.</li>
+  <li>Press Enter.</li>
+</ol>
+
+
+
+<!--
+<p><b>To change the port type of a role:</b></p>
+
+<ol>
+  <li>Double-click the port type.</li>
+  <li>Change the port type. To create a new port type, enter the name. 
+  To use an existing port type, select the port type from the drop-down menu.</li>
+</ol>
+-->
+
+
+
+<p><b>To delete an operation:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>Select the operation and press Delete.</li>
+    <li>Right-click the operation and choose Delete from the pop-up menu.</li>
+  </ul></li>
+</ul>
+
+<p><b>To delete a port type:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>Select the port type and press Delete.</li>
+    <li>Right-click the port type and choose Delete from the pop-up menu.</li>
+  </ul>
+  The port type area of the configuration box is changed to an unconfigured state.</li>
+</ul>
+
+<p><b>To delete a role:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>Select the role and press Delete.</li>
+    <li>Right-click the role and choose Delete from the pop-up menu.</li>
+  </ul>
+  The role area of the configuration box is changed to an unconfigured state.</li>
+</ul>
+
+<p><b>To delete a partner link type:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>Select the configuration box for the partner link type and press Delete.</li>
+    <li>Right-click the configuration box for the partner link type and choose Delete from the pop-up menu.</li>
+  </ul></li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Creating Messages Using the Partner View</h3>
+
+<p>The Messages area in the Partner view contains one configuration box for each message in the WSDL file.</p>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-partner-view-messages.png" 
+   alt="configuration boxes for two messages">
+</p>
+
+<p>In a WSDL file, a port type contains one or more related operations that the web service can perform. 
+  An operation receives a message, sends a message, or does both.</p>
+
+<p>Each message contains one or more logical parts. 
+  For each part, you must specify the name and the type of content.</p>
+
+
+
+<p><b>To create a message:</b></p>
+
+<ol>
+
+  <li>Do one of the following:<br>
+  <ul>
+    <li>Click Add Message.</li>
+    <li>Drag the Message icon from the Palette onto a blank portion of the Messages area.</li>
+    <li>Right-click a blank portion of the Messages area and choose Add Message.</li>
+  </ul>
+  The configuration box for the message appears. The message contains one part. The part's type of content is undefined.</li>
+
+  <li>Do one of the following:
+  <ul>
+    <li>In the Part Element or Type column, click the ellipsis (...) button. 
+        Select any of the built-in types in W3C XML Schema. 
+        If you added an inline schema or imported a schema, then you can select an element or type from the schema. 
+        Click OK.</li>
+    <li>Drag an element or type from the Navigator window onto the Part Element or Type column.</li>
+  </ul></li>
+
+</ol>
+
+
+
+<p><b>To add a part to a message:</b></p>
+
+<ul>
+  <li>Do one of the following:<br>
+  <ul>
+    <li>Click Add Part.<br>
+        A new row appears. The type of content is set to <tt>xs:string</tt>.</li>
+    <li>Right-click the configuration box for the message and choose Add Part from the pop-up menu.<br>
+        A new row appears. The type of content is undefined.</li>
+    <li>Drag an element or type from the Navigator window onto the configuration box for the message, 
+        and above or below an existing row.<br>
+        A new row appears. The type of content is set to the element or type that you selected.</li>
+  </ul></li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Editing Messages Using the Partner View</h3>
+
+<p>The Messages area in the Partner view enables you to modify or delete the messages in a WSDL file.</p>
+
+
+
+<p><b>To change the name of a message:</b></p>
+
+<ul class="note">
+  <li>This procedure will rename all occurrences in the same WSDL file. 
+    If you want to rename all occurrences in the same WSDL file and all associated XSD, WSDL, and BPEL files, 
+    then right-click the component and choose Refactor &gt; Rename.</li>
+</ul>
+
+<ol>
+  <li>Double-click the message name.</li>
+  <li>Change the name.</li>
+  <li>Press Enter.</li>
+</ol>
+
+<p><b>To change the name of a part:</b></p>
+
+<ul class="note">
+  <li>This procedure will rename all occurrences in the same WSDL file. 
+    If you want to rename all occurrences in the same WSDL file and all associated XSD, WSDL, and BPEL files, 
+    then right-click the component and choose Refactor &gt; Rename.</li>
+</ul>
+
+<ol>
+  <li>In the Part Name column, double-click the part name.</li>
+  <li>Change the name.</li>
+  <li>Press Enter.</li>
+</ol>
+
+<p><b>To change the type of content for a part:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>In the Part Element or Type column, click the ellipsis (...) button. 
+        Select any of the built-in types in W3C XML Schema. 
+        If you added an inline schema or imported a schema, then you can select an element or type from the schema. 
+        Click OK.</li>
+    <li>Drag an element or type from the Navigator window onto the Part Element or Type column.</li>
+  </ul></li>
+</ul>
+
+
+
+<p><b>To delete a part:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>Select the part and press Delete.</li>
+    <li>Select the part and click Remove Part.</li>
+    <li>Right-click the part and choose Delete from the pop-up menu.</li>
+  </ul></li>
+</ul>
+
+<p><b>To delete a message:</b></p>
+
+<ul>
+  <li>Do one of the following:
+  <ul>
+    <li>Select the configuration box for the message and press Delete.</li>
+    <li>Right-click the configuration box for the message and choose Delete from the pop-up menu.</li>
+  </ul></li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="WorkingWithWSDLFiles"></a>Working with WSDL Files</h2>
+
+
+
+<h3>Creating a WSDL File From Scratch</h3>
+
+<p>When you create a WSDL file from scratch, the wizard contains three pages that you can fill out.</p>
+
+<ul>
+<li>The Name and Location page prompts you to enter basic information about the WSDL file.</li>
+<li>The Abstract Configuration page prompts you to define the port type, operation, and messages.</li>
+<li>The Concrete Configuration page prompts you to define the binding, service, and port.</li>
+</ul>
+
+<p>You do <i>not</i> need to complete all three pages. 
+You can fill out the Name and Location page and then click Finish. 
+Or you can fill out the Name and Location page and the Abstract Configuration page and then click Finish.</p>
+
+<p><b>To create a WSDL file from scratch:</b></p>
+
+<ol>
+
+  <li>In the Projects window, right-click the <tt>Process Files</tt> node and choose New &gt; WSDL Document.</li>
+
+  <li>In the Name and Location wizard page, do the following:
+
+  <ol type="a">
+    <li>Enter a name for the file. The name must comply with the rules for the <tt>NCName</tt> data type. You cannot enter a name that already exists in the project.</li>
+    <li>(Optional) Change the default folder by clicking Browse and selecting the new folder.</li>
+    <li>Enter the target namespace for the WSDL file. The target namespace will appear in the root element.</li>
+    <li>Specify any XML Schema files that you want to import.</li>
+    <li>If you want to configure the abstract and concrete information from the wizard, then click Next. 
+        Otherwise, click Finish.</li>
+  </ol></li>
+
+  <li>In the Abstract Configuration wizard page, do the following:
+
+  <ol type="a">
+    <li>Enter a name for the port type.</li>
+    <li>Enter a name for the operation.</li>
+    <li>Select the category of operation.</li>
+    <li>Define the message that the operation receives as input.</li>
+    <li>If the operation is a request-response operation, then define the message that the operation sends as output.</li>
+    <li>(Optional) If the operation is a request-response operation, then you can optionally define a message that the operation sends as a fault.</li>
+    <li>If you want to configure the concrete information from the wizard, then click Next. 
+        Otherwise, click Finish.</li>
+  </ol></li>
+
+  <li>In the Concrete Configuration wizard page, do the following:
+
+  <ol type="a">
+    <li>Enter a name for the binding.</li>
+    <li>Select the type of binding.</li>
+    <li>Select the binding subtype. The choices vary depending on the binding type.</li>
+    <li>Enter a name for the service.</li>
+    <li>Enter a name for the port.</li>
+    <li>Click Finish.</li>
+  </ol>
+
+  The WSDL file is created. The WSDL Editor appears in WSDL view.</li>
+
+</ol>
+
+<ul class="note">
+  <li>If you created a SOAP binding, then the port's <tt>soap:address</tt> node includes a Location property.
+    The Location property specifies the address of the port. 
+    The wizard generates a dummy value for the Location property. 
+    The Location property must be unique; that is, the value must not conflict with any other WSDL files 
+    that are deployed to the same application server.</li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Creating a WSDL File Based On an Existing WSDL File</h3>
+
+<p>Instead of creating a WSDL file from scratch, you can create a WSDL file based on an existing WSDL file.</p>
+
+<p><b>To create a WSDL file based on an existing WSDL file:</b></p>
+
+<ol>
+  <li>In the Projects window, right-click the <tt>Process Files</tt> node and choose New &gt; Other.</li>
+  <li>In the Choose File Type wizard page, do the following:
+  <ol type="a">
+    <li>In the Categories list, select the <tt>XML</tt> node.</li>
+    <li>In the File Types list, select the <tt>External WSDL Document(s)</tt> node.</li>
+    <li>Click Next.</li>
+  </ol></li>
+  <li>In the Specify Resource Location wizard page, do one of the following:
+  <ul>
+    <li>To create a WSDL file based on a running service:
+    <ol type="a">
+      <li>Select the From URL button.</li>
+      <li>Enter the URL of the service's WSDL file.</li>
+      <li>Click Finish.</li>
+    </ol></li>
+    <li>To create a WSDL file by using an existing WSDL file on the local file system:
+    <ol type="a">
+      <li>Select the From Local File System button.</li>
+      <li>Specify the folder where the WSDL file is located.</li>
+      <li>Click Finish.</li>
+    </ol></li>
+  </ul>
+  The WSDL file is created. The WSDL Editor appears in WSDL view.
+  </li></ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>NCNAME Data Type</h3>
+
+<p>XML Schema includes a data type called <tt>NCName</tt>. 
+Any name that has the <tt>NCName</tt> data type must comply with the following rules:</p>
+
+<ul>
+  <li>The name must begin with a letter or an underscore (_).</li>
+  <li>The valid characters for the remainder of the name are:
+  <ul>
+    <li>Letters</li>
+    <li>Digits</li>
+    <li>Period (.)</li>
+    <li>Hyphen (-)</li>
+    <li>Underscore (_)</li>
+  </ul></li>
+</ul>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Using Refactoring to Rename or Delete WSDL Components</h3>
+
+<p>You can perform refactoring by using the following approaches:</p>
+
+<ul>
+  <li><b>Rename.</b> Enables you to rename all occurrences in the associated XSD, WSDL, and BPEL files.</li>
+  <li><b>Safely Delete.</b> Enables you to check for references to the component before you perform the delete.</li>
+  <li><b>Undo.</b> After performing a Rename or Safely Delete action, you can undo that action.</li>
+  <li><b>Redo.</b> After performing an undo of a Rename or Safely Delete action, you can redo that action.</li>
+</ul>
+
+<p align="center">
+   <img src="../../../images/articles/ep-wsdl-guide/60/ep-wsdl-guide-refactor.png" 
+   alt="Menu that shows the refactoring options">
+</p>
+
+<p>You can also rename a component by changing the value of the Name property. The WSDL Editor renames all occurrences in the same file, but not in other files.</p>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h3>Validating WSDL Files</h3>
+
+<p>The WSDL Editor includes a validation tool. 
+  The validation tool reviews the WSDL file for problems with syntax and semantics.</p>
+
+<p><b>To validate a WSDL file:</b></p>
+
+<ol>
+  <li>Display any of the views in the WSDL Editor.</li>
+  <li>In the toolbar, click the Validate XML button.<br>
+      The Output window displays any errors or warnings.</li>
+</ol>
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+<!-- ======================================================================================== -->
+
+
+
+<h2><a name="see_also"></a>See Also</h2>
+
+<ul>
+<li><a href="wsdl-partnerview.html">Introducing the WSDL Editor's Partner View</a></li>
+</ul>
+</div>
+<br>
+<hr class="light">
+
+<div class="feedback-box"><a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">Send Us Your Feedback</a></div>
+<br style="clear:both;">
+
+<p align="center"><a href="wsdl-guide.html#top">top</a></p>
+
+
+
+
+
+</body>
+
+</html>

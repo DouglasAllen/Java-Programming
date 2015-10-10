@@ -1,0 +1,1196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Getting Started With Ruby and Rails - NetBeans IDE 6.0 Tutorial</title>
+        <link rel="stylesheet" type="text/css" href="../../../netbeans.css"> 
+        <meta name="description" content="How to use the Ruby support for the NetBeans 6.0 IDE">
+        <meta name="author" content="Chris Kutler"><!--Optional tag-->   
+        <script src="../../../images/js/window_opener.js" type="text/javascript"></script>
+    </head>
+    
+    <body>  
+        
+        <a name="top"></a>
+        <h1>
+            Getting Started With Ruby and Rails
+        </h1>
+        <!-- START INTRO  -->
+        
+        <div class="articledate" style="margin-left: 0px; font-style: italic;">
+            <p><em>Contributed by <a href="mailto:chris.kutler@sun.com"><i>Chris Kutler</i></a><br>
+                November 2007</em> [Revision number: V6.0-1]
+            </p>
+        </div>
+        <!-- This paragraph should contain an overview or an intro to your-tutorial  -->
+        <p>This tutorial gives you a whirlwind tour of Ruby and Ruby on Rails 
+            application development in the NetBeans IDE. The tutorial shows you how to 
+            use the IDE's Ruby support to perform some of the typical phases
+            of application development.
+        </p>
+        <p>The tutorial is designed so that you do not need to 
+            go through it in any particular order. You might want 
+            to skim over it quickly and then return to each section 
+            as time allows. If you prefer a step by step tutorial, 
+            you might want to first 
+            try <a href="rapid-ruby-weblog.html">
+        Creating a Ruby Weblog in 10 Minutes</a>.</p>
+        <!-- END INTRO  -->
+        <table class="full-width" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="left" valign="top"><h3>Contents</h3>
+                    <table border="0" cellpadding="0" cellspacing="0" class="vatop">
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="#rubyproject">
+                            Creating a Ruby Project 
+                            </a></td>
+                        </tr>       
+                        
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="#workingruby">
+                            Working With Ruby Files 
+                            </a></td>
+                        </tr>                         
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="#railsproject">
+                            Creating a Ruby on Rails Project</a>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="#workingrails">
+                            Working With Ruby on Rails Files 
+                            </a></td>
+                        </tr>         
+<!--                        
+                        <tr>
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="#editor">
+                            Working With the Editor</a> 
+                            </td>
+                        </tr> 
+-->     
+                        <tr>                            
+                            <td class="hyphen">-&nbsp;</td>
+                            <td><a href="#irb">
+                            Using the JRuby Interactive Ruby (IRB) Console
+                            </a></td>
+                        </tr>              
+                    </table>
+                </td>
+                <td width="20">&nbsp;</td>
+                <td align="right" valign="top">
+                    <img src="../../../images/articles/60/netbeans-stamp.gif" 
+                    alt="Content on this page applies to NetBeans IDE 6.0" title="Content on this page applies to the NetBeans 
+                    IDE 6.0" border="0">
+                </td>
+            </tr>
+        </table> 
+        
+        <a name="01"></a>
+        <h2>Tutorial Requirements</h2>
+        <p>This tutorial requires the following technologies and resources: </p>
+        <ul>
+            <li>A supported database server </li>
+            <li>NetBeans IDE 6.0 with Ruby support </li>
+        </ul>   
+        <p>See <a href="setting-up.html">Installing and Configuring Ruby Support</a> for 
+            information
+            about installing and configuring NetBeans Ruby support and 
+            working with database servers from NetBeans Ruby on Rails projects.
+        </p>
+        
+        <!-- ======================================================================================== -->
+        
+        <h2><a name="rubyproject"></a>Creating a Ruby Project</h2>
+        <br>
+        <p>A project is the equivalent of your working environment for
+            an application. When you create a new Ruby project, you have
+            the choice of creating a project from existing files, or creating
+            a new set of folders with templates for your Ruby project.
+        </p>
+        <p><b>Note:</b> When you open an existing Ruby or JRuby project
+        that you built outside of the IDE, the only NetBeans related
+        modification that the IDE makes to the project is to
+        create a <tt>nbproject</tt> folder, which contains
+        NetBeans metadata.</p>
+        <p>
+            You can have several projects open in the IDE at the same time. When
+            you have more than one project open, you must specify which
+            project is the main project. The main project is the project that
+            the IDE runs when you click the Run Main Project button. To switch
+            the main project, right-click on a project in the Project's window
+            and choose Set as Main Project.
+        </p>
+        <p>When you create an new Ruby project, the IDE creates a
+            file named <tt>main.rb</tt> by default, and sets this file as
+            the main script. When you click the Run Main Project
+            button (
+            <img alt="Run Main Project button"
+            src="../../../images/articles/60/ruby/getting-started/runbutton.png">),
+            the IDE saves all file changes and runs the main script. To switch to
+            a different start script, right-click the Project node
+            in the Projects window and choose Properties from
+            the pop-up menu. Select the Run category and, in the
+            Main Script text field, type the file name.
+        </p>
+        <p><b>Note:</b> The <tt>main.rb</tt> file is created
+        for Ruby projects. When you create a Ruby on Rails
+        project, as shown in the <a href="#railsproject">
+        Creating a Ruby on Rails Project</a> section, the IDE 
+        does not create
+        a <tt>main.rb</tt> file.
+        </p>
+        <p><b>Try It</b></p>
+        <p>Below are the steps to create a Ruby 
+        project.</p>
+        <ol>
+            <li>
+                <p>If you haven't done so already,
+                start the IDE by using the appropriate step 
+                from the following list:</p>
+                <ul>
+                    <li><b>Windows, Solaris and Linux.</b> 
+                    Double-click the NetBeans desktop icon.</li>
+                    <li><b>Mac.</b> Double-click the NetBeans 
+                    icon in the installation folder.</li>
+                </ul>
+            </li>            
+            <li>Right-click on a blank spot in the Projects window and choose
+            New Project from the pop-up menu.
+            </li>
+            <li>
+                In the New Project wizard, select Ruby in the Categories pane, 
+                select Ruby Application 
+                in the Projects pane, and click Next. If this project is the 
+                first Ruby project that you have opened or created, a dialog 
+                might appear asking you to choose a Ruby interpreter. Select 
+                one of the interpreter choices and click OK.
+            </li>
+            <li><p>Name the project, for example <tt>simple_ruby_application</tt>,
+                and click Finish.</p>
+                <p>The IDE displays the <tt>main.rb</tt> file in the editor.
+                Notice how the code calls <tt>puts</tt> to display
+                the string "Hello World".</p>
+            </li>
+            <li>
+                The Project window shows a logical view of the project 
+                files. Click the Files tab to view the physical
+                layout, then switch back to the Projects window.  With Ruby 
+                projects, the views are very similar.
+            </li>
+            <li><p>Click the Run Main Project button 
+            (<img alt="Run Main Project button"
+                src="../../../images/articles/60/ruby/getting-started/runbutton.png">)
+            to run the application.</p>
+            
+            The IDE displays the output in a window at the bottom of
+            the IDE, as shown below.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 1: Output Window</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/rubyoutput.png" 
+                        alt="Output Window" 
+                        style="margin: 5px auto;" 
+                        width="358" height="102" > 
+                </div>               
+            </li>
+        </ol>
+        <h2><a name="workingruby"></a>Working With Ruby Files</h2>
+        <br>
+        <p>You work with your Ruby project files similar to how you
+        would work with them from a text editor. You open a file by
+        double-clicking on the file's node in either the Projects
+        window or the Files window. You can also press
+        Alt-Shift-O (use Ctrl-Shift-O on the Mac)
+        to access files by name.</p>
+        <p>The IDE's editor offers many features to facilitate your programming
+            tasks. You
+            will learn about some of the basic editing
+            features in this section. A comprehensive list of
+            the editing features can be found on the NetBeans
+            <a href="http://wiki.netbeans.org/wiki/view/RubyEditing" target="_blank">Ruby
+            Editing</a> wiki page.
+<!--            
+            You
+            will learn about some of the basic editing
+            features in this section, and you will learn more in 
+            <a href="#editor">Working With the Editor</a>.
+-->            
+        </p>
+        <p><b>Try It.</b></p>
+        <p>Follow these steps to create a simple Ruby project that displays
+        a product list. First, you create a class for an individual product
+        item. Next you create a class for the item list and a data file
+        to supply the product data. Last, 
+        you edit the <tt>main.rb</tt> file to display the list. As you develop
+        the code, the steps will also introduce editing features.</p>
+        <h3>Create the Item Class</h3>
+        <ol>
+            <li>Create a Ruby project, or use the one that you
+            created in the previous section.</li>
+            <li><p><a name="createItemClass">In</a> the Projects window, create a class file by 
+                right-clicking the Source Files node and
+                choosing New &gt; Ruby Class from the pop-up menu. Type 
+                <tt>Item</tt> in the Class text box
+                and click Finish.</p>
+                The IDE creates a file named <tt>item.rb</tt> and opens the file 
+                in the editor.
+            </li>
+            <li><p>Replace the contents of the <tt>item.rb</tt> file with the 
+                following incorrect code. You will fix the code in the
+                remaining steps.</p>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 1: Item Class</b></td>
+                    </tr>
+                    <tr>
+                        <td><pre>
+class Item
+def initialize(id, type, price)   
+end
+def simple_method(id, type, price)
+@id = id
+@type = type
+@price = price.to_f   
+end
+def to_s
+"Item #{@id} is a #{@type}: Price $#{@price}" 
+end  
+end</pre>      
+                        </td>
+                    </tr>
+                </table>                        
+            </li>
+            <li>Right-click in the source and choose Format
+            from the pop-up menu to reformat the code.
+            </li>          
+            <li>Notice the gray squiggly lines under the arguments
+            for the initialize method, as shown in the following
+            figure. These lines identify
+            unused variables. You will fix this error in the next
+            two steps.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 2: Unused Variables</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/unusedvars.png" 
+                        alt="Unused Variables" 
+                        style="margin: 5px auto;" 
+                        width="473" height="310" > 
+                </div>                   
+            </li>
+            <li>Place the cursor on <tt>@type</tt> in the <tt>simple_method</tt>
+                and press
+                Alt-Shift-Period (Use Ctrl-Shift-Period on the Mac)
+                to select the line. Press the key combination
+                one more time to select the block, as shown
+                in the following figure.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 3: Multiple Line Selection</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/selectforcut.png" 
+                        alt="Multiple Line Selection" 
+                        style="margin: 5px auto;" 
+                        width="295" height="98" > 
+                </div> 
+
+                                
+            </li>
+            <li>Right-click
+                in the source and choose Cut from the pop-up menu.
+            </li>
+            <li>Place the cursor on the beginning of the constructor
+            (<tt>initialize</tt>
+                method) and press Shift-Enter to add a new line under the
+                current line. Right-click
+            in the new line and choose Paste from the pop-up menu.
+            </li>
+            <li><p>The purpose of the simple_method was 
+                to hold the code required for the previous steps. You
+                can now delete this method. First, place the cursor on 
+                the <tt>end</tt> 
+                statement for the 
+                <tt>simple_method</tt>.</p>
+            Notice that the IDE highlights the corresponding
+            <tt>def</tt>.</li>
+            <li>Press  Alt-Shift-Period 
+            (Use Ctrl-Shift-Period on the Mac)
+            to select the method, then press Backspace to
+            delete it.
+            </li>
+            <li>
+            Place
+            the cursor on the blank line and press Ctrl-E 
+            (Use Cmd-E on the Mac) to 
+            remove it.
+            </li>
+            <li><p>This step along with the next two steps shows how to use
+                    code completion. Open up a line at the top of the class block,
+            then place the cursor in the line, type <tt>attr_a</tt>, 
+            and press Ctrl-Space (if Ctrl-Space does not work on your
+            system, use Ctrl-\).</p> 
+            
+            The IDE displays a list of possible code completions, as
+            shown in the following figure.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 4: Code Completion List for <tt>attr_a</tt></b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/codecompletepopup.png" 
+                        alt="Code Completion List for attr_a" 
+                        style="margin: 5px auto;" 
+                        width="259" height="79" > 
+                </div>              
+            </li>
+            <li>
+            <p>Select attr_accessor :attr_names rw, and
+            press Enter.</p>
+            
+            The IDE completes the code and selects <tt>attr_names</tt>
+            for editing, as shown in the next figure.
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 5: Completed Code</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/codecomplete.png" 
+                        alt="Completed Code" 
+                        style="margin: 5px auto;" 
+                        width="263" height="40" > 
+                </div>             
+            </li>
+            <li><p>Type <tt>id, :type, :price</tt> to 
+            complete the statement and press Enter.
+            </p>
+            
+            The statement should look like the
+            following code.
+            
+            <pre>attr_accessor :id, :type, :price</pre>
+            </li>
+            <li>Select each of the arguments to the
+            attr_accessor method and notice how the
+            IDE highlights each attribute's use.
+            </li>            
+            <li>
+            <p>The completed script should look like the following 
+            code sample.</p>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 2: Formatted Item Class</b></td>
+                    </tr>
+                    <tr>
+                        <td><pre>
+class Item
+  attr_accessor :id, :type, :price
+  def initialize(id, type, price)   
+    @id = id
+    @type = type
+    @price = price.to_f
+  end
+  def to_s
+    "Item #{@id} is a #{@type}: Price $#{@price}" 
+  end  
+end</pre>      
+                        </td>
+                    </tr>
+                </table>             
+            </li>
+        </ol>
+        <h3>Create the ItemsList Class</h3>
+        <ol>
+            <li>
+              In the Projects window, create another class file by right-clicking 
+              the Source Files node and choosing New > Ruby Class from the pop-up 
+              menu. Type ItemsList in the Class text box and click Finish.
+              Note that the IDE names the file <tt>items_list.rb</tt>.
+            </li>
+            <li><p>Replace the contents of the <tt>items_list.rb</tt> file
+            with the following statements.</p>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 3: ItemsList Class</b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre>
+class ItemsList
+
+  DATA_FILE="data.txt"
+  attr_accessor :items
+
+  def initialize
+    @items = ItemsList.load_item_data  
+  end
+
+  private
+
+  def self.load_item_data
+    items = []
+    File.open(DATA_FILE) do |data_file|
+      data_file.readlines.each do |line|
+        items << Item.new(*line.split("\s"))
+      end
+    end
+    items
+  end
+  
+end</pre>      
+                        </td>
+                    </tr>
+                </table>                        
+           
+            </li> 
+            <li><p>Open up a line above the Class definition and type
+            <tt>require '</tt> (single quote).</p>
+            
+            Notice how the IDE provides
+            the ending single quote and places the cursor
+            between the quotes, as shown in the following
+            figure. The IDE automatically inserts and removes
+            matching delimiters, such as
+            quotes, braces,
+            and brackets, as well as <tt>end</tt> statements
+            for code blocks.
+
+            <div class="imgcap" style="margin: 10px auto;"> 
+                <p><b>Figure 6: Delimiter Pair Matching</b></p>          
+                <img 
+                    src="../../../images/articles/60/ruby/getting-started/quotecomplete.png" 
+                    alt="Delimiter Pair Matching" 
+                    style="margin: 5px auto;" 
+                    width="140" height="41" > 
+            </div>              
+            </li>
+            <li>With the cursor inside the single quotes, type <tt>it</tt> and press Ctrl-Space.
+            There is only one available import that starts
+            with "it", item, as shown in the next figure. Press
+            Tab to accept that choice.
+            <div class="imgcap" style="margin: 10px auto;"> 
+                <p><b>Figure 7: Code Completion for <tt>require</tt> Statement</b></p>          
+                <img 
+                    src="../../../images/articles/60/ruby/getting-started/requirecomplete.png" 
+                    alt="Code Completion for require statement" 
+                    style="margin: 5px auto;" 
+                    width="198" height="40" > 
+            </div>            
+            </li>   
+        </ol>
+        <h3>Create the Data File</h3>
+        <ol>
+            <li>In the Projects window, right-click on the Source Files node
+                and choose New &gt; Other from the pop-up menu.
+                Select Other in the Categories pane and select Empty File in
+                the File Types pane,
+                then click Next. 
+            </li>
+            <li>
+                Type <tt>data.txt</tt> in the 
+                File Name text box.
+            </li>
+            <li><p>Ensure that the Folder is set to
+                <tt>lib</tt>,
+                and click Finish. 
+                </p>
+                <b>Note:</b> You are placing the text file
+                    in the <tt>lib</tt> folder because, by default, 
+                    when you run the project from the IDE,
+                the default working directory is the <tt>lib</tt> 
+                folder.
+            </li>
+            <li><p>Paste the following text into the <tt>data.txt</tt>
+            file.</p>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 4: Product Data</b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre>
+BF15678 book 25.32
+C29589 cd 18.95
+F89028 beverage 2.00
+BN98232 book 45.33
+BF15890 book 15.98</pre>      
+                        </td>
+                    </tr>
+                </table>                
+            </li>
+        </ol>
+        <h3>Create the Main Script and Run the Application</h3>
+        <ol>
+            <li><p>In the Projects window, double-click main.rb
+            to display the file in the editor window. Replace
+            the contents with the following statements, which
+            display the list of items:</p>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 5: main.rb Contents</b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre>
+require 'items_list'
+
+items_list = ItemsList.new
+items_list.items.each do |item|
+  line_item = item.to_s
+  line_item.gsub!(/book/, 'fiction \0') if item.id =~ /\AB[FN]/
+  line_item.gsub!(/fiction/, 'non-\0') if item.id =~ /\ABN/
+  puts line_item
+end
+puts "\n"</pre>      
+                        </td>
+                    </tr>
+                </table>             
+            </li>
+            <li>The code that you just copied contains two Regexp objects;
+                <tt>/\AB[FN]/</tt> and <tt>/\ABN/</tt>. 
+                Place the cursor inside one of the
+                Regexp objects, as shown below, and press
+                Ctrl-Space. The IDE displays a list of
+                regular expression characters
+                and character combinations. Look at
+                the data in Code Sample 5 and guess
+                which items match each of
+                the two regular
+                expressions.
+                
+            <div class="imgcap" style="margin: 10px auto;"> 
+                <p><b>Figure 8: Regular Expression Code Completion</b></p>          
+                <img 
+                    src="../../../images/articles/60/ruby/getting-started/regularexcomplete.png" 
+                    alt="Regular Expression Code Completion" 
+                    style="margin: 5px auto;" 
+                    width="470" height="357" > 
+            </div>                  
+            </li>
+
+            <li><p>To run the project, click the Run Main Project
+            button in the main toolbar.
+            </p>
+            The IDE saves all your changes and runs the main.rb
+            script. The application output appears in the Output
+            window, as shown in the following figure.
+            <div class="imgcap" style="margin: 10px auto;"> 
+                <p><b>Figure 9: simple_ruby_application Output</b></p>          
+                <img 
+                    src="../../../images/articles/60/ruby/getting-started/rubyappoutput.png" 
+                    alt="simple_ruby_application Output" 
+                    style="margin: 5px auto;" 
+                    width="403" height="127" > 
+            </div>             
+            </li>
+            <li>To practice what you have learned, create another
+            Ruby project. Have the project read and display
+            the entries in a task list.
+            </li>
+        </ol>
+
+        
+        <p><b>For More Information</b></p>
+        <ul>
+            <li>Two popular books for learning about
+                Ruby are <a href="http://www.rubycentral.com/pickaxe/index.html" target="_blank">
+                Programming Ruby: The Pragmatic Programmer's Guide</a> and
+                <a href="http://poignantguide.net/ruby/index.html" target="_blank">
+            Why's (Poignant) Guide to Ruby</a>.</li>
+        </ul>
+        <h2><a name="railsproject"></a>Creating a Ruby on Rails Project</h2>
+        <br>
+        <p>Creating a Ruby on Rails project in the IDE is very
+        similar to using the <tt>rails</tt> command in a terminal
+        window. In fact, when you create a project, the IDE creates
+        the same folders and files that a <tt>rails</tt> command
+        would create.</p>
+        <p>You create a project by right-clicking in the Projects
+        window and choosing New Project from the pop-up menu. You select
+        Ruby from the Categories pane, and you
+        select either Ruby on Rails Application or Ruby on Rails Application
+        With Existing Sources from the
+        Projects pane.</p>
+        <p>You can have several projects 
+        open in the IDE at the same time. The node for the
+        main project, which
+        is the project the NetBeans actions act on, is shown
+        in bold. To switch the main project, 
+        right-click on a project in the Project's window and choose 
+        Set as Main Project.</p>
+        <p>As shown in the following figure, the second page of the New Project wizard
+        enables you to name the project and specify its location.
+        A drop-down list provides the names of several supported
+        database servers. The IDE uses the selected database
+        server as well as the Access Database Using JDBC option
+        to determine how to write the contents for the database.yml file. 
+        </p>
+                        <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 10: Page 2 of New Ruby on Rails Project Wizard</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/railsprojwizard.png" 
+                        alt="Page 2 of New Ruby on Rails Project Wizard" 
+                        style="margin: 5px auto;" 
+                        width="590" height="392" > 
+                </div> 
+        <p><b>Try It</b></p>
+       <p>Follow these steps to create a Ruby on Rails
+        project.</p>      
+        <ol>
+            <li>Right-click on a blank spot in the Projects window and choose
+            New Project from the pop-up menu.
+            </li>
+            <li>
+                In the New Project wizard, select Ruby in the Categories pane, 
+                select Ruby on Rails Application 
+                in the Projects pane, and click Next. If this project is the 
+                first Ruby project that you have opened or created, a dialog 
+                might appear asking you to choose a Ruby interpreter. Select 
+                one of the interpreter choices and click OK.
+            </li>
+            <li>Name the project, for example <tt>simple_rails_application</tt>.
+            </li>
+            <li><p>Next, choose the database server the you will use
+            with the application. If you are using JRuby, you
+            must choose
+            MySQL, PostgresSQL, Oracle, HSQLDB, or Java DB (also known as Derby).
+            </p>
+            <p>The IDE uses this information to seed the
+            <tt>database.yml</tt> file.</p>
+            <b>Note:</b> If you plan to use this project solely for
+            this tutorial, you will not be accessing any databases,
+            so you can accept the default database settings.
+            </li>
+            <li>
+            <p>If you are using JRuby and you are accessing
+            a database server other than
+            MySQL, you must select the Access Database Using JDBC checkbox.
+            If your database server is MySQL, the use of JDBC is optional.
+            </p>
+            <p>When this checkbox is checked, the IDE adds statements
+            to the <tt>environment.rb</tt> file to use the ActiveRecord-JDBC
+            gem.</p>
+            <b>Note:</b> To use a JDBC connection, you must obtain a 
+            JDBC 3.0 client driver for your database server, and put a 
+            copy of the JDBC driver in the JRuby/lib  folder. 
+            </li>
+            <li>Click Finish.
+            </li>
+            <li>Examine the logical view of the file structure in the Projects window.
+            </li>
+            <li>Right-click on the project's node (the root node for the project)
+            and notice the menu options.
+            </li>
+            <li><p>
+            Click the Files tab and compare this physical file structure
+            with the logical view that is presented in the Project's window.
+            </p>
+            The following figure shows the windows side by side,
+             to make it easy to compare the two views.
+
+                         <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 11: Comparison of Projects Window and Files Window</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/projectsandfiles.png" 
+                        alt="Comparison of Projects Window and Files Window" 
+                        style="margin: 5px auto;" 
+                        width="443" height="498" > 
+                </div>           
+            </li>
+            <li>Right-click on the project's node in the Files window
+            and notice the different
+            menu options, as compared to the pop-up menu in the Projects window.
+            For example, the pop-up menu for project's node in
+            the Projects window provides the Generate action,
+            Run Rake Task action, and the Rails Console action, in
+            addition to many other Rails specific actions.
+            
+            </li>
+ 
+        </ol>
+        <h2><a name="workingrails"></a>Working With Ruby on Rails Files</h2>
+        <br> 
+        <p>In addition to Ruby projects,
+        NetBeans Ruby support enables you to work with Ruby on Rails
+        projects. Rails is a framework that enables you to quickly 
+        create database-backed web applications that are based on the
+        model-view-controller (MVC) architecture.</p>
+        <p>Just as with Ruby projects, you can open a file 
+            in the editor by
+        double-clicking on the file's node in either the Projects
+        window or the Files window, or by pressing
+        Alt-Shift-O (use Ctrl-Shift-O on the Mac)
+        to access a file by name.</p>
+         <p>
+        The pop-up menus for the nodes in the Project window
+        provide easy access to Rails scripts and Rake tasks, such as
+        the <tt>generate</tt> script for generating code,
+        and the <tt>db:migrate</tt> task for migrating to 
+        a specific version of the database tables.
+        </p>
+        <p>The IDE understands the relationships between
+            the file types, and makes it easy to navigate
+            to associated files. For example, if you are
+            editing a view file, you can use the pop-up
+            menu to navigate to the associated action
+            file or test.
+        </p>
+        <p>As with all NetBeans projects, you can run your
+        application by clicking the Run Main Project button. The
+        IDE saves all file changes, starts the web server, if necessary, 
+        then displays the
+        welcome page in your browser. You can also use the
+        Run File menu action in the editor to open in
+        the browser the relevant URL to whatever 
+        controller, action, view, or helper you are editing.
+        </p>
+
+        <p><b>Try It</b></p>
+        <p>Complete the following steps to create a Rails version
+        of the sample project presented in the <a href="#workingruby">
+        Working With Ruby Files</a> section. In this variation,
+        the constructor takes a hash instead
+        of positional arguments,
+        you get the data from a <a href="http://www.yaml.org/" target="_blank">YAML</a> file, 
+        and the ItemsList functionality has been moved
+        to the Item class.</p>
+        <p><b>Note:</b> Typically, with a Rails project, you
+        base your model classes on database tables. However, to 
+        make this example quick and simple, the application gets
+        its data from a YAML file.</p>
+        <h3>Create the Model Class</h3>          
+<ol>
+<li>Create a Ruby on Rails project, or use the one that you
+created in the previous section.</li>
+<li><p>In the Projects window, right-click the Models
+    node and choose Generate from the pop-up menu.</p>
+    
+    The Rails Generator dialog box opens, with model
+    selected in the Generate drop-down list,
+    as shown below.
+             <div class="imgcap" style="margin: 10px auto;">
+        <p><b>Figure 12: Rails Generator Invoked From the Model Node</b></p>         
+        <img
+            src="../../../images/articles/60/ruby/getting-started/generatemodel.png"
+            alt="Rails Generator Invoked From the Model Node"
+            style="margin: 5px auto;"
+            width="332" height="381" >
+    </div>                 
+
+</li>
+<li><p>Type <tt>Item</tt> in the Arguments text box, and
+click OK.</p>
+
+The IDE creates a file named <tt>item.rb</tt> and opens
+the file in the editor. A node for the file appears under
+the Models node in the Projects window. The IDE also creates a 
+test suite under
+Unit Test, a test fixture under Test Fixtures, and a migration 
+under Database Migrations &gt; migrate.
+</li> 
+<li><p>Replace the contents of the <tt>item.rb</tt> file with
+    the following code.</p>
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 6: Item Class</b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre># Takes:
+#   :id => unique item id
+#   :type => type of item
+#   :price => price of the item 
+
+class Item
+  DATA_FILE="data.yml"                               
+  attr_accessor :id, :type, :price
+
+  def initialize(attributes)
+    @id = attributes['id']
+    @type = attributes['type']
+    @price = attributes['price'].to_f
+  end
+
+  def to_s
+    "Item #{@id} is a #{@type}: Price $#{@price}"
+  end 
+ 
+  def self.load_item_data
+    YAML.load_file(DATA_FILE).collect do |item_hash|
+      Item.new(item_hash)
+    end
+  end 
+ 
+end</pre>      
+                        </td>
+                    </tr>
+                </table>              
+                
+</li>
+</ol>
+<h3>Create the Data File</h3>  
+<ol>
+<li>The <tt>Item</tt> class requires the <tt>data.yml</tt>
+file for its data. To create this file, right-click the project's
+node in the Projects window, and choose New &gt; Other from
+the pop-up menu.</li>
+<li>In the New File dialog box, select Ruby in the Categories pane,
+select YAML file in the File Types pane, and click Next.
+</li>
+<li><p>Type <tt>data</tt> in the File Name text box and click Finish.
+</p>
+The IDE creates a file named <tt>data.yml</tt> in the project's root
+    folder, and opens the file in the editor. Because the
+    file is in the root folder, you do not see it in the 
+    logical view of the Project window. However, it does
+    appear in the Files window.
+</li>
+<li><p>Replace the contents of the <tt>data.yml</tt> file with the
+following text.</p>
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+    <tr class="bg-white"> 
+        <td><b>Code Sample 7: data.yml</b></td>
+    </tr>
+    <tr> 
+        <td><pre>-
+ id: BF15678 
+ type: book
+ price: 25.32
+-
+ id: C29589 
+ type: cd 
+ price: 18.95
+-
+ id: F89028 
+ type: beverage 
+ price: 2.00
+-
+ id: BN98232 
+ type: book 
+ price: 45.33
+-
+ id: BF15890 
+ type: book 
+ price: 15.98</pre>      
+        </td>
+    </tr>
+</table>  
+</li>
+</ol>
+<h3>Create the Controller and View</h3>  
+<ol>
+<li><p>The model is ready. Now add the controller and the view.
+In the Projects window, right-click the Controllers node and choose
+Generate from the pop-up menu.</p>
+The Rails Generator dialog box opens with controller
+    selected in the Generate drop-down list,
+    as shown below.
+<div class="imgcap" style="margin: 10px auto;">
+    <p><b>Figure 13: Rails Generator Invoked From the Controllers Node</b></p>         
+    <img
+        src="../../../images/articles/60/ruby/getting-started/generatecontroller.png"
+        alt="Rails Generator Invoked From the Controllers Node"
+        style="margin: 5px auto;"
+        width="345" height="412" >
+</div>  
+</li>
+<li><p>Type <tt>Item</tt> in the Name text box, type
+    <tt>index</tt> in the Views text box, and click OK.</p>
+    The IDE creates both the <tt>ItemController</tt> class
+    and the <tt>index.rhtml</tt> view, which is under the 
+    Views &gt; item node. In addition, the IDE creates
+    Functional Tests &gt; item_controller_test.rb and
+    Helpers &gt; item_helper.rb.
+</li>
+<li><p>Replace the contents of the <tt>item_controller.rb</tt> file
+with the following code.</p>
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+    <tr class="bg-white"> 
+        <td><b>Code Sample 8: ItemController Class</b></td>
+    </tr>
+    <tr> 
+        <td><pre>class ItemController < ApplicationController
+  def index
+    @items = Item.load_item_data
+  end
+end</pre>      
+        </td>
+    </tr>
+</table>
+<br>
+The <tt>index</tt> action, which the controller
+    calls before calling the index view, 
+    fills the <tt>@items</tt> global array
+    with the list of items.
+</li>
+<li>To quickly access the <tt>index.rhtml</tt> file, right-click
+in the index definition, and choose Navigate &gt; Go to Rails
+Action or View from the pop-up menu, as shown in the following figure.
+<div class="imgcap" style="margin: 10px auto;"> 
+    <p><b>Figure 14: Navigating to the View</b></p>          
+    <img 
+        src="../../../images/articles/60/ruby/getting-started/gotoaction.png" 
+        alt="Navigating to the View" 
+        style="margin: 5px auto;" 
+        width="458" height="340" > 
+</div>  
+</li>
+<li><p>Replace the contents of <tt>index.rhtml</tt> with
+the following markup.
+</p>
+
+
+     
+     
+                <table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+                    <tr class="bg-white"> 
+                        <td><b>Code Sample 9: <tt>index.rhtml</tt></b></td>
+                    </tr>
+                    <tr> 
+                        <td><pre>
+&lt;h1>List of Items&lt;/h1&gt;
+
+&lt;table border="1"&gt;
+  &lt;tr&gt;&lt;th&gt;Id&lt;/th&gt;&lt;th&gt;Type&lt;/th&gt;&lt;th&gt;Price&lt;/th&gt;&lt;/tr&gt;
+  &lt;% for item in @items %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;%= item.id %&gt;
+      &lt;/td&gt;
+      &lt;td&gt;&lt;%= item.type %&gt;&lt;/td&gt;
+      &lt;td align="right"&gt;&lt;%= '%.02f' % item.price %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;% end %&gt;
+&lt;/table&gt;</pre>      
+                        </td>
+                    </tr>
+                </table>
+                <br>
+The Ruby code that is embedded in the HTML iterates over the <tt>@items</tt> global array
+that was defined by the index action in the controller.
+</li>
+</ol>
+<h3>Run the Application</h3>  
+<ol>
+<li><p>Click the Save All button in the main toolbar to save all your 
+changes.</p>
+The asterisks (*) in the file tabs, which indicated modified files,
+disappear.
+</li>
+<li><p>Right-click in the editor and choose Run File.</p>
+The IDE sends the URL for the item controller and the index
+action to the server, which, in turns sends the following
+page to the browser.
+<div class="imgcap" style="margin: 10px auto;"> 
+    <p><b>Figure 15: Index View Displayed in the Browser</b></p>          
+    <img 
+        src="../../../images/articles/60/ruby/getting-started/appinbrowser.png" 
+        alt="Index View Displayed in the Browser" 
+        style="margin: 5px auto;" 
+        width="185" height="223" > 
+</div>  
+</li>
+<li><p>Try clicking the Run Main Project to run the whole application.</p>
+Note that the standard Ruby on Rails welcome page appears. This is because
+the router, by default, displays the Public &gt; index.html file. You
+will change the routing in the following steps.
+</li>
+<li>In the Projects window, expand Public.</li>
+<li>Right-click the index.html node and choose Delete from
+the pop-up menu.
+</li>
+<li>In the Projects window, expand the Configuration node and
+double-click routes.rb to open it in the editor.
+</li>
+<li>Look for the following comment.
+<pre>  # map.connect '', :controller => "welcome"</pre>
+<p>Replace the comment the following code shown in bold.</p>
+<table border="1" bordercolor="#e7e7e7" cellpadding="2" cellspacing="0" class="examplecode">
+    <tr class="bg-white"> 
+        <td><b>Code Sample 10: Routing Code</b></td>
+    </tr>
+    <tr> 
+        <td><pre>  # You can have the root of your site routed by hooking up '' 
+  # -- just remember to delete public/index.html.
+  <b>map.connect '', :controller => "item"</b></pre>
+        </td>
+    </tr>
+</table>          
+</li>
+<li>To insure that the routing changes are picked up by the server,
+click the server stop button that appears in the
+lower right corner of the IDE, as shown below.
+<div class="imgcap" style="margin: 10px auto;">
+    <p><b>Figure 16: Server Stop Button</b></p>         
+    <img
+        src="../../../images/articles/60/ruby/getting-started/serverstopbtn.png"
+        alt="Server Stop Button"
+        style="margin: 5px auto;"
+        width="424" height="141" >
+</div> 
+</li>
+<li>Click Run Main Project to start the application in the browser.</li>
+</ol>
+<h3>Practicing What You Have Learned</h3>  
+<ol><li>Now try building a project from scratch. Create a
+Ruby on Rails project that displays the entries from a task list.
+</li>
+<li><p>Take a look at <a href="setting-up.html#dbservers">
+Using Databases With JRuby</a> and 
+<a href="rapid-ruby-weblog.html"> 
+Creating a Ruby Weblog in 10 Minutes.</a></p>
+How would you build your task list application if you used
+database table instead of a file?
+</li>
+</ol>
+<p><b>For More Information</b></p>
+    <ul>
+       
+    <li>The <a href="http://www.rubyonrails.org/" target="_blank">
+        Ruby on Rails</a> web site
+        contains screencasts, presentations, tutorials, and samples.
+    </li>
+    <li>You can use the Plugins tool to download
+    and install the Ruby Depot sample application
+    (it might already be installed with
+    your version of the IDE). After installing the plugin,
+    right-click in the Projects window and choose New Project
+    from the pop-up menu. Expand Samples in the Categories
+    pane and select Ruby. Select Depot and click Next. Click
+    Finish and follow the instructions in the README that
+    appears in the browser.
+    </li>
+
+    </ul>
+
+    <h2><a name="irb"></a>Using the JRuby Interactive Ruby (IRB) Console</h2>
+        <br>
+        <p>As you might guess, the JRuby Interactive Ruby (IRB) Console 
+            is a module that lets you interactively enter Ruby statements, just
+            as you do with the Ruby IRB.  In addition, the JRuby Interactive 
+            Ruby (IRB) Console
+            provides interoperability with Java platform applications.
+        </p>
+        <p>
+            You open the console by choosing 
+            Window &gt; Other &gt; Ruby Shell (IRB) from the main menu. The
+            console appears in the lower portion of the IDE, as shown in the
+            following figure.
+        </p>
+        
+        <div class="imgcap" style="margin: 10px auto;"> 
+            <p><b>Figure 17: JRuby IRB Console</b></p>          
+            <img 
+                src="../../../images/articles/60/ruby/getting-started/irb.png" 
+                alt="IRB Console" 
+                style="margin: 5px auto;" 
+                width="566" height="481" > 
+        </div>
+        <p>The IRB Console is launched from the NetBeans installation
+            folder. To switch to another folder, type the following command,
+            replacing <i>your-path</i> with the path to the folder
+            that contains the Ruby files.
+        </p>
+        <pre>  => Dir.chdir("<i>your-path</i>")</pre>
+        <!-- issue 120333 fixed in build 4983
+        <p><b>Tip:</b> To save steps, you can put the <tt>chdir</tt>
+            command in
+        your .irbrc file so that
+        the IRB Console opens in your working folder. Or, you
+        can put  <tt>Dir.chdir(</tt>"<i>IDE-projects-folder</i><tt>")</tt>
+        in the <tt>.irbrc</tt> file so that you can more easily access
+        your projects.</p>         
+        -->
+        <p>Closing the console window does not stop the IRB
+            session. When you reopen the window, the command history
+            is still there. To stop a session, type <code>quit</code>
+            or <code>exit</code> in the console.
+        </p>
+       
+        <b>Try It</b>
+        <ol>
+
+            <li>In the main menu, choose Window &gt; Other &gt; Ruby Shell (IRB) 
+            to open the IRB console.</li>
+            <li>Type some Ruby constants to get familiar with the
+                environment, such as <tt>PLATFORM</tt>, 
+                <tt>VERSION</tt>, <tt>ENV_JAVA</tt>, and <tt>ENV</tt>.
+                Type <tt>Object::constants</tt> to see all the top-level
+                constants.
+            </li>
+            <li><p>Use the IRB to try out Ruby statements. For example,
+                type the following statements to see what Ruby
+            outputs:</p>
+            <pre>&gt;&gt; String.ancestors
+&gt;&gt; "fig mango orange melon grapes".split(pattern="\s")
+&gt;&gt; "users@ruby.netbeans.org" =~ /\A[\w\._%-]+@[\w\.-]+\.[a-zA-Z]{2,4}\z/</pre>
+            <p>Try to think of other Ruby statements you might want
+                to test, such as seeing what type of exception is thrown.
+            </p>
+            <li>Try out the code completion pop-up feature. Type the
+                first few characters and press tab to see a list of suggestions,
+                as shown in the following figure. You can continue typing
+                to narrow the list. Select your choice
+                and press Enter. 
+                <div class="imgcap" style="margin: 10px auto;"> 
+                    <p><b>Figure 18: Code Completion Pop-Up</b></p>          
+                    <img 
+                        src="../../../images/articles/60/ruby/getting-started/irbcodepopup.png" 
+                        alt="Code Completion Pop-Up" 
+                        style="margin: 5px auto;" 
+                        width="397" height="307" > 
+                </div>
+            </li>
+            <li>Press the Up-Arrow several times to scroll through the
+                command history and press the Down-Arrow to move down. Press Return 
+                to re-execute a command.
+            </li>     
+        </ol>
+        <p><b>For More Information</b></p>
+        <ul>
+            <li>The <a href="http://www.rubycentral.com/pickaxe/irb.html" target="_blank">
+                Interactive Ruby Shell</a> chapter
+                in the 
+                <a href="http://www.rubycentral.com/pickaxe/index.html" target="_blank">
+                Programming Ruby: The Pragmatic Programmer's Guide</a> 
+                provides information about using and customizing 
+                the IRB.
+            </li>
+            <li>
+                <a href="http://docs.codehaus.org/display/JRUBY/The+JRuby+Tutorial+Part+1.5+-+Using+JIRB+to+Check+Java+Behaviour" target="_blank">
+                    Using JIRB to Check Java Behaviour</a> 
+                shows examples of using the JRuby IRB to
+                test Java code.
+            </li>
+            
+        </ul>
+        
+        
+        <!-- ======================================================================================== -->
+        <h2><a name="next_steps"></a>Next Steps</h2>
+        <!-- Intro paragraph for this topic  -->
+        <br>
+        <ul>
+            <li>
+                <p>To learn how to use the IDE to quickly build a Ruby on Rails application, go to <a href="rapid-ruby-weblog.html">Creating a Ruby Weblog in 10 Minutes</a>.</p>
+                
+            </li>
+            <li><p>To obtain support and stay informed of the latest 
+                    changes to the NetBeans Ruby development features, join the <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">users@ruby.netbeans.org</a> and  
+                    <a href="http://ruby.netbeans.org/servlets/ProjectMailingListList" target="_blank">dev@ruby.netbeans.org</a>
+                mailing lists.</p>
+            </li>
+            <li>
+            To submit your own NetBeans Ruby tutorial, visit the <a href="http://www.netbeans.org/community/contribute/" target="_blank">NetBeans Community Docs</a> page.    </li>
+            
+        </ul>
+        
+        
+        <!-- ======================================================================================== -->
+        
+        <!-- Send Us Your Feedback Link  -->
+        
+        
+        <!-- Update your-tutorial-title below to reflect your tutorial title -->
+        <br>
+        <div class="feedback-box" >
+        <a href="mailto:nbdocs-feedback-dvd@usersguide.netbeans.org">
+            Send Us Your Feedback
+        </a>
+        </div>
+        <br style="clear:both;">
+        
+    </body>
+</html>
